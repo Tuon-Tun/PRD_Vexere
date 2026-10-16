@@ -166,8 +166,7 @@ Done when: The website accepts more than 3,000 users to connect simultaneously.
 
 ```text
 Done when: The website supports up to 5,000 concurrent user connections without response times exceeding 3 seconds.
-Done when: When concurrent users exceed 5,000, the system queues additional requests and displays "High traffic — please wait" rather than an error.
-Done when: Load testing confirms these thresholds under simulated conditions before release.
+Done when: When more than 5,000 people use the site at the same time, new visitors see "High traffic — please wait" instead of an error.
 ```
 
 ---
@@ -202,7 +201,7 @@ Done when: The customer can enter payment details (card number, expiry, CVV) on 
 Done when: The customer can submit their payment and receive an on-screen confirmation within 5 seconds.
 Done when: The customer receives a confirmation email within 2 minutes of successful payment.
 Done when: If payment is declined, the customer sees a clear error message and can retry or use a different payment method.
-Done when: All payment data is transmitted over HTTPS and no card details are stored in plain text.
+Done when: After payment, the customer only ever sees the last 4 digits of their card. (How card data is protected is an Open Question for Dev / Tech Lead.)
 ```
 
 ---
