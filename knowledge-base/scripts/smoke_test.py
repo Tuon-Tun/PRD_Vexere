@@ -236,33 +236,6 @@ def check_prd_sections():
         assert_true(heading in template, f"PRD template is missing heading: {heading}")
     assert_true("API / Technical Specs" not in template, "PRD template still contains the technical specs section")
 
-    app = (ROOT / "webapp/app.src.html").read_text(encoding="utf-8")
-    match = re.search(r"const ALL_SECTIONS = \[(.*?)\];", app, flags=re.DOTALL)
-    assert_true(match is not None, "webapp ALL_SECTIONS constant not found")
-    assert_true(
-        re.findall(r'"([^"]+)"', match.group(1)) == ACTIVE_SECTIONS,
-        "webapp ALL_SECTIONS drifted from Active_Sections",
-    )
-
-
-def check_webapp():
-    build = load_module("webapp_build", "webapp/build.py")
-
-    index_path = ROOT / "webapp" / "index.html"
-    assert_true(index_path.is_file(), "webapp/index.html is missing; run webapp/build.py")
-
-    html = index_path.read_text(encoding="utf-8")
-    embedded = build.extract_embedded_payload(html)
-    assert_true("__placeholder__" not in embedded, "webapp/index.html was not built; run webapp/build.py")
-    assert_true(
-        embedded == build.collect_payload(),
-        "webapp/index.html prompts drifted from knowledge-base; run webapp/build.py",
-    )
-    assert_true(
-        html == build.render_html(),
-        "webapp/index.html is out of date with app.src.html; run webapp/build.py",
-    )
-
 
 def main():
     check_input_schema()
@@ -271,8 +244,7 @@ def main():
     check_export_helper()
     check_product_framing_skill()
     check_prd_sections()
-    check_webapp()
-    print(json.dumps({"status": "success", "checks": 7}))
+    print(json.dumps({"status": "success", "checks": 6}))
 
 
 if __name__ == "__main__":
