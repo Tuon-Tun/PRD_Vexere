@@ -20,7 +20,7 @@ The PRD is product first. It hands over the rules, the logic, and the core value
 Before drafting, confirm you have:
 
 1. The approved JSON brief from Step 1
-2. The approved Product Framing Pack from Step 2: JTBD, business rules, messages, common behaviors, referenced items, epics, user stories with acceptance criteria, and open questions, all with their IDs
+2. The approved Product Framing Pack from Step 2: JTBD, business rules, messages, common behaviors, referenced items, epics, user stories with acceptance criteria, assumptions, and open questions, all with their IDs
 3. Domain context from `domain-knowledge/[Domain_Name]/rules.md` when running in `IDE_FULL_PIPELINE`
 4. Relevant domain history from prior approved PRDs, if present
 5. Standards from:
@@ -84,7 +84,7 @@ Load `resources/prd-template.md`. Fill every section listed in `Active_Sections`
 - 2.5 Scope lists capabilities at epic or story level with their IDs, never rule values.
 - 2.6 Glossary gives each status and role a one-line meaning; their transitions and permissions are cited by `BR-` ID. A term a rule defines gets its meaning without the value and cites the rule.
 - 3.4 Use Cases: write one only for a flow with several user actions and system responses in between, or that branches on a business condition; one use case may cover several stories. Steps hold only the order and cite AC, CB, BR, and MSG IDs. Add a branch row only where the flow really branches; there is no minimum. If no flow qualifies, write the "No use case needed" line from the template.
-- 3.5 Traceability Matrix: one row per BR, columns BR | Cited by (AC / CB) | UC | MSG, IDs only. Cited by lists the AC and CB IDs that cite the rule plus "via BR-.." for each rule that uses it. MSG lists the messages whose Rules column names the rule. A removed rule shows "No longer applies". Each story that applies no rule gets a row with "—" in the BR column.
+- 3.5 Traceability Matrix: one row per BR, columns BR | Cited by (AC / CB) | UC | MSG, IDs only. Cited by lists the AC and CB IDs that cite the rule plus "via BR-.." for each rule that uses it. MSG lists the messages whose Rules column names the rule. A removed rule shows "No longer applies". A rule cited from another PRD gets its own row, named with that PRD. Each story that applies no rule gets a row with "—" in the BR column.
 - 3.6 Screens lists screens and the stories shown on each; behavior lives in the acceptance criteria.
 - 3.7 Dependencies: "If it is unavailable" cites the rule, common behavior, or acceptance criterion that defines the outcome. Impacted Areas cite story and rule IDs.
 - Open or assumed values: the rule's Rule cell says `TBD (Q-..)` or `[value] (assumed, A-..)`; the question or assumption cites the rule ID and states only the open point.
@@ -127,7 +127,7 @@ Do not pre-fill Version History by default; the PM owns it. Keep the table forma
 - No blank sections remain; use `TBD` when information is still pending.
 - No technical detail appears anywhere (run the self-check in `knowledge-base/product-language/SKILL.md`).
 - No rule value, formula, condition, message wording, or target appears outside its home section.
-- Every story has Priority, Common behaviors, and Rules applied lines; Rules applied lists exactly the BRs referred to by its acceptance criteria, the messages they cite, and its common behaviors, plus every BR cited in those rules' rows, followed all the way down.
+- Every story has Priority, Common behaviors, and Rules applied lines; Rules applied follows the definition in `knowledge-base/product-framing/SKILL.md` exactly (acceptance criteria and common behaviors, then every BR cited in those rules' rows all the way down, the "on entering" row of each transition's new status, and the Rules column of every cited message; rules from another PRD listed but not followed).
 - Every cited ID exists in this PRD or carries the name of a PRD listed in 3.7; every BR is cited or used by another rule, except rows marked "No longer applies", which nothing cites; and the Traceability Matrix holds IDs only.
 - IDs match the approved Product Framing Pack.
 - Terms match the Glossary throughout.

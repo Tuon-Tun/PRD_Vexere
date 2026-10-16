@@ -247,6 +247,16 @@ def check_prd_sections():
         "PRD template still contains the Functional Requirements table",
     )
 
+    framing = (ROOT / "knowledge-base/product-framing/SKILL.md").read_text(encoding="utf-8")
+    for name, text in (("PRD template", template), ("Product framing skill", framing)):
+        # Shared side-effects of a status live once, on its "on entering" row.
+        assert_true("**On Entering a Status**" in text, f"{name} is missing the On Entering a Status table")
+    for path in sorted((ROOT / "knowledge-base").rglob("*.md")):
+        assert_true(
+            "Also cites" not in path.read_text(encoding="utf-8"),
+            f"{path.relative_to(ROOT)} still uses the removed 'Also cites' line",
+        )
+
     writer = (ROOT / "prd-writer.md").read_text(encoding="utf-8")
     agenda = re.findall(r"^  \d+\. (.+?) — ", writer, flags=re.MULTILINE)
     assert_true(agenda == ACTIVE_SECTIONS, "prd-writer.md Step 0 agenda drifted from Active_Sections")

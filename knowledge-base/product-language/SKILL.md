@@ -57,7 +57,7 @@ Ask what a sentence is about. If it is about **money, seats or other inventory, 
 | Formulas, calculations, rounding, application order, with a worked example | Business Rules (3.2) | `BR-01` |
 | Eligibility and conditional policies, including what happens to money, seats, or status when something fails | Business Rules (3.2) | `BR-01` |
 | Limits and data constraints (time windows, quantities, input rules), and deadlines promised to the customer | Business Rules (3.2) | `BR-01` |
-| Status transitions, their conditions, and their side-effects (notifications, inventory released, partner informed) | Business Rules (3.2), Statuses & Transitions | `BR-01` |
+| Status transitions and their conditions; side-effects of one event on its transition row, and side-effects shared by every way into a status on its "on entering" row (notifications, inventory released, partner informed) | Business Rules (3.2), Statuses & Transitions and On Entering a Status | `BR-01` |
 | Who may perform which action | Business Rules (3.2), Roles & Permissions | `BR-01` |
 | What the user sees and can do in one story: UI behavior, loading and empty states, default sort order, what each button does, how an error or rule violation is shown (toast, inline error, popup), side-effects of this story's own action | Acceptance Criteria under its story (3.1) | `US-01-AC2` |
 | Behavior that is the same in every story: login session expired, connection lost, repeated tap, system temporarily unavailable | Common Behaviors (3.1) | `CB-01` |

@@ -160,14 +160,15 @@ When [situation], I want to [motivation], so I can [expected outcome].
   - Statement: As a [persona], I want to [action], so that [value/reason].
   - Priority: Must / Should / Could.
   - Common behaviors: the CB IDs that apply to the story.
-  - Rules applied: every BR referred to by its acceptance criteria, by the messages they cite, and by
-    its common behaviors, plus every BR cited in those rules' rows, followed all the way down.
-    Prefixed with the feature name so it still makes sense in a Jira ticket; rules from another PRD
-    go in a second group prefixed with that PRD's name.
+  - Rules applied: every BR referred to by its acceptance criteria and its common behaviors, then every
+    BR cited in any cell of those rules' rows, followed all the way down (a transition also brings in the
+    "on entering" row of its new status; a cited message brings in its Rules column). Prefixed with the
+    feature name so it still makes sense in a Jira ticket; rules from another PRD go in a second group
+    prefixed with that PRD's name and are not followed further.
   - Acceptance criteria, numbered AC1, AC2, ...: UI/UX behavior, how a broken rule or a failure is
     shown (toast / inline error / popup + MSG ID), and side-effects of this story's own action.
-    Side-effects of a status transition live on its row in 3.2; the acceptance criterion only states
-    that the transition happens. Cite rule and message IDs; never copy a rule value or message wording.
+    Side-effects of a status change live in 3.2 (on its transition or "on entering" row); the acceptance
+    criterion only states that the transition happens. Cite rule and message IDs; never copy a rule value or message wording.
 -->
 
 **Common Behaviors**
@@ -193,12 +194,12 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 <!--
   The core of the PRD for Dev and QC, and the only place rule values live. One rule per row, each with
-  its own BR ID (unique across the three tables), concrete values, and the condition that triggers it.
+  its own BR ID (unique across all tables in this section), concrete values, and the condition that triggers it.
   A rule answers a question about money, seats or other inventory, a status, a voucher or other
   entitlement, or who may act. What the user sees when it applies lives in the citing acceptance criteria.
   - Example: a concrete case with real numbers, e.g. "Ticket 300,000 VND cancelled 30 hours before
     departure -> refund 270,000 VND". Every calculation needs a worked example.
-  - Uses: IDs of other rules this rule depends on. In transition and permission rows, the rules cited in
+  - Uses: IDs of other rules this rule depends on. In transition, status, and permission rows, the rules cited in
     the row play the same role.
   - An open or assumed value is written in the Rule cell itself: "TBD (Q-..)" or "[value] (assumed, A-..)".
   - Notes: the source of the rule; who may change the value without a new release; "No longer applies (vX)"
@@ -214,14 +215,21 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 **Statuses & Transitions**
 
-<!-- Only if the feature has statuses (e.g. booking, ticket, refund). Otherwise remove this block.
-     One row per change of status. When several events lead to the same status, list them all in one
-     Events cell, so side-effects of reaching the new status are written here once, whichever story causes
-     it: notifications by MSG ID, inventory released, partner informed. A condition that depends on another
-     rule names it in words and cites its ID. -->
+<!-- Only if the feature has statuses (e.g. booking, ticket, refund). Otherwise remove these two blocks.
+     Transitions: one row per event that changes a status, with only the side-effects of that event (e.g.
+     "refund per BR-03"). An event names the action and cites the permission row that says who may take it,
+     without repeating its roles or conditions. A condition that depends on another rule names it in words
+     and cites its ID.
+     On Entering a Status: side-effects that are the same however the status is reached (notifications by
+     MSG ID, inventory released, partner informed), written once per status, never on each transition. -->
 
-| ID | From status | Events | Condition | To status | Side-effects |
-|----|-------------|--------|-----------|-----------|--------------|
+| ID | From status | Event | Condition | To status | Side-effects of this event |
+|----|-------------|-------|-----------|-----------|----------------------------|
+
+**On Entering a Status**
+
+| ID | Status | Side-effects |
+|----|--------|--------------|
 
 **Roles & Permissions**
 
@@ -285,6 +293,7 @@ When [situation], I want to [motivation], so I can [expected outcome].
   behaviors), 3.4 (use cases), 3.6 (the Rules column of each message), and 3.2 (rules citing other rules).
   Cited by: the AC and CB IDs that cite the rule, plus "via BR-.." for each rule that uses it.
   MSG: the messages whose Rules column lists the rule. A removed rule shows "No longer applies".
+  A rule cited from another PRD gets its own row, named with that PRD, so a change there can be traced here.
   Add a row with "—" in the BR column for each story that applies no rule. Use "—" when nothing maps.
 -->
 

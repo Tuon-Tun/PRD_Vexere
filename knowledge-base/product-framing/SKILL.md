@@ -56,6 +56,7 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 - Treat `JTBD_Candidates`, `Epic_Candidates`, `User_Story_Candidates`, and their `AC_Seeds` from Step 1 as seeds, not final output.
 - Do not invent business rules, metrics, roles, messages, or edge cases. If a common behavior or a rule the feature clearly needs is not stated in the input, write it as an assumption (below) so the user approves it with the Pack.
 - If a required detail is missing, write `[NEEDS_CLARIFICATION]` and add an Open Question. An open value is written in the rule's own Rule cell as `TBD (Q-..)`. A value taken from the brief's `Assumptions`, or assumed by the Pack, is written there as `[value] (assumed, A-..)`.
+- Every item in the brief's `Assumptions` becomes an `A-` row, and every item in `Missing_Information` or still marked `[NEEDS_CLARIFICATION]` becomes a `Q-` row, each listing the IDs it affects.
 - Preserve the user's language.
 - IDs are plain text, never renumbered or reused. When the Pack is regenerated after feedback, keep existing IDs and give new items the number after the highest one used so far.
 - A rule defined in another approved PRD is cited, not copied: write it as `[Other PRD name] BR-02` and list that PRD as a `DEP-` item.
@@ -71,10 +72,13 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 - Build the register from `Business_Logic_and_Rules`, plus any value, limit, status, or permission stated elsewhere in the brief.
 - A business rule answers a question about money, seats or other inventory, a status, a voucher or other entitlement, or who may act. Three kinds:
   - **Formulas & policies:** calculations, rounding, application order (for example voucher stacking), eligibility, and conditional policies, including what happens to money, seats, or status when something fails. Every formula has a worked example with real numbers.
-  - **Statuses & permissions:** each status transition is one row with its events, condition, and side-effects (notifications by `MSG-` ID, inventory released, partner informed). When several events lead to the same status, write one row and list every event in its Events cell, so the side-effects are written once; a side-effect that differs by event cites the rule that decides it. A condition that depends on another rule names it in words and cites its ID, for example "within the cancellation cutoff (BR-01)". Each action a role may perform is one row.
+  - **Statuses & permissions:**
+    - **Transitions:** one row per event that changes a status, with its condition and the side-effects of that event only (for example "refund per BR-03"). An event names the action and cites the permission row that says who may take it; it does not repeat the permission's roles or conditions. A condition that depends on another rule names it in words and cites its ID, for example "within the cancellation cutoff (BR-01)".
+    - **On entering a status:** one row per status whose side-effects are the same however it is reached (notifications by `MSG-` ID, inventory released, partner informed). They are written here once, never on each transition.
+    - **Permissions:** one row per action a role may perform, including actions that change a status.
   - **Limits & constraints:** time windows, quantities, input rules, and deadlines promised to the customer.
-- Each row has its own `BR-` ID, unique across the three tables.
-- Fill **Uses** with the IDs of other rules a formula, policy, or limit depends on (for example a refund rule that uses the cancellation fee rule). In transition and permission rows, the rules cited in the row play the same role.
+- Each row has its own `BR-` ID, unique across all the business rule tables.
+- Fill **Uses** with the IDs of other rules a formula, policy, or limit depends on (for example a refund rule that uses the cancellation fee rule). In transition, status, and permission rows, the rules cited in the row play the same role.
 - What the user sees when a rule applies or is broken is not part of the rule. It goes into the acceptance criteria that cite the rule.
 - A value set per partner or per campaign is written as the rule's shape, who sets the value, the default if any, and a worked example labelled as sample values.
 
@@ -88,7 +92,7 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 ### Common Behaviors
 
 - Situations that behave the same way in every story — login session expired, connection lost, repeated tap or resubmit, system temporarily unavailable — are written once as `CB-` rows. A story lists the ones that apply on its Common behaviors line instead of writing its own AC for them.
-- A CB states what the user sees and cites the rule and message that apply (for example "charged only once (BR-11)", "MSG-09"). What happens to money, seats, or status is a rule, never written inside the CB.
+- A CB states what the user sees and cites the rule and message that apply (for example "charged only once (BR-11)", "MSG-09"). What happens to money, seats, or status is defined in a rule; the CB names the outcome in words and cites that rule, never its value or condition.
 - Write only the common behaviors the feature needs.
 
 ### Referenced Items
@@ -109,7 +113,7 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 - Keep UI and implementation details out of the story statement unless they are truly the user outcome. Never prescribe technical solutions (APIs, data storage, internal components).
 - **Priority:** `Must`, `Should`, or `Could`.
 - **Common behaviors:** the `CB-` IDs that apply to the story, or `none`.
-- **Rules applied:** every `BR-` ID referred to by the story's acceptance criteria, by the messages they cite (the Rules column), and by the listed common behaviors, plus every `BR-` ID cited in those rules' rows (Uses, Condition, Side-effects), followed all the way down. Prefix it with the PRD name so it still makes sense in a Jira ticket: `Rules applied (PRD [Feature Name]): BR-01, BR-03`, using the feature name, not the full PRD title. Rules from another PRD go in a second group: `(PRD [Other PRD name]): BR-02`. Write `none` if there are none.
+- **Rules applied:** every `BR-` ID referred to by the story's acceptance criteria and by its listed common behaviors, then every `BR-` ID cited in any cell of those rules' rows, followed all the way down. Following a transition row also follows the "on entering" row of its new status. A message cited by an acceptance criterion, a common behavior, or a followed row counts too: follow its Rules column. Prefix the line with the feature name so it still makes sense in a Jira ticket: `Rules applied (PRD [Feature Name]): BR-01, BR-03`, using the feature name, not the full PRD title. Rules from another PRD go in a second group, `(PRD [Other PRD name]): BR-02`; they are listed but their rows are not followed. Write `none` if there are none.
 
 ### Acceptance Criteria
 
@@ -163,8 +167,13 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 **Statuses & Transitions**
 
-| ID | From status | Events | Condition | To status | Side-effects |
-|----|-------------|--------|-----------|-----------|--------------|
+| ID | From status | Event | Condition | To status | Side-effects of this event |
+|----|-------------|-------|-----------|-----------|----------------------------|
+
+**On Entering a Status**
+
+| ID | Status | Side-effects |
+|----|--------|--------------|
 
 **Roles & Permissions**
 
@@ -239,4 +248,4 @@ so that [value/reason].
 | Q-01 | | BR-01 | |
 ```
 
-Remove a table that the feature does not need (for example Statuses & Transitions when nothing has a status). Remove Section 5 when there are no common behaviors. If there are no assumptions, write `No assumptions.`; if no meaningful gaps remain, write `No open questions.`
+Remove a table that the feature does not need (for example Statuses & Transitions and On Entering a Status when nothing has a status). Remove Section 5 when there are no common behaviors. If there are no assumptions, write `No assumptions.`; if no meaningful gaps remain, write `No open questions.`
