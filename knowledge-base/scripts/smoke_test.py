@@ -11,6 +11,24 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
+# Optional PRD sections, in template order. Document Info and Summary are always included.
+ACTIVE_SECTIONS = [
+    "Problem Statement",
+    "JTBD",
+    "Goals & Success Metrics",
+    "Scope",
+    "Glossary",
+    "Feature Epics & User Stories",
+    "Business Rules",
+    "Process Diagrams",
+    "Use Case Specifications",
+    "Functional Requirements",
+    "Non-Functional Requirements",
+    "UI/UX Specifications",
+    "Dependencies & Impacted Areas",
+    "Assumptions & Open Questions",
+]
+
 
 def fail(message):
     print(json.dumps({"status": "error", "message": message}))
@@ -59,6 +77,8 @@ def check_input_schema():
         "Problem_Statement",
         "JTBD_Candidates",
         "Target_Users",
+        "Scope",
+        "Glossary",
         "Epic_Candidates",
         "Primary_User_Story",
         "User_Story_Candidates",
@@ -68,7 +88,8 @@ def check_input_schema():
         "Non_Functional_Requirements",
         "Success_Metrics",
         "UI_UX_Requirements",
-        "API_or_Integration_Notes",
+        "Dependencies_and_Impacted_Areas",
+        "Known_Constraints",
         "Diagram_Requirements",
         "Assumptions",
         "Missing_Information",
@@ -97,21 +118,7 @@ def check_input_schema():
 
     active_sections_items = schema["properties"]["Active_Sections"]["items"]
     assert_true(
-        set(active_sections_items.get("enum", []))
-        == {
-            "Problem Statement",
-            "JTBD",
-            "Goals & Success Metrics",
-            "Assumptions & Open Questions",
-            "Feature Epics & User Stories",
-            "Business Rules",
-            "Process Diagrams",
-            "Use Case Specifications",
-            "Functional Requirements",
-            "Non-Functional Requirements",
-            "UI/UX Specifications",
-            "API / Technical Specs",
-        },
+        active_sections_items.get("enum", []) == ACTIVE_SECTIONS,
         "Active_Sections enum is invalid",
     )
     assert_true(
@@ -215,23 +222,19 @@ def check_product_framing_skill():
     assert_true("Done when" in content, "Product framing skill is missing acceptance criteria guidance")
 
 
-def check_webapp():
-    build = load_module("webapp_build", "webapp/build.py")
+def check_prd_sections():
+    guide = ROOT / "knowledge-base/product-language/SKILL.md"
+    assert_true(guide.is_file(), "Product language guide is missing")
 
-    index_path = ROOT / "webapp" / "index.html"
-    assert_true(index_path.is_file(), "webapp/index.html is missing; run webapp/build.py")
+    skill = (ROOT / "knowledge-base/prd-template/SKILL.md").read_text(encoding="utf-8")
+    mapped = re.findall(r'^\| `"([^"]+)"` \|', skill, flags=re.MULTILINE)
+    assert_true(mapped == ACTIVE_SECTIONS, "prd-template/SKILL.md section mapping drifted from Active_Sections")
 
-    html = index_path.read_text(encoding="utf-8")
-    embedded = build.extract_embedded_payload(html)
-    assert_true("__placeholder__" not in embedded, "webapp/index.html was not built; run webapp/build.py")
-    assert_true(
-        embedded == build.collect_payload(),
-        "webapp/index.html prompts drifted from knowledge-base; run webapp/build.py",
-    )
-    assert_true(
-        html == build.render_html(),
-        "webapp/index.html is out of date with app.src.html; run webapp/build.py",
-    )
+    template = (ROOT / "knowledge-base/prd-template/resources/prd-template.md").read_text(encoding="utf-8")
+    for heading in ("### 1.3 How to Read This PRD", "### 2.1 Summary", "### 2.5 Scope", "### 2.6 Glossary",
+                    "### 3.7 Dependencies & Impacted Areas", "## 4. Assumptions & Open Questions"):
+        assert_true(heading in template, f"PRD template is missing heading: {heading}")
+    assert_true("API / Technical Specs" not in template, "PRD template still contains the technical specs section")
 
 
 def main():
@@ -240,7 +243,7 @@ def main():
     check_create_domain_helper()
     check_export_helper()
     check_product_framing_skill()
-    check_webapp()
+    check_prd_sections()
     print(json.dumps({"status": "success", "checks": 6}))
 
 

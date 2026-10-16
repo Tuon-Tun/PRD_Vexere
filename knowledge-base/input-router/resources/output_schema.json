@@ -17,6 +17,8 @@
     "Problem_Statement",
     "JTBD_Candidates",
     "Target_Users",
+    "Scope",
+    "Glossary",
     "Epic_Candidates",
     "Primary_User_Story",
     "User_Story_Candidates",
@@ -26,7 +28,8 @@
     "Non_Functional_Requirements",
     "Success_Metrics",
     "UI_UX_Requirements",
-    "API_or_Integration_Notes",
+    "Dependencies_and_Impacted_Areas",
+    "Known_Constraints",
     "Diagram_Requirements",
     "Assumptions",
     "Missing_Information"
@@ -56,7 +59,7 @@
     },
     "Active_Sections": {
       "type": "array",
-      "description": "PRD sections the user has confirmed they want included. Sections not listed here are skipped during drafting.",
+      "description": "PRD sections the user has confirmed they want included. Sections not listed here are skipped during drafting. Document Info and Summary are always included and are not listed.",
       "minItems": 1,
       "uniqueItems": true,
       "items": {
@@ -65,7 +68,8 @@
           "Problem Statement",
           "JTBD",
           "Goals & Success Metrics",
-          "Assumptions & Open Questions",
+          "Scope",
+          "Glossary",
           "Feature Epics & User Stories",
           "Business Rules",
           "Process Diagrams",
@@ -73,7 +77,8 @@
           "Functional Requirements",
           "Non-Functional Requirements",
           "UI/UX Specifications",
-          "API / Technical Specs"
+          "Dependencies & Impacted Areas",
+          "Assumptions & Open Questions"
         ]
       }
     },
@@ -149,6 +154,37 @@
     "Target_Users": {
       "$ref": "#/$defs/string_array"
     },
+    "Scope": {
+      "type": "object",
+      "description": "What the feature covers and what it explicitly does not. Out_Of_Scope holds only items the user stated or confirmed.",
+      "additionalProperties": false,
+      "required": ["In_Scope", "Out_Of_Scope"],
+      "properties": {
+        "In_Scope": {
+          "$ref": "#/$defs/string_array"
+        },
+        "Out_Of_Scope": {
+          "$ref": "#/$defs/string_array"
+        }
+      }
+    },
+    "Glossary": {
+      "type": "array",
+      "description": "Business terms, statuses, and roles a reader could misread, defined from the input context in plain language.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["Term", "Meaning"],
+        "properties": {
+          "Term": {
+            "$ref": "#/$defs/non_empty_or_needs_clarification"
+          },
+          "Meaning": {
+            "$ref": "#/$defs/non_empty_or_needs_clarification"
+          }
+        }
+      }
+    },
     "Epic_Candidates": {
       "$ref": "#/$defs/string_array"
     },
@@ -181,12 +217,14 @@
       "$ref": "#/$defs/string_array"
     },
     "Business_Logic_and_Rules": {
+      "description": "One explicit, testable business rule per item, with concrete values and the condition that triggers it.",
       "$ref": "#/$defs/string_array"
     },
     "Functional_Requirements": {
       "$ref": "#/$defs/string_array"
     },
     "Non_Functional_Requirements": {
+      "description": "Business-level expectations as users or the business experience them (perceived speed, availability, platforms, privacy, traceability, volume). No infrastructure.",
       "$ref": "#/$defs/string_array"
     },
     "Success_Metrics": {
@@ -194,10 +232,14 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["Metric", "Baseline", "Target"],
+        "required": ["Metric", "How_Measured", "Baseline", "Target"],
         "properties": {
           "Metric": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
+          },
+          "How_Measured": {
+            "$ref": "#/$defs/non_empty_or_needs_clarification",
+            "description": "Business definition: what is counted, for whom, over which period."
           },
           "Baseline": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
@@ -211,7 +253,12 @@
     "UI_UX_Requirements": {
       "$ref": "#/$defs/string_array"
     },
-    "API_or_Integration_Notes": {
+    "Dependencies_and_Impacted_Areas": {
+      "description": "Business view only: teams, partners, or existing features this feature relies on or changes. Translate technical notes into business meaning; never list endpoints, payloads, or internal components.",
+      "$ref": "#/$defs/string_array"
+    },
+    "Known_Constraints": {
+      "description": "Constraints the user explicitly stated (including technical ones), copied as stated. Never inferred or expanded. Empty array if none.",
       "$ref": "#/$defs/string_array"
     },
     "Diagram_Requirements": {

@@ -203,28 +203,29 @@ Done when: If a user attempts to access demographic data without the appropriate
 
 ---
 
-## Example 8 — API Story
+## Example 8 — Integration / Partner Story
 
 **Story:**
 
 ```text
-As the Orders API,
-I want to include the order status and estimated delivery date in the response,
-so that the customer-facing mobile app can display accurate delivery information to end users.
+As an Online Shopper,
+I want to see my order's current status and estimated delivery date from the delivery partner,
+so that I can plan to be home when the parcel arrives.
 ```
 
 **Why it works:**
 
-- Actor is the API itself — valid for system-to-system integration stories
-- Action defines what data the API exposes — outcome for the consuming application
-- Value traces to the end user — accurate delivery information reaches real people
+- Actor is the person who benefits from the integration, not the system
+- Action names the business information exchanged and where it comes from — no endpoints or data formats
+- Value traces to a real outcome for the shopper
+- The technical design (how the partner's data is received) is left to the Dev team
 
 **Acceptance Criteria:**
 
 ```text
-Done when: The API response includes the fields: order_id, order_status, estimated_delivery_date, last_updated_timestamp.
-Done when: The API returns a response within 300ms for 95% of requests under normal load.
-Done when: If an order_id does not exist, the API returns a 404 status with the message "Order not found."
-Done when: The API is accessible only to authenticated services with a valid API key.
-Done when: The API response schema is documented and versioned.
+Done when: The order page shows the order status, the estimated delivery date, and the time of the last update from the delivery partner.
+Done when: The order page loads within 2 seconds for 95% of visits.
+Done when: If the delivery partner has not sent an update for more than 24 hours, the order page shows "Delivery information is being updated" instead of an outdated date.
+Done when: If the order number does not exist, the shopper sees "Order not found."
+Done when: Only the shopper who placed the order can see its delivery information.
 ```

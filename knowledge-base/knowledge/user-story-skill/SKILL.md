@@ -53,7 +53,8 @@ so that [Value/Reason].
 | **Happy path** | At least one AC for the main successful flow |
 | **Negative/edge flows** | `Done when: If [X], then [Y]` — at least one error/edge case |
 | **Role-based** | Separate AC per role if multiple actors — only combine if buildable + testable together |
-| **NFRs** | Performance, capacity, security — use exact thresholds, never vague quantifiers |
+| **NFRs** | Performance, capacity, security — use exact thresholds, never vague quantifiers, and express them as the user or business experiences them (e.g., "results appear within 3 seconds"), not as infrastructure |
+| **Observable** | Every AC describes what the user sees or what result the business gets — never status codes, error codes, or internal system behavior |
 | **Design hints** | Framed as preference: `Done when: Report is exportable. (Customer prefers Excel.)` |
 
 ### NFR placement
@@ -102,14 +103,15 @@ Epic → Feature → User Story
 
 ## 7 · SPECIAL CASES
 
-**API stories**
+**Integration / partner stories**
 
 ```text
-As the [API name], I want to include [data] in the response,
-so that [consumer] can [outcome].
+As a [person who benefits from the exchange],
+I want to [see / receive / send] [business information] [from / to] [partner or team],
+so that [outcome].
 ```
 
-Also define: endpoints, who pulls/publishes data, how data is used.
+Also define, in business terms: what information is exchanged, when, who owns it, and what the user sees if the partner is unavailable. Do not define endpoints, payloads, status codes, or data formats — those belong to the Dev team's technical design.
 
 **Reporting stories:** WHO = person who uses the report · WHAT/AC = fields, data types · WHY = business reason
 
@@ -170,6 +172,7 @@ Fix any failure before outputting.
 - [ ] "so that" is present with genuine user/business value
 - [ ] No `and` / `or` / `/` in WHO/DOES/WHAT
 - [ ] Every AC has a clear pass/fail condition
+- [ ] Every AC describes an observable outcome in business language — no status codes, endpoints, or internal components
 - [ ] Happy path + at least one negative/edge case covered
 - [ ] All AC completable within one sprint
 - [ ] All 6 INVEST criteria pass
