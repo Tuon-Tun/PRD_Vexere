@@ -46,21 +46,28 @@ so that [Value/Reason].
 **Format:** `Done when: [testable condition — pass/fail verifiable]`
 **Prefer** "Done when" over Gherkin (Given/When/Then) — simpler to read and test.
 
+### Standalone story vs. story inside a PRD
+
+- **Standalone** (a story written on its own, with no PRD): write the values directly in the AC, as in the examples.
+- **Inside a PRD** (the PRD pipeline): every fact has one home, as defined in `knowledge-base/product-language/SKILL.md`. Rule values, formulas, conditions, status transitions, and permissions live in the PRD's Business Rules; message wording lives in its Messages table; quality targets live in its NFR table; behavior shared by every story lives in Common Behaviors. The AC names the rule in words and cites its ID — `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01.` — and never copies the value or the wording. Side-effects of a status transition live on its rule row; the AC only states that the transition happens. Number AC within the story (`AC1`, `AC2`) and add the story's `Priority`, `Common behaviors`, and `Rules applied` lines.
+
 ### Must cover all of these
 
 | Type | Rule |
 |------|------|
 | **Happy path** | At least one AC for the main successful flow |
-| **Negative/edge flows** | `Done when: If [X], then [Y]` — at least one error/edge case |
-| **Role-based** | Separate AC per role if multiple actors — only combine if buildable + testable together |
-| **NFRs** | Performance, capacity, security — use exact thresholds, never vague quantifiers, and express them as the user or business experiences them (e.g., "results appear within 3 seconds"), not as infrastructure |
+| **Negative/edge flows** | `Done when: If [X], then [Y]` — at least one error/edge case. Inside a PRD, a listed common behavior counts for its situation |
+| **Role-based** | Separate AC per role if multiple actors — only combine if buildable + testable together. Inside a PRD, who may act is a permission rule; the AC states what an allowed or a refused role sees and cites the rule |
+| **Error display** | For each broken rule or failure the story can hit: how it is shown (toast, inline error, popup) and which message |
+| **Side-effects** | After the story's own action succeeds: what is recorded and for which metric, which notification is sent, what a partner is informed of — WHAT, never event names or how data is synced |
+| **NFRs** | Performance, capacity, security — use exact thresholds, never vague quantifiers, and express them as the user or business experiences them (e.g., "results appear within 3 seconds"), not as infrastructure. Inside a PRD, cite the NFR ID instead of restating the threshold |
 | **Observable** | Every AC describes what the user sees or what result the business gets — never status codes, error codes, or internal system behavior |
 | **Design hints** | Framed as preference: `Done when: Report is exportable. (Customer prefers Excel.)` |
 
 ### NFR placement
 
 1. In the **WHAT** clause (if it defines system behaviour)
-2. In **AC** (preferred — for performance, capacity, security)
+2. In **AC** (preferred — for performance, capacity, security). Inside a PRD, the threshold lives once in the NFR table (or in a rule, for a limit) and the AC cites its ID
 3. As its **own story** if effort is sprint-sized
 
 ### MoSCoW for AC priority
@@ -97,7 +104,7 @@ Epic → Feature → User Story
 ```
 
 - Stories must connect to a Feature; Features to an Epic
-- Each story's "Why" must be **self-contained** — repeat Epic context in the story; devs work from stories, not Epics
+- Each story's "Why" must be **self-contained** — the "so that" clause makes sense without reading the Epic; devs work from stories, not Epics. Inside a PRD, do not paste the Epic description or rule content into the story: the Jira ticket gets its context from the Epic link and from the rules listed in `Rules applied`
 
 ---
 
@@ -111,11 +118,11 @@ I want to [see / receive / send] [business information] [from / to] [partner or 
 so that [outcome].
 ```
 
-Also define, in business terms: what information is exchanged, when, who owns it, and what the user sees if the partner is unavailable. Do not define endpoints, payloads, status codes, or data formats — those belong to the Dev team's technical design.
+Also define, in business terms: what information is exchanged, when, who owns it, and what the user sees if the partner is unavailable. Inside a PRD, what we need from the partner and who owns it live in Dependencies (cited by `DEP-` ID), and the outcome when the partner is unavailable lives in a rule; the AC only states what the user sees. Do not define endpoints, payloads, status codes, or data formats — those belong to the Dev team's technical design.
 
-**Reporting stories:** WHO = person who uses the report · WHAT/AC = fields, data types · WHY = business reason
+**Reporting stories:** WHO = person who uses the report · WHAT = the business information the report shows · AC = what the user sees (default sort, empty state, export result) · WHY = business reason. Inside a PRD, limits and formats are rules cited by ID
 
-**Non-collocated teams:** Add more AC detail; supplement with SRD or mockup; link all artifacts explicitly in the story.
+**Non-collocated teams:** Add more AC detail; supplement with SRD or mockup; link all artifacts explicitly in the story. Inside a PRD, add detail by citing rule, message, and common behavior IDs, not by copying their content into the AC; use cases cite the AC, not the reverse.
 
 **Mockups:** Each mockup section → one or more stories. Developed collaboratively. Suggestion tool only — not a locked design.
 
@@ -134,6 +141,7 @@ Also define, in business terms: what information is exchanged, when, who owns it
 | Vague NFR ("more than X") | Untestable | Use exact threshold |
 | Developer as actor | No end-user value | Reframe as technical task |
 | Missing "so that" | Team doesn't know the why | Always include value clause |
+| Inside a PRD, AC repeats a rule value ("cancel at least 24h before") or message wording | A policy change must be edited in many places, and the copies drift | Name the rule and cite it: "If the cancellation cutoff has passed (BR-01), ..." |
 
 ---
 
@@ -147,11 +155,15 @@ As a [Actor],
 I want to [Action + Object],
 so that [Value].
 
+**Priority:** [Must / Should / Could]                  ← inside a PRD
+**Common behaviors:** CB-01                            ← inside a PRD
+**Rules applied (PRD [Feature Name]):** BR-01, BR-03   ← inside a PRD
+
 ## Acceptance Criteria
-Done when: [positive condition]
-Done when: [positive condition]
-Done when: If [X], then [Y]  ← negative/edge case
-Done when: [NFR with exact threshold]
+AC1 Done when: [positive condition]
+AC2 Done when: [positive condition]
+AC3 Done when: If [X], then [Y]  ← negative/edge case
+AC4 Done when: [NFR with exact threshold, or its NFR ID inside a PRD]
 
 ## Notes (optional)
 [Design suggestion — framed as preference, not requirement]
@@ -173,7 +185,8 @@ Fix any failure before outputting.
 - [ ] No `and` / `or` / `/` in WHO/DOES/WHAT
 - [ ] Every AC has a clear pass/fail condition
 - [ ] Every AC describes an observable outcome in business language — no status codes, endpoints, or internal components
-- [ ] Happy path + at least one negative/edge case covered
+- [ ] Inside a PRD: no AC repeats a rule value, formula, condition, or message wording — it cites the ID, and `Rules applied` lists every rule referred to by the AC and the listed common behaviors, plus every rule cited in those rules' rows and in the messages they cite, followed all the way down
+- [ ] Happy path + at least one negative/edge case covered, by its own AC or, inside a PRD, by a listed common behavior
 - [ ] All AC completable within one sprint
 - [ ] All 6 INVEST criteria pass
 - [ ] NFRs use exact thresholds — no vague quantifiers

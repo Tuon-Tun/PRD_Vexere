@@ -25,7 +25,7 @@ Done when: The Claims Supervisor can view a list of all reps on their team.
 Done when: The list indicates which reps are authorised to make digital payments.
 Done when: The list indicates which reps are not authorised to make digital payments.
 Done when: A Customer Service Rep cannot access the payment permissions screen.
-Done when: The permissions list reflects real-time data, not cached results older than 5 minutes.
+Done when: A change to a rep's payment permission appears in the list within 5 minutes.
 ```
 
 ---
@@ -228,4 +228,55 @@ Done when: The order page loads within 2 seconds for 95% of visits.
 Done when: If the delivery partner has not sent an update for more than 24 hours, the order page shows "Delivery information is being updated" instead of an outdated date.
 Done when: If the order number does not exist, the shopper sees "Order not found."
 Done when: Only the shopper who placed the order can see its delivery information.
+```
+
+---
+
+## Example 9 — Story Inside a PRD (Rules Cited by ID)
+
+Inside a PRD, rule values, message wording, and shared behaviors are written once in their own tables. The story's AC name each rule in words and cite its ID, so a policy change is edited in one row only.
+
+**From the PRD's Business Rules (3.2) and Messages (3.6):**
+
+```text
+BR-01 | A ticket can be cancelled online up to 24 hours before departure.
+BR-02 | Cancellation fee = 10% of the ticket price. Example: ticket 300,000 VND -> fee 30,000 VND.
+BR-03 | Refund = amount paid - cancellation fee (BR-02). Uses: BR-02. Example: paid 300,000 VND -> refund 270,000 VND.
+BR-04 | Permission: cancel a ticket. Passenger: own tickets. Customer service: on the passenger's behalf.
+BR-05 | Transition: Confirmed -> Cancelled. Event: cancellation confirmed by a role allowed by BR-04.
+        Condition: within the cancellation cutoff (BR-01). Side-effects of this event: refund per BR-03.
+BR-06 | On entering Cancelled: seat returned to the operator; MSG-03 sent.
+MSG-01 | Screen | "Tickets can be cancelled online up to {cancellation cutoff (BR-01)} before departure." | Rules: BR-01
+MSG-02 | Screen | "Your ticket has been cancelled. Refund: {refund amount}."                              | Rules: BR-03
+MSG-03 | Email  | "Cancellation confirmed for ticket {ticket code}..."                                    | Rules: —
+CB-02  | Repeated tap: tapping "Confirm" more than once moves the ticket to Cancelled only once (BR-05).
+```
+
+**Story:**
+
+```text
+As a Passenger who changed my travel plans,
+I want to cancel my ticket in the app,
+so that I get my money back without calling the hotline.
+
+Priority: Must
+Common behaviors: CB-02
+Rules applied (PRD Ticket Cancellation): BR-01, BR-02, BR-03, BR-04, BR-05, BR-06
+```
+
+**Why it works:**
+
+- No AC repeats "24 hours", "10%", or any message wording — changing the cutoff to 12 hours edits BR-01 only
+- The email and the seat release are on the "on entering Cancelled" row (BR-06), written once however the ticket gets cancelled
+- `Rules applied` includes BR-02 because BR-03 uses it, and BR-04 and BR-06 because the transition BR-05 cites its permission and its new status, so the Jira ticket carries every rule needed to build and test the story
+- Repeated taps are handled once by CB-02, which the story lists instead of writing its own AC for it
+- MSG-02's Rules column names BR-03, so a change to the refund rule shows which message to re-check
+
+**Acceptance Criteria:**
+
+```text
+AC1 Done when: On "My tickets", a ticket within the cancellation cutoff (BR-01) shows a "Cancel ticket" button.
+AC2 Done when: If the cancellation cutoff has passed (BR-01), the button is disabled and an inline explanation shows MSG-01.
+AC3 Done when: Tapping "Cancel ticket" opens a popup with the fee (BR-02) and the refund amount (BR-03) before the passenger confirms.
+AC4 Done when: After the passenger confirms, the ticket moves to Cancelled (BR-05) and a toast shows MSG-02.
 ```
