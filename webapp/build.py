@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 SOURCES = {
+    "product_language": "knowledge-base/product-language/SKILL.md",
     "input_router": "knowledge-base/input-router/SKILL.md",
     "input_schema": "knowledge-base/input-router/resources/output_schema.json",
     "product_framing": "knowledge-base/product-framing/SKILL.md",

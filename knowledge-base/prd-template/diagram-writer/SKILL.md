@@ -8,8 +8,13 @@ description: >
 
 # Diagram Writer Skill
 
-Draw diagram code based on user selection. If the feature context is already known
-(for example from a PRD session), skip context questions and go straight to drawing.
+Draw business-level diagram code based on user selection. Diagrams show who does what and
+what happens next, in language PO, BA, Dev, and QC all read the same way. They never show how
+the system is built: the system is one participant, with no internal services, APIs, or data
+stores. Labels follow `knowledge-base/product-language/SKILL.md`.
+
+If the feature context is already known (for example from a PRD session), skip context
+questions and go straight to drawing.
 When called from the PRD pipeline, generate every requested diagram type and return code
 blocks only, with no offer or follow-up text.
 
@@ -23,8 +28,8 @@ When called by the PRD pipeline, the caller provides:
 |-------|------|-------|
 | `diagram_type` | `BPMN` / `Activity Diagram` / `Sequence Diagram` | One value per requested diagram. |
 | `feature_name` | string | Feature or process name. |
-| `actors` | string[] | People, roles, or lanes involved. |
-| `components` | string[] | System components or services, especially for sequence diagrams. |
+| `actors` | string[] | People or roles involved. |
+| `parties` | string[] | Partners, other teams, or existing features named in the input (business-level). Never internal technical components. |
 | `happy_path` | string[] | Ordered successful-flow steps. |
 | `edge_cases` | string[] | Alternative, failure, timeout, validation, or permission scenarios. |
 
@@ -38,9 +43,9 @@ If `diagram_type` is provided by the caller, do not ask the user to choose again
 
 If `diagram_type` or `Diagram_Requirements` is already provided by the orchestrator, skip this question and proceed. Otherwise, ask the user to choose one:
 
-- **BPMN** - who does what across actors and systems
-- **Activity Diagram** - branching logic with happy and error paths
-- **Sequence Diagram** - message exchange between system components
+- **BPMN** - who does what across actors, the system, and partners
+- **Activity Diagram** - branching business logic with happy and error paths
+- **Sequence Diagram** - the order of interactions between actors, the system, and partners
 
 Present the choice briefly.
 
@@ -49,7 +54,7 @@ Present the choice briefly.
 Ask only what is still missing:
 
 - What feature or process should the diagram cover?
-- Who are the actors or system components involved?
+- Who are the actors, and which partners or other teams are involved?
 - What is the happy path? Are there any key decisions or error cases?
 
 ### Step 3 - Draw
@@ -66,11 +71,16 @@ requested code block or blocks.
 Output a ` ```xml ` fenced block containing valid BPMN 2.0 XML.
 
 **Required structure:**
-`<collaboration>` pool -> `<process>` with `<laneSet>` -> one `<lane>` per actor ->
+`<collaboration>` pool -> `<process>` with `<laneSet>` -> one `<lane>` per actor, system, or partner ->
 all flow elements with `<flowNodeRef>` -> `<sequenceFlow>` for every connection ->
 `<bpmndi:BPMNDiagram>` with `<dc:Bounds>` per shape and `<di:waypoint>` per edge.
 
-**Lanes:** minimum User + App/Frontend + Backend Service. Add more if needed.
+**Lanes:** one lane per actor or role, one lane for the system (named after the product, as a
+single black box), and one lane per partner or team named in the input. Never split the system
+into frontend, backend, or internal services.
+
+**Labels:** task names are business actions in the user's language (for example "Choose seats",
+"Confirm payment", "Notify operator"), never API calls or technical operations.
 
 **Standard sizes:**
 
@@ -78,7 +88,7 @@ all flow elements with `<flowNodeRef>` -> `<sequenceFlow>` for every connection 
 - `startEvent` / `endEvent`: 36x36 px
 - `exclusiveGateway`: 50x50 px
 - Pool label column: 30 px (lanes start at pool.x + 30, lane.width = pool.width - 30)
-- Lane heights: User 120-130 px, App 200-220 px, each backend lane >= 100 px
+- Lane heights: actor lanes 120-130 px, system lane 200-220 px, each partner lane >= 100 px
 
 **Layout rules:**
 
@@ -106,15 +116,15 @@ all flow elements with `<flowNodeRef>` -> `<sequenceFlow>` for every connection 
   </collaboration>
   <process id="Process_1" isExecutable="false">
     <laneSet id="LaneSet_1">
-      <lane id="Lane_User" name="User">
+      <lane id="Lane_User" name="[Actor]">
         <flowNodeRef>StartEvent_1</flowNodeRef>
         <!-- add flowNodeRefs for all elements in this lane -->
       </lane>
-      <lane id="Lane_App" name="App / Frontend">
+      <lane id="Lane_System" name="[Product] System">
         <!-- flowNodeRefs -->
       </lane>
-      <lane id="Lane_Backend" name="Backend Service">
-        <!-- flowNodeRefs -->
+      <lane id="Lane_Partner" name="[Partner / Team]">
+        <!-- flowNodeRefs; omit this lane if no partner is involved -->
       </lane>
     </laneSet>
     <!-- declare all elements: startEvent, task, exclusiveGateway, endEvent -->
@@ -138,7 +148,8 @@ Output a ` ```plantuml ` fenced block.
 **Rules:**
 
 - Must include: happy path + at least 1 alternative branch + at least 1 error or exception branch.
-- Step labels must stay under 8 words. No swimlanes.
+- Step labels must stay under 8 words, written as business actions or outcomes. No swimlanes.
+- Conditions are business questions (for example "Seat still available?", "Paid within 15 minutes?"), never technical checks.
 - Use `if / then / else / endif`. Nested conditions are allowed.
 
 **Skeleton:**
@@ -174,10 +185,10 @@ Output a ` ```plantuml ` fenced block.
 
 **Rules:**
 
-- `->` for requests (solid), `-->` for responses (dashed).
-- Wrap success versus error paths in `alt / else / end`.
-- Every external service must be named as a participant (Auth, Analytics, DB, and so on).
-- Annotate every arrow with an HTTP method + endpoint or an action name.
+- Participants: the actors, the system as one participant (named after the product), and only the partners or teams named in the input. Never internal services, databases, or technical components.
+- `->` for an action or request (solid), `-->` for the result (dashed).
+- Label every arrow with a business action or outcome in plain words (for example "Request seat hold", "Seats held for 15 minutes"). Never HTTP methods, endpoints, status codes, or payloads.
+- Wrap success versus failure paths in `alt / else / end`, and describe what the user sees in each.
 
 **Skeleton:**
 
@@ -190,21 +201,18 @@ skinparam ParticipantBorderColor #3355aa
 title [Feature Name] - Sequence
 
 actor User
-participant "[Frontend / App]" as App
-participant "[Backend Service]" as Service
-participant "[External / DB]" as Ext
+participant "[Product] System" as System
+participant "[Partner / Team]" as Partner
 
-User -> App: [User action]
-App -> Service: [API request]
+User -> System: [Business action]
+System -> Partner: [What the system asks the partner to do]
 
 alt Success
-  Service -> Ext: [Data fetch]
-  Ext --> Service: [Data response]
-  Service --> App: 200 OK { payload }
-  App --> User: [UI feedback]
-else Error
-  Service --> App: 4xx / 5xx
-  App --> User: [Error / silent failure]
+  Partner --> System: [Partner confirms]
+  System --> User: [What the user sees]
+else Partner rejects or does not respond
+  Partner --> System: [Rejection / no answer within time limit]
+  System --> User: [What the user sees and can do next]
 end
 @enduml
 ```

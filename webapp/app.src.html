@@ -212,6 +212,7 @@ const I18N = {
     rawPh: "Example: Create a Group Lucky Money feature for Lunar New Year. Target users: wallet users in group chats. Flow: open from home screen, enter greeting and total amount, choose random split, send, share claim link… Edge cases: 11th user sees “all envelopes claimed”; insufficient balance blocks sending.",
     diagramsLabel: "Diagrams to include",
     sectionsLabel: "PRD sections (untick anything you don't need)",
+    sectionsHint: "Document Info and Summary are always included. The PRD stays product first: rules, logic, and value in business language for PO, BA, Dev, and QC. Technical design (APIs, data, architecture) is left to the Dev team.",
     startBtn: "Start the pipeline",
     needKey: "Add your Anthropic API key in Settings first.",
     needRaw: "Please describe the feature first.",
@@ -278,6 +279,7 @@ const I18N = {
     rawPh: "Ví dụ: Tạo tính năng Lì Xì Nhóm cho Tết. Người dùng: user ví trong group chat. Flow: mở từ màn hình chính, nhập lời chúc và tổng tiền, chia ngẫu nhiên, gửi, chia sẻ link nhận… Edge case: người thứ 11 thấy “hết bao lì xì”; không đủ số dư thì chặn gửi.",
     diagramsLabel: "Sơ đồ cần có",
     sectionsLabel: "Các section của PRD (bỏ tick nếu không cần)",
+    sectionsHint: "Document Info và Summary luôn có sẵn. PRD viết theo hướng product first: rule, logic và giá trị cốt lõi bằng ngôn ngữ nghiệp vụ cho PO, BA, Dev và QC. Thiết kế kỹ thuật (API, dữ liệu, kiến trúc) để team Dev đảm nhận.",
     startBtn: "Bắt đầu pipeline",
     needKey: "Hãy nhập Anthropic API key trong Cài đặt trước.",
     needRaw: "Hãy mô tả tính năng trước đã.",
@@ -327,9 +329,10 @@ const t = (k) => (I18N[LANG][k] !== undefined ? I18N[LANG][k] : I18N.en[k] || k)
 
 /* ---------------- constants ---------------- */
 const ALL_SECTIONS = [
-  "Problem Statement", "JTBD", "Goals & Success Metrics", "Assumptions & Open Questions",
+  "Problem Statement", "JTBD", "Goals & Success Metrics", "Scope", "Glossary",
   "Feature Epics & User Stories", "Business Rules", "Process Diagrams", "Use Case Specifications",
-  "Functional Requirements", "Non-Functional Requirements", "UI/UX Specifications", "API / Technical Specs"
+  "Functional Requirements", "Non-Functional Requirements", "UI/UX Specifications",
+  "Dependencies & Impacted Areas", "Assumptions & Open Questions"
 ];
 const DIAGRAM_TYPES = ["Activity Diagram", "Sequence Diagram", "BPMN"];
 const PROVIDERS = {
@@ -354,6 +357,7 @@ const OPENAI_BASE = "https://api.openai.com/v1";
 const GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta";
 const PROMPT_REPO = { repo: "Tuon-Tun/Claude-Code--Path-To-Claude-Code-Executable", branch: "main" };
 const PROMPT_PATHS = {
+  product_language: "knowledge-base/product-language/SKILL.md",
   input_router: "knowledge-base/input-router/SKILL.md",
   input_schema: "knowledge-base/input-router/resources/output_schema.json",
   product_framing: "knowledge-base/product-framing/SKILL.md",
@@ -793,9 +797,11 @@ const schemaObj = () => JSON.parse(PROMPTS.input_schema);
 
 /* ---------------- prompt builders ---------------- */
 const INLINE_NOTE = "\n\n---\nNote: every standards document this skill references is included inline in this prompt. Do not attempt to read files.";
+// product-first wording rules apply to every step that writes or reviews PRD content
+const langGuide = () => "\n\n---\n## Product-First Language Guide (applies to every sentence you write)\n\n" + PROMPTS.product_language;
 function sysRouter() {
-  return PROMPTS.input_router +
-    "\n\n---\n## User Story standards (rule 6 requires these before extracting User_Story_Candidates)\n\n" +
+  return PROMPTS.input_router + langGuide() +
+    "\n\n---\n## User Story standards (rule 7 requires these before extracting User_Story_Candidates)\n\n" +
     PROMPTS.user_story +
     "\n\n---\n## Web session contract\n" +
     "- This pipeline runs from a local web app; the app handles saving and exporting files itself. Set \"Delivery_Mode\" to \"CHAT_TEXT_ONLY\" and \"Output_Artifacts\" to [\"Markdown File\"].\n" +
@@ -809,21 +815,24 @@ function sysClarifyQuestions() {
   return "You are the PRD pipeline orchestrator at Step 1.5 (clarification gate). " +
     "Given the approved brief JSON, write a concise numbered list of clarification questions covering every field that contains \"" + NEEDS + "\". " +
     "Prefix each question with the JSON field name in [brackets]. Group related questions. Match the language of the brief content. " +
+    "Ask only business questions (rules, values, users, scope, outcomes) in plain language; never ask about APIs, databases, or architecture. " +
     "Output only the numbered list. If no field contains the marker, output exactly: NO_GAPS";
 }
 function sysClarifyUpdate() {
   return "You are the PRD pipeline orchestrator updating the brief JSON with the user's clarification answers.\n" +
     "Rules:\n- Only change fields that the answers actually address; keep every unanswered field as \"" + NEEDS + "\".\n" +
-    "- Do not invent details.\n- Keep \"Clarification_Confirmed\" as false; the app flips it after explicit user approval.\n" +
+    "- Do not invent details.\n- Write updated values in business language; translate any technical wording in the answers into its business meaning, " +
+    "and copy explicitly stated constraints into \"Known_Constraints\" as stated.\n" +
+    "- Keep \"Clarification_Confirmed\" as false; the app flips it after explicit user approval.\n" +
     "- The result MUST still validate against this schema:\n\n" + PROMPTS.input_schema + "\n\nReturn ONLY the updated JSON object.";
 }
 function sysFraming() {
-  return PROMPTS.product_framing +
+  return PROMPTS.product_framing + langGuide() +
     "\n\n---\n## User Story standards (apply strictly)\n\n" + PROMPTS.user_story +
     "\n\n---\nWeb session: return the Product Framing Pack as Markdown only. Do not mention files." + INLINE_NOTE;
 }
 function sysDraft() {
-  return PROMPTS.template_skill +
+  return PROMPTS.template_skill + langGuide() +
     "\n\n---\n## PRD Template (fill this exactly)\n\n" + PROMPTS.prd_template +
     "\n\n---\n## Web session contract\n" +
     "- Return ONLY the completed PRD Markdown, no commentary before or after.\n" +
@@ -832,11 +841,11 @@ function sysDraft() {
     "If Diagram_Requirements is [\"None\"], keep Section 3.3 and state: No diagrams requested for this PRD." + INLINE_NOTE;
 }
 function sysDiagram() {
-  return PROMPTS.diagram_writer +
+  return PROMPTS.diagram_writer + langGuide() +
     "\n\n---\nThis is a PRD pipeline call: output only the requested fenced code block(s), no prose, no offers.";
 }
 function sysReviewer(pass, prevNotes) {
-  let s = PROMPTS.reviewer + "\n\n---\nReturn ONLY the JSON array, nothing else.";
+  let s = PROMPTS.reviewer + langGuide() + "\n\n---\nReturn ONLY the JSON array, nothing else.";
   if (pass > 1) {
     s += `\n\nThis is review pass ${pass}. Previous notes:\n` + JSON.stringify(prevNotes) +
       "\nOnly flag issues introduced by the latest edit or still unresolved. Do not re-list resolved notes.";
@@ -847,7 +856,9 @@ function sysApplyEdits() {
   return "You are updating a PRD draft that is in the final approval loop.\n" +
     "Apply the user's requested edits to the draft. Keep the template structure, the `Done when` acceptance-criteria format, " +
     "and the single-sentence JTBD job story format. Do not add reviewer note callouts; the app manages them. " +
-    "Do not invent business rules beyond what the user asked. Return ONLY the full updated PRD Markdown.";
+    "Do not invent business rules beyond what the user asked. Keep the PRD product first: write every edit in business language " +
+    "and never add technical detail." + langGuide() +
+    "\n\n---\nReturn ONLY the full updated PRD Markdown.";
 }
 
 /* ---------------- UI plumbing ---------------- */
@@ -920,6 +931,7 @@ function step0() {
     <div class="checks" id="diagChecks"></div>
     <label>${esc(t("sectionsLabel"))}</label>
     <div class="checks" id="secChecks"></div>
+    <div class="hint">${esc(t("sectionsHint"))}</div>
     <div class="actions"><button class="primary" id="startBtn">${esc(t("startBtn"))}</button>
     <span class="status" id="s0Status"></span></div>`;
   DIAGRAM_TYPES.forEach(d => {
@@ -1099,7 +1111,7 @@ async function step3() {
             role: "user", content:
               `diagram_type: ${dt}\nfeature_name: ${state.brief.Feature_Name}\n` +
               `actors: ${JSON.stringify(state.brief.Target_Users)}\n` +
-              `components: ${JSON.stringify(state.brief.API_or_Integration_Notes)}\n` +
+              `parties: ${JSON.stringify(state.brief.Dependencies_and_Impacted_Areas)}\n` +
               `happy_path: ${JSON.stringify(state.brief.User_Flow)}\n` +
               `edge_cases: ${JSON.stringify(state.brief.Business_Logic_and_Rules)}`
           }]
@@ -1111,7 +1123,7 @@ async function step3() {
     }
     const userMsg =
       `Approved brief JSON:\n${JSON.stringify(state.brief, null, 2)}\n\n` +
-      `Approved Product Framing Pack (source of truth for sections 2.2 and 3.1):\n${state.framing}` +
+      `Approved Product Framing Pack (source of truth for sections 2.3 and 3.1):\n${state.framing}` +
       (diagramBlocks ? `\n\nDiagram code to embed verbatim in Section 3.3:\n${diagramBlocks}` : "");
     const { pre, text } = await runStreamed(card, sysDraft(), [{ role: "user", content: userMsg }]);
     state.draft = text.trim();

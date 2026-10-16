@@ -4,6 +4,46 @@ This document explains how to use the PRD Writer workflow and how the end-to-end
 
 ---
 
+## Product First: What the PRD Covers
+
+The PRD hands over the **rules, the logic, and the core value** of a feature so that **PO, BA, Dev, and QC** understand them the same way, without a meeting to explain the document. It describes **WHAT** the feature does and **WHY** — never **HOW** it is built.
+
+Why: whoever writes the PRD (a person or an AI) rarely has the full technical context — the company's tech stack, engineering rules, internal systems, SaaS tools, and existing configuration. Technical detail written without that context is guesswork: it misleads Dev, nobody else can check it, and it buries the business rules that actually matter. The Dev team owns the technical design in its own document, linked from the PRD's References.
+
+| The PRD contains | The PRD leaves to the Dev team's technical design |
+|------------------|---------------------------------------------------|
+| Problem, value, goals, and how success is measured | Architecture, services, and components |
+| Scope: what is in and what is explicitly out | APIs, endpoints, payloads, status and error codes |
+| Shared glossary of business terms, statuses, and roles | Database tables, fields, and data formats |
+| Business rules with concrete values and worked examples | Configuration keys and how values are configured |
+| Statuses and transitions, roles and permissions | Infrastructure, caching, queues, scheduled jobs |
+| User stories with observable `Done when` acceptance criteria | Code or pseudo-code |
+| Use cases with exception flows, written as what the user sees | |
+| Business-level quality expectations, screens, and user-facing messages | |
+| Dependencies on partners, teams, and existing features; impacted areas | |
+| Technical decisions as **Open Questions** owned by Dev / Tech Lead | |
+
+All wording rules, including a technical-to-product translation table, live in [`knowledge-base/product-language/SKILL.md`](./knowledge-base/product-language/SKILL.md). Every pipeline step applies it.
+
+**PRD structure**
+
+| # | Section | Main reader |
+|---|---------|-------------|
+| 1 | Document Info — version history, references, how to read this PRD *(always included)* | All |
+| 2.1 | Summary — the feature at a glance *(always included)* | All |
+| 2.2–2.4 | Problem Statement, JTBD, Goals & Success Metrics | PO |
+| 2.5–2.6 | Scope, Glossary | All |
+| 3.1 | Feature Epics & User Stories with acceptance criteria | BA, QC |
+| 3.2 | Business Rules — rules, statuses & transitions, roles & permissions | BA, Dev, QC |
+| 3.3 | Process Diagrams — business-level only | BA, Dev |
+| 3.4 | Use Case Specifications | BA, Dev, QC |
+| 3.5 | Functional and Non-Functional Requirements | Dev, QC |
+| 3.6 | UI/UX Specifications and user-facing messages | Dev, QC |
+| 3.7 | Dependencies & Impacted Areas | PO, Dev, QC |
+| 4 | Assumptions & Open Questions | All |
+
+---
+
 ## Quick Start — Web App (no IDE required)
 
 If you are not comfortable with IDEs or the command line, use the bundled web app. It runs the exact same pipeline, entirely in your browser.
@@ -149,14 +189,14 @@ flowchart TD
 - The system first determines whether the user wants `IDE_FULL_PIPELINE` or `CHAT_TEXT_ONLY`.
 - In IDE mode, the system confirms whether final artifacts should include Markdown only or Markdown plus DOCX.
 - The system checks whether the feature needs any diagrams: BPMN, Activity Diagram, or Sequence Diagram.
-- The system presents the twelve PRD sections as a numbered agenda and asks the user to confirm which apply. Excluded sections are skipped during drafting; the default is all sections active.
+- The system presents the fourteen optional PRD sections as a numbered agenda and asks the user to confirm which apply. Document Info and the Summary are always included. Excluded sections are skipped during drafting; the default is all sections active.
 - If the user has not specified mode, diagram needs, or the section agenda, the system must pause and ask before planning the rest of the workflow.
 
 ### Step 1: Data Pre-processing (Input Router)
 
 - The raw request is passed through the `input-router` skill and normalized into a structured JSON object.
 - The JSON must validate against `knowledge-base/input-router/resources/output_schema.json`.
-- The JSON includes delivery mode, output artifacts, feature scope, domain name, story candidates, user flow, business logic, requirements, success metrics, and missing information.
+- The JSON includes delivery mode, output artifacts, domain name, scope (in and out), glossary, story candidates, user flow, business rules, requirements, success metrics, dependencies, known constraints, and missing information — all in business language. Technical wording in the input is translated into its business meaning.
 - In IDE mode, if the domain folder does not exist yet, the system creates it before persisting the JSON file.
 - Domain creation is run with `python knowledge-base/scripts/create_domain.py --domain_name [Domain_Name]`, so the output is anchored to this project root.
 - In IDE mode, the draft JSON is stored under `domain-knowledge/[Domain_Name]/inputs/`.
@@ -165,7 +205,7 @@ flowchart TD
 
 ### Step 1.5: Clarification Gate (Critical Pause)
 
-- The system reviews the approved JSON and asks one consolidated batch of questions for every `[NEEDS_CLARIFICATION]` field.
+- The system reviews the approved JSON and asks one consolidated batch of business questions for every `[NEEDS_CLARIFICATION]` field. It does not ask technical implementation questions; those become Open Questions for Dev / Tech Lead in the PRD.
 - Fields the user cannot answer stay as `[NEEDS_CLARIFICATION]` and surface as `TBD` in the PRD — the system never invents missing details.
 - If the JSON has no gaps, the system asks for a single confirmation and moves on.
 - `Clarification_Confirmed` is set to `true` only after the user explicitly approves the clarified brief. Framing cannot start before that.
@@ -197,7 +237,8 @@ flowchart TD
 - The orchestrator inserts each note inline, directly below the affected section, using the `> [!WARNING] REVIEWER'S NOTE` callout format.
 - In IDE mode, notes are inserted into the Markdown file. In text-only mode, notes are inserted into the in-chat draft.
 - Reviewer output is capped at 10 high-risk notes per pass.
-- The reviewer validates business logic, edge cases, JTBD alignment, and `Done when` acceptance criteria coverage.
+- The reviewer validates business logic, business-level edge cases, scope, JTBD alignment, `Done when` acceptance criteria coverage, and traceability between rules and criteria.
+- The reviewer also flags **technical leakage** (endpoints, status codes, database fields, internal services, code) and wording that PO, BA, Dev, and QC could read differently, and proposes a business-language rewrite.
 
 ### Step 5: User Approval (Critical Pause)
 
@@ -235,12 +276,16 @@ The quality of the Step 1 input strongly affects the quality of the generated PR
 2. **Desired artifacts:** Markdown only, Markdown plus DOCX, or text response only.
 3. **Feature name and objective:** What is the feature, and what business or user value should it create?
 4. **Problem context:** What is broken or missing today?
-5. **Target user or actor:** Who is the main person or system using this feature?
-6. **Basic user flow:** What does the happy path look like from start to finish?
-7. **Business rules and edge cases:** What should happen in error, timeout, invalid input, or exception scenarios?
-8. **Requirements or constraints:** Functional, non-functional, API, security, or operational constraints.
-9. **Success metrics:** How will the team know the feature worked?
-10. **Diagram needs:** State whether you want BPMN, Activity Diagram, Sequence Diagram, or no diagrams.
+5. **Target user or actor:** Who is the main person or role using this feature?
+6. **Scope:** What is included, and what is explicitly out of scope for this release?
+7. **Basic user flow:** What does the happy path look like from start to finish?
+8. **Business rules and edge cases:** Concrete values (amounts, limits, time windows, who may do what) and what should happen when something goes wrong — seat already taken, payment failed, partner not responding, user leaves mid-way.
+9. **Quality expectations:** How fast it should feel, when it must be available, who may see which information.
+10. **Dependencies and known constraints:** Partners, teams, or existing features involved. If your team already knows a constraint (for example "must reuse the current payment partner"), state it — it is recorded as stated under Known Constraints, not expanded into technical detail.
+11. **Success metrics:** How will the team know the feature worked, and how is each metric counted?
+12. **Diagram needs:** State whether you want BPMN, Activity Diagram, Sequence Diagram, or no diagrams. Diagrams stay business-level: actors, the system as one participant, and partners.
+
+There is no need to describe APIs, databases, or architecture: the PRD does not carry them. If you do mention technical details, the pipeline translates them into business meaning.
 
 **Example of a strong input**
 
@@ -285,6 +330,7 @@ This keeps the workflow lean and uses effort only where it adds real value.
 │   ├── app.src.html                   ← web app source template
 │   └── build.py                       ← embeds knowledge-base prompts into index.html
 └── knowledge-base/
+    ├── product-language/              ← product-first wording rules applied by every step
     ├── input-router/                  ← Step 1: raw notes → structured JSON brief (+ schema)
     ├── product-framing/               ← Step 2: JTBD job stories + INVEST user stories + AC
     ├── prd-template/                  ← Step 3: PRD template renderer
@@ -296,7 +342,7 @@ This keeps the workflow lean and uses effort only where it adds real value.
     └── scripts/
         ├── create_domain.py           ← initializes domain-knowledge/<domain>/
         ├── export_docx.py             ← Markdown → DOCX via pypandoc
-        └── smoke_test.py              ← 6-check consistency gate (schema, scripts, webapp sync)
+        └── smoke_test.py              ← 7-check consistency gate (schema, sections, scripts, webapp sync)
 ```
 
 Consistency rules for contributors:
@@ -305,3 +351,5 @@ Consistency rules for contributors:
 - Any change under `knowledge-base/` requires `python webapp/build.py` and committing the regenerated `webapp/index.html` — `smoke_test.py` fails otherwise.
 - `output_schema.json` is the Step 1 contract; if you change its `required` list or enums, update `smoke_test.py` in the same commit.
 - Diagram rules live only in `prd-template/diagram-writer/SKILL.md`; never duplicate them elsewhere.
+- Product-first wording rules live only in `product-language/SKILL.md`; other skills reference it instead of restating it.
+- `Active_Sections` values must stay identical across `output_schema.json`, the mapping table in `prd-template/SKILL.md`, and `ALL_SECTIONS` in `webapp/app.src.html` — `smoke_test.py` checks all three.

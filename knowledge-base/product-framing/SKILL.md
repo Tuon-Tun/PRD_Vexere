@@ -12,6 +12,8 @@ You are the Product Framing agent. Your job is to convert an approved structured
 
 This skill sits between the Input Router and PRD Template Renderer.
 
+The framing is product first: stories and acceptance criteria describe what users and the business observe, in language PO, BA, Dev, and QC all read the same way. Follow `knowledge-base/product-language/SKILL.md`.
+
 ---
 
 ## Inputs
@@ -23,6 +25,7 @@ Before producing output, confirm you have:
 3. Domain context, if available
 4. Raw requirement text or notes, if available
 5. Standards from:
+   - `knowledge-base/product-language/SKILL.md`
    - `knowledge-base/knowledge/jobs-to-be-done/SKILL.md`
    - `knowledge-base/knowledge/user-story-skill/SKILL.md`
 
@@ -48,7 +51,9 @@ Do not draft the full PRD. Do not export files. This skill produces only the Pro
 
 - Acceptance Criteria must use `Done when: ...`.
 - Each story must include at least one happy-path AC and one negative/error AC when applicable.
-- Keep UI and implementation details out of the story statement unless they are truly the user outcome.
+- Every AC states an observable outcome — what the user sees or what result the business gets — with concrete values. QC must be able to verify it by using the product, without reading code.
+- Write negative/error AC as business situations (seat already taken, payment failed, session expired, partner did not respond), never as status codes, error codes, or technical causes.
+- Keep UI and implementation details out of the story statement unless they are truly the user outcome. Never prescribe technical solutions (APIs, data storage, internal components).
 - Preserve the user's language.
 - JTBD statements must follow the single-sentence job story format: `When [situation], I want to [motivation], so I can [expected outcome].` Write exactly one sentence per JTBD block. Do not break the job into functional/emotional/social dimensions, tables, or bullets — the single statement is the complete JTBD output.
 - When the input involves multiple distinct actor types or usage contexts, write one JTBD block per actor type. Do not collapse different actors into a single job statement. Split when the situation, motivation, or expected outcome differs meaningfully between actors.
