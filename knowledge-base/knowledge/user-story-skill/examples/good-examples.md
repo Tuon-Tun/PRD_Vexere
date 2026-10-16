@@ -242,12 +242,13 @@ Inside a PRD, rule values, message wording, and shared behaviors are written onc
 BR-01 | A ticket can be cancelled online up to 24 hours before departure.
 BR-02 | Cancellation fee = 10% of the ticket price. Example: ticket 300,000 VND -> fee 30,000 VND.
 BR-03 | Refund = amount paid - cancellation fee (BR-02). Uses: BR-02. Example: paid 300,000 VND -> refund 270,000 VND.
-BR-04 | Transition: Confirmed -> Cancelled when the customer confirms cancellation within BR-01.
-        Side-effects: seat returned to the operator; email MSG-03 sent.
-MSG-01 | Screen | "Tickets can be cancelled online up to {cancellation cutoff (BR-01)} before departure."
-MSG-02 | Screen | "Your ticket has been cancelled. Refund: {refund amount}."
-MSG-03 | Email  | "Cancellation confirmed for ticket {ticket code}..."
-CB-02  | Repeated tap: tapping "Confirm" more than once creates only one cancellation.
+BR-04 | Transition: Confirmed -> Cancelled. Events: the customer or customer service confirms
+        cancellation within the cancellation cutoff (BR-01).
+        Side-effects: seat returned to the operator; MSG-03 sent.
+MSG-01 | Screen | "Tickets can be cancelled online up to {cancellation cutoff (BR-01)} before departure." | Rules: BR-01
+MSG-02 | Screen | "Your ticket has been cancelled. Refund: {refund amount}."                              | Rules: BR-03
+MSG-03 | Email  | "Cancellation confirmed for ticket {ticket code}..."                                    | Rules: —
+CB-02  | Repeated tap: tapping "Confirm" more than once moves the ticket to Cancelled only once (BR-04).
 ```
 
 **Story:**
@@ -258,15 +259,17 @@ I want to cancel my ticket in the app,
 so that I get my money back without calling the hotline.
 
 Priority: Must
+Common behaviors: CB-02
 Rules applied (PRD Ticket Cancellation): BR-01, BR-02, BR-03, BR-04
-Also cites: CB-02, MSG-01, MSG-02
 ```
 
 **Why it works:**
 
 - No AC repeats "24 hours", "10%", or any message wording — changing the cutoff to 12 hours edits BR-01 only
-- The email and the seat release are side-effects of the status transition (BR-04), written once even if customer service or the operator can also cancel
+- The email and the seat release are side-effects of the status transition (BR-04), written once on its row even though both the customer and customer service can cancel
 - `Rules applied` includes BR-02 because BR-03 uses it, so the Jira ticket carries every rule needed to build and test the story
+- Repeated taps are handled once by CB-02, which the story lists instead of writing its own AC for it
+- MSG-02's Rules column names BR-03, so a change to the refund rule shows which message to re-check
 
 **Acceptance Criteria:**
 

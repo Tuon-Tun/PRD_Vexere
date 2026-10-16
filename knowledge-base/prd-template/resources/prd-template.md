@@ -97,11 +97,13 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 **Goals:**
 
+<!-- Name each outcome and cite its SM ID. A baseline or target appears only in its row of the table below. -->
+
 1.
 
 **Success Metrics:**
 
-<!-- The home of every metric and its target. "How it is measured" is the business definition: what is
+<!-- The home of every metric's baseline and target. "How it is measured" is the business definition: what is
      counted, for whom, over which period. Not a tracking implementation. -->
 
 | ID | Metric | How it is measured | Baseline | Target |
@@ -133,7 +135,9 @@ When [situation], I want to [motivation], so I can [expected outcome].
 <!--
   One term per concept, used identically in every section of this PRD.
   Include business terms, status names, and role names a new reader could misread, each with a
-  one-line meaning. Transitions and permissions live in 3.2: cite their BR IDs, do not restate them.
+  one-line meaning, using the names in 3.2. Transitions and permissions live in 3.2: cite their BR IDs,
+  do not restate them. A term a rule defines (e.g. cancellation cutoff) gets its meaning without the
+  value and cites the rule: "the latest time a ticket can be cancelled online (BR-01)".
 -->
 
 | Term | Meaning in this PRD | Not to be confused with |
@@ -155,12 +159,15 @@ When [situation], I want to [motivation], so I can [expected outcome].
   Each story:
   - Statement: As a [persona], I want to [action], so that [value/reason].
   - Priority: Must / Should / Could.
-  - Rules applied: every BR its acceptance criteria and cited common behaviors refer to, plus the
-    rules those rules use. Prefixed with the PRD name so it still makes sense in a Jira ticket.
-  - Also cites: the CB, MSG, NFR, DEP, and SM IDs its acceptance criteria refer to.
+  - Common behaviors: the CB IDs that apply to the story.
+  - Rules applied: every BR referred to by its acceptance criteria, by the messages they cite, and by
+    its common behaviors, plus every BR cited in those rules' rows, followed all the way down.
+    Prefixed with the feature name so it still makes sense in a Jira ticket; rules from another PRD
+    go in a second group prefixed with that PRD's name.
   - Acceptance criteria, numbered AC1, AC2, ...: UI/UX behavior, how a broken rule or a failure is
     shown (toast / inline error / popup + MSG ID), and side-effects of this story's own action.
-    Cite rule and message IDs; never copy a rule value or message wording.
+    Side-effects of a status transition live on its row in 3.2; the acceptance criterion only states
+    that the transition happens. Cite rule and message IDs; never copy a rule value or message wording.
 -->
 
 **Common Behaviors**
@@ -176,8 +183,8 @@ When [situation], I want to [motivation], so I can [expected outcome].
   - **I want to** [action],
   - **so that** [benefit].
   - **Priority:** [Must / Should / Could]
+  - **Common behaviors:** CB-01
   - **Rules applied (PRD [Feature Name]):** BR-01, BR-03
-  - **Also cites:** CB-01, MSG-01
   - **Acceptance Criteria**
     - AC1 Done when: [observable outcome, naming the rule in words] (BR-03)
     - AC2 Done when: If [business situation] (BR-01), then [toast / inline error / popup] shows MSG-01.
@@ -191,9 +198,12 @@ When [situation], I want to [motivation], so I can [expected outcome].
   entitlement, or who may act. What the user sees when it applies lives in the citing acceptance criteria.
   - Example: a concrete case with real numbers, e.g. "Ticket 300,000 VND cancelled 30 hours before
     departure -> refund 270,000 VND". Every calculation needs a worked example.
-  - Uses: IDs of other rules this rule depends on.
-  - Notes: the source of the rule; who may change the value without a new release; "TBD (Q-..)" or
-    "(assumed, A-..)" for open values; "No longer applies (vX)" for a removed rule, which keeps its ID.
+  - Uses: IDs of other rules this rule depends on. In transition and permission rows, the rules cited in
+    the row play the same role.
+  - An open or assumed value is written in the Rule cell itself: "TBD (Q-..)" or "[value] (assumed, A-..)".
+  - Notes: the source of the rule; who may change the value without a new release; "No longer applies (vX)"
+    for a removed rule, which keeps its ID and is no longer cited.
+  - A rule defined in another approved PRD is not copied here: cite it as "[Other PRD name] BR-02".
 -->
 
 **Formulas, Policies & Limits**
@@ -205,11 +215,13 @@ When [situation], I want to [motivation], so I can [expected outcome].
 **Statuses & Transitions**
 
 <!-- Only if the feature has statuses (e.g. booking, ticket, refund). Otherwise remove this block.
-     One row per transition. Side-effects of reaching the new status are written here once, whichever
-     story causes the transition: notifications by MSG ID, inventory released, partner informed. -->
+     One row per change of status. When several events lead to the same status, list them all in one
+     Events cell, so side-effects of reaching the new status are written here once, whichever story causes
+     it: notifications by MSG ID, inventory released, partner informed. A condition that depends on another
+     rule names it in words and cites its ID. -->
 
-| ID | From status | Event | Condition | To status | Side-effects |
-|----|-------------|-------|-----------|-----------|--------------|
+| ID | From status | Events | Condition | To status | Side-effects |
+|----|-------------|--------|-----------|-----------|--------------|
 
 **Roles & Permissions**
 
@@ -236,7 +248,7 @@ When [situation], I want to [motivation], so I can [expected outcome].
   If no flow qualifies, write "No use case needed: every story is single-step; see the acceptance
   criteria in 3.1." This is complete, not TBD.
 
-  Use cases hold only the ORDER of steps. Every outcome cites where it is defined: the acceptance
+  Use cases hold only the ORDER of steps, taken from the approved user flow. Every outcome cites where it is defined: the acceptance
   criterion or common behavior (what the user sees), the rule (BR), the message (MSG). Add a branch
   row only where the flow really branches; there is no minimum number of rows.
   Precondition and Postcondition name the condition or status and cite its BR ID, without values.
@@ -269,9 +281,11 @@ When [situation], I want to [motivation], so I can [expected outcome].
 #### Traceability Matrix
 
 <!--
-  IDs only, no prose. Built from the citations in 3.1: one row per BR. A rule that only other rules
-  use shows "via BR-.." in the Cited by column. Add a row with "—" in the BR column for each story that
-  applies no rule. Use "—" when nothing maps.
+  IDs only, no prose. One row per BR, built from the citations in 3.1 (acceptance criteria and common
+  behaviors), 3.4 (use cases), 3.6 (the Rules column of each message), and 3.2 (rules citing other rules).
+  Cited by: the AC and CB IDs that cite the rule, plus "via BR-.." for each rule that uses it.
+  MSG: the messages whose Rules column lists the rule. A removed rule shows "No longer applies".
+  Add a row with "—" in the BR column for each story that applies no rule. Use "—" when nothing maps.
 -->
 
 | BR | Cited by (AC / CB) | UC | MSG |
@@ -304,15 +318,17 @@ When [situation], I want to [motivation], so I can [expected outcome].
 **Messages**
 
 <!--
-  The only place message wording lives, for every channel. Acceptance criteria, common behaviors,
-  transitions, and use cases cite the MSG ID and say how it is shown.
+  The only place message wording lives, for every channel. Acceptance criteria and common behaviors
+  cite the MSG ID and say how it is shown (toast, inline error, popup); transitions and use cases cite
+  only the MSG ID.
   A message that mentions a rule value uses a named placeholder citing the rule, never the number:
   "{cancellation cutoff (BR-01)}". Dynamic data uses a plain placeholder: "{ticket code}".
+  Rules: every BR the wording depends on, in a placeholder or explained in words.
   If no copy was provided, write the intent of the message and mark it (proposed copy).
 -->
 
-| ID | Channel | Message |
-|----|---------|---------|
+| ID | Channel | Message | Rules |
+|----|---------|---------|-------|
 
 ---
 
@@ -325,7 +341,8 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 **Dependencies**
 
-<!-- Teams, partners, or existing features this feature relies on. "If it is unavailable" cites the rule,
+<!-- Teams, partners, other PRDs, or existing features this feature relies on. "What we need from it" names
+     the capability and cites rules for values and side-effects. "If it is unavailable" cites the rule,
      common behavior, or acceptance criterion that defines the outcome; it does not restate it. -->
 
 | ID | Depends on | What we need from it | If it is unavailable | Owner |

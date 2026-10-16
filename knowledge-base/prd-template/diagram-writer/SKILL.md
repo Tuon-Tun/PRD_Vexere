@@ -37,6 +37,11 @@ When called by the PRD pipeline, the caller provides:
 
 If `diagram_type` is provided by the caller, do not ask the user to choose again.
 
+**Branches in a PRD pipeline call (all diagram types):** draw only the alternative and failure branches
+that the given AC, CB, and BR define, labelled with their IDs. Never add a branch to fill a skeleton.
+If an outcome the flow needs is not defined, leave the branch out; the drafting step raises it as an
+Open Question.
+
 ---
 
 ## Workflow
@@ -150,8 +155,7 @@ Output a ` ```plantuml ` fenced block.
 
 **Rules:**
 
-- PRD pipeline call: include the happy path and exactly the alternative and error branches that the
-  given AC, CB, and BR define. Do not invent branches.
+- PRD pipeline call: include the happy path and the branches allowed by the rule above.
 - Standalone request: include the happy path, at least 1 alternative branch, and at least 1 error or
   exception branch.
 - Step labels must stay under 8 words, written as business actions or outcomes. No swimlanes.
@@ -216,6 +220,7 @@ System -> Partner: [What the system asks the partner to do]
 alt Success
   Partner --> System: [Partner confirms]
   System --> User: [Outcome the user sees (AC / MSG ID)]
+' Optional: keep this branch only if a BR or AC defines the outcome
 else Partner rejects or does not respond
   Partner --> System: [Rejection / no answer in time (BR ID)]
   System --> User: [Outcome the user sees and next step (AC / MSG ID)]

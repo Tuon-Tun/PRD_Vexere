@@ -49,14 +49,14 @@ so that [Value/Reason].
 ### Standalone story vs. story inside a PRD
 
 - **Standalone** (a story written on its own, with no PRD): write the values directly in the AC, as in the examples.
-- **Inside a PRD** (the PRD pipeline): every fact has one home, as defined in `knowledge-base/product-language/SKILL.md`. Rule values, formulas, conditions, status transitions, and permissions live in the PRD's Business Rules; message wording lives in its Messages table; quality targets live in its NFR table; behavior shared by every story lives in Common Behaviors. The AC names the rule in words and cites its ID — `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01.` — and never copies the value or the wording. Number AC within the story (`AC1`, `AC2`) and add the story's `Priority`, `Rules applied`, and `Also cites` lines.
+- **Inside a PRD** (the PRD pipeline): every fact has one home, as defined in `knowledge-base/product-language/SKILL.md`. Rule values, formulas, conditions, status transitions, and permissions live in the PRD's Business Rules; message wording lives in its Messages table; quality targets live in its NFR table; behavior shared by every story lives in Common Behaviors. The AC names the rule in words and cites its ID — `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01.` — and never copies the value or the wording. Side-effects of a status transition live on its rule row; the AC only states that the transition happens. Number AC within the story (`AC1`, `AC2`) and add the story's `Priority`, `Common behaviors`, and `Rules applied` lines.
 
 ### Must cover all of these
 
 | Type | Rule |
 |------|------|
 | **Happy path** | At least one AC for the main successful flow |
-| **Negative/edge flows** | `Done when: If [X], then [Y]` — at least one error/edge case |
+| **Negative/edge flows** | `Done when: If [X], then [Y]` — at least one error/edge case. Inside a PRD, a listed common behavior counts for its situation |
 | **Role-based** | Separate AC per role if multiple actors — only combine if buildable + testable together. Inside a PRD, who may act is a permission rule; the AC states what an allowed or a refused role sees and cites the rule |
 | **Error display** | For each broken rule or failure the story can hit: how it is shown (toast, inline error, popup) and which message |
 | **Side-effects** | After the story's own action succeeds: what is recorded and for which metric, which notification is sent, what a partner is informed of — WHAT, never event names or how data is synced |
@@ -122,7 +122,7 @@ Also define, in business terms: what information is exchanged, when, who owns it
 
 **Reporting stories:** WHO = person who uses the report · WHAT = the business information the report shows · AC = what the user sees (default sort, empty state, export result) · WHY = business reason. Inside a PRD, limits and formats are rules cited by ID
 
-**Non-collocated teams:** Add more AC detail; supplement with SRD or mockup; link all artifacts explicitly in the story. Inside a PRD, add detail by citing rule, message, and use case IDs, not by copying their content into the AC.
+**Non-collocated teams:** Add more AC detail; supplement with SRD or mockup; link all artifacts explicitly in the story. Inside a PRD, add detail by citing rule, message, and common behavior IDs, not by copying their content into the AC; use cases cite the AC, not the reverse.
 
 **Mockups:** Each mockup section → one or more stories. Developed collaboratively. Suggestion tool only — not a locked design.
 
@@ -155,9 +155,9 @@ As a [Actor],
 I want to [Action + Object],
 so that [Value].
 
-**Priority:** [Must / Should / Could]          ← inside a PRD
-**Rules applied (PRD [name]):** BR-01, BR-03     ← inside a PRD
-**Also cites:** CB-01, MSG-01, NFR-01            ← inside a PRD
+**Priority:** [Must / Should / Could]                  ← inside a PRD
+**Common behaviors:** CB-01                            ← inside a PRD
+**Rules applied (PRD [Feature Name]):** BR-01, BR-03   ← inside a PRD
 
 ## Acceptance Criteria
 AC1 Done when: [positive condition]
@@ -185,8 +185,8 @@ Fix any failure before outputting.
 - [ ] No `and` / `or` / `/` in WHO/DOES/WHAT
 - [ ] Every AC has a clear pass/fail condition
 - [ ] Every AC describes an observable outcome in business language — no status codes, endpoints, or internal components
-- [ ] Inside a PRD: no AC repeats a rule value, formula, condition, or message wording — it cites the ID, and `Rules applied` lists every rule the AC cite plus the rules those rules use
-- [ ] Happy path + at least one negative/edge case covered
+- [ ] Inside a PRD: no AC repeats a rule value, formula, condition, or message wording — it cites the ID, and `Rules applied` lists every rule referred to by the AC, the messages they cite, and the listed common behaviors, plus every rule cited in those rules' rows
+- [ ] Happy path + at least one negative/edge case covered, by its own AC or, inside a PRD, by a listed common behavior
 - [ ] All AC completable within one sprint
 - [ ] All 6 INVEST criteria pass
 - [ ] NFRs use exact thresholds — no vague quantifiers

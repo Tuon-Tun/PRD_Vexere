@@ -36,15 +36,15 @@ Do not draft the full PRD. Do not export files. This skill produces only the Pro
 
 ## Order of work
 
-IDs must exist before anything cites them, so build the Pack in this order:
+Every ID must exist before a story cites it. Rules, messages, common behaviors, referenced items, assumptions, and open questions may cite each other in either direction (a transition sends a message, a message names a rule, a rule waits on a question), so number them all before filling their rows. Build the Pack in this order:
 
 1. Jobs To Be Done.
 2. Business Rules: every rule, status transition, and permission, each with its `BR-` ID.
 3. Messages: every message any story or rule shows, each with its `MSG-` ID.
 4. Common Behaviors: situations that behave the same in every story, each with its `CB-` ID.
-5. Referenced Items: the `SM-`, `NFR-`, and `DEP-` IDs that acceptance criteria will cite.
+5. Referenced Items: every success metric, quality target, and dependency in the brief, each with its `SM-`, `NFR-`, or `DEP-` ID.
 6. Epics & User Stories, whose acceptance criteria cite the IDs above.
-7. Open Questions, each with its `Q-` ID.
+7. Assumptions and Open Questions, each with its `A-` or `Q-` ID.
 
 ---
 
@@ -54,10 +54,11 @@ IDs must exist before anything cites them, so build the Pack in this order:
 
 - Use the approved JSON as the factual boundary.
 - Treat `JTBD_Candidates`, `Epic_Candidates`, `User_Story_Candidates`, and their `AC_Seeds` from Step 1 as seeds, not final output.
-- Do not invent business rules, metrics, roles, messages, or edge cases.
-- If a required detail is missing, write `[NEEDS_CLARIFICATION]` and add an Open Question. In a rule row, write the value as `TBD (Q-..)`.
+- Do not invent business rules, metrics, roles, messages, or edge cases. If a common behavior or a rule the feature clearly needs is not stated in the input, write it as an assumption (below) so the user approves it with the Pack.
+- If a required detail is missing, write `[NEEDS_CLARIFICATION]` and add an Open Question. An open value is written in the rule's own Rule cell as `TBD (Q-..)`. A value taken from the brief's `Assumptions`, or assumed by the Pack, is written there as `[value] (assumed, A-..)`.
 - Preserve the user's language.
-- IDs are plain text and are never renumbered. When the Pack is regenerated after feedback, keep existing IDs and give new items the next free number.
+- IDs are plain text, never renumbered or reused. When the Pack is regenerated after feedback, keep existing IDs and give new items the number after the highest one used so far.
+- A rule defined in another approved PRD is cited, not copied: write it as `[Other PRD name] BR-02` and list that PRD as a `DEP-` item.
 
 ### Jobs To Be Done
 
@@ -70,28 +71,30 @@ IDs must exist before anything cites them, so build the Pack in this order:
 - Build the register from `Business_Logic_and_Rules`, plus any value, limit, status, or permission stated elsewhere in the brief.
 - A business rule answers a question about money, seats or other inventory, a status, a voucher or other entitlement, or who may act. Three kinds:
   - **Formulas & policies:** calculations, rounding, application order (for example voucher stacking), eligibility, and conditional policies, including what happens to money, seats, or status when something fails. Every formula has a worked example with real numbers.
-  - **Statuses & permissions:** each status transition is one row with its event, condition, and side-effects (notifications by `MSG-` ID, inventory released, partner informed). Each action a role may perform is one row.
+  - **Statuses & permissions:** each status transition is one row with its events, condition, and side-effects (notifications by `MSG-` ID, inventory released, partner informed). When several events lead to the same status, write one row and list every event in its Events cell, so the side-effects are written once; a side-effect that differs by event cites the rule that decides it. A condition that depends on another rule names it in words and cites its ID, for example "within the cancellation cutoff (BR-01)". Each action a role may perform is one row.
   - **Limits & constraints:** time windows, quantities, input rules, and deadlines promised to the customer.
 - Each row has its own `BR-` ID, unique across the three tables.
-- Fill **Uses** with the IDs of other rules this rule depends on (for example a refund rule that uses the cancellation fee rule).
+- Fill **Uses** with the IDs of other rules a formula, policy, or limit depends on (for example a refund rule that uses the cancellation fee rule). In transition and permission rows, the rules cited in the row play the same role.
 - What the user sees when a rule applies or is broken is not part of the rule. It goes into the acceptance criteria that cite the rule.
 - A value set per partner or per campaign is written as the rule's shape, who sets the value, the default if any, and a worked example labelled as sample values.
 
 ### Messages
 
-- Every message any story or rule shows, on any channel (screen, email, SMS, push), is written once in the Messages table with its `MSG-` ID. Nothing else contains message copy.
+- Every message any story or rule shows, on any channel (screen, email, SMS, push), is written once in the Messages table with its `MSG-` ID. Nothing else contains message copy. Take the wording the input states from `UI_UX_Requirements`, as stated.
 - A message that mentions a rule value uses a named placeholder that cites the rule, never the number: `{cancellation cutoff (BR-01)}`. Dynamic data uses a plain placeholder such as `{ticket code}`.
+- **Rules** lists every `BR-` ID the wording depends on, whether in a placeholder or explained in words, so a rule change shows which messages to re-check.
 - If the input gives no copy, write the intent and mark it `(proposed copy)`.
 
 ### Common Behaviors
 
-- Situations that behave the same way in every story — login session expired, connection lost, repeated tap or resubmit, system temporarily unavailable — are written once as `CB-` rows. A story cites the ones that apply instead of writing its own AC for them.
-- A CB states what the user sees and cites the rule and message that apply (for example "charged only once (BR-11)", "MSG-09").
+- Situations that behave the same way in every story — login session expired, connection lost, repeated tap or resubmit, system temporarily unavailable — are written once as `CB-` rows. A story lists the ones that apply on its Common behaviors line instead of writing its own AC for them.
+- A CB states what the user sees and cites the rule and message that apply (for example "charged only once (BR-11)", "MSG-09"). What happens to money, seats, or status is a rule, never written inside the CB.
 - Write only the common behaviors the feature needs.
 
 ### Referenced Items
 
-- List the success metrics (`SM-`), quality targets (`NFR-`), and dependencies (`DEP-`) from the brief with their ID and their content. Acceptance criteria and rules cite these IDs. The PRD renders them in 2.4, 3.5, and 3.7.
+- List every success metric (`SM-`), quality target (`NFR-`), and dependency (`DEP-`) from the brief with its ID and all the columns the PRD needs, so Step 3 renders them unchanged in 2.4, 3.5, and 3.7. Acceptance criteria and rules cite these IDs.
+- A dependency's "If it is unavailable" cites the rule, common behavior, or acceptance criterion that defines the outcome; "What we need from it" names the capability and cites rules for values and side-effects.
 
 ### User Stories
 
@@ -105,8 +108,8 @@ IDs must exist before anything cites them, so build the Pack in this order:
 
 - Keep UI and implementation details out of the story statement unless they are truly the user outcome. Never prescribe technical solutions (APIs, data storage, internal components).
 - **Priority:** `Must`, `Should`, or `Could`.
-- **Rules applied:** every `BR-` ID the story's acceptance criteria and cited common behaviors refer to, plus every rule those rules use (the Uses column, followed all the way down). Prefix it with the PRD name so it still makes sense in a Jira ticket: `Rules applied (PRD [Feature_Name]): BR-01, BR-03`. Write `none` if there are none.
-- **Also cites:** the `CB-`, `MSG-`, `NFR-`, `DEP-`, and `SM-` IDs the story's acceptance criteria refer to, or `none`.
+- **Common behaviors:** the `CB-` IDs that apply to the story, or `none`.
+- **Rules applied:** every `BR-` ID referred to by the story's acceptance criteria, by the messages they cite (the Rules column), and by the listed common behaviors, plus every `BR-` ID cited in those rules' rows (Uses, Condition, Side-effects), followed all the way down. Prefix it with the PRD name so it still makes sense in a Jira ticket: `Rules applied (PRD [Feature Name]): BR-01, BR-03`, using the feature name, not the full PRD title. Rules from another PRD go in a second group: `(PRD [Other PRD name]): BR-02`. Write `none` if there are none.
 
 ### Acceptance Criteria
 
@@ -118,7 +121,7 @@ IDs must exist before anything cites them, so build the Pack in this order:
   - **Side-effects of this story's own action:** what the system records and for which metric (`SM-` ID), which notification is sent (`MSG-` ID), what a partner is informed of. Side-effects of a status transition live on the transition row; the acceptance criterion only states that the transition happens, citing its `BR-` ID.
 - Never copy a rule's value, formula, or condition into an acceptance criterion. Name the rule in words and cite its ID: `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01.`
 - Never copy message wording into an acceptance criterion; cite the `MSG-` ID.
-- Each story has at least one happy-path acceptance criterion and, where applicable, one negative/error acceptance criterion. Do not rewrite a situation a cited common behavior already covers.
+- Each story has at least one happy-path acceptance criterion and, where applicable, one negative/error acceptance criterion; a listed common behavior counts as the negative case for its situation. Do not rewrite a situation a listed common behavior already covers.
 - Write negative/error situations as business situations (seat already taken, payment failed, partner did not respond), never as status codes, error codes, or technical causes.
 - For tracking and partners, write WHAT, not HOW: no event names, properties, or data-sync mechanisms.
 
@@ -160,8 +163,8 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 **Statuses & Transitions**
 
-| ID | From status | Event | Condition | To status | Side-effects |
-|----|-------------|-------|-----------|-----------|--------------|
+| ID | From status | Events | Condition | To status | Side-effects |
+|----|-------------|--------|-----------|-----------|--------------|
 
 **Roles & Permissions**
 
@@ -170,9 +173,9 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 ## 4. Messages
 
-| ID | Channel | Message |
-|----|---------|---------|
-| MSG-01 | | |
+| ID | Channel | Message | Rules |
+|----|---------|---------|-------|
+| MSG-01 | | | |
 
 ## 5. Common Behaviors
 
@@ -182,11 +185,23 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 ## 6. Referenced Items
 
-| ID | Item |
-|----|------|
-| SM-01 | [Metric: how it is measured, baseline, target] |
-| NFR-01 | [Expectation: target] |
-| DEP-01 | [Partner, team, or existing feature: what we need from it] |
+**Success Metrics**
+
+| ID | Metric | How it is measured | Baseline | Target |
+|----|--------|--------------------|----------|--------|
+| SM-01 | | | | |
+
+**Quality Targets**
+
+| ID | Expectation | Target | Why it matters |
+|----|-------------|--------|----------------|
+| NFR-01 | | | |
+
+**Dependencies**
+
+| ID | Depends on | What we need from it | If it is unavailable | Owner |
+|----|------------|----------------------|----------------------|-------|
+| DEP-01 | | | | |
 
 ## 7. Epics & User Stories
 
@@ -199,8 +214,8 @@ I want to [action + object],
 so that [value/reason].
 
 **Priority:** [Must / Should / Could]
-**Rules applied (PRD [Feature_Name]):** BR-01, BR-03
-**Also cites:** CB-01, MSG-01, SM-01
+**Common behaviors:** CB-01
+**Rules applied (PRD [Feature Name]):** BR-01, BR-03
 
 **Acceptance Criteria**
 
@@ -209,11 +224,19 @@ so that [value/reason].
 
 **INVEST Check:** I / N / V / E / S / T
 
-## 8. Open Questions
+## 8. Assumptions & Open Questions
 
-| ID | Question | Affects |
-|----|----------|---------|
-| Q-01 | | BR-01 |
+**Assumptions**
+
+| ID | Assumption | Affects | Source / Confidence |
+|----|------------|---------|---------------------|
+| A-01 | | BR-01 | |
+
+**Open Questions**
+
+| ID | Question | Affects | Owner / Next Step |
+|----|----------|---------|-------------------|
+| Q-01 | | BR-01 | |
 ```
 
-Remove a table in Section 3 that the feature does not need (for example Statuses & Transitions when nothing has a status). Remove Section 5 or 6 when nothing would go in it. If no meaningful gaps remain, write `No open questions.` in Section 8.
+Remove a table that the feature does not need (for example Statuses & Transitions when nothing has a status). Remove Section 5 when there are no common behaviors. If there are no assumptions, write `No assumptions.`; if no meaningful gaps remain, write `No open questions.`

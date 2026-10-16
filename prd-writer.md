@@ -25,6 +25,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 
 ### Step 0: Delivery Mode & Diagram Requirement Confirmation
 
+
 * **Action:** Check whether the user has already specified how they want to use the workflow.
   * `IDE_FULL_PIPELINE`: Use this when the user is working in an IDE/repository and wants files created under `domain-knowledge/`, with optional Markdown and DOCX outputs.
   * `CHAT_TEXT_ONLY`: Use this when the user is using the workflow as a chat-agent skill, or does not want `.md`/`.docx` files created. Return the PRD and intermediate artifacts as chat text only.
@@ -34,7 +35,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 * **Important BPMN Note:** BPMN uses BPMN 2.0 XML. It is very token-heavy and not yet efficient for AI because coordinates for shapes and connectors must be estimated manually. The result will be basic, so confirm carefully before choosing BPMN.
 * **Scope agenda confirmation:** After the user confirms delivery mode and diagrams, present the full list of PRD sections and ask the user to confirm which ones apply. Explain briefly what each section contains. Default to all sections active. The user may exclude sections that are not relevant to their feature.
 
-  Present the agenda as a numbered checklist. Mention that Document Info (with a reader guide) and the one-glance Summary are always included, and that a section whose IDs other sections cite (Business Rules, Messages, Success Metrics, Non-Functional Requirements, Dependencies, Assumptions & Open Questions) is kept in minimal form while those IDs are cited.
+  Present the agenda as a numbered checklist. Mention that Document Info (with a reader guide) and the one-glance Summary are always included, and that a section whose IDs other sections cite (Feature Epics & User Stories, Business Rules, Messages, Success Metrics, Non-Functional Requirements, Dependencies, Assumptions & Open Questions) is kept in minimal form while those IDs are cited.
   1. Problem Statement — context, current gap, business motivation
   2. JTBD — jobs-to-be-done by user type and scenario
   3. Goals & Success Metrics — business goals, how each metric is measured, targets
@@ -43,7 +44,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
   6. Feature Epics & User Stories — common behaviors, INVEST-standard stories with priority, Rules applied, and acceptance criteria that cite rules by ID
   7. Business Rules — formulas and policies with worked examples, statuses and transitions, who may act, limits
   8. Process Diagrams — business-level BPMN / Activity / Sequence diagrams (only if requested)
-  9. Use Case Specifications — only for multi-step or branching flows; steps cite AC, BR, and MSG IDs
+  9. Use Case Specifications — only for multi-step or branching flows; steps cite AC, CB, BR, and MSG IDs
   10. Traceability Matrix — IDs only: each rule mapped to the acceptance criteria, use cases, and messages that cite it
   11. Non-Functional Requirements — business-level quality targets: perceived speed, availability, platforms, volume
   12. UI/UX Specifications — screen inventory and the message catalog
@@ -62,6 +63,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 * **Validation:** Before saving or using the JSON, verify that all required schema fields are present, that `Domain_Name` is lowercase kebab-case, and that `Diagram_Requirements` uses only the schema enum values.
 * **IDE persistence:** If `Delivery_Mode` is `IDE_FULL_PIPELINE`, initialize `domain-knowledge/[Domain_Name]` with `python knowledge-base/scripts/create_domain.py --domain_name [Domain_Name]` before saving if the folder does not exist. Save the generated JSON draft to `domain-knowledge/[Domain_Name]/inputs/[Feature_File_Name]_input.json`, where `Feature_File_Name` is a file-safe version of `Feature_Name`.
 * **Text-only behavior:** If `Delivery_Mode` is `CHAT_TEXT_ONLY`, do not create folders or files. Keep the JSON in the conversation only.
+* **Existing PRD:** In `IDE_FULL_PIPELINE`, if `domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.md` already exists, ask the user whether this request changes that PRD. If it does, do not build a new Framing Pack, which would renumber its IDs: treat the request as a Step 5 edit of that PRD, keep every ID, change only the affected rows, mark removed items `No longer applies`, and re-run Step 4.
 * **Output:** Display the generated JSON to the user.
 * **Wait (HITL):** Ask: *"Does this JSON correctly reflect your requirements? Please approve it or request edits."*
 * **Constraint:** DO NOT move to Step 2 until the user explicitly approves the JSON.
@@ -98,10 +100,10 @@ When a user provides a raw idea or note, you MUST execute the following steps in
   * Business Rules with IDs (`BR-01`, ...): formulas and policies with worked examples, statuses and transitions with their side-effects, roles and permissions, limits, and the rules each one uses.
   * Messages with IDs (`MSG-01`, ...): the only place message wording lives, for every channel.
   * Common Behaviors with IDs (`CB-01`, ...): behavior that is the same in every story.
-  * The success metrics, quality targets, and dependencies that acceptance criteria cite (`SM-`, `NFR-`, `DEP-`).
-  * Epic hierarchy and INVEST-standard User Stories, each with Priority, `Rules applied (PRD [Feature_Name])`, and `Also cites` lines.
+  * Every success metric, quality target, and dependency from the brief with its ID (`SM-`, `NFR-`, `DEP-`), so acceptance criteria and rules can cite them.
+  * Epic hierarchy and INVEST-standard User Stories, each with Priority, `Common behaviors`, and `Rules applied (PRD [Feature Name])` lines.
   * Acceptance Criteria numbered per story, using the `Done when` standard, including happy path and negative/error conditions, each describing an observable outcome in business language and citing rules and messages by ID instead of repeating them.
-  * Remaining open questions with IDs (`Q-01`, ...).
+  * Assumptions and remaining open questions with IDs (`A-01`, `Q-01`, ...). An assumed or open value is written in its rule row as `[value] (assumed, A-..)` or `TBD (Q-..)`.
 * **IDE persistence:** In `IDE_FULL_PIPELINE`, save the Product Framing Pack to `domain-knowledge/[Domain_Name]/inputs/[Feature_File_Name]_framing.md`.
 * **Text-only behavior:** In `CHAT_TEXT_ONLY`, return the Product Framing Pack in chat only.
 * **Output:** Display the Product Framing Pack to the user.
@@ -135,6 +137,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
   > **Option B:** [fix_b text]
   ```
 
+* **Note covering several places:** If a note's `section` names several places, insert the note under the first and add a one-line pointer `> See RN-XX` under the others.
 * **Text-only note insertion:** In `CHAT_TEXT_ONLY`, insert the same note format into the in-chat PRD draft instead of editing a file.
 * **Review pass:** Track the pass number. On the first pass, review the full PRD. On later passes, review only issues introduced or unresolved since the previous pass unless the user requests a full review.
 * **If the reviewer returns `[]`:** No inserts needed. Log `QA pass [N] passed - no gaps found` and proceed to Step 5.
@@ -146,16 +149,17 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 * **Mandate:** YOU MUST STOP HERE. Ask the user: *"Here is the reviewed PRD draft. Would you like to adjust anything, add information, or approve this version?"*
 * **Wait:** DO NOT proceed to export or finalization until the user explicitly approves.
 * **Edit loop:** If the user requests substantive edits (new stories, new flows, changed business rules, changed acceptance criteria, scope changes, dependency changes, or diagram changes), update the draft, re-run Step 4 on the affected sections, then return to Step 5.
-* **Changed business rule:** Edit only that rule's row in Section 3.2. Never write the new value into acceptance criteria, use cases, messages, or diagrams. Re-run Step 4 on that rule and on every item the Traceability Matrix lists against it.
+* **Changed business rule:** Edit that rule's row in Section 3.2, then update the worked example of every rule that uses it. Never write the new value into acceptance criteria, use cases, messages, or diagrams. If what the rule uses changed, update the Rules applied line of every story that includes it. Re-run Step 4 on that rule and on every item that cites or uses it, as listed in the Traceability Matrix (or found from the citations in 3.1 to 3.6 when the matrix is excluded).
 * **Cosmetic edits** (may skip Step 4): wording changes, grammar corrections, label renaming, reordering of existing list items with no change to meaning, or formatting adjustments. Reordering keeps every item's ID; IDs are never renumbered or reused, and any change to an ID is substantive. A cosmetic edit does not add, remove, or change acceptance criteria, business rules, user flows, actor definitions, scope, dependencies, success metrics, or diagram content.
 * **Substantive edits** (must re-trigger Step 4): any change that adds or removes a user story, modifies an acceptance criteria condition, changes a business rule or a message, adds an actor, moves an item in or out of scope, changes a dependency, changes a success metric target, or modifies diagram scope. When in doubt, treat the edit as substantive.
 * **Loop cap:** After 3 review/edit passes, surface any remaining reviewer notes or open issues and ask the user for an explicit override before proceeding.
+* **Working files:** After Step 5 approval in `IDE_FULL_PIPELINE`, the PRD is the only home of the feature's facts. Add this line at the top of `inputs/[Feature_File_Name]_framing.md`: `> Superseded by PRDs/[Feature_File_Name]_PRD.md — do not edit; change the PRD instead.` The `_input.json` file is kept as it was approved.
 * **Text-only completion:** If `Delivery_Mode` is `CHAT_TEXT_ONLY`, final approval completes the workflow. Return the final approved PRD text and do not proceed to Step 5.5 or Step 6 unless the user explicitly switches to `IDE_FULL_PIPELINE`.
 
 ### Step 5.5: Wireframe/UI Creation (Optional Design Tool)
 
 * **Mode rule:** This step is available only in `IDE_FULL_PIPELINE`.
-* **Action:** After the user approves the PRD in Step 5, take each screen in the Section 3.6 Screens inventory together with the acceptance criteria of the stories it lists and the messages they cite, and send them to whatever design/wireframe MCP tool is available in the current environment (for example Stitch, Figma, or an equivalent).
+* **Action:** After the user approves the PRD in Step 5, take each screen in the Section 3.6 Screens inventory together with the acceptance criteria of the stories it lists, the common behaviors those stories list, the messages they cite, and the rule rows they cite (so placeholders can be filled with current values), and send them to whatever design/wireframe MCP tool is available in the current environment (for example Stitch, Figma, or an equivalent).
 * **Objective:** Generate one wireframe or screen per screen defined in the PRD, using the design tool's project-creation and screen-generation capabilities. Exact tool names depend on the MCP host — discover them at runtime rather than assuming a specific vendor.
 * **Availability rule:** Only do this if a wireframe-capable design tool is available in the current environment. If none is available, inform the user and continue to Step 6 without blocking export.
 
@@ -170,7 +174,6 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 * **Execution rule:** Use `export_to_docx` when the platform exposes that tool. Prefer file-based arguments: `input_path=domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.md` and `output_path=domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.docx`. If the tool is unavailable, call `knowledge-base/scripts/export_docx.py` directly with `--input_path` and `--output_path`.
 * **Export failure rule:** If DOCX export fails because Pandoc or pypandoc is unavailable, do not fail the PRD workflow. Return the final Markdown path and explain how to install the missing dependency before re-running Step 6.
 * **Objective:** Generate `domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.docx` and return the output path to the user.
-* **Working files:** After Step 5 approval in `IDE_FULL_PIPELINE`, the PRD is the only home of the feature's facts. Add this line at the top of `inputs/[Feature_File_Name]_framing.md`: `> Superseded by PRDs/[Feature_File_Name]_PRD.md — do not edit; change the PRD instead.` The `_input.json` file is kept as it was approved.
 
 ## Best Practices & Rules
 

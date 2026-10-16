@@ -62,13 +62,14 @@ Ask what a sentence is about. If it is about **money, seats or other inventory, 
 | What the user sees and can do in one story: UI behavior, loading and empty states, default sort order, what each button does, how an error or rule violation is shown (toast, inline error, popup), side-effects of this story's own action | Acceptance Criteria under its story (3.1) | `US-01-AC2` |
 | Behavior that is the same in every story: login session expired, connection lost, repeated tap, system temporarily unavailable | Common Behaviors (3.1) | `CB-01` |
 | The exact wording of every message, on any channel (screen, email, SMS, push) | Messages (3.6) | `MSG-01` |
-| Quality targets: perceived speed, availability, supported platforms, expected volume | Non-Functional Requirements (3.5) | `NFR-01` |
-| Success metrics and their targets | Goals & Success Metrics (2.4) | `SM-01` |
-| Partners, teams, and existing features this feature relies on | Dependencies (3.7) | `DEP-01` |
+| Quality targets: perceived speed, availability, supported platforms, information freshness, expected volume | Non-Functional Requirements (3.5) | `NFR-01` |
+| Success metrics with their baselines and targets | Success Metrics table (2.4) | `SM-01` |
+| Partners, teams, other PRDs, and existing features this feature relies on | Dependencies (3.7) | `DEP-01` |
+| A rule defined in another approved PRD | That PRD, listed in Dependencies (3.7) | `[Other PRD name] BR-02` |
 | The order of steps in a multi-step flow | Use Case (3.4), citing AC, CB, BR, and MSG IDs | `UC-01` |
 | Unknown or assumed values | The rule's own row says `TBD (Q-03)` or `15 minutes (assumed, A-02)`; the question or assumption cites the rule ID | `Q-01`, `A-01` |
 
-**Messages:** a message that mentions a rule value uses a named placeholder that cites the rule, never the number: "Tickets can be cancelled online up to {cancellation cutoff (BR-01)} before departure." Dynamic data uses a plain placeholder: `{ticket code}`.
+**Messages:** a message that mentions a rule value uses a named placeholder that cites the rule, never the number: "Tickets can be cancelled online up to {cancellation cutoff (BR-01)} before departure." Dynamic data uses a plain placeholder: `{ticket code}`. The message's Rules column lists every rule its wording depends on. Acceptance criteria and common behaviors say how a message is shown (toast, inline error, popup); transitions and use cases cite only its ID.
 
 **Tracking and partners:** say WHAT, not HOW. Write "The system records each completed cancellation to measure SM-02" and "The operator is informed that the ticket is cancelled". Event names and properties belong to the Data team's tracking plan, and how data reaches a partner belongs to the technical design; both are linked in References.
 
