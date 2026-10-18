@@ -46,6 +46,10 @@ so that [Value/Reason].
 **Format:** `Done when: [testable condition — pass/fail verifiable]`
 **Prefer** "Done when" over Gherkin (Given/When/Then) — simpler to read and test.
 
+- **One outcome per AC.** Split an AC when its outcomes can pass or fail separately (for example a status change and the toast that confirms it).
+- **Name the precondition.** When the AC depends on a situation or a state beyond "the user is on this screen", open with `If` (something happens) or `While` (a state holds): `Done when: While the seat hold is active, the remaining time is visible.`
+- **Label the path.** Tag each AC `(Happy)`, `(Alternative)`, or `(Error)` so QC sees the coverage at a glance.
+
 ### Standalone story vs. story inside a PRD
 
 - **Standalone** (a story written on its own, with no PRD): write the values directly in the AC, as in the examples.
@@ -160,10 +164,10 @@ so that [Value].
 **Rules applied (PRD [Feature Name]):** BR-01, BR-03   ← inside a PRD
 
 ## Acceptance Criteria
-AC1 Done when: [positive condition]
-AC2 Done when: [positive condition]
-AC3 Done when: If [X], then [Y]  ← negative/edge case
-AC4 Done when: [NFR with exact threshold, or its NFR ID inside a PRD]
+AC1 (Happy) Done when: [positive condition]
+AC2 (Alternative) Done when: While [state], [what the user can do or sees]
+AC3 (Error) Done when: If [X], then [Y]  ← negative/edge case
+AC4 (Happy) Done when: [NFR with exact threshold, or its NFR ID inside a PRD]
 
 ## Notes (optional)
 [Design suggestion — framed as preference, not requirement]

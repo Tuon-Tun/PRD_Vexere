@@ -12,15 +12,15 @@ Why: whoever writes the PRD (a person or an AI) rarely has the full technical co
 
 | The PRD contains | The PRD leaves to the Dev team's technical design |
 |------------------|---------------------------------------------------|
-| Problem, value, goals, and how success is measured | Architecture, services, and components |
+| Problem, value, goals, and primary and guardrail metrics with owners | Architecture, services, and components |
 | Scope: what is in and what is explicitly out | APIs, endpoints, payloads, status and error codes |
 | Shared glossary of business terms, statuses, and roles | Database tables, fields, and data formats |
-| Business rules with concrete values and worked examples | Configuration keys and how values are configured |
+| Business rules with concrete values and worked examples, including how existing records are treated at launch | Configuration keys and how values are configured |
 | Statuses and transitions (with their side-effects), roles and permissions | Infrastructure, caching, queues, scheduled jobs |
-| User stories with priority, "Common behaviors" and "Rules applied" lines, and observable `Done when` acceptance criteria | Code or pseudo-code |
+| Epics that name the job (JTBD) they serve; user stories with priority, Screens, Jira, "Common behaviors" and "Rules applied" lines, and labelled `Done when` acceptance criteria | Code or pseudo-code |
 | Common behaviors shared by every story (session expired, connection lost, repeated tap) | Tracking event names and properties (the Data team's tracking plan) |
 | Use cases only for multi-step or branching flows, citing IDs | |
-| An ID-only traceability matrix, business-level quality targets, a screen inventory, and the message catalog | |
+| An ID-only traceability matrix, business-level quality targets, a screen inventory with Figma links, and the message catalog | Colours, sizes, and assets (the Figma file) |
 | Dependencies on partners, teams, and existing features; impacted areas | |
 | Technical decisions as **Open Questions** owned by Dev / Tech Lead | |
 
@@ -28,9 +28,9 @@ Why: whoever writes the PRD (a person or an AI) rarely has the full technical co
 
 | Fact | Its one home | Cited elsewhere as |
 |------|--------------|--------------------|
-| Formulas and policies, statuses and transitions, permissions, limits | 3.2 Business Rules | `BR-01` |
-| What the user sees in one story, how errors are shown, side-effects of the story's own action | Acceptance criteria under the story in 3.1 | `US-01-AC2` |
-| Behavior that is the same in every story | Common Behaviors in 3.1 | `CB-01` |
+| Formulas and policies, statuses and transitions, permissions, limits | 3.1 Business Rules | `BR-01` |
+| What the user sees in one story, how errors are shown, side-effects of the story's own action | Acceptance criteria under the story in 3.3 | `US-01-AC2` |
+| Behavior that is the same in every story | Common Behaviors in 3.3 | `CB-01` |
 | Message wording, on any channel | Messages in 3.6 | `MSG-01` |
 | Metric and quality targets | 2.4 and the Non-Functional Requirements table in 3.5 | `SM-01`, `NFR-01` |
 
@@ -46,9 +46,9 @@ All wording and placement rules, including a technical-to-product translation ta
 | 2.1 | Summary — the feature at a glance *(always included)* | All |
 | 2.2–2.4 | Problem Statement, JTBD, Goals & Success Metrics | PO |
 | 2.5–2.6 | Scope, Glossary | All |
-| 3.1 | Common Behaviors, Feature Epics & User Stories with acceptance criteria | BA, Dev, QC |
-| 3.2 | Business Rules — rules, statuses & transitions, roles & permissions | BA, Dev, QC |
-| 3.3 | Process Diagrams — business-level only | BA, Dev |
+| 3.1 | Business Rules — rules, statuses & transitions, roles & permissions | BA, Dev, QC |
+| 3.2 | Process Diagrams — business-level only | BA, Dev |
+| 3.3 | Common Behaviors, Feature Epics & User Stories with acceptance criteria | BA, Dev, QC |
 | 3.4 | Use Case Specifications — multi-step or branching flows only | BA, Dev, QC |
 | 3.5 | Traceability Matrix (IDs only) and Non-Functional Requirements | BA, Dev, QC |
 | 3.6 | UI/UX Specifications — screen inventory and message catalog | Dev, QC |
@@ -205,7 +205,7 @@ flowchart TD
 - The system generates the Product Framing Pack with `knowledge-base/product-framing/SKILL.md`, which applies standards from:
   - `knowledge-base/knowledge/jobs-to-be-done/SKILL.md`
   - `knowledge-base/knowledge/user-story-skill/SKILL.md`
-- The output is a Product Framing Pack containing single-sentence JTBD job stories (`When [situation], I want to [motivation], so I can [expected outcome].`), research status, business rules with IDs, the message catalog, common behaviors, every success metric, quality target, and dependency from the brief, Epics, INVEST-standard User Stories with Priority, Common behaviors, and Rules applied lines, `Done when` acceptance criteria that cite rules and messages by ID, and assumptions and open questions.
+- The output is a Product Framing Pack containing numbered single-sentence JTBD job stories (`When [situation], I want to [motivation], so I can [expected outcome].`), research status, business rules with IDs, the message catalog, common behaviors, every success metric (typed Primary, Secondary, or Guardrail), quality target, dependency, and screen from the brief, Epics that name the JTBD they serve, INVEST-standard User Stories with Priority, Screens, Common behaviors, and Rules applied lines, `Done when` acceptance criteria that cite rules and messages by ID, and assumptions and open questions.
 - Rules, messages, and common behaviors get their IDs before any story is written, so acceptance criteria can cite them instead of repeating their values. The user approves rules and stories together.
 - In IDE mode, the Product Framing Pack is saved under `domain-knowledge/[Domain_Name]/inputs/[Feature_File_Name]_framing.md`.
 - In text-only mode, the Product Framing Pack is shown in chat but not written to disk.
@@ -271,10 +271,10 @@ The quality of the Step 1 input strongly affects the quality of the generated PR
 5. **Target user or actor:** Who is the main person or role using this feature?
 6. **Scope:** What is included, and what is explicitly out of scope for this release?
 7. **Basic user flow:** What does the happy path look like from start to finish?
-8. **Business rules and edge cases:** Concrete values (amounts, limits, time windows, who may do what) and what should happen when something goes wrong — seat already taken, payment failed, partner not responding, user leaves mid-way.
+8. **Business rules and edge cases:** Concrete values (amounts, limits, time windows, who may do what) and what should happen when something goes wrong — seat already taken, payment failed, partner not responding, user leaves mid-way. If the feature changes existing bookings, tickets, or vouchers, say how those created before launch are treated.
 9. **Quality expectations:** How fast it should feel, when it must be available, on which platforms. (Who may see which information is a business rule: put it under item 8.)
 10. **Dependencies and known constraints:** Partners, teams, or existing features involved. If your team already knows a constraint (for example "must reuse the current payment partner"), state it — it is recorded as stated under Known Constraints, not expanded into technical detail.
-11. **Success metrics:** How will the team know the feature worked, and how is each metric counted?
+11. **Success metrics:** How will the team know the feature worked, how is each metric counted, who owns it, and what must not get worse (guardrail)?
 12. **Diagram needs:** State whether you want BPMN, Activity Diagram, Sequence Diagram, or no diagrams. Diagrams stay business-level: actors, the system as one participant, and partners.
 
 There is no need to describe APIs, databases, or architecture: the PRD does not carry them. If you do mention technical details, the pipeline translates them into business meaning.

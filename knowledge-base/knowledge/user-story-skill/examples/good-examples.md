@@ -236,7 +236,7 @@ Done when: Only the shopper who placed the order can see its delivery informatio
 
 Inside a PRD, rule values, message wording, and shared behaviors are written once in their own tables. The story's AC name each rule in words and cite its ID, so a policy change is edited in one row only.
 
-**From the PRD's Business Rules (3.2) and Messages (3.6):**
+**From the PRD's Business Rules (3.1), Screens and Messages (3.6):**
 
 ```text
 BR-01 | A ticket can be cancelled online up to 24 hours before departure.
@@ -250,6 +250,7 @@ MSG-01 | Screen | "Tickets can be cancelled online up to {cancellation cutoff (B
 MSG-02 | Screen | "Your ticket has been cancelled. Refund: {refund amount}."                              | Rules: BR-03
 MSG-03 | Email  | "Cancellation confirmed for ticket {ticket code}..."                                    | Rules: —
 CB-02  | Repeated tap: tapping "Confirm" more than once moves the ticket to Cancelled only once (BR-05).
+SCR-01 | My tickets | Design: [Figma frame link, filled by the designer]
 ```
 
 **Story:**
@@ -260,6 +261,8 @@ I want to cancel my ticket in the app,
 so that I get my money back without calling the hotline.
 
 Priority: Must
+Screens: SCR-01
+Jira: [PM fills after creating the ticket "US-01 Cancel a ticket"]
 Common behaviors: CB-02
 Rules applied (PRD Ticket Cancellation): BR-01, BR-02, BR-03, BR-04, BR-05, BR-06
 ```
@@ -275,8 +278,10 @@ Rules applied (PRD Ticket Cancellation): BR-01, BR-02, BR-03, BR-04, BR-05, BR-0
 **Acceptance Criteria:**
 
 ```text
-AC1 Done when: On "My tickets", a ticket within the cancellation cutoff (BR-01) shows a "Cancel ticket" button.
-AC2 Done when: If the cancellation cutoff has passed (BR-01), the button is disabled and an inline explanation shows MSG-01.
-AC3 Done when: Tapping "Cancel ticket" opens a popup with the fee (BR-02) and the refund amount (BR-03) before the passenger confirms.
-AC4 Done when: After the passenger confirms, the ticket moves to Cancelled (BR-05) and a toast shows MSG-02.
+AC1 (Happy) Done when: While a ticket is within the cancellation cutoff (BR-01), "My tickets" shows a "Cancel ticket" button for it.
+AC2 (Error) Done when: If the cancellation cutoff has passed (BR-01), the button is disabled and an inline explanation shows MSG-01.
+AC3 (Happy) Done when: Tapping "Cancel ticket" opens a popup with the fee (BR-02) and the refund amount (BR-03) before the passenger confirms.
+AC4 (Happy) Done when: After the passenger confirms, the ticket moves to Cancelled (BR-05).
+AC5 (Happy) Done when: After the passenger confirms, a toast shows MSG-02.
+AC6 (Alternative) Done when: If the passenger closes the popup without confirming, they are back on "My tickets" and the ticket still shows as Confirmed.
 ```

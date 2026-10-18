@@ -38,12 +38,12 @@ When a user provides a raw idea or note, you MUST execute the following steps in
   Present the agenda as a numbered checklist. Mention that Document Info (with a reader guide) and the one-glance Summary are always included, and that a section whose IDs other sections cite (Feature Epics & User Stories, Business Rules, Messages, Success Metrics, Non-Functional Requirements, Dependencies, Assumptions & Open Questions) is kept in minimal form while those IDs are cited.
   1. Problem Statement — context, current gap, business motivation
   2. JTBD — jobs-to-be-done by user type and scenario
-  3. Goals & Success Metrics — business goals, how each metric is measured, targets
+  3. Goals & Success Metrics — business goals; primary, secondary, and guardrail metrics with how each is measured, targets, and owners
   4. Scope — what is in scope and what is explicitly out of scope
   5. Glossary — shared business terms, status names, and role names
-  6. Feature Epics & User Stories — common behaviors, INVEST-standard stories with priority, Rules applied, and acceptance criteria that cite rules by ID
-  7. Business Rules — formulas and policies with worked examples, statuses and transitions, who may act, limits
-  8. Process Diagrams — business-level BPMN / Activity / Sequence diagrams (only if requested)
+  6. Business Rules — formulas and policies with worked examples, statuses and transitions, who may act, limits
+  7. Process Diagrams — business-level BPMN / Activity / Sequence diagrams (only if requested)
+  8. Feature Epics & User Stories — common behaviors, INVEST-standard stories with priority, Rules applied, and acceptance criteria that cite rules by ID
   9. Use Case Specifications — only for multi-step or branching flows; steps cite AC, CB, BR, and MSG IDs
   10. Traceability Matrix — IDs only: each rule mapped to the acceptance criteria, use cases, and messages that cite it
   11. Non-Functional Requirements — business-level quality targets: perceived speed, availability, platforms, volume
@@ -61,7 +61,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 * **Carry-forward inputs:** Pass the delivery mode, output artifact choice, and diagram answer collected in Step 0 to the Input Router. The user should not be asked twice, and `Diagram_Requirements` must be pre-filled from Step 0.
 * **Required fields:** The JSON must include `Delivery_Mode`, `Output_Artifacts`, `Domain_Name`, `Feature_Name`, and all other schema-required fields.
 * **Validation:** Before saving or using the JSON, verify that all required schema fields are present, that `Domain_Name` is lowercase kebab-case, and that `Diagram_Requirements` uses only the schema enum values.
-* **Existing PRD:** Before saving anything, check whether this request changes a PRD that was already approved: in `IDE_FULL_PIPELINE`, `domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.md` exists; in `CHAT_TEXT_ONLY`, the user pasted, or the conversation holds, an approved PRD for this feature. If so, ask the user whether the request changes that PRD. If it does, do not save a new `_input.json` or framing file and do not build a new Framing Pack, which would renumber its IDs. Skip Steps 1.5 to 3 and apply the request through the Step 5 edit loop on that PRD: keep every ID, change only the affected rows, mark removed items `No longer applies`, and re-run Step 4.
+* **Existing PRD:** Before saving anything, check whether a PRD for this feature already exists: in `IDE_FULL_PIPELINE`, `domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.md` exists; in `CHAT_TEXT_ONLY`, the user pasted, or the conversation holds, a PRD for this feature. A file on disk may still be an unapproved draft, so ask the user whether that PRD was approved and whether this request changes it. If it was approved and the request changes it, do not save a new `_input.json` or framing file and do not build a new Framing Pack, which would renumber its IDs. Skip Steps 1.5 to 3 and apply the request through the Step 5 edit loop on that PRD: keep every ID, change only the affected rows, mark removed items `No longer applies`, and re-run Step 4. Do the same for an unapproved draft the user wants to continue; start from Step 1 only if the user wants to start over.
 * **IDE persistence:** If `Delivery_Mode` is `IDE_FULL_PIPELINE`, initialize `domain-knowledge/[Domain_Name]` with `python knowledge-base/scripts/create_domain.py --domain_name [Domain_Name]` before saving if the folder does not exist. Save the generated JSON draft to `domain-knowledge/[Domain_Name]/inputs/[Feature_File_Name]_input.json`, where `Feature_File_Name` is a file-safe version of `Feature_Name`.
 * **Text-only behavior:** If `Delivery_Mode` is `CHAT_TEXT_ONLY`, do not create folders or files. Keep the JSON in the conversation only.
 * **Output:** Display the generated JSON to the user.
@@ -80,6 +80,8 @@ When a user provides a raw idea or note, you MUST execute the following steps in
     [Business_Logic_and_Rules] What is the maximum number of recipients per lucky-money link?
     [User_Story_Candidates] What does a user see if all envelopes have already been claimed?
     [Scope] Is anything explicitly out of scope for this release (for example, claiming from outside the group chat)?
+    [Success_Metrics] What must not get worse while sending volume grows (for example, failed transfers)?
+    [Business_Logic_and_Rules] Do lucky-money links created before launch follow the new rules?
   Please answer the ones you can — any still unknown can stay as TBD.
 * **Update the JSON:** After the user responds, update all clarifiable fields in the JSON. Fields the user cannot answer remain as `[NEEDS_CLARIFICATION]` and surface as `TBD` in the PRD.
 * **No-gap shortcut:** If the approved JSON contains no `[NEEDS_CLARIFICATION]` fields, tell the user the brief is complete, ask for a single confirmation to continue, and skip the question list.
@@ -95,14 +97,14 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 * **Conflict check:** If domain context contradicts the approved JSON (different terminology, conflicting rules, deprecated flows), pause and ask the user how to reconcile before drafting.
 * **Required skill:** Produce the framing output with `knowledge-base/product-framing/SKILL.md`, which applies `knowledge-base/product-language/SKILL.md`, `knowledge-base/knowledge/jobs-to-be-done/SKILL.md`, and `knowledge-base/knowledge/user-story-skill/SKILL.md`.
 * **Action:** Produce a **Product Framing Pack** before PRD drafting. Rules, messages, and common behaviors get their IDs first, so the stories written after them can cite those IDs. It must include:
-  * JTBD statements by user type/scenario, each written as exactly one job story sentence: `When [situation], I want to [motivation], so I can [expected outcome].` Do not expand JTBD into functional/emotional/social dimension breakdowns.
+  * JTBD statements by user type/scenario, each with an ID (`JTBD-01`, ...) and written as exactly one job story sentence: `When [situation], I want to [motivation], so I can [expected outcome].` Do not expand JTBD into functional/emotional/social dimension breakdowns.
   * Research status: mark JTBD as `validated` only when user-provided research supports it; otherwise mark it as `hypothesized, needs validation`.
   * Business Rules with IDs (`BR-01`, ...): formulas and policies with worked examples, statuses and transitions with their side-effects, roles and permissions, limits, and the rules each one uses.
   * Messages with IDs (`MSG-01`, ...): the only place message wording lives, for every channel.
   * Common Behaviors with IDs (`CB-01`, ...): behavior that is the same in every story.
-  * Every success metric, quality target, and dependency from the brief with its ID (`SM-`, `NFR-`, `DEP-`), so acceptance criteria and rules can cite them.
-  * Epic hierarchy and INVEST-standard User Stories, each with Priority, `Common behaviors`, and `Rules applied (PRD [Feature Name])` lines.
-  * Acceptance Criteria numbered per story, using the `Done when` standard, including happy path and negative/error conditions, each describing an observable outcome in business language and citing rules and messages by ID instead of repeating them.
+  * Every success metric (typed Primary, Secondary, or Guardrail, with an owner), quality target, dependency, and screen from the brief with its ID (`SM-`, `NFR-`, `DEP-`, `SCR-`), so acceptance criteria and rules can cite them.
+  * Epic hierarchy, each epic naming the `JTBD-` it serves, and INVEST-standard User Stories, each with Priority, `Screens`, `Common behaviors`, and `Rules applied (PRD [Feature Name])` lines.
+  * Acceptance Criteria numbered and labelled (Happy / Alternative / Error) per story, one outcome each, opening with If or While when they depend on a situation or state, using the `Done when` standard, including happy path and negative/error conditions, each describing an observable outcome in business language and citing rules and messages by ID instead of repeating them.
   * Assumptions and remaining open questions with IDs (`A-01`, `Q-01`, ...). An assumed or open value is written in its rule row as `[value] (assumed, A-..)` or `TBD (Q-..)`.
 * **IDE persistence:** In `IDE_FULL_PIPELINE`, save the Product Framing Pack to `domain-knowledge/[Domain_Name]/inputs/[Feature_File_Name]_framing.md`.
 * **Text-only behavior:** In `CHAT_TEXT_ONLY`, return the Product Framing Pack in chat only.
@@ -113,13 +115,13 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 ### Step 3: Drafting
 
 * Pass the approved JSON from Step 1 and the approved Product Framing Pack from Step 2 into `knowledge-base/prd-template/SKILL.md`.
-* The Product Framing Pack is the source of truth for Section 2.3 JTBD, Section 3.1 Feature Epics & User Stories, Section 3.2 Business Rules, the Messages in Section 3.6, the `SM-`, `NFR-`, and `DEP-` tables, and the Assumptions and Open Questions, with their IDs unchanged. The raw `Epic_Candidates`, `User_Story_Candidates`, and `Business_Logic_and_Rules` from Step 1 are seeds only.
-* **Single home:** No rule value, message wording, or target is written outside its home section. The Traceability Matrix is built from the citations in Section 3.1, Section 3.4, the Rules column of the Section 3.6 Messages, and the rules that cite other rules in Section 3.2.
+* The Product Framing Pack is the source of truth for Section 2.3 JTBD, Section 3.3 Feature Epics & User Stories, Section 3.1 Business Rules, the Screens and Messages in Section 3.6, the `SM-`, `NFR-`, and `DEP-` tables, and the Assumptions and Open Questions, with their IDs unchanged. The raw `Epic_Candidates`, `User_Story_Candidates`, and `Business_Logic_and_Rules` from Step 1 are seeds only.
+* **Single home:** No rule value, message wording, or target is written outside its home section. The Traceability Matrix is built from the citations in Section 3.3, Section 3.4, the Rules column of the Section 3.6 Messages, and the rules that cite other rules in Section 3.1.
 * The drafting skill **MUST** use `knowledge-base/prd-template/resources/prd-template.md`.
 * For the `Version History` and `References` sections, keep the table format but do not invent content.
 * **Product-first drafting:** The draft contains no technical detail (endpoints, status codes, payloads, database fields, internal services, code, configuration keys). Technical wording from the input is translated into business meaning; user-stated constraints go once, as stated, under Known Constraints in Section 3.7; technical decisions become Open Questions owned by Dev / Tech Lead.
-* **Diagram generation:** When Section 3.3 requires diagrams, the drafting skill delegates to `knowledge-base/prd-template/diagram-writer/SKILL.md`. All diagram rules live there. Do not generate diagram code from any other source.
-* **No diagram case:** If `Diagram_Requirements` is `["None"]`, keep Section 3.3 present and state `No diagrams requested for this PRD.`
+* **Diagram generation:** When Section 3.2 requires diagrams, the drafting skill delegates to `knowledge-base/prd-template/diagram-writer/SKILL.md`. All diagram rules live there. Do not generate diagram code from any other source.
+* **No diagram case:** If `Diagram_Requirements` is `["None"]`, keep Section 3.2 present and state `No diagrams requested for this PRD.`
 * **IDE output:** In `IDE_FULL_PIPELINE`, save the Markdown draft to `domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.md`. Do not save drafts in the repository root.
 * **Text-only output:** In `CHAT_TEXT_ONLY`, return the full Markdown PRD draft in chat and do not create files.
 
@@ -149,7 +151,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 * **Mandate:** YOU MUST STOP HERE. Ask the user: *"Here is the reviewed PRD draft. Would you like to adjust anything, add information, or approve this version?"*
 * **Wait:** DO NOT proceed to export or finalization until the user explicitly approves.
 * **Edit loop:** If the user requests substantive edits (new stories, new flows, changed business rules, changed acceptance criteria, scope changes, dependency changes, or diagram changes), update the draft, re-run Step 4 on the affected sections, then return to Step 5.
-* **Changed business rule:** Edit that rule's row in Section 3.2, then update the worked example of every rule that uses it. Never write the new value into acceptance criteria, use cases, messages, or diagrams. If what the rule uses changed, update the Rules applied line of every story that includes it. Re-run Step 4 on that rule and on every item that cites or uses it, as listed in the Traceability Matrix, plus the 3.3 diagrams and the 3.7 Dependencies and Impacted Areas that cite it (or found from the citations in 3.1 to 3.7 when the matrix is excluded).
+* **Changed business rule:** Edit that rule's row in Section 3.1, then update the worked example of every rule that uses it. Never write the new value into acceptance criteria, use cases, messages, or diagrams. If what the rule uses changed, update the Rules applied line of every story that includes it. Re-run Step 4 on that rule and on every item that cites or uses it, as listed in the Traceability Matrix, plus the 3.2 diagrams and the 3.7 Dependencies and Impacted Areas that cite it (or found from the citations in 3.1 to 3.7 when the matrix is excluded).
 * **Cosmetic edits** (may skip Step 4): wording changes, grammar corrections, label renaming, reordering of existing list items with no change to meaning, or formatting adjustments. Reordering keeps every item's ID; IDs are never renumbered or reused, and any change to an ID is substantive. A cosmetic edit does not add, remove, or change acceptance criteria, business rules, user flows, actor definitions, scope, dependencies, success metrics, or diagram content.
 * **Substantive edits** (must re-trigger Step 4): any change that adds or removes a user story, modifies an acceptance criteria condition, changes a business rule or a message, adds an actor, moves an item in or out of scope, changes a dependency, changes a success metric target, or modifies diagram scope. When in doubt, treat the edit as substantive.
 * **Loop cap:** After 3 review/edit passes, surface any remaining reviewer notes or open issues and ask the user for an explicit override before proceeding.
@@ -159,7 +161,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 ### Step 5.5: Wireframe/UI Creation (Optional Design Tool)
 
 * **Mode rule:** This step is available only in `IDE_FULL_PIPELINE`.
-* **Action:** After the user approves the PRD in Step 5, take each screen in the Section 3.6 Screens inventory together with the acceptance criteria of the stories it lists, the common behaviors those stories list, the messages they cite, and the rule rows they cite (so placeholders can be filled with current values), and send them to whatever design/wireframe MCP tool is available in the current environment (for example Stitch, Figma, or an equivalent).
+* **Action:** After the user approves the PRD in Step 5, take each screen in the Section 3.6 Screens inventory together with the acceptance criteria of the stories it lists, the common behaviors those stories list, the messages they cite, and the rule rows they cite (so placeholders can be filled with current values), and send them to whatever design/wireframe MCP tool is available in the current environment (for example Stitch, Figma, or an equivalent). Write the link of each frame it creates into that screen's Design column.
 * **Objective:** Generate one wireframe or screen per screen defined in the PRD, using the design tool's project-creation and screen-generation capabilities. Exact tool names depend on the MCP host — discover them at runtime rather than assuming a specific vendor.
 * **Availability rule:** Only do this if a wireframe-capable design tool is available in the current environment. If none is available, inform the user and continue to Step 6 without blocking export.
 

@@ -42,8 +42,8 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 2. Business Rules: every rule, status transition, and permission, each with its `BR-` ID.
 3. Messages: every message any story or rule shows, each with its `MSG-` ID.
 4. Common Behaviors: situations that behave the same in every story, each with its `CB-` ID.
-5. Referenced Items: every success metric, quality target, and dependency in the brief, each with its `SM-`, `NFR-`, or `DEP-` ID.
-6. Epics & User Stories, whose acceptance criteria cite the IDs above.
+5. Referenced Items: every success metric, quality target, dependency, and screen, each with its `SM-`, `NFR-`, `DEP-`, or `SCR-` ID.
+6. Epics & User Stories: each epic names the `JTBD-` it serves, and the acceptance criteria cite the IDs above.
 7. Assumptions and Open Questions, each with its `A-` or `Q-` ID.
 
 ---
@@ -65,6 +65,7 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 
 - JTBD outputs may be marked `validated` only when user-provided research or domain evidence supports them. If there is no research, mark them as `hypothesized, needs validation`.
 - JTBD statements must follow the single-sentence job story format: `When [situation], I want to [motivation], so I can [expected outcome].` Write exactly one sentence per JTBD block. Do not break the job into functional/emotional/social dimensions, tables, or bullets — the single statement is the complete JTBD output.
+- Number each JTBD (`JTBD-01`, `JTBD-02`, ...). Every epic serves at least one JTBD, and every JTBD is served by at least one epic.
 - When the input involves multiple distinct actor types or usage contexts, write one JTBD block per actor type. Do not collapse different actors into a single job statement. Split when the situation, motivation, or expected outcome differs meaningfully between actors.
 
 ### Business Rules
@@ -72,6 +73,7 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 - Build the register from `Business_Logic_and_Rules`, plus any value, limit, status, or permission stated elsewhere in the brief.
 - A business rule answers a question about money, seats or other inventory, a status, a voucher or other entitlement, or who may act. Three kinds:
   - **Formulas & policies:** calculations, rounding, application order (for example voucher stacking), eligibility, and conditional policies, including what happens to money, seats, or status when something fails. Every formula has a worked example with real numbers.
+  - **Launch policy:** when the feature changes how existing bookings, tickets, vouchers, or accounts behave, a rule says how records that exist before launch, and actions in progress at launch, are treated (for example "tickets bought before the launch date keep the fee shown at purchase"). How existing data is converted is an Open Question for Dev / Tech Lead.
   - **Statuses & permissions:**
     - **Transitions:** one row per event that changes a status, with its condition and the side-effects of that event only (for example "refund per BR-03"). An event names the action and cites the permission row that says who may take it; it does not repeat the permission's roles or conditions. A condition that depends on another rule names it in words and cites its ID, for example "within the cancellation cutoff (BR-01)".
     - **On entering a status:** one row per status whose side-effects are the same however it is reached (notifications by `MSG-` ID, inventory released, partner informed). They are written here once, never on each transition.
@@ -97,7 +99,9 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 
 ### Referenced Items
 
-- List every success metric (`SM-`), quality target (`NFR-`), and dependency (`DEP-`) from the brief with its ID and all the columns the PRD needs, so Step 3 renders them unchanged in 2.4, 3.5, and 3.7. Acceptance criteria and rules cite these IDs.
+- List every success metric (`SM-`), quality target (`NFR-`), dependency (`DEP-`), and screen (`SCR-`) from the brief with its ID and all the columns the PRD needs, so Step 3 renders them unchanged in 2.4, 3.5, 3.7, and 3.6. Acceptance criteria and rules cite these IDs.
+- Each metric has a Type: `Primary` (the outcome the feature is for), `Secondary`, or `Guardrail` (what must not get worse while the primary metric improves; its target is a limit). If the brief has no guardrail, add an Open Question asking which metric must not get worse.
+- Screens come from `UI_UX_Requirements`. A screen the flow clearly needs but the input does not name is marked `(proposed)` so the user approves it. Design links the input gives are kept with the screen; otherwise the Design column is left for the designer.
 - A dependency's "If it is unavailable" cites the rule, common behavior, or acceptance criterion that defines the outcome; "What we need from it" names the capability and cites rules for values and side-effects.
 
 ### User Stories
@@ -112,6 +116,7 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 
 - Keep UI and implementation details out of the story statement unless they are truly the user outcome. Never prescribe technical solutions (APIs, data storage, internal components).
 - **Priority:** `Must`, `Should`, or `Could`.
+- **Screens:** the `SCR-` IDs the story is built on, or `none`.
 - **Common behaviors:** the `CB-` IDs that apply to the story, or `none`.
 - **Rules applied:** every `BR-` ID referred to by the story's acceptance criteria and by its listed common behaviors, then every `BR-` ID cited in any cell of those rules' rows, followed all the way down. Following a transition row also follows the "on entering" row of its new status. A message cited by an acceptance criterion, a common behavior, or a followed row counts too: follow its Rules column. Prefix the line with the feature name so it still makes sense in a Jira ticket: `Rules applied (PRD [Feature Name]): BR-01, BR-03`, using the feature name, not the full PRD title. Rules from another PRD go in a second group, `(PRD [Other PRD name]): BR-02`; they are listed but their rows are not followed. Write `none` if there are none.
 
@@ -119,6 +124,9 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 
 - Number the acceptance criteria within each story: `AC1`, `AC2`, ... Elsewhere they are cited as `US-01-AC2`.
 - Each acceptance criterion uses `Done when: ...` and describes an observable outcome that QC can verify by using the product, without reading code.
+- Label each one `(Happy)`, `(Alternative)`, or `(Error)`: `AC2 (Error) Done when: ...`.
+- One outcome per acceptance criterion: split it when its outcomes can pass or fail separately (for example a status change and the toast that confirms it).
+- When it depends on a situation or a state beyond "the user is on this screen", open with `If` (something happens) or `While` (a state holds) and cite the rule: `Done when: While the seat hold is active (BR-01), the remaining time is visible.`
 - An acceptance criterion covers one of:
   - **UI/UX behavior:** what the user sees and can do, loading and empty states, default sort order, what each button does.
   - **Validation and error handling:** when a rule is broken or something fails, how it is shown (toast, inline error, or popup) and which message (`MSG-` ID).
@@ -196,9 +204,9 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 **Success Metrics**
 
-| ID | Metric | How it is measured | Baseline | Target |
-|----|--------|--------------------|----------|--------|
-| SM-01 | | | | |
+| ID | Type | Metric | How it is measured | Baseline | Target | Owner |
+|----|------|--------|--------------------|----------|--------|-------|
+| SM-01 | Primary | | | | | |
 
 **Quality Targets**
 
@@ -212,9 +220,17 @@ When [situation], I want to [motivation], so I can [expected outcome].
 |----|------------|----------------------|----------------------|-------|
 | DEP-01 | | | | |
 
+**Screens**
+
+| ID | Screen | Purpose | Design |
+|----|--------|---------|--------|
+| SCR-01 | | | |
+
 ## 7. Epics & User Stories
 
 ### Epic 1 - [Epic Name]
+
+**Serves:** JTBD-01
 
 #### US-01 - [Story Name]
 
@@ -223,13 +239,15 @@ I want to [action + object],
 so that [value/reason].
 
 **Priority:** [Must / Should / Could]
+**Screens:** SCR-01
 **Common behaviors:** CB-01
 **Rules applied (PRD [Feature Name]):** BR-01, BR-03
 
 **Acceptance Criteria**
 
-- AC1 Done when: [observable happy-path outcome, citing rules by ID] (BR-03)
-- AC2 Done when: If [business situation named in words] (BR-01), then [toast / inline error / popup] shows MSG-01.
+- AC1 (Happy) Done when: [observable outcome, citing rules by ID] (BR-03)
+- AC2 (Alternative) Done when: While [state named in words] (BR-03), [what the user can do or sees].
+- AC3 (Error) Done when: If [business situation named in words] (BR-01), [toast / inline error / popup] shows MSG-01.
 
 **INVEST Check:** I / N / V / E / S / T
 
@@ -248,4 +266,4 @@ so that [value/reason].
 | Q-01 | | BR-01 | |
 ```
 
-Remove a table that the feature does not need (for example Statuses & Transitions and On Entering a Status when nothing has a status). Remove Section 5 when there are no common behaviors. If there are no assumptions, write `No assumptions.`; if no meaningful gaps remain, write `No open questions.`
+Remove a table that the feature does not need (for example Statuses & Transitions and On Entering a Status when nothing has a status); always keep Success Metrics. Remove Section 5 when there are no common behaviors. If there are no assumptions, write `No assumptions.`; if no meaningful gaps remain, write `No open questions.`

@@ -18,9 +18,9 @@ ACTIVE_SECTIONS = [
     "Goals & Success Metrics",
     "Scope",
     "Glossary",
-    "Feature Epics & User Stories",
     "Business Rules",
     "Process Diagrams",
+    "Feature Epics & User Stories",
     "Use Case Specifications",
     "Traceability Matrix",
     "Non-Functional Requirements",
@@ -242,6 +242,11 @@ def check_prd_sections():
                     "## 4. Assumptions & Open Questions"):
         assert_true(heading in template, f"PRD template is missing heading: {heading}")
     assert_true("API / Technical Specs" not in template, "PRD template still contains the technical specs section")
+    # Rules are defined before the stories that cite them, in the PRD as in the framing pack.
+    assert_true(
+        0 <= template.find("### 3.1 Business Rules") < template.find("### 3.3 Feature Epics & User Stories"),
+        "PRD template must place Business Rules (3.1) before Feature Epics & User Stories (3.3)",
+    )
     assert_true(
         "#### Functional Requirements" not in template,
         "PRD template still contains the Functional Requirements table",

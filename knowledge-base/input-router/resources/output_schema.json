@@ -68,9 +68,9 @@
           "Goals & Success Metrics",
           "Scope",
           "Glossary",
-          "Feature Epics & User Stories",
           "Business Rules",
           "Process Diagrams",
+          "Feature Epics & User Stories",
           "Use Case Specifications",
           "Traceability Matrix",
           "Non-Functional Requirements",
@@ -217,7 +217,7 @@
       "$ref": "#/$defs/string_array"
     },
     "Business_Logic_and_Rules": {
-      "description": "One business rule per item, with concrete values and the condition that triggers it: formulas and rounding, eligibility and conditional policies (including what happens to money, seats, or status when something fails), status transitions, who may act, and limits. Not what the user sees; that belongs in AC_Seeds.",
+      "description": "One business rule per item, with concrete values and the condition that triggers it: formulas and rounding, eligibility and conditional policies (including what happens to money, seats, or status when something fails), status transitions, who may act, limits, and how records that exist before launch and actions in progress at launch are treated. Not what the user sees; that belongs in AC_Seeds.",
       "$ref": "#/$defs/string_array"
     },
     "Non_Functional_Requirements": {
@@ -229,8 +229,13 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["Metric", "How_Measured", "Baseline", "Target"],
+        "required": ["Type", "Metric", "How_Measured", "Baseline", "Target", "Owner"],
         "properties": {
+          "Type": {
+            "type": "string",
+            "description": "Primary: the outcome the feature is for. Secondary: a supporting outcome. Guardrail: what must not get worse while the primary metric improves; its target is a limit.",
+            "enum": ["Primary", "Secondary", "Guardrail"]
+          },
           "Metric": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
           },
@@ -243,12 +248,16 @@
           },
           "Target": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
+          },
+          "Owner": {
+            "$ref": "#/$defs/non_empty_or_needs_clarification",
+            "description": "The role who reports the number and judges the result."
           }
         }
       }
     },
     "UI_UX_Requirements": {
-      "description": "Screens named in the input and message wording stated in the input, copied as stated. Behavior on a screen belongs in the story's AC_Seeds.",
+      "description": "Screens named in the input (with any design link the input gives) and message wording stated in the input, copied as stated. Behavior on a screen belongs in the story's AC_Seeds.",
       "$ref": "#/$defs/string_array"
     },
     "Dependencies_and_Impacted_Areas": {

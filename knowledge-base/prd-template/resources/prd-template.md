@@ -22,11 +22,14 @@
 
 ### 1.2 References
 
-<!-- PM fills this section. Do not generate. Link the Dev team's technical design document and the
-     Data team's tracking plan here once they exist. -->
+<!-- PM fills the links. Do not generate them. Keep the four rows below and add others as needed. -->
 
 | Document | Link | PIC |
 |----------|------|-----|
+| Jira Epic | | |
+| Figma (master file) | | |
+| Technical design (Dev) | | |
+| Tracking plan (Data) | | |
 
 ### 1.3 How to Read This PRD
 
@@ -35,11 +38,11 @@
 | Reader | Start with | Use it to |
 |--------|------------|-----------|
 | PO | 2. Feature Overview, 2.5 Scope | Confirm the value, the goals, and what is in or out |
-| BA | 3.1 User Stories, 3.2 Business Rules, 3.4 Use Cases, 3.5 Traceability Matrix | Check that every rule and flow is complete and consistent |
-| Dev | 3.1 Acceptance Criteria and Rules applied, 3.2 Business Rules, 3.6 Messages, 3.7 Dependencies | Understand the logic to build, then design the technical solution separately |
-| QC | 3.1 Acceptance Criteria and Common Behaviors, 3.2 Business Rules, 3.5 Traceability Matrix, 3.6 Messages | Derive test cases and trace each one to a criterion or rule ID |
+| BA | 3.1 Business Rules, 3.3 User Stories, 3.4 Use Cases, 3.5 Traceability Matrix | Check that every rule and flow is complete and consistent |
+| Dev | 3.1 Business Rules, 3.3 Acceptance Criteria and Rules applied, 3.6 Screens and Messages, 3.7 Dependencies | Understand the logic to build, then design the technical solution separately |
+| QC | 3.1 Business Rules, 3.3 Acceptance Criteria and Common Behaviors, 3.5 Traceability Matrix, 3.6 Messages | Derive test cases and trace each one to a criterion or rule ID |
 
-Every fact appears once. Other places cite its ID: `US-` story, `US-01-AC2` acceptance criterion, `CB-` common behavior, `BR-` business rule, `MSG-` message, `UC-` use case, `SM-` success metric, `NFR-` quality target, `DEP-` dependency, `A-` assumption, `Q-` open question.
+Every fact appears once. Other places cite its ID: `JTBD-` job, `US-` story, `US-01-AC2` acceptance criterion, `CB-` common behavior, `BR-` business rule, `MSG-` message, `SCR-` screen, `UC-` use case, `SM-` success metric, `NFR-` quality target, `DEP-` dependency, `A-` assumption, `Q-` open question.
 
 ---
 
@@ -59,7 +62,7 @@ Every fact appears once. Other places cite its ID: `US-` story, `US-01-AC2` acce
 | **For whom** | [Primary users or actors] |
 | **Why** | [The problem or opportunity it addresses] |
 | **Core value** | [The most important outcome for users and for the business] |
-| **Success looks like** | [The headline metric, by name and ID, e.g. "Booking completion rate (SM-01)"] |
+| **Success looks like** | [The primary metric and its guardrail, by name and ID, e.g. "Booking completion rate (SM-01), without more payment failures (SM-03)"] |
 
 ---
 
@@ -85,9 +88,10 @@ Every fact appears once. Other places cite its ID: `US-` story, `US-01-AC2` acce
   Write one JTBD block per actor when their situation, motivation, or expected outcome differs.
   Do not collapse different actors into a single statement.
   Each JTBD is exactly one job story sentence — no dimension tables or bullets.
+  Keep the JTBD IDs from the approved Product Framing Pack; each epic in 3.3 names the job it serves.
 -->
 
-**JTBD - [User Type / Scenario]**
+**JTBD-01 - [User Type / Scenario]** — Status: [validated / hypothesized, needs validation]
 
 When [situation], I want to [motivation], so I can [expected outcome].
 
@@ -104,11 +108,14 @@ When [situation], I want to [motivation], so I can [expected outcome].
 **Success Metrics:**
 
 <!-- The home of every metric's baseline and target. "How it is measured" is the business definition: what is
-     counted, for whom, over which period. Not a tracking implementation. -->
+     counted, for whom, over which period. Not a tracking implementation.
+     Type: Primary (the outcome the feature is for), Secondary, or Guardrail (what must not get worse while
+     the primary metric improves). A guardrail's target is a limit, e.g. "≤ 1%" or "no worse than baseline".
+     Owner: the role who reports the number and judges the result. -->
 
-| ID | Metric | How it is measured | Baseline | Target |
-|----|--------|--------------------|----------|--------|
-| SM-01 | | | | |
+| ID | Type | Metric | How it is measured | Baseline | Target | Owner |
+|----|------|--------|--------------------|----------|--------|-------|
+| SM-01 | Primary | | | | | |
 
 ---
 
@@ -135,7 +142,7 @@ When [situation], I want to [motivation], so I can [expected outcome].
 <!--
   One term per concept, used identically in every section of this PRD.
   Include business terms, status names, and role names a new reader could misread, each with a
-  one-line meaning, using the names in 3.2. Transitions and permissions live in 3.2: cite their BR IDs,
+  one-line meaning, using the names in 3.1. Transitions and permissions live in 3.1: cite their BR IDs,
   do not restate them. A term a rule defines (e.g. cancellation cutoff) gets its meaning without the
   value and cites the rule: "the latest time a ticket can be cancelled online (BR-01)".
 -->
@@ -147,50 +154,7 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 ## 3. Feature Specifications
 
-### 3.1 Feature Epics & User Stories
-
-<!--
-  Taken from the approved Product Framing Pack. Follow the `user-story-skill` rules STRICTLY.
-
-  Common Behaviors come first: situations that behave the same way in every story (login session
-  expired, connection lost, repeated tap, system temporarily unavailable). Each is written once and
-  cited by stories instead of being repeated in their acceptance criteria.
-
-  Each story:
-  - Statement: As a [persona], I want to [action], so that [value/reason].
-  - Priority: Must / Should / Could.
-  - Common behaviors: the CB IDs that apply to the story.
-  - Rules applied: every BR referred to by its acceptance criteria and its common behaviors, then every
-    BR cited in any cell of those rules' rows, followed all the way down (a transition also brings in the
-    "on entering" row of its new status; a cited message brings in its Rules column). Prefixed with the
-    feature name so it still makes sense in a Jira ticket; rules from another PRD go in a second group
-    prefixed with that PRD's name and are not followed further.
-  - Acceptance criteria, numbered AC1, AC2, ...: UI/UX behavior, how a broken rule or a failure is
-    shown (toast / inline error / popup + MSG ID), and side-effects of this story's own action.
-    Side-effects of a status change live in 3.2 (on its transition or "on entering" row); the acceptance
-    criterion only states that the transition happens. Cite rule and message IDs; never copy a rule value or message wording.
--->
-
-**Common Behaviors**
-
-| ID | Situation | What the user sees / what happens | Rules & Messages |
-|----|-----------|-----------------------------------|------------------|
-| CB-01 | | | |
-
-**Epic 1: [Epic Name]**
-
-- **US-01 - [Story Name]**
-  - **As a** [user role],
-  - **I want to** [action],
-  - **so that** [benefit].
-  - **Priority:** [Must / Should / Could]
-  - **Common behaviors:** CB-01
-  - **Rules applied (PRD [Feature Name]):** BR-01, BR-03
-  - **Acceptance Criteria**
-    - AC1 Done when: [observable outcome, naming the rule in words] (BR-03)
-    - AC2 Done when: If [business situation] (BR-01), then [toast / inline error / popup] shows MSG-01.
-
-### 3.2 Business Rules
+### 3.1 Business Rules
 
 <!--
   The core of the PRD for Dev and QC, and the only place rule values live. One rule per row, each with
@@ -205,6 +169,9 @@ When [situation], I want to [motivation], so I can [expected outcome].
   - Notes: the source of the rule; who may change the value without a new release; "No longer applies (vX)"
     for a removed rule, which keeps its ID and is no longer cited.
   - A rule defined in another approved PRD is not copied here: cite it as "[Other PRD name] BR-02".
+  - Launch policy: when the feature changes how existing bookings, tickets, vouchers, or accounts behave,
+    a rule says how records that exist before launch, and actions in progress at launch, are treated.
+    How existing data is converted is an Open Question for Dev / Tech Lead.
 -->
 
 **Formulas, Policies & Limits**
@@ -239,11 +206,69 @@ When [situation], I want to [motivation], so I can [expected outcome].
 | ID | Action | [Role 1] | [Role 2] | [Role 3] |
 |----|--------|----------|----------|----------|
 
-### 3.3 Process Diagrams
+---
+
+### 3.2 Process Diagrams
 
 <!-- Use the diagram-writer skill. Business-level diagrams only: actors, the system as one
      participant, and partners named in the input. Labels name rules and cite their IDs, never values.
      Available types: BPMN (bpmn.io XML), Activity Diagram (PlantUML), Sequence Diagram (PlantUML). -->
+
+---
+
+### 3.3 Feature Epics & User Stories
+
+<!--
+  Taken from the approved Product Framing Pack. Follow the `user-story-skill` rules STRICTLY.
+
+  Common Behaviors come first: situations that behave the same way in every story (login session
+  expired, connection lost, repeated tap, system temporarily unavailable). Each is written once and
+  cited by stories instead of being repeated in their acceptance criteria.
+
+  Each epic names the job it serves (JTBD ID) and has a Jira line the PM fills after creating the epic.
+
+  Each story:
+  - Statement: As a [persona], I want to [action], so that [value/reason].
+  - Priority: Must / Should / Could.
+  - Screens: the SCR IDs from 3.6 the story is built on, or none.
+  - Jira: filled by the PM after creating the ticket; never generated. The Jira ticket summary starts
+    with the story ID and name (e.g. "US-03 Choose seats"), so the ticket and the PRD always match.
+  - Common behaviors: the CB IDs that apply to the story.
+  - Rules applied: every BR referred to by its acceptance criteria and its common behaviors, then every
+    BR cited in any cell of those rules' rows, followed all the way down (a transition also brings in the
+    "on entering" row of its new status; a cited message brings in its Rules column). Prefixed with the
+    feature name so it still makes sense in a Jira ticket; rules from another PRD go in a second group
+    prefixed with that PRD's name and are not followed further.
+  - Acceptance criteria, numbered AC1, AC2, ... and labelled (Happy), (Alternative), or (Error): UI/UX
+    behavior, how a broken rule or a failure is shown (toast / inline error / popup + MSG ID), and
+    side-effects of this story's own action. One outcome per criterion: split it when its outcomes can
+    pass or fail separately. When it depends on a situation or state beyond "the user is on this
+    screen", open with "If" (something happens) or "While" (a state holds) and cite the rule.
+    Side-effects of a status change live in 3.1 (on its transition or "on entering" row); the acceptance
+    criterion only states that the transition happens. Cite rule and message IDs; never copy a rule value or message wording.
+-->
+
+**Common Behaviors**
+
+| ID | Situation | What the user sees / what happens | Rules & Messages |
+|----|-----------|-----------------------------------|------------------|
+| CB-01 | | | |
+
+**Epic 1: [Epic Name]** — Serves: JTBD-01 — Jira: [PM fills]
+
+- **US-01 - [Story Name]**
+  - **As a** [user role],
+  - **I want to** [action],
+  - **so that** [benefit].
+  - **Priority:** [Must / Should / Could]
+  - **Screens:** SCR-01
+  - **Jira:** [PM fills]
+  - **Common behaviors:** CB-01
+  - **Rules applied (PRD [Feature Name]):** BR-01, BR-03
+  - **Acceptance Criteria**
+    - AC1 (Happy) Done when: [observable outcome, naming the rule in words] (BR-03)
+    - AC2 (Alternative) Done when: While [state] (BR-03), [what the user can do or sees].
+    - AC3 (Error) Done when: If [business situation] (BR-01), [toast / inline error / popup] shows MSG-01.
 
 ---
 
@@ -254,7 +279,7 @@ When [situation], I want to [motivation], so I can [expected outcome].
   that branches on a business condition. One use case may cover several stories; name them in its
   header. A single-step story gets no use case: its acceptance criteria are complete.
   If no flow qualifies, write "No use case needed: every story is single-step; see the acceptance
-  criteria in 3.1." This is complete, not TBD.
+  criteria in 3.3." This is complete, not TBD.
 
   Use cases hold only the ORDER of steps, taken from the approved user flow. Every outcome cites where it is defined: the acceptance
   criterion or common behavior (what the user sees), the rule (BR), the message (MSG). Add a branch
@@ -289,8 +314,8 @@ When [situation], I want to [motivation], so I can [expected outcome].
 #### Traceability Matrix
 
 <!--
-  IDs only, no prose. One row per BR, built from the citations in 3.1 (acceptance criteria and common
-  behaviors), 3.4 (use cases), 3.6 (the Rules column of each message), and 3.2 (rules citing other rules).
+  IDs only, no prose. One row per BR, built from the citations in 3.3 (acceptance criteria and common
+  behaviors), 3.4 (use cases), 3.6 (the Rules column of each message), and 3.1 (rules citing other rules).
   Cited by: the AC and CB IDs that cite the rule, plus "via BR-.." for each rule that uses it.
   MSG: the messages whose Rules column lists the rule. A removed rule shows "No longer applies".
   A rule cited from another PRD gets its own row, named with that PRD, so a change there can be traced here.
@@ -306,7 +331,7 @@ When [situation], I want to [motivation], so I can [expected outcome].
   The home of cross-cutting quality targets, expressed as users or the business experience them:
   response time as the user perceives it, availability (e.g. 24/7, peak seasons), supported platforms
   and channels, information freshness, expected volume.
-  Who may see what is a permission rule in 3.2; recording a specific action is an acceptance criterion.
+  Who may see what is a permission rule in 3.1; recording a specific action is an acceptance criterion.
   No infrastructure. If the business has no target, write TBD and add an Open Question for Dev / Tech Lead.
 -->
 
@@ -319,10 +344,12 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 **Screens**
 
-<!-- An inventory only. What each screen does lives in the acceptance criteria of the stories listed. -->
+<!-- An inventory only. What each screen does lives in the acceptance criteria of the stories listed.
+     Stories: built from the stories' Screens lines. Design: the Figma frame link, filled by the designer or
+     PM (Step 5.5 writes it for frames it creates); never generated. Colours, sizes, and assets live in Figma. -->
 
-| Screen | Purpose | Stories |
-|--------|---------|---------|
+| ID | Screen | Purpose | Stories | Design |
+|----|--------|---------|---------|--------|
 
 **Messages**
 
@@ -369,7 +396,7 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 <!-- Only constraints on how or when the feature is delivered that the user explicitly stated (e.g. reuse
      the current payment partner, launch before Tet), recorded once as stated. Limits on what users or
-     data may do are business rules in 3.2. Write "None provided." if there are none. -->
+     data may do are business rules in 3.1. Write "None provided." if there are none. -->
 
 -
 

@@ -53,17 +53,19 @@ Ask what a sentence is about. If it is about **money, seats or other inventory, 
 
 | Fact | Its one home | ID |
 |------|--------------|----|
-| Who needs what, and why; priority | User Story (3.1) | `US-01` |
-| Formulas, calculations, rounding, application order, with a worked example | Business Rules (3.2) | `BR-01` |
-| Eligibility and conditional policies, including what happens to money, seats, or status when something fails | Business Rules (3.2) | `BR-01` |
-| Limits and data constraints (time windows, quantities, input rules), and deadlines promised to the customer | Business Rules (3.2) | `BR-01` |
-| Status transitions and their conditions; side-effects of one event on its transition row, and side-effects shared by every way into a status on its "on entering" row (notifications, inventory released, partner informed) | Business Rules (3.2), Statuses & Transitions and On Entering a Status | `BR-01` |
-| Who may perform which action | Business Rules (3.2), Roles & Permissions | `BR-01` |
-| What the user sees and can do in one story: UI behavior, loading and empty states, default sort order, what each button does, how an error or rule violation is shown (toast, inline error, popup), side-effects of this story's own action | Acceptance Criteria under its story (3.1) | `US-01-AC2` |
-| Behavior that is the same in every story: login session expired, connection lost, repeated tap, system temporarily unavailable | Common Behaviors (3.1) | `CB-01` |
+| The jobs users hire the feature for | JTBD (2.3); each epic names the job it serves | `JTBD-01` |
+| Who needs what, and why; priority | User Story (3.3) | `US-01` |
+| Formulas, calculations, rounding, application order, with a worked example | Business Rules (3.1) | `BR-01` |
+| Eligibility and conditional policies, including what happens to money, seats, or status when something fails, and how records that exist before launch and actions in progress at launch are treated | Business Rules (3.1) | `BR-01` |
+| Limits and data constraints (time windows, quantities, input rules), and deadlines promised to the customer | Business Rules (3.1) | `BR-01` |
+| Status transitions and their conditions; side-effects of one event on its transition row, and side-effects shared by every way into a status on its "on entering" row (notifications, inventory released, partner informed) | Business Rules (3.1), Statuses & Transitions and On Entering a Status | `BR-01` |
+| Who may perform which action | Business Rules (3.1), Roles & Permissions | `BR-01` |
+| What the user sees and can do in one story: UI behavior, loading and empty states, default sort order, what each button does, how an error or rule violation is shown (toast, inline error, popup), side-effects of this story's own action | Acceptance Criteria under its story (3.3) | `US-01-AC2` |
+| Behavior that is the same in every story: login session expired, connection lost, repeated tap, system temporarily unavailable | Common Behaviors (3.3) | `CB-01` |
 | The exact wording of every message, on any channel (screen, email, SMS, push) | Messages (3.6) | `MSG-01` |
 | Quality targets: perceived speed, availability, supported platforms, information freshness, expected volume | Non-Functional Requirements (3.5) | `NFR-01` |
-| Success metrics with their baselines and targets | Success Metrics table (2.4) | `SM-01` |
+| Success metrics (primary, secondary, guardrail) with their baselines, targets, and owners | Success Metrics table (2.4) | `SM-01` |
+| Screens and their design links | Screens (3.6) | `SCR-01` |
 | Partners, teams, other PRDs, and existing features this feature relies on | Dependencies (3.7) | `DEP-01` |
 | A rule defined in another approved PRD | That PRD, listed in Dependencies (3.7) | `[Other PRD name] BR-02` |
 | The order of steps in a multi-step flow | Use Case (3.4), citing AC, CB, BR, and MSG IDs | `UC-01` |

@@ -3,7 +3,7 @@ name: diagram-writer
 description: >
   Draw process diagrams on demand. Trigger when the user asks to "draw", "create", or
   "generate" a diagram, or mentions BPMN, activity diagram, sequence diagram, flow diagram,
-  or "draw a diagram". Also trigger when a PRD session reaches section 3.3 and diagrams are needed.
+  or "draw a diagram". Also trigger when a PRD session reaches section 3.2 and diagrams are needed.
 ---
 
 # Diagram Writer Skill
