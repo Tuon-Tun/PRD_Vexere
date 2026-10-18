@@ -18,11 +18,11 @@ ACTIVE_SECTIONS = [
     "Goals & Success Metrics",
     "Scope",
     "Glossary",
-    "Feature Epics & User Stories",
     "Business Rules",
     "Process Diagrams",
+    "Feature Epics & User Stories",
     "Use Case Specifications",
-    "Functional Requirements",
+    "Traceability Matrix",
     "Non-Functional Requirements",
     "UI/UX Specifications",
     "Dependencies & Impacted Areas",
@@ -80,11 +80,9 @@ def check_input_schema():
         "Scope",
         "Glossary",
         "Epic_Candidates",
-        "Primary_User_Story",
         "User_Story_Candidates",
         "User_Flow",
         "Business_Logic_and_Rules",
-        "Functional_Requirements",
         "Non_Functional_Requirements",
         "Success_Metrics",
         "UI_UX_Requirements",
@@ -220,6 +218,14 @@ def check_product_framing_skill():
     content = path.read_text(encoding="utf-8")
     assert_true("Product Framing Pack" in content, "Product framing skill is missing its output contract")
     assert_true("Done when" in content, "Product framing skill is missing acceptance criteria guidance")
+    assert_true("Rules applied" in content, "Product framing skill is missing the Rules applied line")
+    # Rules must get their IDs before the stories that cite them are written.
+    rules_at = content.find("## 3. Business Rules")
+    stories_at = content.find("## 7. Epics & User Stories")
+    assert_true(
+        0 <= rules_at < stories_at,
+        "Product framing output must define Business Rules before Epics & User Stories",
+    )
 
 
 def check_prd_sections():
@@ -232,9 +238,33 @@ def check_prd_sections():
 
     template = (ROOT / "knowledge-base/prd-template/resources/prd-template.md").read_text(encoding="utf-8")
     for heading in ("### 1.3 How to Read This PRD", "### 2.1 Summary", "### 2.5 Scope", "### 2.6 Glossary",
-                    "### 3.7 Dependencies & Impacted Areas", "## 4. Assumptions & Open Questions"):
+                    "#### Traceability Matrix", "### 3.7 Dependencies & Impacted Areas",
+                    "## 4. Assumptions & Open Questions"):
         assert_true(heading in template, f"PRD template is missing heading: {heading}")
     assert_true("API / Technical Specs" not in template, "PRD template still contains the technical specs section")
+    # Rules are defined before the stories that cite them, in the PRD as in the framing pack.
+    assert_true(
+        0 <= template.find("### 3.1 Business Rules") < template.find("### 3.3 Feature Epics & User Stories"),
+        "PRD template must place Business Rules (3.1) before Feature Epics & User Stories (3.3)",
+    )
+    assert_true(
+        "#### Functional Requirements" not in template,
+        "PRD template still contains the Functional Requirements table",
+    )
+
+    framing = (ROOT / "knowledge-base/product-framing/SKILL.md").read_text(encoding="utf-8")
+    for name, text in (("PRD template", template), ("Product framing skill", framing)):
+        # Shared side-effects of a status live once, on its "on entering" row.
+        assert_true("**On Entering a Status**" in text, f"{name} is missing the On Entering a Status table")
+    for path in sorted((ROOT / "knowledge-base").rglob("*.md")):
+        assert_true(
+            "Also cites" not in path.read_text(encoding="utf-8"),
+            f"{path.relative_to(ROOT)} still uses the removed 'Also cites' line",
+        )
+
+    writer = (ROOT / "prd-writer.md").read_text(encoding="utf-8")
+    agenda = re.findall(r"^  \d+\. (.+?) — ", writer, flags=re.MULTILINE)
+    assert_true(agenda == ACTIVE_SECTIONS, "prd-writer.md Step 0 agenda drifted from Active_Sections")
 
 
 def main():

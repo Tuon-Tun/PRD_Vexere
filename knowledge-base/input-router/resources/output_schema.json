@@ -20,11 +20,9 @@
     "Scope",
     "Glossary",
     "Epic_Candidates",
-    "Primary_User_Story",
     "User_Story_Candidates",
     "User_Flow",
     "Business_Logic_and_Rules",
-    "Functional_Requirements",
     "Non_Functional_Requirements",
     "Success_Metrics",
     "UI_UX_Requirements",
@@ -70,11 +68,11 @@
           "Goals & Success Metrics",
           "Scope",
           "Glossary",
-          "Feature Epics & User Stories",
           "Business Rules",
           "Process Diagrams",
+          "Feature Epics & User Stories",
           "Use Case Specifications",
-          "Functional Requirements",
+          "Traceability Matrix",
           "Non-Functional Requirements",
           "UI/UX Specifications",
           "Dependencies & Impacted Areas",
@@ -170,7 +168,7 @@
     },
     "Glossary": {
       "type": "array",
-      "description": "Business terms, statuses, and roles a reader could misread, defined from the input context in plain language.",
+      "description": "Business terms, status names, and role names a reader could misread, each with a one-line meaning from the input context. Transitions and permissions belong in Business_Logic_and_Rules.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -188,15 +186,12 @@
     "Epic_Candidates": {
       "$ref": "#/$defs/string_array"
     },
-    "Primary_User_Story": {
-      "$ref": "#/$defs/non_empty_or_needs_clarification"
-    },
     "User_Story_Candidates": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["Title", "Actor", "Action", "Value"],
+        "required": ["Title", "Actor", "Action", "Value", "AC_Seeds"],
         "properties": {
           "Title": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
@@ -209,22 +204,24 @@
           },
           "Value": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
+          },
+          "AC_Seeds": {
+            "description": "What the user sees or what this story triggers, as stated in the input (UI behavior, how an error is shown, side-effects of the story's own action). Never rule values. Empty array if none.",
+            "$ref": "#/$defs/string_array"
           }
         }
       }
     },
     "User_Flow": {
+      "description": "Ordered business steps only. Values, limits, and conditions belong in Business_Logic_and_Rules.",
       "$ref": "#/$defs/string_array"
     },
     "Business_Logic_and_Rules": {
-      "description": "One explicit, testable business rule per item, with concrete values and the condition that triggers it.",
-      "$ref": "#/$defs/string_array"
-    },
-    "Functional_Requirements": {
+      "description": "One business rule per item, with concrete values and the condition that triggers it: formulas and rounding, eligibility and conditional policies (including what happens to money, seats, or status when something fails), status transitions, who may act, limits, and how records that exist before launch and actions in progress at launch are treated. Not what the user sees; that belongs in AC_Seeds.",
       "$ref": "#/$defs/string_array"
     },
     "Non_Functional_Requirements": {
-      "description": "Business-level expectations as users or the business experience them (perceived speed, availability, platforms, privacy, traceability, volume). No infrastructure.",
+      "description": "Cross-cutting quality expectations as users or the business experience them (perceived speed, availability, platforms, information freshness, expected volume). Who may see what is a business rule; recording a specific action is an AC seed. No infrastructure.",
       "$ref": "#/$defs/string_array"
     },
     "Success_Metrics": {
@@ -232,8 +229,13 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["Metric", "How_Measured", "Baseline", "Target"],
+        "required": ["Type", "Metric", "How_Measured", "Baseline", "Target", "Owner"],
         "properties": {
+          "Type": {
+            "type": "string",
+            "description": "Primary: the outcome the feature is for. Secondary: a supporting outcome. Guardrail: what must not get worse while the primary metric improves; its target is a limit.",
+            "enum": ["Primary", "Secondary", "Guardrail"]
+          },
           "Metric": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
           },
@@ -246,11 +248,16 @@
           },
           "Target": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
+          },
+          "Owner": {
+            "$ref": "#/$defs/non_empty_or_needs_clarification",
+            "description": "The role who reports the number and judges the result."
           }
         }
       }
     },
     "UI_UX_Requirements": {
+      "description": "Screens named in the input (with any design link the input gives) and message wording stated in the input, copied as stated. Behavior on a screen belongs in the story's AC_Seeds.",
       "$ref": "#/$defs/string_array"
     },
     "Dependencies_and_Impacted_Areas": {
@@ -258,7 +265,7 @@
       "$ref": "#/$defs/string_array"
     },
     "Known_Constraints": {
-      "description": "Constraints the user explicitly stated (including technical ones), copied as stated. Never inferred or expanded. Empty array if none.",
+      "description": "Constraints on how or when the feature is delivered that the user explicitly stated (including technical ones), copied as stated. Never inferred or expanded. Limits on what users or data may do belong in Business_Logic_and_Rules. Empty array if none.",
       "$ref": "#/$defs/string_array"
     },
     "Diagram_Requirements": {
