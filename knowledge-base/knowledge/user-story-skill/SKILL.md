@@ -46,14 +46,14 @@ so that [Value/Reason].
 **Format:** `Done when: [testable condition — pass/fail verifiable]`
 **Prefer** "Done when" over Gherkin (Given/When/Then) — simpler to read and test.
 
-- **One outcome per AC.** Split an AC when its outcomes can pass or fail separately (for example a status change and the toast that confirms it).
+- **One outcome per AC.** Split an AC when its outcomes can pass or fail separately (for example a status change and the toast that confirms it). A disabled or hidden control and the inline message that explains it count as one outcome.
 - **Name the precondition.** When the AC depends on a situation or a state beyond "the user is on this screen", open with `If` (something happens) or `While` (a state holds): `Done when: While the seat hold is active, the remaining time is visible.`
 - **Label the path.** Tag each AC `(Happy)`, `(Alternative)`, or `(Error)` so QC sees the coverage at a glance.
 
 ### Standalone story vs. story inside a PRD
 
 - **Standalone** (a story written on its own, with no PRD): write the values directly in the AC, as in the examples.
-- **Inside a PRD** (the PRD pipeline): every fact has one home, as defined in `knowledge-base/product-language/SKILL.md`. Rule values, formulas, conditions, status transitions, and permissions live in the PRD's Business Rules; message wording lives in its Messages table; quality targets live in its NFR table; behavior shared by every story lives in Common Behaviors. The AC names the rule in words and cites its ID — `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01.` — and never copies the value or the wording. Side-effects of a status transition live on its rule row; the AC only states that the transition happens. Number AC within the story (`AC1`, `AC2`) and add the story's `Priority`, `Common behaviors`, and `Rules applied` lines.
+- **Inside a PRD** (the PRD pipeline): every fact has one home, as defined in `knowledge-base/product-language/SKILL.md`. Rule values, formulas, conditions, status transitions, and permissions live in the PRD's Business Rules; message wording lives in its Messages table; quality targets live in its NFR table; behavior shared by every story lives in Common Behaviors. The AC names the rule in words and cites its ID — `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01.` — and never copies the value or the wording. Side-effects of a status transition live on its rule row; the AC only states that the transition happens. Number AC within the story (`AC1`, `AC2`) and add the story's `Priority`, `Screens`, `Jira` (left empty for the PM), `Common behaviors`, and `Rules applied` lines.
 
 ### Must cover all of these
 
@@ -160,6 +160,8 @@ I want to [Action + Object],
 so that [Value].
 
 **Priority:** [Must / Should / Could]                  ← inside a PRD
+**Screens:** SCR-01                                    ← inside a PRD
+**Jira:** [PM fills]                                   ← inside a PRD
 **Common behaviors:** CB-01                            ← inside a PRD
 **Rules applied (PRD [Feature Name]):** BR-01, BR-03   ← inside a PRD
 

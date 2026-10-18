@@ -243,7 +243,7 @@ flowchart TD
 ### Step 5.5: Optional Wireframe/UI Creation (Design MCP Tool)
 
 - This step runs only in IDE full pipeline mode.
-- After the PRD is approved, the system may generate wireframes from the 3.6 screen inventory, the acceptance criteria of the stories each screen lists, and the messages they cite.
+- After the PRD is approved, the system may generate wireframes from the 3.6 screen inventory, the acceptance criteria of the stories each screen lists, and the messages they cite. It writes each new frame's link into the screen's Design column and never overwrites a link that is already there.
 - This step should run only if a wireframe-capable design MCP tool (for example Stitch or Figma) is available in the environment.
 - If no design tool is available, the workflow should continue to export without blocking.
 

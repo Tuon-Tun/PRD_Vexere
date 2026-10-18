@@ -37,7 +37,7 @@ If JTBD research is not provided in the approved brief, Product Framing Pack, or
 
 Load `resources/prd-template.md`. Fill every section listed in `Active_Sections`. For any section **not** in `Active_Sections`, replace its entire content with `_Section excluded at user's request._` and keep the heading so the document structure stays intact. Use `TBD` only when the approved inputs still contain an unresolved gap.
 
-**Always included:** Section 1 Document Info (1.1 and 1.2 stay as empty tables for the PM; 1.3 is kept as is, translated) and Section 2.1 Summary. They are not part of `Active_Sections` and are never excluded.
+**Always included:** Section 1 Document Info (1.1 stays an empty table for the PM; 1.2 keeps its four pre-seeded rows with empty Link and PIC cells; 1.3 is kept as is, translated) and Section 2.1 Summary. They are not part of `Active_Sections` and are never excluded.
 
 **Section mapping:**
 

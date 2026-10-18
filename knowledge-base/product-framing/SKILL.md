@@ -71,7 +71,7 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 ### Business Rules
 
 - Build the register from `Business_Logic_and_Rules`, plus any value, limit, status, or permission stated elsewhere in the brief.
-- A business rule answers a question about money, seats or other inventory, a status, a voucher or other entitlement, or who may act. Three kinds:
+- A business rule answers a question about money, seats or other inventory, a status, a voucher or other entitlement, or who may act. Four kinds:
   - **Formulas & policies:** calculations, rounding, application order (for example voucher stacking), eligibility, and conditional policies, including what happens to money, seats, or status when something fails. Every formula has a worked example with real numbers.
   - **Launch policy:** when the feature changes how existing bookings, tickets, vouchers, or accounts behave, a rule says how records that exist before launch, and actions in progress at launch, are treated (for example "tickets bought before the launch date keep the fee shown at purchase"). How existing data is converted is an Open Question for Dev / Tech Lead.
   - **Statuses & permissions:**
@@ -99,8 +99,8 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 
 ### Referenced Items
 
-- List every success metric (`SM-`), quality target (`NFR-`), dependency (`DEP-`), and screen (`SCR-`) from the brief with its ID and all the columns the PRD needs, so Step 3 renders them unchanged in 2.4, 3.5, 3.7, and 3.6. Acceptance criteria and rules cite these IDs.
-- Each metric has a Type: `Primary` (the outcome the feature is for), `Secondary`, or `Guardrail` (what must not get worse while the primary metric improves; its target is a limit). If the brief has no guardrail, add an Open Question asking which metric must not get worse.
+- List every success metric (`SM-`), quality target (`NFR-`), dependency (`DEP-`), and screen (`SCR-`) from the brief with its ID and all the columns the PRD needs, so Step 3 renders them unchanged in 2.4, 3.5, 3.7, and 3.6 (the Stories column of 3.6 is built later from the stories' Screens lines). Acceptance criteria and rules cite these IDs.
+- Each metric has a Type: `Primary` (the outcome the feature is for), `Secondary`, or `Guardrail` (what must not get worse while the primary metric improves; its target is a limit). If the brief has no guardrail, make sure one Open Question asks which metric must not get worse (the brief's `Missing_Information` may already hold it; do not add it twice).
 - Screens come from `UI_UX_Requirements`. A screen the flow clearly needs but the input does not name is marked `(proposed)` so the user approves it. Design links the input gives are kept with the screen; otherwise the Design column is left for the designer.
 - A dependency's "If it is unavailable" cites the rule, common behavior, or acceptance criterion that defines the outcome; "What we need from it" names the capability and cites rules for values and side-effects.
 
@@ -125,7 +125,7 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 - Number the acceptance criteria within each story: `AC1`, `AC2`, ... Elsewhere they are cited as `US-01-AC2`.
 - Each acceptance criterion uses `Done when: ...` and describes an observable outcome that QC can verify by using the product, without reading code.
 - Label each one `(Happy)`, `(Alternative)`, or `(Error)`: `AC2 (Error) Done when: ...`.
-- One outcome per acceptance criterion: split it when its outcomes can pass or fail separately (for example a status change and the toast that confirms it).
+- One outcome per acceptance criterion: split it when its outcomes can pass or fail separately (for example a status change and the toast that confirms it). A disabled or hidden control and the inline message that explains it count as one outcome.
 - When it depends on a situation or a state beyond "the user is on this screen", open with `If` (something happens) or `While` (a state holds) and cite the rule: `Done when: While the seat hold is active (BR-01), the remaining time is visible.`
 - An acceptance criterion covers one of:
   - **UI/UX behavior:** what the user sees and can do, loading and empty states, default sort order, what each button does.

@@ -35,7 +35,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 * **Important BPMN Note:** BPMN uses BPMN 2.0 XML. It is very token-heavy and not yet efficient for AI because coordinates for shapes and connectors must be estimated manually. The result will be basic, so confirm carefully before choosing BPMN.
 * **Scope agenda confirmation:** After the user confirms delivery mode and diagrams, present the full list of PRD sections and ask the user to confirm which ones apply. Explain briefly what each section contains. Default to all sections active. The user may exclude sections that are not relevant to their feature.
 
-  Present the agenda as a numbered checklist. Mention that Document Info (with a reader guide) and the one-glance Summary are always included, and that a section whose IDs other sections cite (Feature Epics & User Stories, Business Rules, Messages, Success Metrics, Non-Functional Requirements, Dependencies, Assumptions & Open Questions) is kept in minimal form while those IDs are cited.
+  Present the agenda as a numbered checklist. Mention that Document Info (with a reader guide) and the one-glance Summary are always included, and that a section whose IDs other sections cite (JTBD, Business Rules, Feature Epics & User Stories, Screens and Messages, Success Metrics, Non-Functional Requirements, Dependencies, Assumptions & Open Questions) is kept in minimal form while those IDs are cited.
   1. Problem Statement — context, current gap, business motivation
   2. JTBD — jobs-to-be-done by user type and scenario
   3. Goals & Success Metrics — business goals; primary, secondary, and guardrail metrics with how each is measured, targets, and owners
@@ -71,7 +71,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 ### Step 1.5: Clarification & Mandatory Confirmation Gate (CRITICAL PAUSE)
 
 * **Purpose:** This step exists to resolve all `[NEEDS_CLARIFICATION]` gaps before any framing or drafting work begins. It saves significant tokens by preventing the model from drafting incomplete sections that must be redone later.
-* **Action:** Review the approved JSON from Step 1. For every field containing `[NEEDS_CLARIFICATION]`, generate a concise, numbered list of clarification questions and present them to the user in one message. Group related questions together. Do not ask the same information twice.
+* **Action:** Review the approved JSON from Step 1. For every field containing `[NEEDS_CLARIFICATION]`, and every item in `Missing_Information`, generate a concise, numbered list of clarification questions and present them to the user in one message. Group related questions together. Do not ask the same information twice.
 * **Business questions only:** Ask about rules, values, users, scope, and outcomes in plain language. Do not ask technical implementation questions (APIs, databases, architecture); those become Open Questions for Dev / Tech Lead in the PRD.
 * **Example format:**
   Before we begin framing, I need to clarify a few points:
@@ -84,7 +84,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
     [Business_Logic_and_Rules] Do lucky-money links created before launch follow the new rules?
   Please answer the ones you can — any still unknown can stay as TBD.
 * **Update the JSON:** After the user responds, update all clarifiable fields in the JSON. Fields the user cannot answer remain as `[NEEDS_CLARIFICATION]` and surface as `TBD` in the PRD.
-* **No-gap shortcut:** If the approved JSON contains no `[NEEDS_CLARIFICATION]` fields, tell the user the brief is complete, ask for a single confirmation to continue, and skip the question list.
+* **No-gap shortcut:** If the approved JSON contains no `[NEEDS_CLARIFICATION]` fields and `Missing_Information` is empty, tell the user the brief is complete, ask for a single confirmation to continue, and skip the question list.
 * **Set `Clarification_Confirmed: true`** in the JSON only after the user explicitly confirms the clarified brief (or confirms the no-gap shortcut). Do not proceed to Step 2 until this field is `true`.
 * **Wait (HITL):** Ask: *"Is the brief now correct and complete? Approve to continue to JTBD framing, or request changes."*
 * **Constraint:** DO NOT move to Step 2 until `Clarification_Confirmed` is `true`.
@@ -161,7 +161,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 ### Step 5.5: Wireframe/UI Creation (Optional Design Tool)
 
 * **Mode rule:** This step is available only in `IDE_FULL_PIPELINE`.
-* **Action:** After the user approves the PRD in Step 5, take each screen in the Section 3.6 Screens inventory together with the acceptance criteria of the stories it lists, the common behaviors those stories list, the messages they cite, and the rule rows they cite (so placeholders can be filled with current values), and send them to whatever design/wireframe MCP tool is available in the current environment (for example Stitch, Figma, or an equivalent). Write the link of each frame it creates into that screen's Design column.
+* **Action:** After the user approves the PRD in Step 5, take each screen in the Section 3.6 Screens inventory together with the acceptance criteria of the stories it lists, the common behaviors those stories list, the messages they cite, and the rule rows they cite (so placeholders can be filled with current values), and send them to whatever design/wireframe MCP tool is available in the current environment (for example Stitch, Figma, or an equivalent). Write the link of each frame it creates into that screen's Design column. Skip a screen whose Design column already holds a link, and never overwrite one.
 * **Objective:** Generate one wireframe or screen per screen defined in the PRD, using the design tool's project-creation and screen-generation capabilities. Exact tool names depend on the MCP host — discover them at runtime rather than assuming a specific vendor.
 * **Availability rule:** Only do this if a wireframe-capable design tool is available in the current environment. If none is available, inform the user and continue to Step 6 without blocking export.
 

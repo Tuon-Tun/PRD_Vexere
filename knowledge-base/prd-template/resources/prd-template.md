@@ -242,7 +242,7 @@ When [situation], I want to [motivation], so I can [expected outcome].
   - Acceptance criteria, numbered AC1, AC2, ... and labelled (Happy), (Alternative), or (Error): UI/UX
     behavior, how a broken rule or a failure is shown (toast / inline error / popup + MSG ID), and
     side-effects of this story's own action. One outcome per criterion: split it when its outcomes can
-    pass or fail separately. When it depends on a situation or state beyond "the user is on this
+    pass or fail separately (a disabled control and the inline message explaining it count as one). When it depends on a situation or state beyond "the user is on this
     screen", open with "If" (something happens) or "While" (a state holds) and cite the rule.
     Side-effects of a status change live in 3.1 (on its transition or "on entering" row); the acceptance
     criterion only states that the transition happens. Cite rule and message IDs; never copy a rule value or message wording.
