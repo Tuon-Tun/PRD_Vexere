@@ -1,6 +1,9 @@
 {
   "Delivery_Mode": "IDE_FULL_PIPELINE",
-  "Output_Artifacts": ["Markdown File", "DOCX File"],
+  "Output_Artifacts": [
+    "Markdown File",
+    "DOCX File"
+  ],
   "Active_Sections": [
     "Problem Statement",
     "JTBD",
@@ -17,7 +20,7 @@
     "Dependencies & Impacted Areas",
     "Assumptions & Open Questions"
   ],
-  "Clarification_Confirmed": false,
+  "Clarification_Confirmed": true,
   "Domain_Name": "currency-switch",
   "Feature_Name": "Currency Switch",
   "Input_Type": "Business Requirements",
@@ -75,10 +78,10 @@
   ],
   "Scope": {
     "In_Scope": [
+      "Áp dụng cho vertical Bus trước tiên, trên web desktop, mobile web và app",
       "Quy ước hiển thị số tiền thống nhất trên mọi trang và mọi platform",
-      "Địa danh không dấu trên UI ngoại ngữ (Phase 1); tên bản địa cho Top 50 điểm đến (Phase sau)",
+      "Địa danh không dấu trên UI ngoại ngữ",
       "Search widget đa ngôn ngữ (Phase 1)",
-      "UI ngoại ngữ không còn nội dung tiếng Việt: banner, promo, popup, ToS, Privacy Policy, thông báo CSKH (Phase 2)",
       "Chọn ngôn ngữ; chọn tiền tệ tham khảo theo phạm vi của ngôn ngữ",
       "Lưu lựa chọn ngôn ngữ và tiền tệ qua phiên và thiết bị",
       "Tự nhận diện ngôn ngữ và tiền tệ cho khách mới",
@@ -97,40 +100,147 @@
       "Quản lý quy tắc tỷ giá trên công cụ cấu hình nội bộ",
       "Gợi ý nhập tên hành khách bằng chữ Latin trên UI ngoại ngữ"
     ],
-    "Out_Of_Scope": ["[NEEDS_CLARIFICATION]"]
+    "Out_Of_Scope": [
+      "Thanh toán (settlement) bằng ngoại tệ; có thể xem lại khi công ty có pháp nhân ở nước ngoài",
+      "Tên bản địa theo từng ngôn ngữ cho Top 50 điểm đến (phase sau)",
+      "UI ngoại ngữ không còn nội dung tiếng Việt: banner, promo, popup, ToS, Privacy Policy, thông báo CSKH (US-04 gốc, Phase 2)",
+      "Các vertical khác Bus trong đợt này",
+      "Các bề mặt CMS, coupon/campaign, landing page, trip card, payment promotion (chưa có estimate)"
+    ]
   },
   "Glossary": [
-    { "Term": "Khách inbound", "Meaning": "Khách quốc tế dùng UI ngoại ngữ của Vexere (gọi tắt là user quốc tế trong PRD gốc)." },
-    { "Term": "UI ngoại ngữ", "Meaning": "Giao diện Vexere ở bất kỳ ngôn ngữ nào khác tiếng Việt." },
-    { "Term": "Tiền thanh toán (settlement)", "Meaning": "Đơn vị tiền thật sự bị trừ khi thanh toán; trong tính năng này luôn là VND." },
-    { "Term": "Tiền tệ tham khảo", "Meaning": "Tiền tệ user chọn để xem giá quy đổi; chỉ để tham khảo, không dùng để thanh toán (PRD gốc gọi là currency hoặc presentment currency)." },
-    { "Term": "Số tham khảo", "Meaning": "Số tiền đã quy đổi sang tiền tệ tham khảo (PRD gốc gọi là presentment)." },
-    { "Term": "Hiển thị kép", "Meaning": "Cách hiển thị số tham khảo và số VND trên cùng một dòng, dạng 'số chính : số phụ'." },
-    { "Term": "Nhóm Browse", "Meaning": "Nhóm bề mặt dùng để xem và chọn chuyến, nơi ngoại tệ là số chính." },
-    { "Term": "Nhóm Pay", "Meaning": "Nhóm bề mặt liên quan tới thanh toán và sau khi đặt, nơi VND là số chính." },
-    { "Term": "Số chính / số phụ", "Meaning": "Số được nhấn mạnh và số đi kèm trong hiển thị kép." },
-    { "Term": "Bảng tỷ giá", "Meaning": "Tập tỷ giá của mọi cặp tiền tạo ra trong một lần cập nhật, kèm nguồn và thời điểm bản tin của từng cặp (PRD gốc gọi là batch)." },
-    { "Term": "Bảng tỷ giá cũ (stale)", "Meaning": "Bảng tỷ giá hiện hành không còn được dùng để hiển thị vì quá lâu không cập nhật được." },
-    { "Term": "Quy tắc tỷ giá", "Meaning": "Cấu hình tỷ giá cho một cặp tiền XXX/VND do nhân viên vận hành quản lý trên công cụ cấu hình tỷ giá." },
-    { "Term": "Tỷ giá gốc", "Meaning": "Tỷ giá lấy từ nguồn, trước khi áp buffer." },
-    { "Term": "Buffer", "Meaning": "Phần trăm cộng thêm vào tỷ giá gốc theo quy tắc tỷ giá." },
-    { "Term": "Nguồn chính / nguồn dự phòng", "Meaning": "Nguồn tỷ giá được ưu tiên dùng trước và các nguồn dùng khi nguồn trước lỗi." },
-    { "Term": "Biến động tối đa/ngày", "Meaning": "Mức lệch tối đa giữa tỷ giá mới và tỷ giá hiện hành mà quy tắc tỷ giá chấp nhận." },
-    { "Term": "Báo giá (quote)", "Meaning": "Bản chốt giá tạo khi khách vào checkout, giữ cố định số VND và bảng tỷ giá dùng cho đơn." },
-    { "Term": "Thời gian giữ chỗ", "Meaning": "Khoảng thời gian chỗ đã chọn được giữ cho khách trong lúc thanh toán, theo thời gian giữ chỗ hiện có của hệ thống." },
-    { "Term": "Phạm vi tiền tệ của ngôn ngữ", "Meaning": "Danh sách tiền tệ tham khảo được dùng với một ngôn ngữ." },
-    { "Term": "Tiền tệ chính của ngôn ngữ", "Meaning": "Tiền tệ mặc định khai báo cho một ngôn ngữ (ví dụ KO → KRW)." },
-    { "Term": "Tiền tệ gợi ý", "Meaning": "Nhóm tiền tệ hiện đầu tiên trên picker tiền tệ của EN." },
-    { "Term": "Lựa chọn chủ động", "Meaning": "Ngôn ngữ hoặc tiền tệ do user tự chọn trên picker (PRD gốc gọi là explicit), khác với giá trị tự nhận diện." },
-    { "Term": "Tự nhận diện", "Meaning": "Cách hệ thống tự xác định ngôn ngữ và tiền tệ cho khách mới (PRD gốc gọi là auto-detect)." },
-    { "Term": "Tham số trên link", "Meaning": "Ngôn ngữ và tiền tệ được chỉ định ngay trong link web hoặc deep link app." },
-    { "Term": "Disclaimer", "Meaning": "Câu lưu ý rằng giá tham khảo chỉ để tham khảo và khách bị trừ bằng VND." },
-    { "Term": "Payment Notice", "Meaning": "Thông báo về số VND chính xác sẽ bị trừ; có bản đầy đủ ở checkout và bản rút gọn ở màn thanh toán." },
-    { "Term": "Địa danh không dấu", "Meaning": "Tên địa danh tiếng Việt đã bỏ dấu để khách đọc và gõ được bằng bàn phím Latin." },
-    { "Term": "Ngôn ngữ đặt vé", "Meaning": "Ngôn ngữ UI tại thời điểm thanh toán, được lưu trên đơn." },
-    { "Term": "Vertical", "Meaning": "Ngành hàng của Vexere (ví dụ Bus)." },
-    { "Term": "Platform", "Meaning": "Kênh sử dụng: web desktop, mobile web, app." },
-    { "Term": "Mã ISO", "Meaning": "Mã tiền tệ 3 chữ cái theo chuẩn ISO 4217 (ví dụ USD, KRW)." }
+    {
+      "Term": "Khách inbound",
+      "Meaning": "Khách quốc tế dùng UI ngoại ngữ của Vexere (gọi tắt là user quốc tế trong PRD gốc)."
+    },
+    {
+      "Term": "UI ngoại ngữ",
+      "Meaning": "Giao diện Vexere ở bất kỳ ngôn ngữ nào khác tiếng Việt."
+    },
+    {
+      "Term": "Tiền thanh toán (settlement)",
+      "Meaning": "Đơn vị tiền thật sự bị trừ khi thanh toán; trong tính năng này luôn là VND."
+    },
+    {
+      "Term": "Tiền tệ tham khảo",
+      "Meaning": "Tiền tệ user chọn để xem giá quy đổi; chỉ để tham khảo, không dùng để thanh toán (PRD gốc gọi là currency hoặc presentment currency)."
+    },
+    {
+      "Term": "Số tham khảo",
+      "Meaning": "Số tiền đã quy đổi sang tiền tệ tham khảo (PRD gốc gọi là presentment)."
+    },
+    {
+      "Term": "Hiển thị kép",
+      "Meaning": "Cách hiển thị số tham khảo và số VND trên cùng một dòng, dạng 'số chính : số phụ'."
+    },
+    {
+      "Term": "Nhóm Browse",
+      "Meaning": "Nhóm bề mặt dùng để xem và chọn chuyến, nơi ngoại tệ là số chính."
+    },
+    {
+      "Term": "Nhóm Pay",
+      "Meaning": "Nhóm bề mặt liên quan tới thanh toán và sau khi đặt, nơi VND là số chính."
+    },
+    {
+      "Term": "Số chính / số phụ",
+      "Meaning": "Số được nhấn mạnh và số đi kèm trong hiển thị kép."
+    },
+    {
+      "Term": "Bảng tỷ giá",
+      "Meaning": "Tập tỷ giá của mọi cặp tiền tạo ra trong một lần cập nhật, kèm nguồn và thời điểm bản tin của từng cặp (PRD gốc gọi là batch)."
+    },
+    {
+      "Term": "Bảng tỷ giá cũ (stale)",
+      "Meaning": "Bảng tỷ giá hiện hành không còn được dùng để hiển thị vì quá lâu không cập nhật được."
+    },
+    {
+      "Term": "Quy tắc tỷ giá",
+      "Meaning": "Cấu hình tỷ giá cho một cặp tiền XXX/VND do nhân viên vận hành quản lý trên công cụ cấu hình tỷ giá."
+    },
+    {
+      "Term": "Tỷ giá gốc",
+      "Meaning": "Tỷ giá lấy từ nguồn, trước khi áp buffer."
+    },
+    {
+      "Term": "Buffer",
+      "Meaning": "Phần trăm cộng thêm vào tỷ giá gốc theo quy tắc tỷ giá."
+    },
+    {
+      "Term": "Nguồn chính / nguồn dự phòng",
+      "Meaning": "Nguồn tỷ giá được ưu tiên dùng trước và các nguồn dùng khi nguồn trước lỗi."
+    },
+    {
+      "Term": "Biến động tối đa/ngày",
+      "Meaning": "Mức lệch tối đa giữa tỷ giá mới và tỷ giá hiện hành mà quy tắc tỷ giá chấp nhận."
+    },
+    {
+      "Term": "Báo giá (quote)",
+      "Meaning": "Bản chốt giá tạo khi khách vào checkout, giữ cố định số VND và bảng tỷ giá dùng cho đơn."
+    },
+    {
+      "Term": "Thời gian giữ chỗ",
+      "Meaning": "Khoảng thời gian chỗ đã chọn được giữ cho khách trong lúc thanh toán, theo thời gian giữ chỗ hiện có của hệ thống."
+    },
+    {
+      "Term": "Phạm vi tiền tệ của ngôn ngữ",
+      "Meaning": "Danh sách tiền tệ tham khảo được dùng với một ngôn ngữ."
+    },
+    {
+      "Term": "Tiền tệ chính của ngôn ngữ",
+      "Meaning": "Tiền tệ mặc định khai báo cho một ngôn ngữ (ví dụ KO → KRW)."
+    },
+    {
+      "Term": "Tiền tệ gợi ý",
+      "Meaning": "Nhóm tiền tệ hiện đầu tiên trên picker tiền tệ của EN."
+    },
+    {
+      "Term": "Lựa chọn chủ động",
+      "Meaning": "Ngôn ngữ hoặc tiền tệ do user tự chọn trên picker (PRD gốc gọi là explicit), khác với giá trị tự nhận diện."
+    },
+    {
+      "Term": "Tự nhận diện",
+      "Meaning": "Cách hệ thống tự xác định ngôn ngữ và tiền tệ cho khách mới (PRD gốc gọi là auto-detect)."
+    },
+    {
+      "Term": "Tham số trên link",
+      "Meaning": "Ngôn ngữ và tiền tệ được chỉ định ngay trong link web hoặc deep link app."
+    },
+    {
+      "Term": "Disclaimer",
+      "Meaning": "Câu lưu ý rằng giá tham khảo chỉ để tham khảo và khách bị trừ bằng VND."
+    },
+    {
+      "Term": "Payment Notice",
+      "Meaning": "Thông báo về số VND chính xác sẽ bị trừ; có bản đầy đủ ở checkout và bản rút gọn ở màn thanh toán."
+    },
+    {
+      "Term": "Địa danh không dấu",
+      "Meaning": "Tên địa danh tiếng Việt đã bỏ dấu để khách đọc và gõ được bằng bàn phím Latin."
+    },
+    {
+      "Term": "Ngôn ngữ đặt vé",
+      "Meaning": "Ngôn ngữ UI tại thời điểm thanh toán, được lưu trên đơn."
+    },
+    {
+      "Term": "Vertical",
+      "Meaning": "Ngành hàng của Vexere (ví dụ Bus)."
+    },
+    {
+      "Term": "Platform",
+      "Meaning": "Kênh sử dụng: web desktop, mobile web, app."
+    },
+    {
+      "Term": "Mã ISO",
+      "Meaning": "Mã tiền tệ 3 chữ cái theo chuẩn ISO 4217 (ví dụ USD, KRW)."
+    },
+    {
+      "Term": "Chế độ thứ bậc hiển thị",
+      "Meaning": "Cài đặt quyết định số nào là số chính trong hiển thị kép: VND trên mọi bề mặt, hoặc theo nhóm Browse/Pay."
+    },
+    {
+      "Term": "BU",
+      "Meaning": "Bộ phận kinh doanh phụ trách cấu hình ngôn ngữ, tiền tệ được bật."
+    }
   ],
   "Epic_Candidates": [
     "Epic 1: Nền tảng (Foundation) - quy ước số tiền, địa danh, search widget, nội dung ngoại ngữ",
@@ -170,17 +280,6 @@
         "Kết quả gợi ý khi gõ và tên điểm đã chọn hiển thị dạng không dấu.",
         "Chọn điểm và bấm tìm thì dẫn tới trang kết quả tìm kiếm đúng ngôn ngữ đang dùng.",
         "Không có kết quả khớp thì hiện thông báo không có kết quả bằng ngôn ngữ UI."
-      ]
-    },
-    {
-      "Title": "US-04 UI ngoại ngữ không còn nội dung tiếng Việt (Phase 2)",
-      "Actor": "Khách inbound",
-      "Action": "đọc mọi banner, promo, popup, ToS, Privacy Policy và thông báo CSKH bằng ngôn ngữ đã chọn",
-      "Value": "tôi hiểu toàn bộ điều kiện đặt vé",
-      "AC_Seeds": [
-        "Không còn chuỗi tiếng Việt có dấu nào trên UI của mỗi ngôn ngữ ngoại ngữ.",
-        "Không còn chuỗi chưa dịch (mã chuỗi thô) hiển thị ra UI.",
-        "Banner hoặc promo chưa có bản dịch thì không hiển thị trên UI ngoại ngữ."
       ]
     },
     {
@@ -281,8 +380,9 @@
       "Action": "số tham khảo được cập nhật theo tỷ giá mới mà không bị chặn thanh toán",
       "Value": "tôi tiếp tục đặt vé mà không mất thời gian điền lại thông tin",
       "AC_Seeds": [
-        "Toast làm mới tỷ giá chỉ hiện khi số tham khảo thay đổi, hoặc khi lấy tỷ giá không thành công (theo PRD gốc, cần làm rõ).",
-        "Hết thời gian giữ chỗ thì user quay về trang kết quả tìm kiếm với thông báo hết thời gian giữ chỗ."
+        "Toast làm mới tỷ giá chỉ hiện khi số tham khảo thay đổi.",
+        "Nếu lấy tỷ giá mới không thành công, khách vẫn thấy số tham khảo theo tỷ giá hiện có của báo giá, không có toast, và vẫn thanh toán được (đề xuất).",
+        "Hết thời gian giữ chỗ thì khách quay về trang kết quả tìm kiếm với thông báo hết thời gian giữ chỗ."
       ]
     },
     {
@@ -358,7 +458,7 @@
       ]
     },
     {
-      "Title": "Gợi ý nhập tên hành khách bằng chữ Latin",
+      "Title": "US-23 Gợi ý nhập tên hành khách bằng chữ Latin",
       "Actor": "Khách inbound",
       "Action": "biết phải nhập tên hành khách bằng chữ Latin như trên hộ chiếu",
       "Value": "tôi không bị báo lỗi khi nhập tên",
@@ -384,17 +484,16 @@
   "Business_Logic_and_Rules": [
     "Tiền thanh toán luôn là VND cho mọi user. Tiền tệ tham khảo chỉ để hiển thị, không dùng trong giao dịch, hoá đơn, đối soát hay báo cáo doanh thu. (gốc BR-S01)",
     "Vexere không thu phí quy đổi ngoại tệ. (gốc BR-S02)",
-    "Tỷ giá tham khảo lấy từ quy tắc tỷ giá trên công cụ cấu hình tỷ giá. Buffer % của quy tắc có áp vào số tham khảo hay không: [NEEDS_CLARIFICATION] (PRD gốc: chờ chốt). (gốc BR-S02, CR-34)",
+    "Tỷ giá dùng cho số tham khảo lấy từ quy tắc tỷ giá trên công cụ cấu hình tỷ giá. Buffer % của quy tắc có áp vào số tham khảo hay không là cài đặt do vận hành chọn trên công cụ (theo config). (gốc BR-S02, CR-34)",
     "Hoá đơn VAT luôn bằng VND; số ngoại tệ không xuất hiện trong chỉ tiêu tính thuế. (gốc BR-S03)",
     "Mọi số liệu doanh thu được ghi nhận bằng số tiền VND; số tham khảo chỉ là thông tin phụ. (gốc US-18)",
-    "Hiển thị kép một dòng: mọi bề mặt có giá hiển thị số tham khảo và số VND trên một dòng, dạng 'số chính : số phụ'. Nhóm Browse (kết quả tìm kiếm, tìm nhà xe, chi tiết chuyến, chọn ghế, lịch giá, bộ lọc và thanh trượt giá, nhãn giảm giá, trang SEO landing): ngoại tệ là số chính, ví dụ 'USD 17.92 : VND 467,000'. Nhóm Pay (checkout, thanh toán, email xác nhận, My bookings, hoàn tiền, back office): VND là số chính và số phụ có tiền tố '~', ví dụ 'VND 470,300 : ~USD 18.05'. Thứ bậc theo nhóm: [NEEDS_CLARIFICATION] (PRD gốc: TBU, chờ thống nhất cùng Dev và Design). (gốc BR-D01, CR-04)",
+    "Hiển thị kép một dòng: mọi bề mặt có giá hiển thị số tham khảo và số VND trên một dòng, dạng 'số chính : số phụ'; ngoại tệ đứng ở vị trí số phụ có tiền tố '~'. Thứ bậc hiển thị là cài đặt có 2 chế độ: (1) VND là số chính trên mọi bề mặt, ví dụ '467,000 VND : ~USD 17.92' - chế độ áp dụng hiện tại; (2) theo nhóm, giữ nguyên định nghĩa của PRD gốc: nhóm Browse (kết quả tìm kiếm, tìm nhà xe, chi tiết chuyến, chọn ghế, lịch giá, bộ lọc và thanh trượt giá, nhãn giảm giá, trang SEO landing) lấy ngoại tệ làm số chính, ví dụ 'USD 17.92 : 467,000 VND'; nhóm Pay (checkout, thanh toán, email xác nhận, My bookings, hoàn tiền, back office) lấy VND làm số chính, ví dụ '470,300 VND : ~USD 18.05'. Chế độ (2) bật được bằng config trong tương lai, không cần phát hành bản mới. (gốc BR-D01, CR-04)",
     "Không bề mặt nào hiện ngoại tệ mà thiếu VND. (gốc US-10)",
-    "Khi thứ bậc hiển thị bị tắt, mọi bề mặt dùng VND làm số chính. Ai được tắt và khi nào: [NEEDS_CLARIFICATION]. (gốc CR-04)",
     "Khi tiền tệ hiện hành là VND (UI VI, hoặc user EN chọn VND), chỉ hiển thị VND, không có số quy đổi. (gốc BR-D02)",
-    "Số lẻ theo quy ước Vexere, cố định theo bảng, không theo mặc định của chuẩn định dạng quốc tế (vốn cho IDR, TWD 2 số lẻ): 0 số lẻ: VND, JPY, KRW, IDR, TWD; 2 số lẻ: USD, EUR, SGD, THB, CNY và tiền tệ không liệt kê (theo ISO 4217); 3 số lẻ: BHD, KWD, OMR. (gốc BR-D03)",
+    "Số lẻ theo quy ước Vexere, cố định theo bảng, không theo mặc định của chuẩn định dạng quốc tế (vốn cho IDR, TWD 2 số lẻ): 0 số lẻ: VND, JPY, KRW, IDR, TWD; 2 số lẻ: USD, EUR, SGD, THB, CNY; 3 số lẻ: BHD, KWD, OMR. Tiền tệ không có trong bảng dùng số lẻ chuẩn ISO 4217 của tiền tệ đó. (gốc BR-D03)",
     "Làm tròn half-up (nửa lên, xa số 0); mọi nơi hiển thị dùng cùng một quy tắc làm tròn. (gốc CR-03)",
     "Luôn hiển thị mã ISO thay vì ký hiệu tiền tệ, trên mọi ngôn ngữ (ví dụ USD 19.96, CNY 127.95), để tránh nhầm ¥ giữa JPY và CNY. (gốc BR-D04)",
-    "Số VND định dạng theo ngôn ngữ UI, ví dụ 'VND 520,000' trên EN và VI. Mã tiền đặt trước hay sau số: [NEEDS_CLARIFICATION] (PRD gốc: chờ Design). (gốc BR-D05, US-01)",
+    "Số VND định dạng theo ngôn ngữ UI, mã VND đứng sau số, ví dụ '520,000 VND' trên EN và VI. Mã ngoại tệ đứng trước số như PRD gốc, ví dụ 'USD 17.92'. (gốc BR-D05, US-01)",
     "Công thức quy đổi: tỷ giá là số VND cho 1 đơn vị ngoại tệ (ví dụ USD = 26.054, KRW = 18,95). Tổng tham khảo = làm tròn(tổng VND sau giảm giá / tỷ giá). Mỗi dòng dương (vé, phí, bảo hiểm) quy đổi và làm tròn độc lập: dòng tham khảo = làm tròn(VND của dòng / tỷ giá). (gốc CR-06, CR-07)",
     "Breakdown luôn cộng khớp total: dòng giảm giá gánh phần chênh do làm tròn (giảm giá = tổng tham khảo − các dòng dương − các dòng giảm giá khác); có nhiều dòng giảm giá thì dòng có giá trị tuyệt đối lớn nhất gánh, các dòng khác quy đổi độc lập. Ví dụ KRW = 18,95: vé 467.000 → 24,644; phí dịch vụ 50.000 → 2,639; voucher 10% −46.700 → −2,465 (gánh chênh); total 470.300 → 24,818. (gốc BR-D06, CR-08)",
     "Đơn không có dòng giảm giá: phần chênh do làm tròn cộng vào dòng có giá trị VND lớn nhất. Ví dụ USD = 26.054: vé chặng 1 467.000 → 17.92; phí dịch vụ 50.000 → 1.92; vé chặng 2 517.000 → 19.85 (gánh chênh +0.01); total 1.034.000 → 39.69. (gốc CR-10)",
@@ -404,7 +503,7 @@
     "Bộ lọc giá theo tiền tham khảo: khi lọc, giá trị biên được quy ngược về VND và so sánh bằng VND, nới thêm nửa đơn vị nhỏ nhất của tiền tham khảo (USD 0.01, KRW 1) ở hai đầu để chuyến hiển thị đúng bằng giá trị biên vẫn được giữ: biên trên VND = (biên + 0,5 × đơn vị) × tỷ giá; biên dưới VND = (biên − 0,5 × đơn vị) × tỷ giá. Ví dụ USD = 26.054: lọc ≤ USD 20 giữ lại chuyến 521.100 VND (hiển thị USD 20.00). (gốc BR-D08, CR-32)",
     "Khi bảng tỷ giá hiện hành là bảng cũ (stale), chỉ hiển thị VND kèm thông báo; không dùng tỷ giá cũ. (gốc BR-D09, CR-31)",
     "Ngôn ngữ và tiền tệ là hai danh sách riêng do vận hành quản lý, kèm bảng quốc gia → tiền tệ. Ngôn ngữ chưa có trong danh sách đang bật → EN. (gốc BR-N01)",
-    "Phạm vi tiền tệ theo ngôn ngữ: mỗi ngôn ngữ khai báo danh sách tiền tệ được dùng và một tiền tệ chính. Danh sách thực tế = tiền tệ của ngôn ngữ ∩ tiền tệ đang bật ∩ tiền tệ có trong bảng tỷ giá hiện hành, luôn có VND. Mỗi tiền tệ trong danh sách cần một quy tắc tỷ giá đang bật. Muốn xem tiền tệ ngoài phạm vi, user chuyển sang ngôn ngữ tương ứng hoặc EN. Ví dụ: ZH chọn CNY hoặc TWD; KO chọn KRW hoặc USD; TH chọn THB hoặc USD; VI chỉ có VND. (gốc BR-N02, US-06)",
+    "Phạm vi tiền tệ theo ngôn ngữ: mỗi ngôn ngữ khai báo danh sách tiền tệ được dùng và một tiền tệ chính; danh sách ngôn ngữ và tiền tệ thực tế theo config của BU. Danh sách thực tế = tiền tệ của ngôn ngữ ∩ tiền tệ đang bật ∩ tiền tệ có trong bảng tỷ giá hiện hành, luôn có VND. Mỗi tiền tệ trong danh sách cần một quy tắc tỷ giá đang bật. Muốn xem tiền tệ ngoài phạm vi, user chuyển sang ngôn ngữ tương ứng hoặc EN. Ví dụ (giá trị mẫu): ZH chọn CNY hoặc TWD; KO chọn KRW hoặc USD; TH chọn THB hoặc USD; VI chỉ có VND. (gốc BR-N02, US-06)",
     "Đổi ngôn ngữ thì tiền tệ đổi theo phạm vi tiền tệ của ngôn ngữ mới. (gốc US-05)",
     "Tiền tệ mặc định, xét theo thứ tự và chỉ nhận ứng viên trong phạm vi của ngôn ngữ: (1) tiền tệ của quốc gia nơi user truy cập theo bảng quốc gia → tiền tệ (web lấy quốc gia theo vị trí truy cập, app theo vùng của thiết bị); (2) tiền tệ chính của ngôn ngữ; (3) với EN: USD. Không ứng viên nào hợp lệ → chỉ hiển thị VND kèm thông báo tỷ giá tạm thời không có. Ví dụ: EN ở Mỹ → USD; EN ở Việt Nam → VND (đổi được trên picker); EN ở Pháp → EUR nếu đang bật, không thì USD; ZH ở Đài Loan → TWD; ZH ở Việt Nam → CNY; KO ở Mỹ → USD; KO ở Hàn Quốc hoặc Việt Nam → KRW. (gốc BR-N03)",
     "Thứ tự ưu tiên xác định ngôn ngữ và tiền tệ (xác định riêng, cùng một thứ tự): thao tác trong phiên > tham số trên link (chỉ cho phiên đó, không lưu) > lựa chọn chủ động gần nhất giữa hồ sơ và thiết bị > tự nhận diện lần đầu > mặc định (EN cho ngôn ngữ; quy tắc tiền tệ mặc định cho tiền tệ). Ngôn ngữ được xác định trước; tiền tệ phải thuộc phạm vi của ngôn ngữ hiện hành, không thì xét ứng viên kế tiếp. Ngôn ngữ VI luôn dùng VND. Giá trị tự nhận diện không phải lựa chọn chủ động. (gốc BR-N04, CR-13)",
@@ -413,16 +512,16 @@
     "Địa danh trên UI ngoại ngữ - Phase 1: mọi địa danh Bus được chuẩn hoá thành không dấu, dùng chung cho mọi ngôn ngữ ngoại ngữ (kể cả ngôn ngữ thêm sau). Phase sau: tên bản địa theo từng ngôn ngữ cho Top 50 điểm đến inbound (Hà Nội, Sapa, Hạ Long, Ninh Bình, Huế, Đà Nẵng, Hội An, Nha Trang, Đà Lạt, TP.HCM, Phú Quốc...); ngôn ngữ chưa có tên bản địa vẫn dùng bản không dấu. (gốc BR-N07, US-02)",
     "Cách chuẩn hoá không dấu: bỏ dấu tiếng Việt và chuyển 'đ/Đ' thành 'd/D' (ví dụ 'Đà Lạt' → 'Da Lat'). (gốc BR-N08)",
     "Tự nhận diện cho khách mới: chỉ chạy khi khách chưa có ngôn ngữ, tiền tệ đã lưu và chưa có hồ sơ; không chạy với bot công cụ tìm kiếm; trên app chạy ở lần mở đầu tiên. Ngôn ngữ: web theo tham số ngôn ngữ trên link > ngôn ngữ trong đường dẫn > ngôn ngữ ưu tiên đầu tiên của trình duyệt; app theo ngôn ngữ thiết bị; không khớp ngôn ngữ nào đang bật → EN. Tiền tệ: theo quy tắc tiền tệ mặc định; không xác định được quốc gia thì bỏ qua bước tiền tệ theo quốc gia. Không xác định được tín hiệu nào (VPN, thiếu thông tin) → EN + USD. (gốc BR-N09, CR-17 đến CR-20)",
-    "Bảng quyết định cho khách mới (ví dụ với cấu hình Phase 1, quốc gia / ngôn ngữ trình duyệt hoặc thiết bị → ngôn ngữ, tiền tệ): VN/vi → VI, VND (không có picker tiền tệ); VN/en → EN, VND (expat, khách quốc tế tại VN; đổi được sang tiền tệ khác); VN/zh, ko, th → ZH/KO/TH, CNY/KRW/THB; US/en → EN, USD; CN/zh-CN → ZH, CNY; TW/zh-TW → ZH (giản thể), TWD nếu đang bật, không thì CNY; KR/ko → KO, KRW; TH/th → TH, THB; KR/en → EN, KRW (EN lấy tiền tệ theo quốc gia); JP/ja (chưa có trong cấu hình) → EN, JPY nếu đang bật, không thì USD; AU/en → EN, AUD nếu đang bật, không thì USD; FR, DE/fr, de → EN, EUR nếu đang bật, không thì USD; ngoài VN/vi → VI, VND (Việt kiều); không xác định hoặc VPN → EN, USD; US/ko → KO, USD (USD thuộc phạm vi KO). (gốc BR-N10)",
+    "Bảng quyết định cho khách mới (giá trị mẫu theo cấu hình ví dụ của PRD gốc; ngôn ngữ, tiền tệ thực tế theo config của BU; quốc gia / ngôn ngữ trình duyệt hoặc thiết bị → ngôn ngữ, tiền tệ): VN/vi → VI, VND (không có picker tiền tệ); VN/en → EN, VND (expat, khách quốc tế tại VN; đổi được sang tiền tệ khác); VN/zh, ko, th → ZH/KO/TH, CNY/KRW/THB; US/en → EN, USD; CN/zh-CN → ZH, CNY; TW/zh-TW → ZH (giản thể), TWD nếu đang bật, không thì CNY; KR/ko → KO, KRW; TH/th → TH, THB; KR/en → EN, KRW (EN lấy tiền tệ theo quốc gia); JP/ja (chưa có trong cấu hình) → EN, JPY nếu đang bật, không thì USD; AU/en → EN, AUD nếu đang bật, không thì USD; FR, DE/fr, de → EN, EUR nếu đang bật, không thì USD; ngoài VN/vi → VI, VND (Việt kiều); không xác định hoặc VPN → EN, USD; US/ko → KO, USD (USD thuộc phạm vi KO). (gốc BR-N10)",
     "Lưu lựa chọn: ngôn ngữ và tiền tệ lưu riêng, mỗi giá trị kèm đánh dấu là lựa chọn chủ động hay tự nhận diện và thời điểm chọn. Sau tự nhận diện, cả hai được lưu là không chủ động; phiên sau dùng lại, không tự nhận diện lại. User đổi trên picker → lưu là lựa chọn chủ động kèm thời điểm, đồng bộ lên hồ sơ nếu đã đăng nhập. Guest lưu trên thiết bị; user đã đăng nhập lưu cả trên hồ sơ để giữ qua các thiết bị. Tham số trên link không được lưu vào thiết bị hay hồ sơ. (gốc BR-N11, CR-21, US-07, US-09)",
     "Khi giá trị trên thiết bị và trên hồ sơ khác nhau (xét riêng ngôn ngữ và tiền tệ): lựa chọn chủ động thắng giá trị tự nhận diện; hai lựa chọn chủ động thì cái mới hơn thắng và được đồng bộ lên hồ sơ khi đăng nhập; hai giá trị không chủ động thì hồ sơ thắng. (gốc CR-14)",
     "Tiền tệ đã lưu nằm ngoài phạm vi của ngôn ngữ hiện hành không bị xoá, chỉ bị bỏ qua cho tới khi user quay về ngôn ngữ có phạm vi chứa nó. Ví dụ: EN + RUB → chuyển KO thì KRW (RUB ngoài phạm vi KO) → quay lại EN thì RUB. (gốc CR-15, US-07)",
     "Tham số tiền tệ trên link nằm ngoài phạm vi tiền tệ của ngôn ngữ hiện hành (ví dụ ngôn ngữ KO với tiền tệ JPY) thì bị bỏ qua. (gốc US-09)",
     "Một ngôn ngữ chỉ được bật khi bản dịch của ngôn ngữ đó đã được đưa lên hệ thống. Mọi thay đổi cấu hình ngôn ngữ, tiền tệ và bảng quốc gia → tiền tệ được ghi lịch sử: người, thời điểm, giá trị cũ, giá trị mới. (gốc BR-N12, US-20)",
-    "Khi vào checkout, hệ thống tạo báo giá giữ cố định: số VND, bảng tỷ giá mới nhất tại thời điểm đó, thời điểm hết hiệu lực của tỷ giá (mốc làm mới tỷ giá kế tiếp trong ngày: [NEEDS_CLARIFICATION]) và thời điểm hết giữ chỗ theo thời gian giữ chỗ hiện có. (gốc CR-22)",
+    "Khi vào checkout, hệ thống tạo báo giá giữ cố định: số VND, bảng tỷ giá mới nhất tại thời điểm đó, thời điểm hết hiệu lực của tỷ giá (lần cập nhật tỷ giá 2 giờ kế tiếp) và thời điểm hết giữ chỗ theo thời gian giữ chỗ hiện có. (gốc CR-22)",
     "Số VND giữ cố định trong một báo giá: đổi ngôn ngữ hoặc tiền tệ trước màn thanh toán chỉ đổi tiền tệ tham khảo; tỷ giá vẫn lấy từ bảng tỷ giá của báo giá; số VND và thời điểm hết giữ chỗ không đổi. (gốc BR-C01, CR-23)",
     "Ngôn ngữ và tiền tệ đổi được từ trang kết quả tìm kiếm tới bước nhập thông tin; ở màn thanh toán thì không đổi được. (gốc BR-C07)",
-    "Khi tỷ giá của báo giá hết hiệu lực trong lúc chỗ vẫn còn được giữ, báo giá tự chuyển sang bảng tỷ giá mới nhất, không chặn thanh toán; số VND không đổi. (gốc BR-C04, CR-24)",
+    "Khi tỷ giá của báo giá hết hiệu lực trong lúc chỗ vẫn còn được giữ, báo giá tự chuyển sang bảng tỷ giá mới nhất, không chặn thanh toán; số VND không đổi. Nếu chưa có bảng tỷ giá mới hợp lệ, báo giá giữ tỷ giá hiện có cho tới khi bảng tỷ giá bị coi là cũ; khi đó chỉ hiển thị VND (đề xuất). (gốc BR-C04, CR-24)",
     "Khi hết thời gian giữ chỗ, chỗ được nhả và báo giá không còn dùng được; khách phải chọn lại chuyến. (gốc CR-24, US-14)",
     "Khi lưu đơn, số tham khảo trên đơn luôn được Vexere tính lại từ bảng tỷ giá của báo giá, không lấy số hiển thị trên thiết bị của khách; 100% đơn được tính lại. (gốc CR-25, NFR-04)",
     "Email xác nhận và My bookings hiển thị số tham khảo theo tỷ giá lúc đặt, vĩnh viễn, lấy từ đơn, không tính lại. Ví dụ: đơn đặt ở tỷ giá 26.054 vẫn hiện 'VND 470,300 : ~USD 18.05' khi tỷ giá hôm nay là 26.500. Đổi ngôn ngữ hoặc tiền tệ sau khi đặt không làm đổi tiền tệ và số tham khảo của đơn cũ. (gốc BR-P01, CR-26, US-15)",
@@ -433,16 +532,21 @@
     "Bảng tỷ giá chỉ hợp lệ khi có đủ tiền tệ chính của mọi ngôn ngữ đang bật. (gốc CR-29)",
     "Loại tỷ giá: spot. Nguồn dự phòng phải dùng cùng loại tỷ giá; nếu khác thì ghi rõ khác biệt trong bảng tỷ giá. (gốc BR-F02)",
     "Nguồn tỷ giá không hiện trên giao diện chính; được công bố trong tooltip (i) cạnh disclaimer và trong mục tỷ giá tham khảo của Điều khoản (T&C): tên nguồn, loại tỷ giá, thời điểm cập nhật của bảng tỷ giá đang dùng. (gốc BR-F03)",
-    "Mỗi cặp tiền XXX/VND có một quy tắc tỷ giá gồm: buffer %, đơn vị làm tròn (VND), biến động tối đa/ngày (%), danh sách nguồn theo thứ tự ưu tiên, trạng thái bật/tắt. Tỷ giá theo quy tắc = tỷ giá gốc × (1 + buffer). Ví dụ buffer 2%: USD gốc 25.899 → 26.417; THB gốc 772,44 → 787,88. 'Đơn vị làm tròn' làm tròn tỷ giá hay số VND sau quy đổi (PRD gốc ví dụ 1.000 đ), và ví dụ THB (772,44 × 1,02 = 787,8888, làm tròn half-up ra 787,89): [NEEDS_CLARIFICATION]. (gốc BR-F04, CR-34)",
+    "Mỗi cặp tiền XXX/VND có một quy tắc tỷ giá gồm: buffer %, đơn vị làm tròn (VND), biến động tối đa/ngày (%), danh sách nguồn theo thứ tự ưu tiên, trạng thái bật/tắt; mọi giá trị do vận hành đặt cho từng cặp trên công cụ (theo config). Tỷ giá theo quy tắc = tỷ giá gốc × (1 + buffer), làm tròn half-up tới đơn vị làm tròn của quy tắc. Ví dụ (giá trị mẫu, buffer 2%): USD gốc 25.899, đơn vị làm tròn 1 VND → 26.417; THB gốc 772,44, đơn vị làm tròn 0,01 VND → 787,89. (gốc BR-F04, CR-34)",
     "Quy tắc tỷ giá bị tắt thì cặp tiền đó không còn trong bảng tỷ giá; ngôn ngữ dùng tiền tệ đó chỉ hiển thị VND theo quy tắc tiền tệ mặc định. (gốc BR-F04, US-22)",
-    "Tỷ giá mới lệch so với tỷ giá hiện hành quá 'biến động tối đa/ngày' của quy tắc thì bị bỏ qua, giữ tỷ giá hiện hành và ghi cảnh báo; để trống là không giới hạn. Có thử nguồn dự phòng khi tỷ giá bị bỏ qua hay không: [NEEDS_CLARIFICATION] (PRD gốc: chờ chốt). (gốc CR-33)",
-    "Bảng tỷ giá hiện hành bị coi là cũ (stale) khi không tạo được bảng hợp lệ trong [NEEDS_CLARIFICATION] lần cập nhật liên tiếp. Ngày nguồn không công bố bản tin (cuối tuần, lễ) không tính là lần lỗi. Khi mọi nguồn lỗi, giữ bảng hiện hành cho tới ngưỡng stale. (gốc CR-30, US-19)",
+    "Tỷ giá mới lệch so với tỷ giá hiện hành quá 'biến động tối đa/ngày' của quy tắc thì bị bỏ qua, giữ tỷ giá hiện hành và ghi cảnh báo; để trống là không giới hạn. Khi tỷ giá bị bỏ qua, có thử nguồn dự phòng hay không là cài đặt do vận hành chọn (theo config). (gốc CR-33)",
+    "Bảng tỷ giá hiện hành bị coi là cũ (stale) khi không tạo được bảng hợp lệ trong N lần cập nhật liên tiếp; N do vận hành đặt (theo config), ví dụ mẫu N = 3 tức khoảng 6 giờ không có bảng mới. Ngày nguồn không công bố bản tin (cuối tuần, lễ) không tính là lần lỗi. Khi mọi nguồn lỗi, giữ bảng hiện hành cho tới ngưỡng stale. (gốc CR-30, US-19)",
     "Cơ chế chỉ hiển thị VND khi bảng tỷ giá cũ cũng được dùng làm công tắc tắt khẩn cấp. (gốc CR-31)",
     "Mọi thay đổi tỷ giá và quy tắc tỷ giá được ghi lại: giá trị, nguồn, thời điểm, người hoặc hệ thống thực hiện. (gốc NFR-02, US-19, 3.6.1)",
     "Dữ liệu nhập của quy tắc tỷ giá: mã tiền bắt buộc, mã ISO 4217 3 ký tự, không sửa được sau khi tạo; tiền quy đổi sang mặc định VND, không sửa được; buffer bắt buộc, nhập theo % hoặc bps (chọn một); trạng thái Active/Inactive; đơn vị làm tròn bắt buộc; biến động tối đa/ngày tuỳ chọn; mỗi nguồn có số ưu tiên bắt buộc, không trùng, và trạng thái bật/tắt. (gốc 3.6.1)",
     "Mỗi cặp tiền chỉ có một quy tắc tỷ giá: tạo quy tắc cho cặp đã có thì bị từ chối. (gốc US-22, 3.6.1)",
     "Currency Switch bật tắt theo từng vertical × platform; tỷ lệ traffic được tăng dần mà không cần phát hành bản mới. Tắt thì UI về chỉ hiển thị VND ngay. (gốc US-21)",
-    "Phân quyền: PO bật ngôn ngữ, tiền tệ (US-20) và bật tắt, ramp tính năng (US-21); nhân viên vận hành quản lý quy tắc tỷ giá (US-22). Vai trò cụ thể được phép trên công cụ: [NEEDS_CLARIFICATION]."
+    "Phân quyền: bật ngôn ngữ, tiền tệ; bật tắt và ramp tính năng; quản lý quy tắc tỷ giá; đổi chế độ thứ bậc hiển thị đều theo phân quyền hiện có của hệ thống, PRD này không định nghĩa lại. (gốc US-20, US-21, US-22)",
+    "Dữ liệu cũ lúc ra mắt (đề xuất): đơn đặt trước khi ra mắt không có số tham khảo; email, My bookings và hoàn tiền của các đơn này chỉ hiển thị VND trên mọi UI.",
+    "Checkout đang dở lúc ra mắt (đề xuất): báo giá tạo trước khi bật tính năng tiếp tục chỉ hiển thị VND tới khi xong đơn.",
+    "Đơn chỉ lưu số tham khảo khi màn thanh toán đã hiển thị số tham khảo cho khách; nếu không, đơn không có số tham khảo (đề xuất).",
+    "Khi tắt tính năng cho một vertical × platform (đề xuất): mọi bề mặt chuyển về chỉ VND ngay, kể cả checkout đang dở và My bookings; số tham khảo đã lưu trên đơn được giữ và hiện lại khi bật lại; email đã gửi không đổi.",
+    "Khi một ngôn ngữ hoặc tiền tệ bị tắt (đề xuất): lựa chọn đã lưu không bị xoá, chỉ bị bỏ qua tới khi được bật lại; ngôn ngữ bị tắt thì dùng EN, tiền tệ bị tắt thì dùng ứng viên kế tiếp theo thứ tự ưu tiên."
   ],
   "Non_Functional_Requirements": [
     "Đổi tiền tệ ở trang kết quả tìm kiếm: toàn bộ giá trên trang cập nhật trong dưới 200 ms. (gốc NFR-01)",
@@ -454,48 +558,48 @@
     {
       "Type": "Primary",
       "Metric": "Tỷ lệ hoàn thành đơn ở các user dùng page ngoại ngữ (North-star)",
-      "How_Measured": "[NEEDS_CLARIFICATION]",
-      "Baseline": "[NEEDS_CLARIFICATION]",
-      "Target": "[NEEDS_CLARIFICATION]",
-      "Owner": "[NEEDS_CLARIFICATION]"
+      "How_Measured": "Số đơn thanh toán thành công chia cho số phiên có xem kết quả tìm kiếm trên UI ngoại ngữ, vertical Bus, tính theo tuần",
+      "Baseline": "Trung bình 4 tuần trước khi bật tính năng cho Bus",
+      "Target": "Tăng so với baseline; mức cụ thể PO chốt sau khi đo baseline",
+      "Owner": "PO"
     },
     {
       "Type": "Secondary",
       "Metric": "Conversion UI ngoại ngữ",
-      "How_Measured": "Đo theo funnel; các bước funnel: [NEEDS_CLARIFICATION]",
-      "Baseline": "[NEEDS_CLARIFICATION]",
-      "Target": "[NEEDS_CLARIFICATION]",
-      "Owner": "[NEEDS_CLARIFICATION]"
+      "How_Measured": "Tỷ lệ chuyển giữa các bước trên UI ngoại ngữ, vertical Bus, theo tuần: kết quả tìm kiếm → chọn chuyến và chỗ → checkout → thanh toán thành công",
+      "Baseline": "Trung bình 4 tuần trước khi bật tính năng cho Bus",
+      "Target": "Tăng so với baseline ở từng bước; mức cụ thể PO chốt sau khi đo baseline",
+      "Owner": "PO"
     },
     {
       "Type": "Guardrail",
       "Metric": "Conversion UI VI",
-      "How_Measured": "[NEEDS_CLARIFICATION]",
-      "Baseline": "[NEEDS_CLARIFICATION]",
+      "How_Measured": "Số đơn thanh toán thành công chia cho số phiên có xem kết quả tìm kiếm trên UI tiếng Việt, vertical Bus, tính theo tuần",
+      "Baseline": "Trung bình 4 tuần trước khi bật tính năng cho Bus",
       "Target": "Không giảm",
-      "Owner": "[NEEDS_CLARIFICATION]"
+      "Owner": "PO"
     },
     {
       "Type": "Guardrail",
       "Metric": "Ticket CSKH 'giá khác số bị trừ'",
-      "How_Measured": "[NEEDS_CLARIFICATION]",
-      "Baseline": "[NEEDS_CLARIFICATION]",
+      "How_Measured": "Số ticket CSKH phân loại 'giá khác số bị trừ' trên 1.000 đơn UI ngoại ngữ, theo tuần",
+      "Baseline": "Trung bình 4 tuần trước khi bật tính năng cho Bus",
       "Target": "Không tăng",
-      "Owner": "[NEEDS_CLARIFICATION]"
+      "Owner": "Trưởng nhóm CSKH"
     },
     {
       "Type": "Guardrail",
       "Metric": "Tỷ lệ hoàn và chargeback đơn UI ngoại ngữ",
-      "How_Measured": "[NEEDS_CLARIFICATION]",
-      "Baseline": "[NEEDS_CLARIFICATION]",
+      "How_Measured": "Số đơn UI ngoại ngữ bị hoàn tiền hoặc chargeback chia cho số đơn UI ngoại ngữ thanh toán thành công, theo tháng",
+      "Baseline": "Trung bình 3 tháng trước khi bật tính năng cho Bus",
       "Target": "Không tăng",
-      "Owner": "[NEEDS_CLARIFICATION]"
+      "Owner": "Finance"
     }
   ],
   "UI_UX_Requirements": [
     "14 điểm UI phải hiển thị kép: kết quả tìm kiếm, lịch giá theo ngày, bộ lọc và thanh trượt giá, nhãn giảm giá, sơ đồ ghế (giá từng ghế, giường), trang chi tiết chuyến, breakdown phí (phí dịch vụ, phí thanh toán, bảo hiểm, dịch vụ thêm), voucher và khuyến mãi, total, trang thanh toán, email xác nhận, My bookings, số tiền hoàn, trang SEO landing.",
-    "Bốn điểm trang thanh toán, email, My bookings, số tiền hoàn phụ thuộc kết luận của Legal.",
-    "Các component CMS, coupon/campaign, landing page, trip card, payment promotion có hiển thị giá nhưng chưa có estimate.",
+    "Bốn điểm trang thanh toán, email, My bookings, số tiền hoàn phụ thuộc kết luận của Legal (Legal có quy trình riêng).",
+    "Các component CMS, coupon/campaign, landing page, trip card, payment promotion có hiển thị giá nhưng chưa có estimate; ngoài phạm vi đợt này.",
     "Picker ngôn ngữ và picker tiền tệ (web và app).",
     "Back office đơn hàng cho CSKH.",
     "Màn 'Cấu hình tỷ giá' (Home / Fx Conversion Rule) trên công cụ cấu hình nội bộ VEX-CONFIG: danh sách quy tắc và form tạo, sửa quy tắc.",
@@ -506,7 +610,7 @@
     "Copy (EN) - Dưới tổng tiền ở checkout: \"You'll pay in VND\"",
     "Copy (EN) - Payment Notice đầy đủ (checkout): \"Payment Notice: You will be charged exactly {VND_Amount} VND. The converted amount (~{FX_Amount} {CUR}) is for reference only. Your issuing bank may apply its own exchange rate and international transaction fees.\"",
     "Copy (EN) - Payment Notice rút gọn (màn thanh toán): \"You will be charged exactly {VND_Amount} VND. {CUR} amounts are for reference only.\"",
-    "Copy (EN) - Nút thanh toán: \"Pay VND {VND_Amount}\"",
+    "Copy (EN) - Nút thanh toán: \"Pay {VND_Amount} VND\" (mã VND đứng sau số; PRD gốc viết \"Pay VND {VND_Amount}\")",
     "Copy (EN) - Dưới nút thanh toán: \"By clicking Pay, you agree that your transaction will be processed in VND.\"",
     "Copy (EN) - Toast làm mới tỷ giá: \"Reference rate updated to the bank's latest session.\"",
     "Copy (EN) - Note hoàn tiền: \"You will be refunded {VND_Amount} VND. The {CUR} amount is based on the reference rate at booking. The amount credited to your card depends on your bank's exchange rate on the refund date.\"",
@@ -522,25 +626,29 @@
   "Dependencies_and_Impacted_Areas": [
     "Nguồn tỷ giá FXRatesAPI và ExchangeRate-API: cung cấp tỷ giá spot cho từng cặp tiền.",
     "Công cụ cấu hình nội bộ VEX-CONFIG: nơi nhân viên vận hành quản lý quy tắc tỷ giá.",
-    "Legal: kết luận cho trang thanh toán, email, My bookings, số tiền hoàn; soạn mục tỷ giá tham khảo trong T&C.",
-    "Design (cùng Dev): thứ bậc hiển thị theo nhóm Browse/Pay và vị trí mã VND.",
-    "Đội dịch thuật: bản dịch cho từng ngôn ngữ, bản dịch Payment Notice được duyệt, tên bản địa Top 50 điểm đến (Phase sau).",
+    "Legal: kết luận cho trang thanh toán, email, My bookings, số tiền hoàn; soạn mục tỷ giá tham khảo trong T&C; duyệt copy theo quy trình riêng của Legal.",
+    "Design: thể hiện hai chế độ thứ bậc hiển thị và vị trí mã tiền.",
+    "Đội dịch thuật: bản dịch cho từng ngôn ngữ đang bật và bản dịch Payment Notice được duyệt.",
     "Back office CSKH: hiển thị thông tin tiền tệ của đơn.",
     "Kế toán và Finance: hoá đơn VAT và báo cáo doanh thu giữ VND như hiện tại.",
     "SEO: đường dẫn theo ngôn ngữ và sitemap cho mỗi ngôn ngữ mới; trang mở bằng link có tham số trỏ về đường dẫn không tham số; bot không bị tự nhận diện.",
     "Marketing và affiliate: link có chỉ định ngôn ngữ và tiền tệ.",
-    "Hạng mục 'Đăng ký' liên quan tới gợi ý nhập tên Latin (PRD gốc: check lại progress Đăng ký).",
+    "Hạng mục 'Đăng ký' liên quan tới gợi ý nhập tên Latin; không chặn ngày ra mắt.",
     "Tính năng giữ chỗ hiện có: thời gian giữ chỗ của hệ thống.",
     "Email xác nhận, vé điện tử và thông báo trên app.",
     "BRD Currency Switch (Multi-currency Display & Settlement) và Timeline Dev (tài liệu tham chiếu).",
-    "Khu vực bị ảnh hưởng: 14 điểm hiển thị giá, search widget, địa danh Bus trên UI ngoại ngữ, banner, promo, popup, ToS, Privacy Policy và thông báo CSKH trên UI ngoại ngữ, bước nhập thông tin hành khách."
+    "Khu vực bị ảnh hưởng: 14 điểm hiển thị giá, search widget, địa danh Bus trên UI ngoại ngữ, bước nhập thông tin hành khách.",
+    "BU: cấu hình danh sách ngôn ngữ, tiền tệ và bảng quốc gia → tiền tệ.",
+    "Phân quyền hiện có của hệ thống: ai được bật ngôn ngữ, tiền tệ, bật tắt tính năng, quản lý quy tắc tỷ giá."
   ],
   "Known_Constraints": [
     "Đổi currency không tạo server call cho search result. (gốc NFR-01)",
     "Mọi số tiền đi qua một formatter dùng chung trên web và app; còn UI hoặc component format tiền ngoài formatter dùng chung thì không pass. (gốc CR-01, US-01)",
     "Component search widget dùng lại được cho các ngôn ngữ thêm sau qua config, không sửa code. (gốc US-03)"
   ],
-  "Diagram_Requirements": ["Activity Diagram"],
+  "Diagram_Requirements": [
+    "Activity Diagram"
+  ],
   "Assumptions": [
     "Nguồn của brief: PRD - Currency Switch (Multi-currency Display & Settlement) v0.1, 09 Oct 2026, PO Nguyễn Đức Anh Tuấn. BRD Currency Switch chưa được cung cấp.",
     "Problem Statement và JTBD được suy ra từ Goals và vế 'để...' của các US, vì PRD gốc không có hai mục này.",
@@ -549,21 +657,15 @@
     "US-19 gốc có actor là dịch vụ lấy tỷ giá; brief đổi sang người hưởng lợi là nhân viên vận hành tỷ giá theo chuẩn user story.",
     "Story gợi ý nhập tên Latin được tách từ BR-N13 vì PRD gốc chưa có US cho nội dung này.",
     "Hoá đơn VAT và báo cáo doanh thu giữ như hiện tại, không thêm tiền tệ nào khác. (gốc US-18)",
-    "Cấu hình Phase 1 gồm các ngôn ngữ VI, EN, ZH (giản thể), KO, TH, suy ra từ bảng quyết định BR-N10.",
-    "Vertical áp dụng gồm ít nhất Bus, vì PRD gốc nói 'mọi địa danh Bus'."
+    "Danh sách ngôn ngữ, tiền tệ được bật phụ thuộc config của BU; các ví dụ ngôn ngữ, tiền tệ trong rule là giá trị mẫu.",
+    "Định nghĩa, baseline và owner của các chỉ số do pipeline đề xuất theo yêu cầu của user ('tự xử lý').",
+    "Lúc ra mắt, chế độ thứ bậc hiển thị là VND làm số chính trên mọi bề mặt; chế độ theo nhóm Browse/Pay bật được bằng config sau này.",
+    "'Đơn vị làm tròn' của quy tắc tỷ giá làm tròn tỷ giá theo quy tắc (VND cho 1 đơn vị ngoại tệ). Ví dụ THB trong PRD gốc ghi 787,88, khác kết quả làm tròn half-up 787,89.",
+    "Cách xử lý dữ liệu cũ lúc ra mắt, khi tắt tính năng, khi tắt một ngôn ngữ hoặc tiền tệ, và khi lấy tỷ giá mới thất bại trong checkout do pipeline đề xuất theo yêu cầu của user ('tự đề xuất').",
+    "Các bề mặt CMS, coupon/campaign, landing page, trip card, payment promotion nằm ngoài phạm vi đợt này vì chưa có estimate; user chưa chắc chắn.",
+    "Copy toast làm mới tỷ giá giữ nguyên như PRD gốc, kể cả chữ 'bank'."
   ],
   "Missing_Information": [
-    "Chỉ số: định nghĩa 'tỷ lệ hoàn thành đơn' và các bước funnel của conversion UI ngoại ngữ; baseline, target, owner và kỳ đo của từng chỉ số (kể cả 3 guardrail).",
-    "Phạm vi ra mắt: ngôn ngữ và tiền tệ được bật ở Phase 1 (VI, EN, ZH, KO, TH?); danh sách tiền tệ trong phạm vi của EN; vertical (chỉ Bus?) và platform áp dụng; kế hoạch ramp.",
-    "Phase: phần tên bản địa Top 50 của US-02 (Phase sau) và US-04 (Phase 2) có thuộc PRD lần này không?",
-    "Out of scope: xác nhận những gì không làm, ví dụ thanh toán bằng ngoại tệ, ngoại tệ trên hoá đơn, các bề mặt CMS, coupon/campaign, landing page, trip card, payment promotion (đang 'chưa có estimate').",
-    "Hiển thị: chốt thứ bậc Browse/Pay (đang TBU với Dev và Design) và vị trí mã VND trước hay sau số; Payment Notice đang viết '{VND_Amount} VND' trong khi nút thanh toán viết 'VND {VND_Amount}'. Ai được tắt thứ bậc hiển thị và khi nào?",
-    "Tỷ giá: buffer có áp vào số tham khảo không (nếu có, mức buffer từng cặp); 'đơn vị làm tròn' làm tròn tỷ giá hay số VND, và ví dụ THB 787,88 so với 787,89 theo half-up; có thử nguồn dự phòng khi tỷ giá mới vượt biến động tối đa/ngày không; ngưỡng stale là bao nhiêu lần cập nhật lỗi liên tiếp.",
-    "Checkout: các mốc làm mới tỷ giá trong ngày dùng cho hạn tỷ giá của báo giá (khác chu kỳ 2 giờ?); toast 'Reference rate updated…' có hiện khi lấy tỷ giá thất bại không, nếu không thì khách thấy gì; copy toast nhắc 'bank' trong khi nguồn là FXRatesAPI/ExchangeRate-API, giữ hay sửa?",
-    "Legal và copy: 4 điểm trang thanh toán, email, My bookings, số tiền hoàn đang chờ kết luận gì; ai duyệt copy Payment Notice, disclaimer, T&C, copy search widget 'đề xuất'; ai duyệt bản dịch Payment Notice của từng ngôn ngữ.",
-    "Dữ liệu cũ lúc ra mắt: đơn đặt trước khi ra mắt hiển thị gì trên email, My bookings và hoàn tiền ở UI ngoại ngữ (chỉ VND?); checkout đang dở khi ra mắt hoặc khi tắt tính năng giữa chừng thì xử lý thế nào; lựa chọn đã lưu khi một ngôn ngữ hoặc tiền tệ bị tắt sau này.",
-    "Phân quyền: vai trò nào được tạo, sửa, tắt quy tắc tỷ giá; bật ngôn ngữ, tiền tệ; bật tắt và ramp tính năng.",
-    "Gợi ý nhập tên Latin: tiến độ hạng mục 'Đăng ký' liên quan và hạng mục này có chặn ra mắt không.",
-    "Số lẻ của tiền tệ không liệt kê: luôn 2 số lẻ, hay theo số lẻ chuẩn ISO 4217 của tiền tệ đó?"
+    "Mức target cụ thể của tỷ lệ hoàn thành đơn và conversion UI ngoại ngữ: PO chốt sau khi đo baseline."
   ]
 }
