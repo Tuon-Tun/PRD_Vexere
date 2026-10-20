@@ -86,11 +86,11 @@ Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn n
 
 | ID | Rule | Example | Uses | Notes |
 |----|------|---------|------|-------|
-| BR-05 | Hiển thị kép một dòng: mọi bề mặt có giá trong phạm vi đợt này (SCR-01 đến SCR-05, SCR-07 đến SCR-11, SCR-15) (assumed, A-13) hiển thị số tham khảo và số VND trên cùng một dòng, dạng "số chính : số phụ". Ngoại tệ khi ở vị trí số phụ có tiền tố "~". Số nào là số chính theo BR-06. | 467,000 VND : ~USD 17.92 | BR-06, BR-07, BR-11, BR-12 | Gốc: BR-D01; 14 điểm hiển thị giá của UI_UX_Requirements; A-13 |
+| BR-05 | Hiển thị kép một dòng: mọi bề mặt có giá trong phạm vi đợt này (SCR-01 đến SCR-05, SCR-07 đến SCR-11, SCR-15) (assumed, A-13) hiển thị số tham khảo và số VND trên cùng một dòng, dạng "số chính : số phụ". Ngoại tệ khi ở vị trí số phụ có tiền tố "~". Số nào là số chính theo BR-06. | 467,000 VND : ~USD 17.92 | BR-06, BR-07, BR-11, BR-12 | Gốc: BR-D01; 14 điểm hiển thị giá ở mục 3.5 của PRD gốc; A-13 |
 | BR-06 | Chế độ thứ bậc hiển thị: một cài đặt có 2 chế độ, đổi được mà không cần phát hành bản mới, theo phân quyền BR-79. (1) VND là số chính trên mọi bề mặt. (2) Theo nhóm: nhóm Browse (kết quả tìm kiếm, tìm nhà xe, chi tiết chuyến, chọn ghế, lịch giá, bộ lọc và thanh trượt giá, nhãn giảm giá, trang SEO landing) lấy ngoại tệ làm số chính; nhóm Pay (checkout, thanh toán, email xác nhận, My bookings, hoàn tiền, back office) lấy VND làm số chính. Chế độ lúc ra mắt: (1) VND là số chính trên mọi bề mặt (assumed, A-10). | Chế độ (1): kết quả tìm kiếm 467,000 VND : ~USD 17.92; checkout 470,300 VND : ~USD 18.05. Chế độ (2): kết quả tìm kiếm USD 17.92 : 467,000 VND; checkout 470,300 VND : ~USD 18.05. | BR-05, BR-79 | Gốc: BR-D01, CR-04; quyết định 5 |
 | BR-07 | Không bề mặt nào hiện ngoại tệ mà thiếu số VND. Giá trị biên trên bộ lọc và thanh trượt giá có kèm số VND hay không: TBD (Q-20). | Ô giá không bao giờ chỉ có "~USD 17.92"; luôn kèm 467,000 VND. | BR-05 | Gốc: US-10 |
-| BR-08 | Khi tiền tệ hiện hành là VND (UI VI, hoặc khách chọn VND), chỉ hiển thị VND, không có số tham khảo. | UI EN, khách chọn VND: 467,000 VND, không có ~USD. | BR-23 | Gốc: BR-D02 |
-| BR-09 | Số lẻ của mỗi tiền tệ theo bảng cố định của Vexere, không theo mặc định của chuẩn định dạng quốc tế (vốn cho IDR, TWD 2 số lẻ). 0 số lẻ: VND, JPY, KRW, IDR, TWD. 2 số lẻ: USD, EUR, SGD, THB, CNY. 3 số lẻ: BHD, KWD, OMR. Tiền tệ không có trong bảng dùng số lẻ chuẩn ISO 4217 của tiền tệ đó. | Giá trị mẫu: 467,000 VND với 1 TWD = 820 VND → 569.51 → TWD 570; với 1 KWD = 85,000 VND → 5.4941 → KWD 5.494; AUD không có trong bảng → 2 số lẻ theo ISO 4217. | BR-10 | Gốc: BR-D03; quyết định 12 |
+| BR-08 | Khi tiền tệ hiện hành là VND (UI VI, hoặc khách chọn VND), chỉ hiển thị VND, không có số tham khảo. Số tham khảo đã lưu trên đơn đã đặt khi tiền tệ hiện hành là VND trên UI ngoại ngữ: TBD (Q-23). | UI EN, khách chọn VND: 467,000 VND, không có ~USD. | BR-23 | Gốc: BR-D02 |
+| BR-09 | Số lẻ của mỗi tiền tệ theo bảng cố định của Vexere; bảng này thắng số lẻ chuẩn ISO 4217 khi hai bên khác nhau (ISO 4217 cho IDR, TWD 2 số lẻ). 0 số lẻ: VND, JPY, KRW, IDR, TWD. 2 số lẻ: USD, EUR, SGD, THB, CNY. 3 số lẻ: BHD, KWD, OMR. Tiền tệ không có trong bảng dùng số lẻ chuẩn ISO 4217 của tiền tệ đó. | Giá trị mẫu: 467,000 VND với 1 TWD = 820 VND → 569.51 → TWD 570; với 1 KWD = 85,000 VND → 5.4941 → KWD 5.494; AUD không có trong bảng → 2 số lẻ theo ISO 4217. | BR-10 | Gốc: BR-D03; quyết định 12 |
 | BR-10 | Làm tròn half-up (nửa lên, xa số 0) tới số lẻ của tiền tệ (BR-09). Mọi nơi hiển thị dùng cùng một quy tắc làm tròn. | 17.925 → 17.93; 17.924 → 17.92; −2,464.5 → −2,465. | BR-09 | Gốc: CR-03 |
 | BR-11 | Mọi số tiền luôn kèm mã ISO 4217 3 chữ cái, không dùng ký hiệu tiền tệ, trên mọi ngôn ngữ, để tránh nhầm ¥ giữa JPY và CNY. | USD 19.96, CNY 127.95; không viết $19.96 hay ¥127.95. | — | Gốc: BR-D04, US-01 |
 | BR-12 | Số VND định dạng theo ngôn ngữ UI, mã VND đứng sau số. Mã ngoại tệ đứng trước số. Mỗi ngôn ngữ chỉ có một cách viết số VND trên toàn UI, mọi platform. | EN và VI: 520,000 VND. Ngoại tệ: USD 17.92. Không viết "VND 520,000". | BR-09, BR-11 | Gốc: BR-D05, US-01; quyết định 5 |
@@ -107,13 +107,13 @@ Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn n
 | BR-18 | Đơn không có dòng giảm giá: phần chênh do làm tròn (tổng tham khảo − tổng các dòng dương) cộng vào dòng có giá trị VND lớn nhất. | 1 USD = 26,054 VND: vé chặng 1 467,000 VND → 17.92; phí dịch vụ 50,000 VND → 1.92; vé chặng 2 517,000 VND → 19.84; total 1,034,000 VND → 39.687 → 39.69. Chênh 39.69 − (17.92 + 1.92 + 19.84) = +0.01 cộng vào vé chặng 2 → 19.85. Kiểm tra: 17.92 + 1.92 + 19.85 = 39.69. | BR-15 | Gốc: CR-10 |
 | BR-19 | Đơn nhiều vé: mỗi dòng breakdown là thành tiền của dòng (đơn giá × số lượng) rồi mới quy đổi. Sơ đồ ghế và chi tiết chuyến quy đổi theo đơn giá. | 1 USD = 26,054 VND: breakdown 2 vé × 467,000 VND = 934,000 VND → 35.849 → ~USD 35.85; sơ đồ ghế hiện ~USD 17.92 mỗi ghế (2 × 17.92 = 35.84 khác 35.85 là đúng quy tắc). | BR-15 | Gốc: CR-11, CR-12 |
 | BR-20 | Voucher và khuyến mãi luôn lấy VND làm số chính, ở cả hai chế độ của BR-06. | Chế độ (2): dòng voucher có số chính là −46,700 VND, số phụ là số USD quy đổi. | BR-06 | Gốc: BR-D07 |
-| BR-21 | Lọc giá theo tiền tệ tham khảo: giá trị biên khách chọn bằng tiền tệ tham khảo được quy ngược về VND và so sánh bằng VND, nới thêm nửa đơn vị nhỏ nhất của tiền tệ tham khảo (theo số lẻ BR-09, ví dụ USD 0.01, KRW 1) ở hai đầu, để chuyến hiển thị đúng bằng giá trị biên vẫn được giữ. Biên trên VND = (biên trên + 0.5 × đơn vị) × tỷ giá. Biên dưới VND = (biên dưới − 0.5 × đơn vị) × tỷ giá. Chuyến được giữ khi biên dưới VND ≤ giá VND < biên trên VND. | 1 USD = 26,054 VND. Lọc ≤ USD 20: biên trên = 20.005 × 26,054 = 521,210.27 VND → giữ chuyến 521,100 VND (~USD 20.00), loại chuyến 521,250 VND (~USD 20.01). Lọc ≥ USD 15: biên dưới = 14.995 × 26,054 = 390,679.73 VND → giữ chuyến 390,700 VND (~USD 15.00). Giá trị mẫu 1 USD = 26,000 VND, lọc ≤ USD 20: biên trên = 20.005 × 26,000 = 520,130 VND → chuyến 520,130 VND (~USD 20.01) bị loại. | BR-09, BR-10, BR-13 | Gốc: BR-D08, CR-32 |
+| BR-21 | Lọc giá theo tiền tệ tham khảo: giá trị biên khách chọn bằng tiền tệ tham khảo được quy ngược về VND và so sánh bằng VND, nới thêm nửa đơn vị nhỏ nhất của tiền tệ tham khảo (theo số lẻ BR-09, ví dụ USD 0.01, KRW 1) ở hai đầu, để chuyến hiển thị đúng bằng giá trị biên vẫn được giữ. Biên trên VND = (biên trên + 0.5 × đơn vị) × tỷ giá. Biên dưới VND = (biên dưới − 0.5 × đơn vị) × tỷ giá. Chuyến được giữ khi biên dưới VND ≤ giá VND < biên trên VND. Khi khách đổi tiền tệ tham khảo trong khi đang lọc theo khoảng giá, khoảng giá đã chọn được giữ (hiển thị lại bằng tiền tệ mới) hay đặt lại về toàn bộ khoảng giá: TBD (Q-21). | 1 USD = 26,054 VND. Lọc ≤ USD 20: biên trên = 20.005 × 26,054 = 521,210.27 VND → giữ chuyến 521,100 VND (~USD 20.00), loại chuyến 521,250 VND (~USD 20.01). Lọc ≥ USD 15: biên dưới = 14.995 × 26,054 = 390,679.73 VND → giữ chuyến 390,700 VND (~USD 15.00). Giá trị mẫu 1 USD = 26,000 VND, lọc ≤ USD 20: biên trên = 20.005 × 26,000 = 520,130 VND → chuyến 520,130 VND (~USD 20.01) bị loại. | BR-09, BR-10, BR-13 | Gốc: BR-D08, CR-32 |
 
 *Ngôn ngữ và tiền tệ*
 
 | ID | Rule | Example | Uses | Notes |
 |----|------|---------|------|-------|
-| BR-22 | Ngôn ngữ và tiền tệ là hai danh sách riêng, kèm bảng quốc gia → tiền tệ. Ngôn ngữ, tiền tệ nào được bật và bảng quốc gia → tiền tệ do BU cấu hình (DEP-14), theo phân quyền BR-76, không cần phát hành bản mới. Ngôn ngữ dự phòng là EN: dùng khi ngôn ngữ cần dùng không có trong danh sách đang bật. Lúc ra mắt áp dụng cho vertical Bus. | Giá trị mẫu (cấu hình ví dụ của PRD gốc): ngôn ngữ VI, EN, ZH, KO, TH; bảng quốc gia → tiền tệ có VN → VND, US → USD, KR → KRW, TW → TWD. Trình duyệt ưu tiên ja, JA chưa bật → EN. | BR-76 | Gốc: BR-N01; quyết định 2; A-08 |
+| BR-22 | Ngôn ngữ và tiền tệ là hai danh sách riêng, kèm bảng quốc gia → tiền tệ. Ngôn ngữ, tiền tệ nào được bật và bảng quốc gia → tiền tệ do BU cấu hình (DEP-14), theo phân quyền BR-76, không cần phát hành bản mới. Ngôn ngữ dự phòng là EN: dùng khi ngôn ngữ cần dùng không có trong danh sách đang bật. | Giá trị mẫu (cấu hình ví dụ của PRD gốc): ngôn ngữ VI, EN, ZH, KO, TH; bảng quốc gia → tiền tệ có VN → VND, US → USD, KR → KRW, TW → TWD. Trình duyệt ưu tiên ja, JA chưa bật → EN. | BR-76 | Gốc: BR-N01; quyết định 2; A-08 |
 | BR-23 | Phạm vi tiền tệ của ngôn ngữ: mỗi ngôn ngữ khai báo danh sách tiền tệ được dùng và một tiền tệ chính (BU cấu hình, BR-22). Danh sách tiền tệ chọn được của ngôn ngữ = tiền tệ của ngôn ngữ ∩ tiền tệ đang bật ∩ tiền tệ có trong bảng tỷ giá hiện hành, luôn có VND; với ngôn ngữ khác VI chỉ khai báo một tiền tệ, khách có chọn được VND hay không: TBD (Q-18). Picker tiền tệ chỉ cho chọn trong danh sách tiền tệ chọn được. Mỗi tiền tệ trong phạm vi tiền tệ của ngôn ngữ cần một quy tắc tỷ giá đang bật (BR-52). Ngôn ngữ VI chỉ có VND. Muốn xem tiền tệ ngoài phạm vi tiền tệ của ngôn ngữ, khách chuyển sang ngôn ngữ tương ứng hoặc EN. | Giá trị mẫu: ZH: CNY, TWD (chính CNY); KO: KRW, USD (chính KRW); TH: THB, USD (chính THB); EN: mọi tiền tệ đang bật, gồm VND; VI: VND. Danh sách tiền tệ chọn được của ZH: CNY, TWD, VND; quy tắc TWD/VND bị tắt (BR-53) → CNY, VND (TWD không phải tiền tệ chính của ngôn ngữ nào, nên bảng mới vẫn hợp lệ, BR-49). | BR-22, BR-48, BR-52, BR-53 | Gốc: BR-N02, US-06; A-08 |
 | BR-24 | Đổi ngôn ngữ thì tiền tệ được xác định lại cho ngôn ngữ mới, theo thứ tự ưu tiên BR-26. | Khách ở Hàn Quốc đang EN + EUR, đổi sang KO → EUR ngoài phạm vi KO → KRW. | BR-23, BR-26 | Gốc: US-05 |
 | BR-25 | Tiền tệ mặc định, xét theo thứ tự, chỉ nhận ứng viên thuộc phạm vi tiền tệ của ngôn ngữ (BR-23): (1) tiền tệ của quốc gia nơi khách truy cập theo bảng quốc gia → tiền tệ (web: theo vị trí truy cập; app: theo vùng của thiết bị); (2) tiền tệ chính của ngôn ngữ; (3) với EN: USD. Không ứng viên nào hợp lệ thì chỉ hiển thị VND (CB-02). | EN ở Mỹ → USD; EN ở Việt Nam → VND (đổi được trên picker); EN ở Pháp → EUR nếu đang bật, không thì USD; ZH ở Đài Loan → TWD; ZH ở Việt Nam → CNY; KO ở Mỹ → USD; KO ở Hàn Quốc hoặc Việt Nam → KRW. | BR-22, BR-23 | Gốc: BR-N03 |
@@ -145,7 +145,7 @@ Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn n
 | BR-40 | Ngôn ngữ và tiền tệ đổi được từ trang kết quả tìm kiếm tới bước nhập thông tin hành khách; ở màn thanh toán thì không đổi được. | Ở bước nhập thông tin: đổi USD → KRW được. Ở màn thanh toán: không đổi được. | BR-39 | Gốc: BR-C07 |
 | BR-41 | Bản dịch Payment Notice (MSG-08, MSG-09) của một ngôn ngữ chưa được duyệt thì hiển thị bản EN. | Bản dịch TH của Payment Notice chưa được duyệt → khách dùng UI TH thấy Payment Notice bản EN. | — | Gốc: US-13 |
 | BR-42 | Khi lưu đơn, số tham khảo lưu trên đơn là kết quả quy đổi số VND của báo giá bằng bảng tỷ giá của báo giá tại lúc khách bấm nút thanh toán của lần thanh toán thành công (assumed, A-25), theo BR-15 đến BR-19. | Báo giá 470,300 VND, bảng tỷ giá của báo giá có 1 USD = 26,054 VND → đơn lưu 470,300 / 26,054 = 18.051 → ~USD 18.05. Giá trị mẫu: khách bấm nút thanh toán lúc 09:59 khi bảng tỷ giá của báo giá có 1 USD = 26,054 VND; thanh toán thành công lúc 10:01, sau khi báo giá đã chuyển sang bảng tỷ giá mới có 1 USD = 26,300 VND → đơn vẫn lưu ~USD 18.05. | BR-13, BR-15, BR-17, BR-18, BR-19, BR-66 | Gốc: CR-25, NFR-04 của PRD gốc; A-25 |
-| BR-43 | Đơn chỉ lưu số tham khảo khi màn thanh toán đã hiển thị số tham khảo cho khách, hoặc khi màn thanh toán chỉ hiển thị VND vì đang chờ kết luận của Legal (BR-65) nhưng checkout của báo giá đã hiển thị số tham khảo; nếu không, đơn không có số tham khảo (CB-05) (assumed, A-12, A-15). | Màn thanh toán chỉ hiển thị VND vì bảng tỷ giá hiện hành đang Cũ (BR-75) → đơn không có số tham khảo. Màn thanh toán chờ kết luận của Legal, checkout đã hiển thị 470,300 VND : ~USD 18.05 → đơn vẫn lưu ~USD 18.05. | BR-42, BR-65, BR-75 | Gốc: brief (đề xuất); A-12, A-15 |
+| BR-43 | Đơn chỉ lưu số tham khảo khi, lúc khách bấm nút thanh toán (BR-42), màn thanh toán đang hiển thị số tham khảo cho khách, hoặc màn thanh toán chỉ hiển thị VND vì đang chờ kết luận của Legal (BR-65) nhưng checkout của báo giá đã hiển thị số tham khảo; nếu không, đơn không có số tham khảo (CB-05) (assumed, A-12, A-15). | Màn thanh toán chỉ hiển thị VND vì bảng tỷ giá hiện hành đang Cũ (BR-75) → đơn không có số tham khảo. Màn thanh toán chờ kết luận của Legal, checkout đã hiển thị 470,300 VND : ~USD 18.05 → đơn vẫn lưu ~USD 18.05. Khách bấm nút thanh toán lúc 09:59 khi màn thanh toán hiển thị 470,300 VND : ~USD 18.05; bảng tỷ giá hiện hành thành Cũ lúc 10:00 (BR-75); thanh toán thành công lúc 10:01 → đơn vẫn lưu ~USD 18.05. | BR-42, BR-65, BR-75 | Gốc: brief (đề xuất); A-12, A-15 |
 
 *Sau khi đặt*
 
@@ -182,8 +182,8 @@ Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn n
 | BR-62 | Dữ liệu cũ lúc ra mắt: đơn đặt trước khi ra mắt không có số tham khảo; email, My bookings và hoàn tiền của các đơn này chỉ hiển thị VND trên mọi UI (CB-05) (assumed, A-12). | Đơn đặt một ngày trước ra mắt, xem My bookings trên UI EN sau ra mắt → chỉ 470,300 VND. | BR-44, BR-45 | Gốc: brief (đề xuất); A-12 |
 | BR-63 | Checkout đang dở lúc ra mắt: báo giá tạo trước khi bật tính năng tiếp tục chỉ hiển thị VND tới khi xong đơn (assumed, A-12). | Báo giá tạo lúc 13:58, tính năng bật lúc 14:00 → checkout đó vẫn chỉ VND; đơn không có số tham khảo (BR-43). | BR-43, BR-60, BR-66 | Gốc: brief (đề xuất); A-12 |
 | BR-64 | Khi một ngôn ngữ hoặc tiền tệ bị tắt: lựa chọn đã lưu không bị xoá, chỉ bị bỏ qua tới khi được bật lại; ngôn ngữ bị tắt thì dùng ngôn ngữ dự phòng (BR-22); tiền tệ bị tắt thì dùng ứng viên kế tiếp theo thứ tự ưu tiên (BR-26) (assumed, A-12). | Giá trị mẫu: khách đã lưu TH + THB; TH bị tắt → EN, tiền tệ xác định lại theo BR-26; TH bật lại → TH + THB. | BR-22, BR-26, BR-31 | Gốc: brief (đề xuất); A-12 |
-| BR-65 | Trong khi Legal chưa kết luận cho màn thanh toán (SCR-07), email xác nhận, My bookings và số tiền hoàn (DEP-03), bốn bề mặt này chỉ hiển thị VND (assumed, A-15). Trong thời gian này, đơn vẫn lưu số tham khảo theo BR-43; khi Legal kết luận cho phép một bề mặt, bề mặt đó hiển thị số tham khảo đã lưu của đơn, kể cả đơn thanh toán trong thời gian chờ; email đã gửi không đổi (assumed, A-15). | Legal chưa kết luận cho màn thanh toán → màn thanh toán chỉ hiện 470,300 VND; checkout đã hiện 470,300 VND : ~USD 18.05 → đơn vẫn lưu ~USD 18.05 (BR-43); sau đó Legal cho phép My bookings → đơn này hiện 470,300 VND : ~USD 18.05 trên My bookings. | BR-43 | Gốc: UI_UX_Requirements (Legal); A-15 |
-| BR-80 | Hồ sơ và thiết bị có từ trước khi ra mắt: khách chưa có ngôn ngữ, tiền tệ đã lưu theo BR-31, cả trên thiết bị lẫn trên hồ sơ, được tự nhận diện theo BR-29 ở lần mở Vexere đầu tiên trên thiết bị đó sau ngày ra mắt, kể cả khi khách đã có hồ sơ hoặc đã mở app trước ngày ra mắt; kết quả được lưu là giá trị tự nhận diện (BR-31) (assumed, A-21). Ngôn ngữ khách đã lưu trên hồ sơ hoặc trên app trước ngày ra mắt được coi là lựa chọn chủ động hay giá trị tự nhận diện, và khách đó có được tự nhận diện như trên hay không: TBD (Q-26). | Khách có tài khoản từ trước, cài app trước ra mắt, thiết bị dùng vi, ở Việt Nam → lần mở app đầu tiên sau ra mắt: VI + VND (BR-30), không rơi về EN (BR-26). | BR-26, BR-29, BR-30, BR-31 | Gốc: Pack (đề xuất); quyết định 9; A-21 |
+| BR-65 | Trong khi Legal chưa kết luận cho màn thanh toán (SCR-07), email xác nhận, My bookings và số tiền hoàn (DEP-03), bốn bề mặt này chỉ hiển thị VND (assumed, A-15). Trong thời gian này, đơn vẫn lưu số tham khảo theo BR-43; khi Legal kết luận cho phép một bề mặt, bề mặt đó hiển thị số tham khảo đã lưu của đơn, kể cả đơn thanh toán trong thời gian chờ; email đã gửi không đổi (assumed, A-15). | Legal chưa kết luận cho màn thanh toán → màn thanh toán chỉ hiện 470,300 VND; checkout đã hiện 470,300 VND : ~USD 18.05 → đơn vẫn lưu ~USD 18.05 (BR-43); sau đó Legal cho phép My bookings → đơn này hiện 470,300 VND : ~USD 18.05 trên My bookings. | BR-43 | Gốc: mục 3.5 của PRD gốc (bốn điểm phụ thuộc kết luận Legal); A-15 |
+| BR-80 | Hồ sơ và thiết bị có từ trước khi ra mắt: khách chưa có ngôn ngữ, tiền tệ đã lưu theo BR-31, cả trên thiết bị lẫn trên hồ sơ, được tự nhận diện theo BR-29 ở lần mở Vexere đầu tiên trên thiết bị đó sau ngày ra mắt, kể cả khi khách đã có hồ sơ hoặc đã mở app trước ngày ra mắt; kết quả được lưu là giá trị tự nhận diện (BR-31) (assumed, A-21). Ngôn ngữ khách đã chọn và Vexere đã lưu trên hồ sơ hoặc trên app trước ngày ra mắt, nếu có, được coi là lựa chọn chủ động (BR-31) và khách đó không được tự nhận diện theo BR-29; tiền tệ xác định theo BR-26 (assumed, A-21). | Khách có tài khoản từ trước, cài app trước ra mắt, thiết bị dùng vi, ở Việt Nam → lần mở app đầu tiên sau ra mắt: VI + VND (BR-30), không rơi về EN (BR-26). Khách đã chọn EN trên app trước ra mắt, thiết bị dùng vi, ở Mỹ → lần mở app đầu tiên sau ra mắt: EN + USD (BR-25), không tự nhận diện sang VI. | BR-26, BR-29, BR-30, BR-31 | Gốc: Pack (đề xuất); quyết định 9; A-21 |
 | BR-81 | Trong khi Currency Switch bật cho một vertical × platform ở tỷ lệ traffic dưới 100% (BR-60), mỗi khách thuộc cố định một nhóm, nhóm bật (thấy số tham khảo) hoặc nhóm tắt (như khi tắt, BR-61), qua mọi trang và mọi phiên trên cùng thiết bị; sau khi đăng nhập, nhóm theo hồ sơ của khách. Khi tỷ lệ tăng, khách đang ở nhóm bật vẫn ở nhóm bật; khách mới vào nhóm bật khi đang có báo giá Đang hiệu lực được xử lý như checkout đang dở lúc ra mắt (BR-63). Khi tỷ lệ giảm, khách rời nhóm bật được xử lý như khi tắt (BR-61) (assumed, A-12). | Giá trị mẫu: Bus × app 10% → khách A thuộc nhóm bật thấy ~USD trên mọi trang và mọi phiên trên điện thoại của mình; tăng lên 50% → A vẫn thấy ~USD; khách B vào nhóm bật khi đang ở checkout → checkout đó vẫn chỉ VND (BR-63). | BR-60, BR-61, BR-63 | Gốc: US-21 (đề xuất); quyết định 9; A-12 |
 
 **Statuses & Transitions**
@@ -198,7 +198,7 @@ Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn n
 | BR-70 | Báo giá: Đang hiệu lực | Khách thanh toán thành công | — | Báo giá: Đã thành đơn | Đơn lưu số VND của báo giá và ngôn ngữ đặt vé (BR-46). Nếu BR-43 cho phép, đơn lưu thêm: tiền tệ tham khảo, số tham khảo tính theo BR-42, tỷ giá và nguồn tỷ giá của bảng tỷ giá dùng để tính số tham khảo đó (BR-42), nhóm hiển thị Browse/Pay theo chế độ BR-06, phiên bản, ngôn ngữ và thời điểm disclaimer (MSG-01) được hiển thị cho khách. Gốc: CR-25, US-17. |
 | BR-71 | Bảng tỷ giá hiện hành: Bình thường | Một lần cập nhật định kỳ không tạo được bảng tỷ giá hợp lệ (BR-49) | Đã đủ ngưỡng N lần liên tiếp (BR-56) | Bảng tỷ giá hiện hành: Cũ (stale) | — (xem BR-75). Gốc: CR-30, CR-31. |
 | BR-72 | Bảng tỷ giá hiện hành: Bình thường | Bật công tắc tắt khẩn cấp (người có quyền theo BR-77) | — | Bảng tỷ giá hiện hành: Cũ (stale) | — (xem BR-75). Cách vận hành: Q-10. Gốc: CR-31. |
-| BR-73 | Bảng tỷ giá hiện hành: Cũ (stale) | Một lần cập nhật tạo được bảng tỷ giá hợp lệ (BR-49) | Công tắc tắt khẩn cấp không bật (BR-72) | Bảng tỷ giá hiện hành: Bình thường | Bảng mới thành bảng tỷ giá hiện hành (BR-48). Gốc: CR-30. |
+| BR-73 | Bảng tỷ giá hiện hành: Cũ (stale) | Một lần cập nhật tạo được bảng tỷ giá hợp lệ (BR-49) | Công tắc tắt khẩn cấp không bật (BR-72) (assumed, A-12) | Bảng tỷ giá hiện hành: Bình thường | Bảng mới thành bảng tỷ giá hiện hành (BR-48). Gốc: CR-30; điều kiện công tắc tắt khẩn cấp: CR-31 (đề xuất). |
 | BR-84 | Bảng tỷ giá hiện hành: Cũ (stale) | Tắt công tắc tắt khẩn cấp (người có quyền theo BR-77) | Chưa đủ ngưỡng N lần liên tiếp (BR-56) | Bảng tỷ giá hiện hành: Bình thường | Bảng tỷ giá hợp lệ mới nhất (BR-49) tiếp tục là bảng tỷ giá hiện hành (BR-48) (assumed, A-12). Cách vận hành: Q-10. Gốc: CR-31 (đề xuất). |
 
 **On Entering a Status**
@@ -206,7 +206,7 @@ Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn n
 | ID | Status | Side-effects |
 |----|--------|--------------|
 | BR-74 | Báo giá: Hết hạn | Chỗ được nhả; báo giá không còn dùng được; khách phải chọn lại chuyến để có báo giá mới (BR-66). Gốc: CR-24, US-14. |
-| BR-75 | Bảng tỷ giá hiện hành: Cũ (stale) | Mọi bề mặt chỉ hiển thị VND, không dùng tỷ giá của bảng cũ, kể cả báo giá đang mở (BR-68), kèm MSG-06 (CB-02). Đơn thanh toán trong thời gian này không có số tham khảo (BR-43). Số tham khảo đã lưu trên đơn (BR-44): TBD (Q-23). Gốc: BR-D09, CR-31. |
+| BR-75 | Bảng tỷ giá hiện hành: Cũ (stale) | Mọi bề mặt chỉ hiển thị VND, không dùng tỷ giá của bảng cũ, kể cả báo giá đang mở (BR-68), kèm MSG-06 (CB-02). Đơn thanh toán thành công trong thời gian này lưu số tham khảo hay không theo BR-43. Số tham khảo đã lưu trên đơn (BR-44): TBD (Q-23). Gốc: BR-D09, CR-31. |
 
 **Roles & Permissions**
 
@@ -228,16 +228,16 @@ Placeholder số tiền chỉ chứa số đã định dạng theo BR-09, BR-10,
 | MSG-03 | Màn hình (SCR-13) | "Prices in {mã tiền tệ}" | BR-23 |
 | MSG-04 | Màn hình (SCR-13) | (proposed copy) Ý: cho biết đây là tiền hiển thị, không phải tiền thanh toán. Đề xuất: "Display currency only. You will be charged in VND." | BR-01, BR-23 |
 | MSG-05 | Màn hình (SCR-13) | (proposed copy) "Suggested" / "All currencies" | BR-27 |
-| MSG-06 | Màn hình | "Reference prices in {mã tiền tệ} are temporarily unavailable. Prices are shown in VND." | BR-25, BR-53, BR-75 |
+| MSG-06 | Màn hình | "Reference prices in {mã tiền tệ} are temporarily unavailable. Prices are shown in VND." {mã tiền tệ} khi không có ứng viên tiền tệ hợp lệ (BR-25): TBD (Q-31). | BR-25, BR-53, BR-75 |
 | MSG-07 | Màn hình (SCR-05); trên UI VI: TBD (Q-22) | "You'll pay in VND" | BR-01, BR-06 |
-| MSG-08 | Màn hình (SCR-05), Payment Notice bản đầy đủ | "Payment Notice: You will be charged exactly {số tiền VND} VND. The converted amount (~{số tham khảo} {mã tiền tệ}) is for reference only. Your issuing bank may apply its own exchange rate and international transaction fees." | BR-01, BR-02, BR-12, BR-15, BR-39, BR-41 |
+| MSG-08 | Màn hình (SCR-05), Payment Notice bản đầy đủ | "Payment Notice: You will be charged exactly {số tiền VND} VND. The converted amount (~{số tham khảo} {mã tiền tệ}) is for reference only. Your issuing bank may apply its own exchange rate and international transaction fees." Vị trí mã tiền của số tham khảo: TBD (Q-13). | BR-01, BR-02, BR-05, BR-12, BR-15, BR-39, BR-41 |
 | MSG-09 | Màn hình (SCR-07), Payment Notice rút gọn | "You will be charged exactly {số tiền VND} VND. {mã tiền tệ} amounts are for reference only." | BR-01, BR-12, BR-39, BR-41 |
 | MSG-10 | Màn hình (SCR-07); trên UI VI: TBD (Q-22) | "Pay {số tiền VND} VND" | BR-01, BR-12, BR-39 |
 | MSG-11 | Màn hình (SCR-07); trên UI VI: TBD (Q-22) | "By clicking Pay, you agree that your transaction will be processed in VND." | BR-01 |
 | MSG-12 | Màn hình | "Reference rate updated to the bank's latest session." | BR-67, BR-83 |
 | MSG-13 | Màn hình (SCR-01) | "Your seat hold has expired. Please select your trip again." | BR-69, BR-74 |
 | MSG-14 | Màn hình (SCR-10) | "You will be refunded {số tiền hoàn VND} VND. The {mã tiền tệ} amount is based on the reference rate at booking. The amount credited to your card depends on your bank's exchange rate on the refund date." | BR-01, BR-12, BR-45 |
-| MSG-15 | Màn hình (SCR-20) | Nội dung do Legal soạn (DEP-03), gồm: nguồn chính, nguồn dự phòng, loại tỷ giá, tần suất cập nhật, cách làm tròn. | BR-10, BR-47, BR-48, BR-50, BR-51, BR-52 |
+| MSG-15 | Màn hình (SCR-20) | Nội dung do Legal soạn (DEP-03), gồm: nguồn chính, nguồn dự phòng, loại tỷ giá, tần suất cập nhật, cách làm tròn. | BR-09, BR-10, BR-47, BR-48, BR-50, BR-51, BR-52 |
 | MSG-16 | Màn hình (SCR-06) | "Enter your name in Latin letters, as shown on your passport." | — |
 | MSG-17 | Màn hình (SCR-06) | Thông báo lỗi hiện có của hệ thống khi tên hành khách có ký tự không hợp lệ, hiển thị bằng ngôn ngữ UI (copy hiện có, DEP-10). | — |
 | MSG-18 | Màn hình (SCR-14) | "No matching places. Try another name or check the spelling." (copy đề xuất trong brief) | — |
@@ -251,7 +251,7 @@ Placeholder số tiền chỉ chứa số đã định dạng theo BR-09, BR-10,
 |----|-----------|-----------------------------------|------------------|
 | CB-01 | Bảng tỷ giá đang tải | Ô giá hiện khung chờ (skeleton) cho tới khi có bảng tỷ giá; không ô nào hiện ngoại tệ mà thiếu VND (BR-07). | BR-07, BR-48 |
 | CB-02 | Số tham khảo tạm thời không có: bảng tỷ giá hiện hành đang Cũ, kể cả khi bật công tắc tắt khẩn cấp (BR-71, BR-72, BR-75); tiền tệ của khách không có trong bảng tỷ giá hiện hành (BR-53); không có ứng viên tiền tệ hợp lệ (BR-25) | Mọi giá chỉ hiển thị VND, không có số tham khảo; MSG-06 hiện một lần mỗi trang, cạnh bảng giá. Khi không có ứng viên tiền tệ hợp lệ (BR-25), {mã tiền tệ} trong MSG-06 là tiền tệ nào: chờ Q-31. Khách vẫn tìm chuyến, đặt vé và thanh toán bằng VND như bình thường (BR-01). Số tham khảo đã lưu trên các đơn đã đặt hiển thị theo BR-44. | BR-01, BR-25, BR-44, BR-53, BR-71, BR-72, BR-75; MSG-06 |
-| CB-03 | Currency Switch đang tắt cho vertical × platform khách đang dùng (BR-60, BR-61) | Mọi giá chỉ hiển thị VND, không có số tham khảo (BR-61). Không có picker tiền tệ; picker ngôn ngữ, UI ngoại ngữ, địa danh không dấu (BR-37) và search widget vẫn như khi bật. MSG-01, MSG-02, MSG-06, MSG-08 và MSG-09 không hiện; MSG-07, MSG-10 và MSG-11 vẫn hiện như khi bật (assumed, A-12). Back office đơn hàng vẫn hiển thị thông tin tiền tệ đã lưu của đơn (assumed, A-12). | BR-37, BR-60, BR-61; MSG-01, MSG-02, MSG-06, MSG-07, MSG-08, MSG-09, MSG-10, MSG-11 |
+| CB-03 | Currency Switch đang tắt cho vertical Bus trên platform khách đang dùng (BR-60, BR-61), hoặc khách thuộc nhóm tắt trong khi Currency Switch bật ở tỷ lệ traffic dưới 100% (BR-81) | Mọi giá chỉ hiển thị VND, không có số tham khảo (BR-61). Không có picker tiền tệ; picker ngôn ngữ, UI ngoại ngữ, địa danh không dấu (BR-37) và search widget vẫn như khi bật. MSG-01, MSG-02, MSG-06, MSG-08 và MSG-09 không hiện; MSG-07, MSG-10 và MSG-11 vẫn hiện như khi bật (assumed, A-12). Back office đơn hàng vẫn hiển thị thông tin tiền tệ đã lưu của đơn (assumed, A-12). | BR-37, BR-60, BR-61, BR-81; MSG-01, MSG-02, MSG-06, MSG-07, MSG-08, MSG-09, MSG-10, MSG-11 |
 | CB-04 | Tiền tệ hiện hành là VND: UI VI, hoặc khách chọn VND (BR-08) | Mọi giá chỉ hiển thị VND, không có số tham khảo (BR-08); trên UI VI không có picker tiền tệ (BR-23). Số tham khảo đã lưu trên các đơn đã đặt hiển thị theo BR-44. | BR-08, BR-23, BR-44 |
 | CB-05 | Đơn không có số tham khảo: đơn đặt trước khi ra mắt (BR-62) hoặc không đủ điều kiện lưu số tham khảo (BR-43); hoặc email xác nhận, My bookings, số tiền hoàn đang chờ kết luận của Legal (BR-65) | Email xác nhận, My bookings và số tiền hoàn của đơn chỉ hiển thị VND trên mọi UI. Back office hiển thị MSG-19 ở phần thông tin tiền tệ của đơn khi đơn không có số tham khảo (BR-43, BR-62). | BR-43, BR-44, BR-45, BR-62, BR-65; MSG-19 |
 
@@ -275,7 +275,7 @@ Placeholder số tiền chỉ chứa số đã định dạng theo BR-09, BR-10,
 | NFR-02 | Lịch sử thay đổi tỷ giá và quy tắc tỷ giá (BR-57) được giữ lại | Tối thiểu 24 tháng | Đủ bằng chứng cho khiếu nại, hoàn tiền, chargeback và kiểm tra nội bộ |
 | NFR-03 | Cùng một giá (cùng một dòng breakdown, total hoặc số hoàn của cùng một báo giá hoặc cùng một đơn) hiển thị cùng một số tham khảo ở mọi nơi hiển thị: web, app, email, back office | 0 lệch | Số tham khảo khác nhau giữa các nơi tạo khiếu nại "giá khác số bị trừ" (SM-04) |
 | NFR-04 | Nền tảng hỗ trợ | Web desktop, mobile web, app | Khách quốc tế đặt vé trên cả ba platform |
-| NFR-05 | Sau khi tắt Currency Switch cho một vertical × platform (BR-61), mọi bề mặt của vertical × platform đó chỉ hiển thị VND | Ngay khi tắt: mọi trang mở sau lúc tắt chỉ hiển thị VND (gốc US-21); trang khách đang mở lúc tắt (kể cả checkout, bước nhập thông tin hành khách, màn thanh toán): TBD (Q-28) | Dừng hiển thị số tham khảo kịp thời khi có sự cố |
+| NFR-05 | Sau khi tắt Currency Switch cho một vertical × platform (BR-61), mọi bề mặt của vertical × platform đó chỉ hiển thị VND | Ngay khi tắt, kể cả trang khách đang mở lúc tắt (checkout, bước nhập thông tin hành khách, màn thanh toán, My bookings) (gốc US-21; assumed, A-12) | Dừng hiển thị số tham khảo kịp thời khi có sự cố |
 
 **Dependencies**
 
@@ -316,7 +316,7 @@ Placeholder số tiền chỉ chứa số đã định dạng theo BR-09, BR-10,
 | SCR-13 | Picker tiền tệ (web và app) | Chọn tiền tệ tham khảo trong danh sách tiền tệ chọn được của ngôn ngữ (BR-23) | |
 | SCR-14 | Search widget (web desktop, mobile web, app) | Tìm chuyến theo ngôn ngữ UI, địa danh không dấu (BR-37) | |
 | SCR-15 | Back office đơn hàng (CSKH) | Xem thông tin tiền tệ của từng đơn | |
-| SCR-16 | Công cụ cấu hình tỷ giá - danh sách quy tắc (Home / Fx Conversion Rule) | Xem, lọc quy tắc tỷ giá; làm mới tỷ giá; mở form thêm quy tắc; đặt ngưỡng bảng cũ cho cả bảng tỷ giá (BR-56) (proposed) | |
+| SCR-16 | Công cụ cấu hình tỷ giá - danh sách quy tắc (Home / Fx Conversion Rule) | Xem, lọc quy tắc tỷ giá; làm mới tỷ giá; mở form thêm quy tắc; đặt ngưỡng bảng cũ cho cả bảng tỷ giá (BR-56) (assumed, A-22) | |
 | SCR-17 | Công cụ cấu hình tỷ giá - form tạo, sửa quy tắc | Tạo, sửa quy tắc tỷ giá và nguồn của một cặp tiền | |
 | SCR-18 | Trang tạo bản dịch cho ngôn ngữ mới (web và app) (proposed) | Tạo bản dịch của ngôn ngữ mới từ bản EN (en-US) | |
 | SCR-19 | Trang xem trước bản dịch (web và app) (proposed) | Xem trước UI với bản dịch mới trước khi bật ngôn ngữ | |
@@ -343,7 +343,7 @@ tôi muốn mọi số tiền trên mọi trang và mọi platform được vi�
 
 - AC1 (Happy) Done when: Trên mọi màn hình của story và mọi platform (NFR-04), mỗi số tiền hiển thị kèm mã ISO của tiền tệ, không số tiền nào dùng ký hiệu tiền tệ (BR-11).
 - AC2 (Happy) Done when: Mỗi số VND được viết theo cách viết số của ngôn ngữ UI đang dùng, với mã VND đứng sau số (BR-12).
-- AC3 (Happy) Done when: Mỗi số ngoại tệ hiển thị có mã tiền đứng trước số (BR-12), trừ trường hợp đang chờ kết luận ở Q-13.
+- AC3 (Happy) Done when: Mỗi số ngoại tệ hiển thị có mã tiền đứng trước số (BR-12), trừ số tham khảo trong Payment Notice bản đầy đủ ở checkout, có vị trí mã tiền chờ Q-13.
 - AC4 (Happy) Done when: Trong cùng một ngôn ngữ UI, cùng một số VND được viết giống hệt nhau trên mọi màn hình của story và mọi platform (BR-12, NFR-04).
 - AC5 (Happy) Done when: Mỗi số tiền hiển thị đúng số lẻ của tiền tệ đó theo bảng số lẻ của Vexere (BR-09).
 - AC6 (Alternative) Done when: Nếu tiền tệ tham khảo không có trong bảng số lẻ của Vexere (BR-09), số tham khảo hiển thị theo số lẻ mà BR-09 quy định cho tiền tệ ngoài bảng.
@@ -432,7 +432,7 @@ tôi muốn chọn ngôn ngữ hiển thị của Vexere,
 **Priority:** Must
 **Screens:** SCR-05, SCR-06, SCR-12
 **Common behaviors:** CB-02, CB-03, CB-04
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-24, BR-25, BR-26, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-40, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-64, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-82
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-24, BR-25, BR-26, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-40, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-63, BR-64, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-81, BR-82
 
 **Acceptance Criteria**
 
@@ -456,7 +456,7 @@ tôi muốn thấy số tham khảo bằng tiền tệ gắn với ngôn ngữ t
 **Priority:** Must
 **Screens:** SCR-01, SCR-05, SCR-06, SCR-13
 **Common behaviors:** CB-02, CB-03, CB-04
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-26, BR-27, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-40, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-64, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-82
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-26, BR-27, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-40, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-63, BR-64, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-81, BR-82
 
 **Acceptance Criteria**
 
@@ -469,7 +469,7 @@ tôi muốn thấy số tham khảo bằng tiền tệ gắn với ngôn ngữ t
 - AC7 (Alternative) Done when: Nếu ngôn ngữ hiện hành là ngôn ngữ khác VI và chỉ khai báo một tiền tệ (BR-23), picker tiền tệ ở dạng chỉ đọc và hiển thị MSG-03 (chờ Q-18).
 - AC8 (Alternative) Done when: Nếu khách đổi tiền tệ ở checkout hoặc bước nhập thông tin hành khách (BR-40), số VND của báo giá không đổi (BR-39).
 - AC9 (Alternative) Done when: Nếu khách đổi tiền tệ ở checkout hoặc bước nhập thông tin hành khách (BR-40), số tham khảo theo tiền tệ mới được quy đổi bằng bảng tỷ giá của báo giá (BR-39).
-- AC10 (Error) Done when: Nếu tiền tệ đã lưu của khách đang bị tắt (BR-64), số tham khảo hiển thị bằng tiền tệ dự phòng của BR-64.
+- AC10 (Error) Done when: Nếu tiền tệ đã lưu của khách đang bị tắt (BR-64), số tham khảo hiển thị bằng tiền tệ của ứng viên kế tiếp theo thứ tự ưu tiên (BR-26, BR-64).
 - AC11 (Happy) Done when: Ở trang kết quả tìm kiếm, sau khi khách đổi tiền tệ, kết quả tìm kiếm vẫn hiển thị mà khách không phải tìm lại chuyến.
 - AC12 (Happy) Done when: Trong khi picker tiền tệ hiện nhóm tiền tệ gợi ý và nhóm tất cả tiền tệ (BR-27), tên hai nhóm là MSG-05.
 
@@ -486,16 +486,18 @@ tôi muốn ngôn ngữ, tiền tệ đã chọn được giữ qua các phiên,
 **Priority:** Should
 **Screens:** SCR-12, SCR-13
 **Common behaviors:** CB-02, CB-03, CB-04
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-26, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-64, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-82
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-26, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-63, BR-64, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-81, BR-82
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Sau khi guest đổi ngôn ngữ hoặc tiền tệ trên picker, lần sau mở Vexere trên cùng thiết bị, Vexere dùng đúng giá trị vừa chọn (BR-31).
-- AC2 (Happy) Done when: Sau khi khách đã đăng nhập đổi ngôn ngữ hoặc tiền tệ trên picker, khi đăng nhập trên một thiết bị khác, khách thấy đúng giá trị vừa chọn (BR-31, BR-32).
-- AC3 (Alternative) Done when: Nếu ngôn ngữ hoặc tiền tệ trên thiết bị khác với trên hồ sơ lúc khách đăng nhập, Vexere dùng giá trị thắng theo BR-32.
-- AC4 (Alternative) Done when: Nếu lựa chọn trên thiết bị thắng khi khách đăng nhập (BR-32), lần sau khách đăng nhập trên thiết bị khác cũng thấy lựa chọn đó.
+- AC1 (Happy) Done when: Sau khi guest đổi ngôn ngữ hoặc tiền tệ trên picker, lần sau mở Vexere trên cùng thiết bị (trên web: mở một đường dẫn không có ngôn ngữ, BR-28), Vexere dùng đúng giá trị vừa chọn (BR-26, BR-31).
+- AC2 (Happy) Done when: Sau khi khách đã đăng nhập đổi ngôn ngữ hoặc tiền tệ trên picker, khi đăng nhập trên một thiết bị khác, khách thấy đúng giá trị vừa chọn (BR-31, BR-32), trừ trường hợp trên web của AC7.
+- AC3 (Alternative) Done when: Nếu ngôn ngữ hoặc tiền tệ trên thiết bị khác với trên hồ sơ lúc khách đăng nhập, Vexere dùng giá trị thắng theo BR-32, trừ trường hợp trên web của AC7.
+- AC4 (Alternative) Done when: Nếu lựa chọn trên thiết bị thắng khi khách đăng nhập (BR-32), lần sau khách đăng nhập trên thiết bị khác cũng thấy lựa chọn đó, trừ trường hợp trên web của AC7.
 - AC5 (Alternative) Done when: Nếu khách chuyển sang ngôn ngữ có phạm vi tiền tệ không chứa tiền tệ đã lưu rồi quay lại ngôn ngữ có phạm vi chứa nó (BR-33), số tham khảo hiển thị lại bằng tiền tệ đã lưu.
 - AC6 (Error) Done when: Nếu ngôn ngữ hoặc tiền tệ đã lưu đang bị tắt (BR-64), lựa chọn đó không bị mất: khi được bật lại, Vexere dùng lại đúng lựa chọn đã lưu.
+- AC7 (Alternative) Done when: Nếu khách đăng nhập trên web khi trang đang ở đường dẫn của một ngôn ngữ khác ngôn ngữ thắng theo BR-32 (BR-26, BR-28), trang vẫn hiển thị bằng ngôn ngữ của đường dẫn.
+- AC8 (Alternative) Done when: Nếu khách đã đăng nhập trên web và trang hiển thị bằng ngôn ngữ của đường dẫn thay cho ngôn ngữ thắng theo BR-32 (AC7), ở phiên kế tiếp, khi khách mở một đường dẫn không có ngôn ngữ, Vexere dùng ngôn ngữ và tiền tệ thắng theo BR-32 (BR-26, BR-28).
 
 **INVEST Check:** I (chưa đạt) / N / V / E / S / T
 - I: cần picker của US-05 và US-06 để khách có lựa chọn chủ động; làm sau hai story đó.
@@ -509,7 +511,7 @@ tôi muốn thấy sẵn ngôn ngữ, tiền tệ phù hợp,
 **Priority:** Should
 **Screens:** SCR-12, SCR-13
 **Common behaviors:** CB-02, CB-03, CB-04
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-26, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-82
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-26, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-63, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-81, BR-82
 
 **Acceptance Criteria**
 
@@ -517,16 +519,17 @@ tôi muốn thấy sẵn ngôn ngữ, tiền tệ phù hợp,
 - AC2 (Happy) Done when: Nếu khách mới (BR-29) mở Vexere lần đầu, số tham khảo hiển thị bằng tiền tệ tự nhận diện theo BR-25, khớp bảng quyết định cho khách mới (BR-30).
 - AC3 (Happy) Done when: Nếu khách mới mở trên web một đường dẫn không có ngôn ngữ (BR-28), trang chuyển tới đường dẫn của ngôn ngữ tự nhận diện (BR-29).
 - AC4 (Alternative) Done when: Nếu ngôn ngữ của trình duyệt hoặc thiết bị không khớp ngôn ngữ nào đang bật (BR-29), giao diện hiển thị bằng ngôn ngữ dự phòng (BR-22).
-- AC5 (Error) Done when: Nếu không xác định được cả ngôn ngữ lẫn quốc gia của khách mới (BR-29), Vexere mở bằng cặp ngôn ngữ và tiền tệ dự phòng của BR-29.
-- AC6 (Happy) Done when: Nếu khách đã được tự nhận diện quay lại Vexere mà chưa chủ động chọn ngôn ngữ, tiền tệ nào (BR-26), kể cả khi truy cập từ quốc gia khác, Vexere dùng lại ngôn ngữ và tiền tệ đã tự nhận diện lần đầu (BR-31); trường hợp khách mới mở Vexere lần đầu từ link có chỉ định ngôn ngữ chờ Q-19.
+- AC5 (Error) Done when: Nếu không xác định được cả ngôn ngữ lẫn quốc gia của khách mới (BR-29), Vexere mở bằng ngôn ngữ và tiền tệ mà BR-29 quy định cho trường hợp này.
+- AC6 (Happy) Done when: Nếu khách đã được tự nhận diện quay lại Vexere (trên web: mở một đường dẫn không có ngôn ngữ, BR-28) mà chưa chủ động chọn ngôn ngữ, tiền tệ nào (BR-26), kể cả khi truy cập từ quốc gia khác, Vexere dùng lại ngôn ngữ và tiền tệ đã tự nhận diện lần đầu (BR-31); trường hợp khách mới mở Vexere lần đầu từ link có chỉ định ngôn ngữ chờ Q-19.
 - AC7 (Alternative) Done when: Nếu trang được mở bởi bot của công cụ tìm kiếm (BR-29), trang hiển thị theo ngôn ngữ của đường dẫn, không bị tự nhận diện (BR-28).
 - AC8 (Alternative) Done when: Nếu trang được mở bởi bot của công cụ tìm kiếm (BR-28), giá chỉ hiển thị VND.
-- AC9 (Alternative) Done when: Nếu khách đã có hồ sơ hoặc đã dùng app từ trước khi ra mắt nhưng chưa có ngôn ngữ, tiền tệ đã lưu (BR-80), lần đầu mở Vexere sau ra mắt, Vexere mở bằng cặp ngôn ngữ và tiền tệ tự nhận diện theo BR-29; trường hợp khách đã lưu ngôn ngữ trước ngày ra mắt chờ Q-26.
+- AC9 (Alternative) Done when: Nếu khách đã có hồ sơ hoặc đã dùng app từ trước khi ra mắt nhưng chưa có ngôn ngữ, tiền tệ đã lưu (BR-80), lần đầu mở Vexere sau ra mắt, Vexere mở bằng cặp ngôn ngữ và tiền tệ tự nhận diện theo BR-29.
 - AC10 (Alternative) Done when: Nếu bot của công cụ tìm kiếm mở một đường dẫn không có ngôn ngữ (BR-28), trang được dẫn tới đường dẫn của ngôn ngữ mà BR-28 quy định cho bot, không bị tự nhận diện.
 - AC11 (Alternative) Done when: Nếu ngôn ngữ trình duyệt hoặc thiết bị của khách mới là một biến thể theo vùng mà một ngôn ngữ đang bật đã khai báo (BR-82), giao diện hiển thị bằng ngôn ngữ đó.
+- AC12 (Alternative) Done when: Nếu khách đã chọn ngôn ngữ và Vexere đã lưu ngôn ngữ đó trên app trước ngày ra mắt (BR-80), lần đầu mở app sau ra mắt, giao diện hiển thị bằng ngôn ngữ đã lưu đó, không theo ngôn ngữ thiết bị (BR-26, BR-31).
 
 **INVEST Check:** I / N / V / E (chưa đạt) / S / T
-- E: AC6 chờ Q-19; AC9 chờ Q-26.
+- E: AC6 chờ Q-19.
 
 #### US-09 - Ngôn ngữ và tiền tệ chỉ định qua link
 
@@ -537,7 +540,7 @@ tôi muốn link của tôi mở trang Vexere bằng ngôn ngữ, tiền tệ t�
 **Priority:** Should
 **Screens:** SCR-01, SCR-11, SCR-12, SCR-13
 **Common behaviors:** CB-02, CB-03, CB-04
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-26, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-82
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-26, BR-28, BR-29, BR-30, BR-31, BR-32, BR-33, BR-34, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-63, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-80, BR-81, BR-82
 
 **Acceptance Criteria**
 
@@ -545,7 +548,7 @@ tôi muốn link của tôi mở trang Vexere bằng ngôn ngữ, tiền tệ t�
 - AC2 (Happy) Done when: Nếu người nhận mở deep link app có chỉ định ngôn ngữ và tiền tệ (BR-26), app mở bằng đúng ngôn ngữ và tiền tệ đó.
 - AC3 (Alternative) Done when: Nếu người nhận là khách quay lại đã lưu lựa chọn chủ động khác với link (BR-26), phiên mở từ link vẫn dùng ngôn ngữ và tiền tệ của link.
 - AC4 (Alternative) Done when: Nếu người nhận đổi ngôn ngữ hoặc tiền tệ trên picker trong phiên mở từ link (BR-26), Vexere dùng giá trị vừa đổi thay cho giá trị của link.
-- AC5 (Alternative) Done when: Nếu người nhận đã có ngôn ngữ, tiền tệ đã lưu, phiên kế tiếp không mở từ link quay về các giá trị đã lưu đó (BR-31); trường hợp người nhận là khách mới mở Vexere lần đầu từ link chờ Q-19.
+- AC5 (Alternative) Done when: Nếu người nhận đã có ngôn ngữ, tiền tệ đã lưu, phiên kế tiếp không mở từ link (trên web: mở một đường dẫn không có ngôn ngữ, BR-28) quay về các giá trị đã lưu đó (BR-26, BR-31); trường hợp người nhận là khách mới mở Vexere lần đầu từ link chờ Q-19.
 - AC6 (Alternative) Done when: Nếu người nhận đã đăng nhập, ngôn ngữ và tiền tệ trên hồ sơ không đổi theo giá trị của link (BR-31).
 - AC7 (Error) Done when: Nếu tiền tệ chỉ định trên link bị bỏ qua theo BR-34, số tham khảo hiển thị bằng tiền tệ của ứng viên kế tiếp theo thứ tự ưu tiên (BR-26).
 - AC8 (Error) Done when: Nếu ngôn ngữ chỉ định trên link chưa được bật (BR-22), trang mở bằng ngôn ngữ dự phòng (BR-22).
@@ -568,7 +571,7 @@ tôi muốn thấy đồng thời số tham khảo và số VND phải trả ở
 **Priority:** Must
 **Screens:** SCR-01, SCR-02, SCR-03, SCR-04, SCR-05, SCR-07, SCR-08, SCR-09, SCR-10, SCR-11, SCR-20
 **Common behaviors:** CB-01, CB-02, CB-03, CB-04, CB-05
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-20, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-20, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-63, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-81
 
 **Acceptance Criteria**
 
@@ -598,7 +601,7 @@ tôi muốn các dòng breakdown cộng lại đúng bằng total quy đổi,
 **Priority:** Must
 **Screens:** SCR-05, SCR-07, SCR-08, SCR-09
 **Common behaviors:** CB-01, CB-02, CB-03, CB-04, CB-05
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-63, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-81
 
 **Acceptance Criteria**
 
@@ -622,7 +625,7 @@ tôi muốn lọc chuyến theo khoảng giá bằng tiền tệ đã chọn,
 **Priority:** Should
 **Screens:** SCR-01
 **Common behaviors:** CB-01, CB-02, CB-03, CB-04
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-21, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-21, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-63, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-81
 
 **Acceptance Criteria**
 
@@ -631,6 +634,7 @@ tôi muốn lọc chuyến theo khoảng giá bằng tiền tệ đã chọn,
 - AC3 (Happy) Done when: Sau khi khách áp dụng khoảng giá, danh sách chuyến chỉ còn các chuyến được giữ theo quy tắc lọc giá theo tiền tệ tham khảo (BR-21).
 - AC4 (Alternative) Done when: Nếu một chuyến có số tham khảo hiển thị đúng bằng giá trị biên khách đã chọn (BR-21), chuyến đó vẫn có trong kết quả lọc.
 - AC5 (Alternative) Done when: Nếu không chuyến nào được giữ theo khoảng giá đã chọn (BR-21), trang kết quả hiển thị trạng thái không có chuyến hiện có của trang kết quả tìm kiếm.
+- AC6 (Alternative) Done when: Nếu khách đổi tiền tệ tham khảo trong khi đang lọc theo khoảng giá (BR-21), bộ lọc và danh sách chuyến hiển thị theo BR-21 (chờ Q-21).
 
 **INVEST Check:** I (chưa đạt) / N / V / E (chưa đạt) / S / T
 - I: cần bảng tỷ giá (US-19) và hiển thị kép (US-10) có trước.
@@ -649,12 +653,12 @@ tôi muốn thấy rõ số VND chính xác sẽ bị trừ cùng lưu ý về t
 **Priority:** Must
 **Screens:** SCR-05, SCR-07, SCR-12, SCR-13
 **Common behaviors:** CB-02, CB-03, CB-04
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-40, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-40, BR-41, BR-42, BR-43, BR-44, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-63, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-81
 
 **Acceptance Criteria**
 
 - AC1 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, ở checkout, dòng MSG-07 hiện ngay dưới tổng tiền.
-- AC2 (Happy) Done when: Ở checkout, hộp Payment Notice bản đầy đủ hiện MSG-08, với số VND của báo giá (BR-39) và số tham khảo giống hệt tổng tham khảo ở dòng total (BR-15, NFR-03).
+- AC2 (Happy) Done when: Ở checkout, hộp Payment Notice bản đầy đủ hiện MSG-08, với số VND của báo giá (BR-39) và số tham khảo giống hệt tổng tham khảo ở dòng total (BR-15, NFR-03); vị trí mã tiền của số tham khảo trong MSG-08 chờ Q-13.
 - AC3 (Happy) Done when: Ở màn thanh toán, Payment Notice rút gọn hiện MSG-09 thành một dòng ngay trên nút thanh toán, với số VND của báo giá (BR-39).
 - AC4 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, ở màn thanh toán, nhãn nút thanh toán là MSG-10 bằng ngôn ngữ UI, với số VND của báo giá (BR-39) viết theo BR-12.
 - AC5 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, ở màn thanh toán, MSG-11 hiện thành một dòng ngay dưới nút thanh toán.
@@ -665,7 +669,7 @@ tôi muốn thấy rõ số VND chính xác sẽ bị trừ cùng lưu ý về t
 - AC10 (Alternative) Done when: Trong khi checkout hoặc màn thanh toán chỉ hiển thị VND (CB-02, CB-04), hoặc màn thanh toán đang chờ kết luận của Legal (BR-65), màn đó không hiện MSG-08 hay MSG-09 (assumed, A-20).
 
 **INVEST Check:** I / N / V / E (chưa đạt) / S / T
-- E: MSG-07, MSG-10, MSG-11 trên UI VI chờ Q-22.
+- E: MSG-07, MSG-10, MSG-11 trên UI VI chờ Q-22; vị trí mã tiền của số tham khảo trong MSG-08 chờ Q-13.
 
 #### US-14 - Tỷ giá tham khảo được làm mới khi quá hạn
 
@@ -676,11 +680,11 @@ tôi muốn số tham khảo được cập nhật theo tỷ giá mới mà khô
 **Priority:** Must
 **Screens:** SCR-05, SCR-06, SCR-07, SCR-01, SCR-09
 **Common behaviors:** CB-02, CB-03, CB-04, CB-05
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-46, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-65, BR-66, BR-67, BR-68, BR-69, BR-70, BR-71, BR-72, BR-73, BR-74, BR-75, BR-76, BR-77, BR-78, BR-79, BR-83
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-46, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-63, BR-65, BR-66, BR-67, BR-68, BR-69, BR-70, BR-71, BR-72, BR-73, BR-74, BR-75, BR-76, BR-77, BR-78, BR-79, BR-81, BR-83
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trong khi tỷ giá của báo giá còn hiệu lực (BR-66), số tham khảo của cùng một tiền tệ ở checkout và màn thanh toán không đổi, kể cả khi đã có bảng tỷ giá hiện hành mới hơn (BR-39, BR-48).
+- AC1 (Happy) Done when: Trong khi tỷ giá của báo giá còn hiệu lực (BR-66) và báo giá không được tạo trong lúc bảng tỷ giá hiện hành đang Cũ (BR-83), số tham khảo của cùng một tiền tệ ở checkout và màn thanh toán không đổi, kể cả khi đã có bảng tỷ giá hiện hành mới hơn (BR-39, BR-48).
 - AC2 (Happy) Done when: Nếu tới mốc hết hiệu lực tỷ giá của báo giá và báo giá chuyển sang bảng tỷ giá mới (BR-67), số tham khảo ở checkout và màn thanh toán hiển thị theo bảng tỷ giá mới của báo giá.
 - AC3 — No longer applies: lặp side-effects của việc báo giá chuyển sang bảng tỷ giá mới; AC2 đã nêu việc chuyển.
 - AC4 (Happy) Done when: Nếu báo giá đã chuyển sang bảng tỷ giá mới (BR-67, BR-83), khách vẫn ở bước đang làm và không phải nhập lại thông tin hành khách đã nhập.
@@ -692,7 +696,7 @@ tôi muốn số tham khảo được cập nhật theo tỷ giá mới mà khô
 - AC10 (Error) Done when: Nếu hết thời gian giữ chỗ (BR-69) khi khách đang ở checkout, bước nhập thông tin hành khách hoặc màn thanh toán, khách được đưa về trang kết quả tìm kiếm (SCR-01) để chọn lại chuyến (BR-74).
 - AC11 (Error) Done when: Nếu khách được đưa về trang kết quả tìm kiếm vì hết thời gian giữ chỗ (BR-69), trang kết quả tìm kiếm hiện MSG-13 (dạng toast hay popup: chờ Q-30).
 - AC12 (Alternative) Done when: Nếu báo giá đang giữ tỷ giá hiện có sau mốc hết hiệu lực (BR-68) và chuyển sang bảng tỷ giá hợp lệ mới (BR-83), số tham khảo ở checkout và màn thanh toán hiển thị theo bảng tỷ giá mới của báo giá.
-- AC13 (Alternative) Done when: Nếu báo giá chuyển sang bảng tỷ giá mới (BR-67, BR-83) trong khi thanh toán của khách đang được xử lý và màn thanh toán đã hiển thị số tham khảo lúc khách bấm nút thanh toán (BR-65), My bookings của đơn hiển thị số tham khảo bằng tổng tham khảo hiển thị ở màn thanh toán lúc khách bấm nút thanh toán (BR-42, BR-70).
+- AC13 (Alternative) Done when: Nếu báo giá chuyển sang bảng tỷ giá mới (BR-67, BR-83) trong khi thanh toán của khách đang được xử lý và màn thanh toán đã hiển thị số tham khảo lúc khách bấm nút thanh toán (BR-43, BR-65), My bookings của đơn hiển thị số tham khảo bằng tổng tham khảo hiển thị ở màn thanh toán lúc khách bấm nút thanh toán (BR-42, BR-70).
 - AC14 (Alternative) Done when: Nếu báo giá được tạo trong khi bảng tỷ giá hiện hành đang Cũ và bảng tỷ giá hiện hành trở lại Bình thường khi chỗ vẫn còn được giữ (BR-73, BR-83), số tham khảo ở checkout và màn thanh toán hiển thị theo bảng tỷ giá mới của báo giá.
 
 **INVEST Check:** I / N / V / E / S / T
@@ -709,8 +713,8 @@ tôi muốn email xác nhận, My bookings hiện số tham khảo theo tỷ gi�
 
 **Priority:** Must
 **Screens:** SCR-08, SCR-09
-**Common behaviors:** CB-03, CB-05
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-46, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-65, BR-66, BR-68, BR-70, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79
+**Common behaviors:** CB-02, CB-03, CB-04, CB-05
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-46, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-63, BR-65, BR-66, BR-68, BR-70, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-81
 
 **Acceptance Criteria**
 
@@ -719,7 +723,7 @@ tôi muốn email xác nhận, My bookings hiện số tham khảo theo tỷ gi�
 - AC3 (Happy) Done when: Email xác nhận của đơn hiển thị số VND kèm số tham khảo bằng tiền tệ tham khảo lưu trên đơn (BR-44).
 - AC4 (Happy) Done when: Nếu màn thanh toán đã hiển thị số tham khảo lúc khách bấm nút thanh toán (BR-43, BR-65), số tham khảo của đơn trên email xác nhận và trên My bookings đều giống hệt tổng tham khảo hiển thị ở màn thanh toán lúc đó (BR-42, BR-70, NFR-03).
 - AC5 (Alternative) Done when: Nếu bảng tỷ giá hiện hành đã đổi sau khi đặt (BR-48), My bookings vẫn hiển thị số tham khảo lúc đặt của đơn, không tính lại theo bảng mới (BR-44).
-- AC6 (Alternative) Done when: Nếu sau khi đặt khách đổi tiền tệ, hoặc đổi sang một ngôn ngữ khác VI (BR-44), đơn cũ trên My bookings vẫn hiển thị tiền tệ tham khảo và số tham khảo lúc đặt.
+- AC6 (Alternative) Done when: Nếu sau khi đặt khách đổi sang một tiền tệ khác VND, hoặc đổi sang một ngôn ngữ khác VI (BR-44), đơn cũ trên My bookings vẫn hiển thị tiền tệ tham khảo và số tham khảo lúc đặt; khi tiền tệ hiện hành là VND trên UI ngoại ngữ: chờ Q-23.
 - AC7 (Alternative) Done when: Trong khi khách xem My bookings trên UI VI (BR-44), đơn chỉ hiển thị số VND.
 - AC8 — No longer applies: dựa trên một nguyên nhân kỹ thuật mà QC không tái hiện được bằng cách dùng sản phẩm; số tham khảo của đơn được kiểm tra ở AC4.
 - AC9 (Happy) Done when: Email xác nhận và vé điện tử của đơn được gửi bằng ngôn ngữ đặt vé (BR-46).
@@ -739,8 +743,8 @@ tôi muốn thấy số hoàn bằng VND kèm số tham khảo theo tỷ giá ng
 
 **Priority:** Must
 **Screens:** SCR-10
-**Common behaviors:** CB-03, CB-05
-**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79
+**Common behaviors:** CB-02, CB-03, CB-04, CB-05
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-63, BR-65, BR-66, BR-68, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-81
 
 **Acceptance Criteria**
 
@@ -749,7 +753,7 @@ tôi muốn thấy số hoàn bằng VND kèm số tham khảo theo tỷ giá ng
 - AC3 (Happy) Done when: Trong khi số hoàn hiển thị kèm số tham khảo (BR-45), MSG-14 hiển thị ngay cạnh số hoàn.
 - AC4 (Happy) Done when: Số hoàn và số tham khảo của số hoàn hiển thị cho khách mà không có bước nào yêu cầu khách đồng ý (BR-45).
 - AC5 (Happy) Done when: Số tham khảo của số hoàn giống hệt nhau mỗi lần khách xem lại và trên mọi platform (BR-45, NFR-03).
-- AC6 (Alternative) Done when: Nếu sau khi đặt khách đổi tiền tệ, hoặc đổi sang một ngôn ngữ khác VI (BR-45), số tham khảo của số hoàn vẫn dùng tiền tệ tham khảo của đơn.
+- AC6 (Alternative) Done when: Nếu sau khi đặt khách đổi sang một tiền tệ khác VND, hoặc đổi sang một ngôn ngữ khác VI (BR-45), số tham khảo của số hoàn vẫn dùng tiền tệ tham khảo của đơn; khi tiền tệ hiện hành là VND trên UI ngoại ngữ: chờ Q-23.
 - AC7 (Alternative) Done when: Trong khi khách xem thông tin hoàn tiền trên UI VI (BR-45), số hoàn chỉ hiển thị VND.
 
 **INVEST Check:** I (chưa đạt) / N / V / E (chưa đạt) / S / T
@@ -764,8 +768,8 @@ tôi muốn xem tiền tệ, số tham khảo, tỷ giá, thông báo khách đ�
 
 **Priority:** Must
 **Screens:** SCR-15
-**Common behaviors:** CB-05
-**Rules applied (PRD Currency Switch):** BR-01, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-42, BR-43, BR-44, BR-45, BR-46, BR-47, BR-48, BR-49, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-62, BR-65, BR-66, BR-68, BR-70, BR-71, BR-75, BR-76, BR-78, BR-79
+**Common behaviors:** CB-03, CB-05
+**Rules applied (PRD Currency Switch):** BR-01, BR-02, BR-05, BR-06, BR-07, BR-08, BR-09, BR-10, BR-11, BR-12, BR-13, BR-14, BR-15, BR-16, BR-17, BR-18, BR-19, BR-22, BR-23, BR-25, BR-37, BR-38, BR-39, BR-41, BR-42, BR-43, BR-44, BR-45, BR-46, BR-47, BR-48, BR-49, BR-50, BR-51, BR-52, BR-53, BR-54, BR-55, BR-56, BR-57, BR-58, BR-59, BR-60, BR-61, BR-62, BR-63, BR-65, BR-66, BR-68, BR-70, BR-71, BR-72, BR-75, BR-76, BR-77, BR-78, BR-79, BR-81
 
 **Acceptance Criteria**
 
@@ -828,7 +832,7 @@ tôi muốn có một bảng tỷ giá thống nhất được cập nhật đ�
 - AC5 (Alternative) Done when: Nếu tỷ giá mới của một cặp lệch quá biến động tối đa/ngày của quy tắc (BR-54) và cài đặt thử nguồn kế tiếp của cặp là Không (BR-55), bảng mới giữ tỷ giá hiện hành của cặp: SCR-16 vẫn hiện tỷ giá, nguồn và thời điểm bản tin cũ của cặp.
 - AC6 (Alternative) Done when: Nếu tỷ giá mới của một cặp bị bỏ qua theo BR-54 và cài đặt thử nguồn kế tiếp của cặp là Có (BR-55), tỷ giá của cặp trong bảng mới được xác định từ nguồn kế tiếp theo BR-55, và SCR-16 hiện nguồn được dùng.
 - AC7 (Alternative) Done when: Nếu tỷ giá mới của một cặp bị bỏ qua theo BR-54, cảnh báo tỷ giá bị bỏ qua của cặp đó hiển thị cho người và ở nơi BR-54 quy định (chờ Q-29).
-- AC8 (Error) Done when: Nếu một lần cập nhật không tạo được bảng tỷ giá hợp lệ (BR-49), kể cả khi mọi nguồn đều lỗi, bảng tỷ giá hiện hành giữ nguyên (BR-56): số tham khảo khách thấy không đổi.
+- AC8 (Error) Done when: Nếu một lần cập nhật không tạo được bảng tỷ giá hợp lệ (BR-49), kể cả khi mọi nguồn đều lỗi, mà số lần cập nhật định kỳ liên tiếp không tạo được bảng tỷ giá hợp lệ chưa đạt ngưỡng bảng cũ (BR-56), số tham khảo khách thấy không đổi.
 - AC9 (Error) Done when: Nếu số lần cập nhật định kỳ liên tiếp không tạo được bảng tỷ giá hợp lệ đạt ngưỡng bảng cũ (BR-56), bảng tỷ giá hiện hành chuyển sang Cũ (BR-71).
 - AC10 (Alternative) Done when: Nếu các lần cập nhật không tạo được bảng tỷ giá hợp lệ rơi vào ngày nguồn không công bố bản tin (BR-56), bảng tỷ giá hiện hành không chuyển sang Cũ (BR-71) vì những lần đó.
 - AC11 (Alternative) Done when: Nếu bảng tỷ giá hiện hành chuyển từ Cũ sang Bình thường (BR-73), các bề mặt có giá hiện lại số tham khảo.
@@ -899,9 +903,10 @@ tôi muốn bật tắt Currency Switch theo từng vertical × platform và đ�
 - AC14 (Alternative) Done when: Nếu công tắc tắt khẩn cấp được tắt khi đã đủ ngưỡng bảng cũ (BR-56), các bề mặt vẫn chỉ hiển thị VND (CB-02) cho tới lần cập nhật đầu tiên sau đó tạo được bảng tỷ giá hợp lệ (BR-73).
 - AC15 (Alternative) Done when: Nếu khách đăng nhập trong khi Currency Switch bật ở tỷ lệ traffic dưới 100% (BR-81), việc khách có thấy số tham khảo hay không theo nhóm của hồ sơ, giống nhau trên mọi thiết bị khách đăng nhập.
 - AC16 (Alternative) Done when: Nếu tỷ lệ traffic giảm và khách rời nhóm bật (BR-81), khách thấy như CB-03.
+- AC17 (Alternative) Done when: Trong khi công tắc tắt khẩn cấp đang bật (BR-72), kể cả khi một lần cập nhật tạo được bảng tỷ giá hợp lệ (BR-73), các bề mặt có giá vẫn chỉ hiển thị VND (CB-02).
 
 **INVEST Check:** I / N / V / E (chưa đạt) / S / T
-- E: cách vận hành bật tắt, ramp, công tắc tắt khẩn cấp và đổi chế độ thứ bậc hiển thị chờ Q-10; cách áp dụng NFR-05 cho trang khách đang mở lúc tắt chờ Q-28.
+- E: cách vận hành bật tắt, ramp, công tắc tắt khẩn cấp và đổi chế độ thứ bậc hiển thị chờ Q-10; cách đạt NFR-05 cho trang khách đang mở lúc tắt chờ Q-28 (Dev / Tech Lead).
 
 #### US-22 - Cấu hình tỷ giá trên công cụ
 
@@ -920,9 +925,9 @@ tôi muốn quản lý quy tắc tỷ giá quy đổi sang VND trên công cụ 
 - AC2 (Happy) Done when: Trên SCR-16, lọc theo mã tiền hoặc theo trạng thái (Tất cả, Đang bật, Đang tắt) chỉ hiện các quy tắc khớp bộ lọc.
 - AC3 (Happy) Done when: Từ nút thêm cấu hình tỷ giá trên SCR-16, nhân viên vận hành tỷ giá nhập quy tắc đúng BR-58 cho một cặp tiền chưa có quy tắc trên SCR-17, và sau khi lưu, quy tắc mới xuất hiện trong danh sách SCR-16 (BR-52).
 - AC4 (Error) Done when: Nếu dữ liệu nhập trên SCR-17 không đúng BR-58, quy tắc không được lưu và lỗi inline dưới từng trường sai hiện MSG-21.
-- AC5 (Error) Done when: Nếu tạo quy tắc cho một cặp tiền đã có quy tắc (BR-59), quy tắc không được tạo và form hiện MSG-20.
+- AC5 (Error) Done when: Nếu tạo quy tắc cho một cặp tiền đã có quy tắc (BR-59), quy tắc không được tạo và SCR-17 hiện MSG-20 (dạng lỗi inline, toast hay popup: chờ Q-30).
 - AC6 (Alternative) Done when: Bấm link trong MSG-20 mở quy tắc đang có của cặp đó trên SCR-17.
-- AC7 (Happy) Done when: Trên form sửa quy tắc (SCR-17), các trường mà BR-58 không cho sửa sau khi tạo hiển thị ở dạng chỉ đọc; các trường còn lại sửa và lưu được.
+- AC7 (Happy) Done when: Trên form sửa quy tắc (SCR-17), các trường mà BR-58 không cho sửa sau khi tạo hiển thị ở dạng chỉ đọc.
 - AC8 (Happy) Done when: Sau khi lưu một quy tắc vừa tạo hoặc vừa sửa, một lần cập nhật tỷ giá được thực hiện theo BR-48; khi lần đó tạo được bảng hợp lệ (BR-49), SCR-16 hiện tỷ giá hiện tại của cặp với thời điểm cập nhật mới.
 - AC9 (Happy) Done when: Bấm làm mới tỷ giá trên SCR-16 thực hiện một lần cập nhật tỷ giá (BR-48); khi lần đó tạo được bảng hợp lệ (BR-49), danh sách hiện tỷ giá hiện tại theo bảng mới.
 - AC10 (Happy) Done when: Sau khi đổi số ưu tiên hoặc bật, tắt một nguồn của một cặp trên SCR-17 (BR-58), SCR-16 hiện cho cặp đó nguồn được chọn theo BR-47 với cấu hình mới.
@@ -934,10 +939,11 @@ tôi muốn quản lý quy tắc tỷ giá quy đổi sang VND trên công cụ 
 - AC16 (Happy) Done when: Mỗi lần tạo, sửa, bật, tắt một quy tắc hoặc một nguồn được ghi vào lịch sử thay đổi quy tắc tỷ giá theo BR-57.
 - AC17 (Error) Done when: Nếu người thực hiện không có quyền theo BR-78, việc tạo, sửa, bật tắt quy tắc hoặc nguồn, đặt ngưỡng bảng cũ hay làm mới tỷ giá không được thực hiện theo phân quyền hiện có (DEP-15), và cấu hình đang có giữ nguyên.
 - AC18 (Happy) Done when: Sau khi cài đặt buffer của một cặp được đổi (BR-14), số tham khảo của tiền tệ đó quy đổi theo cài đặt mới từ bảng tỷ giá tạo sau đó (BR-13).
+- AC19 (Happy) Done when: Trên form sửa quy tắc (SCR-17), nhân viên vận hành tỷ giá sửa và lưu được các trường mà BR-58 cho sửa sau khi tạo.
 
 **INVEST Check:** I / N / V / E (chưa đạt) / S (chưa đạt) / T
-- E: tắt quy tắc của tiền tệ chính của một ngôn ngữ đang bật chờ Q-14; tiền tệ bị tắt chuyển sang ứng viên kế tiếp hay chỉ VND chờ Q-17; cách làm mới tỷ giá ngay sau khi tạo, sửa chờ Q-09.
-- S: 18 AC; nên tách thành danh sách, lọc và làm mới (AC1, AC2, AC9), tạo và sửa quy tắc (AC3 đến AC8, AC10), cài đặt và bật tắt (AC11 đến AC15, AC18).
+- E: tắt quy tắc của tiền tệ chính của một ngôn ngữ đang bật chờ Q-14; tiền tệ bị tắt chuyển sang ứng viên kế tiếp hay chỉ VND chờ Q-17; cách làm mới tỷ giá ngay sau khi tạo, sửa chờ Q-09; dạng hiển thị MSG-20 ở AC5 chờ Q-30.
+- S: 19 AC; nên tách thành danh sách, lọc và làm mới (AC1, AC2, AC9), tạo và sửa quy tắc (AC3 đến AC8, AC10, AC19), cài đặt và bật tắt (AC11 đến AC15, AC18).
 
 ## 8. Assumptions & Open Questions
 
@@ -948,7 +954,7 @@ tôi muốn quản lý quy tắc tỷ giá quy đổi sang VND trên công cụ 
 | A-01 | Nguồn của brief là PRD - Currency Switch (Multi-currency Display & Settlement) v0.1, 09 Oct 2026, PO Nguyễn Đức Anh Tuấn. BRD Currency Switch chưa được cung cấp. | DEP-13 | Brief (Assumptions) / Cao |
 | A-02 | Problem Statement và JTBD được suy ra từ Goals và vế "để..." của các US, vì PRD gốc không có hai mục này. | JTBD-01 đến JTBD-09 | Brief (Assumptions) / Trung bình |
 | A-03 | PRD gốc viết tỷ giá theo cách ghi số Việt Nam (26.054 là 26,054 VND cho 1 USD; 18,95 là 18.95 VND cho 1 KRW). Pack viết mọi ví dụ theo cách ghi số của UI EN. | BR-13 đến BR-21, BR-39, BR-42, BR-44, BR-45, BR-52 đến BR-55 | Brief (Assumptions) / Cao |
-| A-04 | Phần kỹ thuật của PRD gốc (cấu hình định dạng số, cách xác định ngôn ngữ và tiền tệ viết theo kiểu lập trình (CR-13), dữ liệu của báo giá và đơn, lệnh làm mới tỷ giá của công cụ, mã lỗi khi trùng quy tắc, cấu trúc bản dịch và danh sách key, dữ liệu doanh thu cho phân tích) chuyển sang tài liệu Technical design của Dev và tracking plan của Data. | Q-02 đến Q-12 | Brief (Assumptions) / Cao |
+| A-04 | Phần kỹ thuật của PRD gốc (cấu hình định dạng số, cách xác định ngôn ngữ và tiền tệ viết theo kiểu lập trình (CR-13), dữ liệu của báo giá và đơn, lệnh làm mới tỷ giá của công cụ, mã lỗi khi trùng quy tắc, cấu trúc bản dịch và danh sách chuỗi dịch, dữ liệu doanh thu cho phân tích) chuyển sang tài liệu Technical design của Dev và tracking plan của Data. | Q-02 đến Q-12 | Brief (Assumptions) / Cao |
 | A-05 | US-19 gốc có actor là dịch vụ lấy tỷ giá; đổi sang người hưởng lợi là nhân viên vận hành tỷ giá theo chuẩn user story. | US-19, JTBD-09 | Brief (Assumptions) / Cao |
 | A-06 | Story gợi ý nhập tên Latin được tách từ BR-N13 vì PRD gốc chưa có US cho nội dung này. | US-23, MSG-16, MSG-17, DEP-10 | Brief (Assumptions) / Cao |
 | A-07 | Hoá đơn VAT và báo cáo doanh thu giữ như hiện tại, không thêm tiền tệ nào khác. | BR-03, BR-04, DEP-07, US-18 | Brief (Assumptions) / Cao |
@@ -956,7 +962,7 @@ tôi muốn quản lý quy tắc tỷ giá quy đổi sang VND trên công cụ 
 | A-09 | Định nghĩa, baseline và owner của các chỉ số do pipeline đề xuất theo yêu cầu của user ("tự xử lý"). | SM-01 đến SM-05 | Brief (Assumptions), quyết định 1 / Trung bình |
 | A-10 | Lúc ra mắt, chế độ thứ bậc hiển thị là VND làm số chính trên mọi bề mặt; chế độ theo nhóm Browse/Pay bật được bằng cấu hình sau này. | BR-06, BR-05, BR-20 | Brief (Assumptions), quyết định 5 / Cao |
 | A-11 | "Đơn vị làm tròn" của quy tắc tỷ giá làm tròn tỷ giá theo quy tắc (VND cho 1 đơn vị ngoại tệ). Ví dụ THB của PRD gốc ghi 787,88, khác kết quả làm tròn half-up 787.89; Pack dùng 787.89. | BR-52 | Brief (Assumptions) / Trung bình |
-| A-12 | Cách xử lý dữ liệu cũ lúc ra mắt, checkout đang dở lúc ra mắt, khi tắt tính năng (gồm picker và thông báo trong lúc tắt), khi ramp theo tỷ lệ traffic, khi tắt một ngôn ngữ hoặc tiền tệ, khi lấy tỷ giá mới không thành công trong checkout, khi tắt công tắc tắt khẩn cấp, và việc đơn chỉ lưu số tham khảo khi màn thanh toán đã hiển thị nó, do pipeline đề xuất theo yêu cầu của user ("tự đề xuất"); cần PO duyệt. | BR-43, BR-61, BR-62, BR-63, BR-64, BR-68, BR-81, BR-83, BR-84, CB-03, US-21 | Brief (Assumptions, đề xuất), quyết định 7, 9 / Thấp, chờ duyệt |
+| A-12 | Cách xử lý dữ liệu cũ lúc ra mắt, checkout đang dở lúc ra mắt, khi tắt tính năng (gồm picker và thông báo trong lúc tắt), khi ramp theo tỷ lệ traffic, khi tắt một ngôn ngữ hoặc tiền tệ, khi lấy tỷ giá mới không thành công trong checkout, khi có bảng tỷ giá hợp lệ mới trong lúc công tắc tắt khẩn cấp đang bật, khi tắt công tắc tắt khẩn cấp, và việc đơn chỉ lưu số tham khảo khi màn thanh toán đã hiển thị nó, do pipeline đề xuất theo yêu cầu của user ("tự đề xuất"); cần PO duyệt. | BR-43, BR-61, BR-62, BR-63, BR-64, BR-68, BR-73, BR-81, BR-83, BR-84, CB-03, NFR-05, US-21 | Brief (Assumptions, đề xuất), quyết định 7, 9 / Thấp, chờ duyệt |
 | A-13 | Các bề mặt CMS, coupon/campaign, landing page, trip card, payment promotion nằm ngoài phạm vi đợt này vì chưa có estimate; user chưa chắc chắn. | BR-05, US-10, SCR-01 đến SCR-11 | Brief (Assumptions), quyết định 4 / Trung bình |
 | A-14 | Copy toast làm mới tỷ giá giữ nguyên như PRD gốc, kể cả chữ "bank". | MSG-12 | Brief (Assumptions), quyết định 7 / Cao |
 | A-15 | Trong khi Legal chưa kết luận cho màn thanh toán (SCR-07), email xác nhận, My bookings và số tiền hoàn, bốn bề mặt này chỉ hiển thị VND. Trong thời gian này, đơn vẫn lưu số tham khảo nếu checkout của báo giá đã hiển thị số tham khảo (BR-43), để back office có bằng chứng về những gì khách đã thấy (US-17, SM-04) và các bề mặt hiển thị lại số đã lưu khi Legal cho phép; nếu không có ngoại lệ này, mọi đơn thanh toán trong thời gian chờ sẽ vĩnh viễn không có số tham khảo. | BR-43, BR-65, CB-05, DEP-03, SCR-07 đến SCR-10, US-15, US-16, US-17, SM-04 | Pack đề xuất / Thấp, chờ duyệt |
@@ -965,12 +971,12 @@ tôi muốn quản lý quy tắc tỷ giá quy đổi sang VND trên công cụ 
 | A-18 | Copy của picker tiền tệ (MSG-04, MSG-05) do Pack đề xuất vì input chỉ nêu ý; copy lỗi nhập liệu trên form quy tắc tỷ giá (MSG-21) do Pack đề xuất vì input không có copy; thông báo lỗi tên hành khách (MSG-17) dùng copy hiện có của hệ thống. | MSG-04, MSG-05, MSG-17, MSG-21 | Pack đề xuất / Trung bình |
 | A-19 | Mức lệch của tỷ giá mới so với biến động tối đa/ngày tính theo phần trăm giữa tỷ giá gốc mới và tỷ giá gốc hiện hành của cặp, cả hai trước buffer và trước làm tròn. | BR-54, BR-55 | Pack đề xuất / Trung bình |
 | A-20 | Hộp Payment Notice bản đầy đủ (MSG-08) ở checkout và Payment Notice rút gọn (MSG-09) ở màn thanh toán chỉ hiện khi màn đó đang hiển thị số tham khảo. Khi màn chỉ hiển thị VND (CB-02, CB-03, CB-04, BR-65), hai thông báo này không hiện, vì nội dung của chúng nói về số tham khảo và tiền tệ tham khảo. Khi tính năng tắt: CB-03. | US-13, MSG-08, MSG-09, CB-03 | Pack đề xuất / Trung bình, chờ duyệt |
-| A-21 | Khách đã có hồ sơ hoặc đã dùng app trước khi ra mắt nhưng chưa có ngôn ngữ, tiền tệ đã lưu được tự nhận diện ở lần mở đầu tiên sau ra mắt, thay vì rơi về ngôn ngữ mặc định của BR-26, để khách đang dùng tiếng Việt không bị chuyển sang EN (SM-03). | BR-29, BR-80, US-08, SM-03 | Pack đề xuất (quyết định 9) / Thấp, chờ duyệt |
+| A-21 | Khách đã có hồ sơ hoặc đã dùng app trước khi ra mắt nhưng chưa có ngôn ngữ, tiền tệ đã lưu được tự nhận diện ở lần mở đầu tiên sau ra mắt, thay vì rơi về ngôn ngữ mặc định của BR-26, để khách đang dùng tiếng Việt không bị chuyển sang EN (SM-03). Ngôn ngữ khách đã chọn và Vexere đã lưu trên hồ sơ hoặc trên app trước ngày ra mắt, nếu có, được coi là lựa chọn chủ động, để khách không mất lựa chọn đã có; khách đó không được tự nhận diện. Cách chuyển dữ liệu có sẵn: Q-26. | BR-29, BR-80, US-08, SM-03 | Pack đề xuất (quyết định 9) / Thấp, chờ duyệt |
 | A-22 | Ngưỡng cũ N là một giá trị cho cả bảng tỷ giá, không theo từng cặp tiền, vì bảng cũ được định nghĩa cho cả bảng tỷ giá (CR-30); quyết định 6 lại liệt kê N cùng các giá trị nhân viên vận hành đặt cho từng cặp. Nếu PO chọn N theo từng cặp, N thành một trường của quy tắc tỷ giá trên SCR-17 (BR-58), BR-56 và BR-71 phải viết lại theo từng cặp, và Q-25 được trả lời theo N của cặp. N không có mặc định, bắt buộc đặt trước ngày ra mắt và được đặt trên danh sách quy tắc (SCR-16). | BR-56, BR-71, BR-78, US-19, US-22, Q-25, SCR-16 | Pack đề xuất, lệch quyết định 6 / Trung bình, chờ PO duyệt |
 | A-23 | Hai cài đặt Có/Không của quy tắc tỷ giá (buffer áp vào số tham khảo, BR-14; thử nguồn kế tiếp khi tỷ giá mới bị bỏ qua, BR-55) không có mặc định và bắt buộc chọn trên form quy tắc, để không cặp nào thiếu cách quy đổi hoặc cách xử lý khi tỷ giá mới bị bỏ qua. | BR-14, BR-55, BR-58, US-22 | Pack đề xuất (quyết định 6) / Trung bình, chờ duyệt |
 | A-24 | Bot của công cụ tìm kiếm mở đường dẫn không có ngôn ngữ (gồm các đường dẫn đã được công cụ tìm kiếm ghi nhận trước ra mắt) nhận trang VI, vì bot không được tự nhận diện và ngôn ngữ mặc định của BR-26 sẽ đổi ngôn ngữ của các trang tiếng Việt đã được ghi nhận. Trên web, ngôn ngữ chỉ định trên link thắng ngôn ngữ trong đường dẫn của link, như thứ tự của tự nhận diện (BR-29). | BR-28, US-08, US-09, DEP-08 | Pack đề xuất / Trung bình, chờ PO cùng SEO (DEP-08) duyệt |
 | A-25 | Nếu báo giá chuyển sang bảng tỷ giá mới (BR-67, BR-83) trong lúc thanh toán của khách đang được xử lý, đơn vẫn lưu số tham khảo theo bảng tỷ giá của báo giá tại lúc khách bấm nút thanh toán, để số trên đơn bằng tổng tham khảo khách thấy ở màn thanh toán khi bấm nút. | BR-42, BR-70, US-14, US-15 | Pack đề xuất / Thấp, chờ duyệt |
-| A-26 | Trên web, ngôn ngữ trong đường dẫn của trang được xét ở bước (2) của BR-26 cùng tham số trên link, chỉ cho phiên đó, không lưu; khách quay lại mở đường dẫn không có ngôn ngữ được dẫn tới đường dẫn của ngôn ngữ xác định theo BR-26. Lý do: BR-28 cho ngôn ngữ trong đường dẫn quyết định ngôn ngữ của trang, còn thứ tự ưu tiên của PRD gốc không có bước cho đường dẫn; nếu không, khách đã lưu ngôn ngữ khác mở link chia sẻ hoặc trang SEO sẽ không thấy đúng ngôn ngữ của đường dẫn. | BR-26, BR-28, US-09, DEP-08 | Pack đề xuất / Trung bình, chờ PO cùng SEO (DEP-08) duyệt |
+| A-26 | Trên web, ngôn ngữ trong đường dẫn của trang được xét ở bước (2) của BR-26 cùng tham số trên link, chỉ cho phiên đó, không lưu; khách quay lại mở đường dẫn không có ngôn ngữ được dẫn tới đường dẫn của ngôn ngữ xác định theo BR-26. Lý do: BR-28 cho ngôn ngữ trong đường dẫn quyết định ngôn ngữ của trang, còn thứ tự ưu tiên của PRD gốc không có bước cho đường dẫn; nếu không, khách đã lưu ngôn ngữ khác mở link chia sẻ hoặc trang SEO sẽ không thấy đúng ngôn ngữ của đường dẫn. Hệ quả: trên web, ngôn ngữ đã lưu (lựa chọn chủ động hoặc giá trị tự nhận diện) chỉ quyết định ngôn ngữ của trang khi khách mở một đường dẫn không có ngôn ngữ; khách mở một đường dẫn có ngôn ngữ khác (bookmark, kết quả tìm kiếm, link chia sẻ), hoặc đăng nhập khi trang đang ở đường dẫn của một ngôn ngữ khác, thấy ngôn ngữ của đường dẫn trong phiên đó (US-07-AC7, US-07-AC8). | BR-26, BR-28, US-07, US-08, US-09, DEP-08 | Pack đề xuất / Trung bình, chờ PO cùng SEO (DEP-08) duyệt |
 
 **Open Questions**
 
@@ -1001,9 +1007,9 @@ tôi muốn quản lý quy tắc tỷ giá quy đổi sang VND trên công cụ 
 | Q-23 | Số tham khảo đã lưu trên đơn (BR-44, BR-45, BR-70) có bị ẩn trên email xác nhận, My bookings, thông tin hoàn tiền và back office đơn hàng trong hai trường hợp sau không: (1) bảng tỷ giá hiện hành đang Cũ (BR-75, CB-02); (2) khách đang dùng VND trên UI ngoại ngữ (BR-08, CB-04)? BR-75 và BR-08 nói mọi bề mặt chỉ hiển thị VND, trong khi BR-44 giữ số tham khảo lúc đặt vĩnh viễn và chỉ có ngoại lệ khi xem trên UI VI. US-15, US-16, US-17 hiện đọc theo BR-44, BR-45: số đã lưu vẫn hiển thị. | BR-08, BR-44, BR-45, BR-75, CB-02, CB-04, US-15, US-16, US-17 | PO |
 | Q-24 | No longer applies: đã thành đề xuất BR-81 (A-12). | BR-60, CB-03, US-21 | PO |
 | Q-25 | Khi một lần cập nhật không lấy được tỷ giá của một cặp từ mọi nguồn (BR-47), nhưng bảng mới vẫn hợp lệ vì cặp đó không phải tiền tệ chính của ngôn ngữ đang bật nào (BR-49): bảng mới bỏ cặp đó (khách đang dùng tiền tệ đó thấy như CB-02), hay giữ tỷ giá hiện hành của cặp như khi tỷ giá mới bị bỏ qua (BR-54)? Nếu giữ, giữ tới khi nào? | BR-47, BR-48, BR-49, BR-54, CB-02, US-19 | PO |
-| Q-26 | Trước khi ra mắt, Vexere đã lưu ngôn ngữ khách chọn trên hồ sơ hoặc trên app chưa? Nếu có, giá trị đó được coi là lựa chọn chủ động (BR-31) hay chỉ như giá trị tự nhận diện, và BR-80 có áp dụng cho các khách này không? | BR-26, BR-31, BR-80, US-08 | PO; Dev / Tech Lead ghi cách chuyển dữ liệu có sẵn trong Technical design |
+| Q-26 | Trước khi ra mắt, Vexere đã lưu ngôn ngữ khách chọn trên hồ sơ hoặc trên app chưa? Nếu có, dữ liệu đó được chuyển thành lựa chọn chủ động đã lưu (BR-31, BR-80) như thế nào? | BR-31, BR-80, US-08 | Dev / Tech Lead: ghi trong Technical design |
 | Q-27 | Một phiên của khách bắt đầu và kết thúc khi nào trên web và trên app (ví dụ đóng tab hoặc trình duyệt, đóng app, hay không thao tác trong một khoảng thời gian)? BR-26, BR-31, BR-48 và SM-01, SM-03 có dùng cùng một định nghĩa phiên không? | BR-26, BR-31, BR-48, BR-81, SM-01, SM-03, US-05, US-07, US-09, US-19 | PO cùng Dev / Tech Lead và Data |
-| Q-28 | Với trang khách đang mở lúc tắt Currency Switch cho một vertical × platform (BR-61, NFR-05), kể cả checkout, bước nhập thông tin hành khách và màn thanh toán: giá chuyển sang chỉ VND ngay trên trang đó hay từ lần tải trang hoặc thao tác kế tiếp, và chậm nhất sau bao lâu? | BR-61, NFR-05, US-21 | PO cùng Dev / Tech Lead |
+| Q-28 | Làm sao để trang khách đang mở lúc tắt Currency Switch cho một vertical × platform (kể cả checkout, bước nhập thông tin hành khách và màn thanh toán) chuyển sang chỉ hiển thị VND ngay (BR-61, NFR-05)? Nếu không làm được ngay, độ trễ tối đa là bao nhiêu, để PO duyệt? | BR-61, NFR-05, US-21 | Dev / Tech Lead: ghi trong Technical design; PO duyệt độ trễ nếu có |
 | Q-29 | Cảnh báo tỷ giá bị bỏ qua (BR-54) cần hiển thị cho ai (ví dụ nhân viên vận hành tỷ giá) và ở đâu (danh sách quy tắc SCR-16, lịch sử thay đổi tỷ giá, hay một thông báo gửi tới người phụ trách), gồm thông tin gì? | BR-54, US-19 | PO |
-| Q-30 | Khi khách được đưa về trang kết quả tìm kiếm vì hết thời gian giữ chỗ, MSG-13 hiện dưới dạng toast hay popup? | MSG-13, US-14 | PO cùng Design (DEP-04) |
+| Q-30 | Khi khách được đưa về trang kết quả tìm kiếm vì hết thời gian giữ chỗ, MSG-13 hiện dưới dạng toast hay popup? Khi tạo quy tắc cho cặp tiền đã có quy tắc, MSG-20 trên form quy tắc (SCR-17) hiện dưới dạng lỗi inline, toast hay popup? | MSG-13, MSG-20, US-14, US-22 | PO cùng Design (DEP-04) |
 | Q-31 | Khi không có ứng viên tiền tệ hợp lệ (BR-25), MSG-06 hiện với {mã tiền tệ} là tiền tệ nào (ví dụ tiền tệ chính của ngôn ngữ hiện hành), hay dùng một biến thể copy không có mã tiền tệ? | MSG-06, BR-25, CB-02 | PO |
