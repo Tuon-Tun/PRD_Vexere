@@ -226,7 +226,7 @@ flowchart TD
 - The orchestrator inserts each note inline, directly below the affected section, using the `> [!WARNING] REVIEWER'S NOTE` callout format.
 - In IDE mode, notes are inserted into the Markdown file. In text-only mode, notes are inserted into the in-chat draft.
 - Reviewer output is capped at 10 high-risk notes per pass.
-- The reviewer validates business logic, business-level edge cases, scope, JTBD alignment, `Done when` acceptance criteria coverage, and traceability: every cited ID exists, every rule is cited or used by another rule, and each story's `Rules applied` line lists the rules its acceptance criteria, messages, and common behaviors refer to, plus the rules those rules use, followed all the way down.
+- The reviewer validates business logic, business-level edge cases, scope, JTBD alignment, `Done when` acceptance criteria coverage, and traceability: every cited ID exists, every rule is cited or used by another rule, and each story's `Rules applied` line lists the rules its acceptance criteria and common behaviors cite, plus the permission and "on entering" rows of each transition they cite. Rules that a listed rule uses are found through its Uses column and the Traceability Matrix, so the line stays short enough to read in a Jira ticket.
 - The reviewer flags **duplication**: a rule value, message wording, or target written outside its home, and proposes replacing the copy with the ID.
 - The reviewer also flags **technical leakage** (endpoints, status codes, database fields, internal services, code) and wording that PO, BA, Dev, and QC could read differently, and proposes a business-language rewrite.
 

@@ -219,6 +219,16 @@ def check_product_framing_skill():
     assert_true("Product Framing Pack" in content, "Product framing skill is missing its output contract")
     assert_true("Done when" in content, "Product framing skill is missing acceptance criteria guidance")
     assert_true("Rules applied" in content, "Product framing skill is missing the Rules applied line")
+    # Rules applied lists direct citations only; a chain followed to the end lists most of the register.
+    for rel in (
+        "knowledge-base/product-framing/SKILL.md",
+        "knowledge-base/prd-template/SKILL.md",
+        "knowledge-base/prd-template/resources/prd-template.md",
+        "knowledge-base/prd-reviewer.md",
+        "knowledge-base/knowledge/user-story-skill/SKILL.md",
+    ):
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        assert_true("all the way down" not in text, f"{rel} still follows Rules applied all the way down")
     # Rules must get their IDs before the stories that cite them are written.
     rules_at = content.find("## 3. Business Rules")
     stories_at = content.find("## 7. Epics & User Stories")

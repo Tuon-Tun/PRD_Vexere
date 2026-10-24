@@ -234,11 +234,11 @@ When [situation], I want to [motivation], so I can [expected outcome].
   - Jira: filled by the PM after creating the ticket; never generated. The Jira ticket summary starts
     with the story ID and name (e.g. "US-03 Choose seats"), so the ticket and the PRD always match.
   - Common behaviors: the CB IDs that apply to the story.
-  - Rules applied: every BR referred to by its acceptance criteria and its common behaviors, then every
-    BR cited in any cell of those rules' rows, followed all the way down (a transition also brings in the
-    "on entering" row of its new status; a cited message brings in its Rules column). Prefixed with the
-    feature name so it still makes sense in a Jira ticket; rules from another PRD go in a second group
-    prefixed with that PRD's name and are not followed further.
+  - Rules applied: the BRs its acceptance criteria and its common behaviors cite; a cited transition
+    also brings in the permission row its event names and the "on entering" row of its new status.
+    Rules those rules use are not listed: they are in each rule's Uses column and in 3.5. Prefixed with
+    the feature name so it still makes sense in a Jira ticket; rules from another PRD go in a second
+    group prefixed with that PRD's name.
   - Acceptance criteria, numbered AC1, AC2, ... and labelled (Happy), (Alternative), or (Error): UI/UX
     behavior, how a broken rule or a failure is shown (toast / inline error / popup + MSG ID), and
     side-effects of this story's own action. One outcome per criterion: split it when its outcomes can

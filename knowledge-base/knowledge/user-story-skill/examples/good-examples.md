@@ -271,7 +271,7 @@ Rules applied (PRD Ticket Cancellation): BR-01, BR-02, BR-03, BR-04, BR-05, BR-0
 
 - No AC repeats "24 hours", "10%", or any message wording — changing the cutoff to 12 hours edits BR-01 only
 - The email and the seat release are on the "on entering Cancelled" row (BR-06), written once however the ticket gets cancelled
-- `Rules applied` includes BR-02 because BR-03 uses it, and BR-04 and BR-06 because the transition BR-05 cites its permission and its new status, so the Jira ticket carries every rule needed to build and test the story
+- `Rules applied` lists BR-01, BR-02, BR-03, and BR-05 because the AC and CB-02 cite them, and BR-04 and BR-06 because the transition BR-05 names its permission and its new status. It stops there: a rule that BR-03 uses would be found in BR-03's Uses column, not added to the line
 - Repeated taps are handled once by CB-02, which the story lists instead of writing its own AC for it
 - MSG-02's Rules column names BR-03, so a change to the refund rule shows which message to re-check
 

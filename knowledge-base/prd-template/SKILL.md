@@ -130,7 +130,7 @@ Do not pre-fill Version History by default; the PM owns it. Keep the table forma
 - No rule value, formula, condition, message wording, or target appears outside its home section.
 - Every epic names the JTBD it serves, and every JTBD is served by an epic.
 - Every acceptance criterion is labelled (Happy), (Alternative), or (Error), states one outcome, and opens with If or While when it depends on a situation or state.
-- Every story has Priority, Screens, Jira (empty, for the PM), Common behaviors, and Rules applied lines; Rules applied follows the definition in `knowledge-base/product-framing/SKILL.md` exactly (acceptance criteria and common behaviors, then every BR cited in those rules' rows all the way down, the "on entering" row of each transition's new status, and the Rules column of every cited message; rules from another PRD listed but not followed).
+- Every story has Priority, Screens, Jira (empty, for the PM), Common behaviors, and Rules applied lines; Rules applied follows the definition in `knowledge-base/product-framing/SKILL.md` exactly (the rules the acceptance criteria and the listed common behaviors cite, plus the permission and "on entering" rows of each cited transition, and nothing further; rules from another PRD in a second group).
 - Every cited ID exists in this PRD or carries the name of a PRD listed in 3.7; every BR is cited or used by another rule, except rows marked "No longer applies", which nothing cites; and the Traceability Matrix holds IDs only.
 - IDs match the approved Product Framing Pack.
 - Terms match the Glossary throughout.

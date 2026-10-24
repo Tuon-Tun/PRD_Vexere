@@ -191,7 +191,7 @@ Fix any failure before outputting.
 - [ ] No `and` / `or` / `/` in WHO/DOES/WHAT
 - [ ] Every AC has a clear pass/fail condition
 - [ ] Every AC describes an observable outcome in business language — no status codes, endpoints, or internal components
-- [ ] Inside a PRD: no AC repeats a rule value, formula, condition, or message wording — it cites the ID, and `Rules applied` lists every rule referred to by the AC and the listed common behaviors, plus every rule cited in those rules' rows and in the messages they cite, followed all the way down
+- [ ] Inside a PRD: no AC repeats a rule value, formula, condition, or message wording — it cites the ID, and `Rules applied` lists the rules the AC and the listed common behaviors cite, plus the permission and "on entering" rows of each cited transition, and nothing further
 - [ ] Happy path + at least one negative/edge case covered, by its own AC or, inside a PRD, by a listed common behavior
 - [ ] All AC completable within one sprint
 - [ ] All 6 INVEST criteria pass
