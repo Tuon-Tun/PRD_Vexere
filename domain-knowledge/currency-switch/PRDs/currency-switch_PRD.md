@@ -147,6 +147,8 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 
 ### 2.6 Glossary
 
+> See RN-17
+
 | Term | Meaning in this PRD | Not to be confused with |
 |------|---------------------|-------------------------|
 | Khách inbound | Khách quốc tế dùng UI ngoại ngữ của Vexere | Việt kiều dùng UI VI ở nước ngoài (BR-30) |
@@ -204,6 +206,11 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 ## 3. Feature Specifications
 
 ### 3.1 Business Rules
+
+> [!WARNING] REVIEWER'S NOTE (RN-17)
+> **Risk:** Dòng Glossary mới “Dòng giảm giá” đã xếp khoản giảm theo phương thức thanh toán vào nhóm dòng giảm giá và trích BR-20. Nhưng BR-20 và US-10-AC4 vẫn chỉ nói “voucher và khuyến mãi” lấy VND làm số chính, nên phần BR-20 trong rủi ro của RN-14 vẫn chưa xử lý xong. Khi bật chế độ (2) theo nhóm (BR-06, US-21-AC12), Dev và QC không biết dòng giảm theo phương thức thanh toán trên breakdown lấy VND làm số chính hay theo nhóm Browse/Pay.
+> **Option A:** Trong 3.1 BR-20, đổi cột Rule thành “Voucher, khuyến mãi và mọi dòng giảm giá luôn lấy VND làm số chính, ở cả hai chế độ của BR-06.” Thêm vào cuối cột Example “ Khoản giảm theo phương thức thanh toán −20,000 VND (giá trị mẫu) trên breakdown cũng có số chính là −20,000 VND.” Trong US-10, đổi AC4 thành “AC4 (Alternative) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (2) "theo nhóm" (BR-06), số tiền của voucher, khuyến mãi và mọi dòng giảm giá vẫn lấy VND làm số chính trên mọi bề mặt (BR-20).” (Rules applied của US-10 đã có BR-20; Traceability Matrix giữ nguyên.)
+> **Option B:** Trong 4 Open Questions, thêm `| Q-33 | Ở chế độ (2) theo nhóm (BR-06), khoản giảm theo phương thức thanh toán đã áp vào đơn có lấy VND làm số chính như voucher và khuyến mãi (BR-20) không? | BR-06, BR-20, US-10 | PO: trả lời trước khi bật chế độ (2) (US-21-AC12) |`. Trong 3.1 BR-20, thêm vào cuối cột Rule “ Khoản giảm theo phương thức thanh toán đã áp vào đơn: TBD (Q-33).” Dòng Glossary “Dòng giảm giá” và US-10-AC4 giữ nguyên.
 
 Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn nghìn, dấu chấm thập phân); tỷ giá là số VND cho 1 đơn vị ngoại tệ (A-03). Ngôn ngữ, tiền tệ trong ví dụ là giá trị mẫu; danh sách ngôn ngữ, tiền tệ được bật theo cấu hình của BU (BR-22, A-08). Lúc ra mắt VND là số chính trên mọi bề mặt (BR-06), nên ví dụ hiển thị viết dạng "467,000 VND : ~USD 17.92".
 
@@ -714,6 +721,8 @@ stop
 
 **Epic 3: Hiển thị kép** — Serves: JTBD-01, JTBD-02 — Jira: [PM fills]
 
+> See RN-17
+
 - **US-10 - Thấy số tham khảo và số VND ở mọi bước**
   - **Là** khách inbound,
   - **tôi muốn** thấy đồng thời số tham khảo và số VND phải trả ở bất kỳ bước nào có giá,
@@ -1009,6 +1018,8 @@ stop
   - **INVEST:** I / N / V / E (chưa đạt) / S / T
     - E: cách vận hành bật tắt, ramp, công tắc tắt khẩn cấp và đổi chế độ thứ bậc hiển thị chờ Q-10; cách đạt NFR-05, NFR-06 cho trang khách đang mở chờ Q-28 (Dev / Tech Lead).
 
+> See RN-16
+
 - **US-22 - Cấu hình tỷ giá trên công cụ**
   - **Là** nhân viên vận hành tỷ giá,
   - **tôi muốn** quản lý quy tắc tỷ giá quy đổi sang VND trên công cụ cấu hình tỷ giá,
@@ -1046,6 +1057,11 @@ stop
 ---
 
 ### 3.4 Use Case Specifications
+
+> [!WARNING] REVIEWER'S NOTE (RN-16)
+> **Risk:** Bước 2 mới của UC-04 chỉ cho sửa, bật, tắt quy tắc trên SCR-17. Trong khi đó, US-22-AC20 (nhánh “2, 3” trích AC này) và MSG-23 cho bật, tắt bằng công tắc trạng thái trên cả SCR-16, còn cột Purpose của SCR-16 không nhắc tới công tắc này. Vì vậy QC dựng test theo UC-04 sẽ bỏ sót việc bật, tắt ngay trên danh sách, và Dev không biết SCR-16 có công tắc trạng thái hay không.
+> **Option A:** Trong UC-04, đổi cột Action của bước 3 thành “Lưu quy tắc trên SCR-17, hoặc bật, tắt một quy tắc bằng công tắc trạng thái ngay trên danh sách SCR-16” (cột Result giữ nguyên). Trong 3.6, thêm vào cuối cột Purpose của SCR-16 “; bật, tắt quy tắc bằng công tắc trạng thái (BR-52)”. Nhánh `| 2, 3 | Tắt quy tắc của tiền tệ chính của một ngôn ngữ đang bật | US-22-AC20 | BR-85 |`, US-22-AC20 và MSG-23 giữ nguyên. Traceability Matrix giữ nguyên.
+> **Option B:** Giữ UC-04 như hiện tại và chỉ cho bật, tắt quy tắc trên form SCR-17: trong US-22, đổi đoạn cuối của AC20 “cạnh công tắc trạng thái, trên SCR-16 hoặc SCR-17 nơi thao tác” thành “cạnh công tắc trạng thái trên SCR-17”. Trong 3.6, đổi cột Channel của MSG-23 từ “Màn hình (SCR-16, SCR-17)” thành “Màn hình (SCR-17)”. Traceability Matrix giữ nguyên.
 
 **UC-01 - Khách mở Vexere và xem giá bằng tiền tệ của mình** (covers US-03, US-05, US-06, US-08, US-10)
 
@@ -1289,6 +1305,8 @@ stop
 ---
 
 ### 3.6 UI/UX Specifications
+
+> See RN-16
 
 **Screens**
 
