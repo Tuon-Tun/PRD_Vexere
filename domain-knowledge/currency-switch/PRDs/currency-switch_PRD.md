@@ -125,11 +125,6 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 
 ### 2.5 Scope
 
-> [!WARNING] REVIEWER'S NOTE (RN-14)
-> **Risk:** 2.5 loại payment promotion “không gồm các dòng giảm giá trên breakdown của đơn”, nhưng dòng Glossary mới “Dòng giảm giá” chỉ gồm voucher và khuyến mãi và ghi không nhầm với payment promotion, còn A-13, nơi các vế ngoại lệ mới của 2.5 được trích, vẫn ghi ranh giới cũ không có ngoại lệ, nên với khoản giảm theo phương thức thanh toán đã áp vào đơn và hiện trên breakdown (SCR-05), Dev và QC không biết dòng đó có quy đổi, gánh phần chênh do làm tròn (BR-17) và lấy VND làm số chính (BR-20) hay không.
-> **Option A:** Trong 2.6, đổi cột Meaning của dòng “Dòng giảm giá” thành “Mọi dòng mang giá trị âm trên breakdown của đơn: voucher, khuyến mãi, kể cả khoản giảm theo phương thức thanh toán đã áp vào đơn (BR-17, BR-20)” và cột Not to be confused with thành “Bề mặt giới thiệu payment promotion ngoài breakdown (ngoài phạm vi, A-13)”. Trong 4 Assumptions, đổi cột Assumption của A-13 thành “Các bề mặt CMS, coupon/campaign, landing page do CMS tạo, trip card và bề mặt giới thiệu payment promotion nằm ngoài phạm vi đợt này vì chưa có estimate; Trang SEO landing (SCR-11), các dòng giảm giá trên breakdown của đơn (BR-17, BR-20) và mục tỷ giá tham khảo của Điều khoản (SCR-20) vẫn trong phạm vi; user chưa chắc chắn.”, và thêm SCR-05 vào cột Affects của A-13.
-> **Option B:** Thêm vào 4 Open Questions: `| Q-33 | Khoản giảm theo phương thức thanh toán đã áp vào đơn và hiện trên breakdown (SCR-05) là dòng giảm giá theo BR-17, BR-20, hay thuộc payment promotion ngoài phạm vi? | BR-17, BR-20, A-13, SCR-05 | PO: trả lời trước khi chốt phạm vi |`. Trong 2.6, đổi cột Not to be confused with của dòng “Dòng giảm giá” thành “Payment promotion (ngoài phạm vi, A-13); khoản giảm theo phương thức thanh toán trên breakdown: TBD (Q-33)”. Trong 4 Assumptions, đổi cột Assumption của A-13 thành “Các bề mặt CMS, coupon/campaign, landing page do CMS tạo, trip card, payment promotion nằm ngoài phạm vi đợt này vì chưa có estimate; Trang SEO landing (SCR-11), các dòng giảm giá trên breakdown của đơn (BR-17, BR-20) và mục tỷ giá tham khảo của Điều khoản (SCR-20) vẫn trong phạm vi; user chưa chắc chắn.”
-
 **In scope**
 
 - Ra mắt cho vertical Bus trước, trên web desktop, mobile web và app (BR-60, NFR-04).
@@ -151,8 +146,6 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 ---
 
 ### 2.6 Glossary
-
-> See RN-14
 
 | Term | Meaning in this PRD | Not to be confused with |
 |------|---------------------|-------------------------|
@@ -203,7 +196,7 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 | Nhân viên vận hành tỷ giá | Người quản lý quy tắc tỷ giá trên công cụ cấu hình tỷ giá (BR-78) | — |
 | Công cụ cấu hình tỷ giá | Màn "Cấu hình tỷ giá" trên công cụ cấu hình nội bộ VEX-CONFIG (SCR-16, SCR-17, DEP-02) | — |
 | Trang SEO landing | Trang đích từ công cụ tìm kiếm, có giá hiển thị kép (SCR-11, BR-05) | Landing page do CMS tạo (ngoài phạm vi, A-13) |
-| Dòng giảm giá | Dòng voucher hoặc khuyến mãi mang giá trị âm trên breakdown của đơn (BR-17, BR-20) | Payment promotion (ngoài phạm vi, A-13) |
+| Dòng giảm giá | Mọi dòng mang giá trị âm trên breakdown của đơn: voucher, khuyến mãi, kể cả khoản giảm theo phương thức thanh toán đã áp vào đơn (BR-17, BR-20) | Bề mặt giới thiệu payment promotion ngoài breakdown (ngoài phạm vi, A-13) |
 | Currency Switch bật cho khách | Vertical × platform khách dùng đang bật Currency Switch (BR-60) và, khi tỷ lệ traffic dưới 100%, khách thuộc nhóm bật (BR-81) | Nhóm tắt, hoặc vertical × platform đang tắt (CB-03) |
 
 ---
@@ -211,11 +204,6 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 ## 3. Feature Specifications
 
 ### 3.1 Business Rules
-
-> [!WARNING] REVIEWER'S NOTE (RN-11)
-> **Risk:** Câu mới cuối BR-75 nói khi bảng trở lại Bình thường (BR-73, BR-84) thì “trang đang mở”, mà câu ngay trước vừa nêu là gồm cả checkout, chỉ hiện lại số tham khảo khi khách mở hoặc tải lại trang, trong khi BR-83 và US-14-AC14 cho báo giá trong checkout chuyển ngay sang bảng mới và hiển thị theo bảng đó; câu này trích A-42 nhưng A-42 không nêu giả định đó, còn US-19-AC11 và US-21-AC9 không nói trang đang mở có phải tải lại không, nên Dev và QC sẽ hiểu khác nhau về checkout và trang kết quả tìm kiếm đang mở khi bảng tỷ giá hết Cũ.
-> **Option A:** Trong 3.1 BR-75, thay câu “Khi bảng trở lại Bình thường (BR-73, BR-84), trang đang mở hiện lại số tham khảo khi khách mở hoặc tải lại trang (BR-48) (assumed, A-42).” bằng “Khi bảng trở lại Bình thường (BR-73, BR-84), trang khách đang mở hiện lại số tham khảo khi khách mở hoặc tải lại trang (BR-48), trừ checkout, bước nhập thông tin hành khách và màn thanh toán (SCR-05 đến SCR-07): các trang này hiện lại số tham khảo ngay, theo bảng tỷ giá của báo giá (BR-66, BR-83) (assumed, A-42).” Thêm vào cuối cột Assumption của A-42: “Khi bảng trở lại Bình thường, trang đang mở ngoài checkout chỉ hiện lại số tham khảo khi khách mở hoặc tải lại trang (BR-48), còn checkout đang mở hiện lại ngay theo báo giá (BR-83), để khách đang thanh toán không phải tải lại trang (US-14-AC4).”, và thêm BR-73, BR-84, US-14, US-19 vào cột Affects của A-42. Đổi US-19-AC11 thành “AC11 (Alternative) Done when: Nếu bảng tỷ giá hiện hành chuyển từ Cũ sang Bình thường (BR-73), trang có giá khách mở hoặc tải lại sau đó hiện lại số tham khảo, còn trang kết quả tìm kiếm khách đang mở vẫn chỉ hiển thị VND tới khi khách tải lại (BR-75).” và US-21-AC9 thành “AC9 (Alternative) Done when: Nếu công tắc tắt khẩn cấp được tắt khi chưa đủ ngưỡng bảng cũ (BR-84), các bề mặt có giá hiện lại số tham khảo theo BR-75 mà không cần phát hành bản mới.” (Rules applied của US-19 và US-21 đã có BR-75.) Ở Traceability Matrix, thêm US-19-AC11, US-21-AC9 vào dòng BR-75, và thêm “via BR-75” vào dòng BR-66 và dòng BR-83.
-> **Option B:** Trong 3.1 BR-75, thay câu “Khi bảng trở lại Bình thường (BR-73, BR-84), trang đang mở hiện lại số tham khảo khi khách mở hoặc tải lại trang (BR-48) (assumed, A-42).” bằng “Khi bảng trở lại Bình thường (BR-73, BR-84), trang khách đang mở cũng hiện lại số tham khảo trong thời gian NFR-06, không chờ khách tải lại trang; checkout, bước nhập thông tin hành khách và màn thanh toán hiển thị theo bảng tỷ giá của báo giá (BR-66, BR-83) (assumed, A-42).” Trong 3.5 NFR-06, thêm “ hoặc trở lại Bình thường (BR-73, BR-84)” ngay sau “chuyển sang Cũ (BR-71, BR-72)”. Thêm vào cuối cột Assumption của A-42: “Khi bảng trở lại Bình thường, trang khách đang mở cũng hiện lại số tham khảo ngay, để hai chiều xử lý giống nhau và khớp với báo giá trong checkout (BR-83).”, và thêm BR-73, BR-84, US-19 vào cột Affects của A-42. Thêm vào trước dấu chấm cuối của US-19-AC11 và của US-21-AC9 vế “, kể cả trên trang khách đang mở, trong thời gian NFR-06 mà khách không phải tải lại trang (BR-75)”, và vào trước dấu chấm cuối của US-19-AC15 vế “, trừ khi bảng tỷ giá hiện hành vừa trở lại Bình thường (BR-75)”. (Rules applied của US-19 và US-21 đã có BR-75.) Ở Traceability Matrix, thêm US-19-AC11, US-19-AC15, US-21-AC9 vào dòng BR-75, và thêm “via BR-75” vào dòng BR-66 và dòng BR-83.
 
 Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn nghìn, dấu chấm thập phân); tỷ giá là số VND cho 1 đơn vị ngoại tệ (A-03). Ngôn ngữ, tiền tệ trong ví dụ là giá trị mẫu; danh sách ngôn ngữ, tiền tệ được bật theo cấu hình của BU (BR-22, A-08). Lúc ra mắt VND là số chính trên mọi bề mặt (BR-06), nên ví dụ hiển thị viết dạng "467,000 VND : ~USD 17.92".
 
@@ -356,7 +344,7 @@ Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn n
 | ID | Status | Side-effects |
 |----|--------|--------------|
 | BR-74 | Báo giá: Hết hạn | Chỗ được nhả; báo giá không còn dùng được; khách phải chọn lại chuyến để có báo giá mới (BR-66). Gốc: CR-24, US-14. |
-| BR-75 | Bảng tỷ giá hiện hành: Cũ (stale) | Mọi bề mặt chỉ hiển thị VND, không dùng tỷ giá của bảng cũ, kể cả báo giá đang mở (BR-68), kèm MSG-06 (CB-02). Đơn thanh toán thành công trong thời gian này lưu số tham khảo hay không theo BR-43. Số tham khảo đã lưu trên đơn vẫn hiển thị theo BR-44, BR-45 (assumed, A-36). Trang khách đang mở, gồm cả trang kết quả tìm kiếm và checkout, chuyển sang chỉ hiển thị VND trong thời gian NFR-06, không chờ khách tải lại trang; đây là ngoại lệ của vế trang đang mở không tự đổi số tham khảo trong BR-48. Khi bảng trở lại Bình thường (BR-73, BR-84), trang đang mở hiện lại số tham khảo khi khách mở hoặc tải lại trang (BR-48) (assumed, A-42). Gốc: BR-D09, CR-31. |
+| BR-75 | Bảng tỷ giá hiện hành: Cũ (stale) | Mọi bề mặt chỉ hiển thị VND, không dùng tỷ giá của bảng cũ, kể cả báo giá đang mở (BR-68), kèm MSG-06 (CB-02). Đơn thanh toán thành công trong thời gian này lưu số tham khảo hay không theo BR-43. Số tham khảo đã lưu trên đơn vẫn hiển thị theo BR-44, BR-45 (assumed, A-36). Trang khách đang mở, gồm cả trang kết quả tìm kiếm và checkout, chuyển sang chỉ hiển thị VND trong thời gian NFR-06, không chờ khách tải lại trang; đây là ngoại lệ của vế trang đang mở không tự đổi số tham khảo trong BR-48. Khi bảng trở lại Bình thường (BR-73, BR-84), trang khách đang mở hiện lại số tham khảo khi khách mở hoặc tải lại trang (BR-48), trừ checkout, bước nhập thông tin hành khách và màn thanh toán (SCR-05 đến SCR-07): các trang này hiện lại số tham khảo ngay, theo bảng tỷ giá của báo giá (BR-66, BR-83) (assumed, A-42). Gốc: BR-D09, CR-31. |
 
 **Roles & Permissions**
 
@@ -370,11 +358,6 @@ Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn n
 ---
 
 ### 3.2 Process Diagrams
-
-> [!WARNING] REVIEWER'S NOTE (RN-15)
-> **Risk:** Khi rút gọn, ba nhãn của sơ đồ “Cập nhật bảng tỷ giá” viết lại một phần điều kiện và làm rơi vế của rule: “Tới lịch, sửa quy tắc hoặc bấm làm mới (BR-48)” bỏ việc tạo quy tắc, trái với UC-04 bước 4 và US-22-AC8; “Đủ N lần không lấy được cặp này? (BR-86)” bỏ “định kỳ liên tiếp”, trong khi BR-56 không tính lần cập nhật sau khi tạo, sửa quy tắc hay bấm làm mới; “Bình thường nếu công tắc khẩn cấp tắt (BR-73)” dùng một tên không có trong Glossary cho công tắc tắt khẩn cấp và giấu một nhánh trong ô hành động, nên QC dựng test từ sơ đồ có thể bấm làm mới N lần để đẩy một cặp ra khỏi bảng, hoặc hiểu ngược trạng thái của công tắc.
-> **Option A:** Trong sơ đồ “Cập nhật bảng tỷ giá”, cho nhãn chỉ trích rule thay vì viết lại một phần điều kiện: thay `:Tới lịch, sửa quy tắc hoặc bấm làm mới (BR-48);` bằng `:Bắt đầu một lần cập nhật (BR-48);`; thay `if (Đủ N lần không lấy được cặp này? (BR-86)) then (có)` bằng `if (Cặp đã đủ ngưỡng của BR-86?) then (có)`; thay ba dòng `if (Bảng đang Cũ? (BR-73)) then (có)` / `:Bình thường nếu công tắc khẩn cấp tắt (BR-73);` / `endif` bằng `if (Đủ điều kiện của BR-73?) then (có)` / `:Bảng hiện hành thành Bình thường (BR-73);` / `endif`.
-> **Option B:** Trong sơ đồ “Cập nhật bảng tỷ giá”, giữ điều kiện trong nhãn nhưng đủ vế và đúng thuật ngữ Glossary: thay `:Tới lịch, sửa quy tắc hoặc bấm làm mới (BR-48);` bằng `:Tới lịch, tạo, sửa quy tắc hoặc làm mới (BR-48);`; thay `if (Đủ N lần không lấy được cặp này? (BR-86)) then (có)` bằng `if (Đủ N lần định kỳ liên tiếp thiếu cặp? (BR-86)) then (có)`; thay ba dòng `if (Bảng đang Cũ? (BR-73)) then (có)` / `:Bình thường nếu công tắc khẩn cấp tắt (BR-73);` / `endif` bằng `if (Bảng Cũ, công tắc tắt khẩn cấp không bật? (BR-73)) then (có)` / `:Bảng thành Bình thường (BR-73);` / `endif`.
 
 **Xác định ngôn ngữ và tiền tệ khi khách mở Vexere**
 
@@ -485,7 +468,7 @@ skinparam ActivityDiamondBackgroundColor #fff3cd
 title Currency Switch - Cập nhật bảng tỷ giá
 
 start
-:Tới lịch, sửa quy tắc hoặc bấm làm mới (BR-48);
+:Bắt đầu một lần cập nhật (BR-48);
 while (Còn cặp có quy tắc đang bật? (BR-52)) is (có)
   :Lấy tỷ giá từ nguồn ưu tiên (BR-47);
   if (Lấy được từ một nguồn? (BR-47)) then (có)
@@ -500,7 +483,7 @@ while (Còn cặp có quy tắc đang bật? (BR-52)) is (có)
       :Nhận tỷ giá mới theo quy tắc (BR-52);
     endif
   else (không)
-    if (Đủ N lần không lấy được cặp này? (BR-86)) then (có)
+    if (Cặp đã đủ ngưỡng của BR-86?) then (có)
       :Cặp không có trong bảng mới (BR-86);
     else (không)
       :Giữ tỷ giá hiện hành của cặp (BR-86);
@@ -509,8 +492,8 @@ while (Còn cặp có quy tắc đang bật? (BR-52)) is (có)
 endwhile (hết)
 if (Bảng mới hợp lệ? (BR-49)) then (có)
   :Bảng mới thành bảng hiện hành (BR-48);
-  if (Bảng đang Cũ? (BR-73)) then (có)
-    :Bình thường nếu công tắc khẩn cấp tắt (BR-73);
+  if (Đủ điều kiện của BR-73?) then (có)
+    :Bảng hiện hành thành Bình thường (BR-73);
   endif
 else (không)
   if (Đủ ngưỡng bảng cũ? (BR-56)) then (có)
@@ -822,8 +805,6 @@ stop
     - AC11 (Alternative) Done when: Trong khi khách dùng UI VI, checkout và màn thanh toán không hiện MSG-07, MSG-11, và nút thanh toán giữ nhãn hiện tại thay vì MSG-10 (assumed, A-35).
   - **INVEST:** I / N / V / E / S / T
 
-> See RN-11
-
 - **US-14 - Tỷ giá tham khảo được làm mới khi quá hạn**
   - **Là** khách inbound đang thanh toán,
   - **tôi muốn** số tham khảo được cập nhật theo tỷ giá mới mà không bị chặn thanh toán,
@@ -938,8 +919,6 @@ stop
 
 **Epic 6: Vận hành** — Serves: JTBD-08, JTBD-09 — Jira: [PM fills]
 
-> See RN-11
-
 - **US-19 - Bảng tỷ giá thống nhất**
   - **Là** nhân viên vận hành tỷ giá,
   - **tôi muốn** có một bảng tỷ giá thống nhất được cập nhật định kỳ từ các nguồn đã cấu hình,
@@ -960,16 +939,17 @@ stop
     - AC8 (Error) Done when: Nếu một lần cập nhật không tạo được bảng tỷ giá hợp lệ (BR-49), kể cả khi mọi nguồn đều lỗi, mà số lần cập nhật định kỳ liên tiếp không tạo được bảng tỷ giá hợp lệ chưa đạt ngưỡng bảng cũ (BR-56), số tham khảo khách thấy không đổi.
     - AC9 (Error) Done when: Nếu số lần cập nhật định kỳ liên tiếp không tạo được bảng tỷ giá hợp lệ đạt ngưỡng bảng cũ (BR-56), bảng tỷ giá hiện hành chuyển sang Cũ (BR-71).
     - AC10 (Alternative) Done when: Nếu các lần cập nhật không tạo được bảng tỷ giá hợp lệ rơi vào ngày nguồn không công bố bản tin (BR-56), bảng tỷ giá hiện hành không chuyển sang Cũ (BR-71) vì những lần đó.
-    - AC11 (Alternative) Done when: Nếu bảng tỷ giá hiện hành chuyển từ Cũ sang Bình thường (BR-73), các bề mặt có giá hiện lại số tham khảo.
+    - AC11 (Alternative) Done when: Nếu bảng tỷ giá hiện hành chuyển từ Cũ sang Bình thường (BR-73), trang có giá khách mở hoặc tải lại sau đó hiện lại số tham khảo.
     - AC12 (Happy) Done when: Mỗi lần cập nhật, tỷ giá mới của từng cặp được ghi vào lịch sử thay đổi tỷ giá theo BR-57.
     - AC13 (Error) Done when: Nếu một lần cập nhật không tạo được bảng tỷ giá hợp lệ (BR-49), tỷ giá hiện tại của mọi cặp trên SCR-16 không đổi (BR-56).
     - AC14 (Alternative) Done when: Nếu khách mở hoặc tải lại một trang có giá sau khi có bảng tỷ giá hiện hành mới (BR-48), số tham khảo trên trang đó tính theo bảng mới.
     - AC15 (Alternative) Done when: Trong khi khách đang ở một trang có giá, nếu có bảng tỷ giá hiện hành mới (BR-48), số tham khảo trên trang đó không tự đổi.
     - AC16 (Alternative) Done when: Nếu một lần cập nhật không lấy được tỷ giá của một cặp từ nguồn nào nhưng bảng mới vẫn hợp lệ (BR-86), SCR-16 vẫn hiện tỷ giá, nguồn và thời điểm bản tin cũ của cặp đó.
     - AC17 (Error) Done when: Nếu một cặp không lấy được tỷ giá từ nguồn nào trong số lần cập nhật định kỳ liên tiếp bằng ngưỡng bảng cũ (BR-86), bảng tỷ giá mới không có cặp đó và tiền tệ đó không còn trên picker tiền tệ (BR-23).
+    - AC18 (Alternative) Done when: Nếu bảng tỷ giá hiện hành chuyển từ Cũ sang Bình thường (BR-73) khi khách đang mở trang kết quả tìm kiếm, trang đó vẫn chỉ hiển thị VND tới khi khách tải lại (BR-75).
   - **INVEST:** I (chưa đạt) / N / V / E / S (chưa đạt) / T
     - I: cần quy tắc tỷ giá đang bật và danh sách SCR-16 của US-22 (hoặc quy tắc mẫu) để chạy và kiểm thử.
-    - S: nhiều nhánh; nếu vượt một sprint, tách biến động tối đa/ngày (AC5 đến AC7), bảng cũ (AC8 đến AC11, AC13) và cặp không lấy được tỷ giá (AC16, AC17) thành story riêng.
+    - S: nhiều nhánh; nếu vượt một sprint, tách biến động tối đa/ngày (AC5 đến AC7), bảng cũ (AC8 đến AC11, AC13, AC18) và cặp không lấy được tỷ giá (AC16, AC17) thành story riêng.
 
 - **US-20 - Thêm ngôn ngữ hoặc tiền tệ bằng cấu hình**
   - **Là** PO,
@@ -998,10 +978,6 @@ stop
     - E: luồng tạo, xem trước bản dịch và SCR-18, SCR-19 chờ Dev / Tech Lead xác nhận (Q-08).
     - S: story gộp thêm ngôn ngữ (AC1 đến AC5, AC12) và thêm tiền tệ (AC6, AC7); nên tách làm hai story.
 
-> See RN-11
-
-> See RN-12
-
 - **US-21 - Bật tắt và ramp tính năng**
   - **Là** PO,
   - **tôi muốn** bật tắt Currency Switch theo từng vertical × platform và đổi chế độ thứ bậc hiển thị,
@@ -1020,7 +996,7 @@ stop
     - AC6 (Alternative) Done when: Nếu Currency Switch được bật lại cho vertical × platform đó (BR-61), đơn đã lưu số tham khảo trước khi tắt hiện lại số tham khảo lúc đặt trên My bookings (BR-44).
     - AC7 (Alternative) Done when: Nếu khách đã vào checkout trước khi Currency Switch được bật cho vertical × platform đó (BR-63, đề xuất, A-12), checkout đó giữ cách hiển thị như trước khi bật cho tới khi xong đơn.
     - AC8 (Happy) Done when: Sau khi người có quyền theo BR-77 bật công tắc tắt khẩn cấp, bảng tỷ giá hiện hành chuyển sang Cũ (BR-72) mà không cần phát hành bản mới.
-    - AC9 (Alternative) Done when: Nếu công tắc tắt khẩn cấp được tắt khi chưa đủ ngưỡng bảng cũ (BR-84), các bề mặt có giá hiện lại số tham khảo mà không cần phát hành bản mới.
+    - AC9 (Alternative) Done when: Nếu công tắc tắt khẩn cấp được tắt khi chưa đủ ngưỡng bảng cũ (BR-84), các bề mặt có giá hiện lại số tham khảo theo BR-75 mà không cần phát hành bản mới.
     - AC10 (Error) Done when: Nếu người thực hiện không có quyền theo BR-77, việc bật tắt Currency Switch, đổi tỷ lệ traffic hoặc bật tắt công tắc tắt khẩn cấp không được thực hiện theo phân quyền hiện có (DEP-15), và trạng thái đang có giữ nguyên.
     - AC11 (Happy) Done when: Trong khi Currency Switch bật ở tỷ lệ traffic dưới 100% và tỷ lệ không giảm (BR-81), một guest đã thấy số tham khảo vẫn thấy số tham khảo ở mọi trang và mọi phiên sau đó trên cùng thiết bị.
     - AC12 (Happy) Done when: Sau khi người có quyền theo BR-79 đổi chế độ thứ bậc hiển thị (BR-06), các bề mặt có giá hiển thị số chính theo chế độ mới mà không cần phát hành bản mới.
@@ -1031,9 +1007,7 @@ stop
     - AC17 (Alternative) Done when: Trong khi công tắc tắt khẩn cấp đang bật (BR-72), kể cả khi một lần cập nhật tạo được bảng tỷ giá hợp lệ (BR-73), các bề mặt có giá vẫn chỉ hiển thị VND (CB-02).
     - AC18 (Alternative) Done when: Nếu khách đang mở trang kết quả tìm kiếm hoặc checkout khi công tắc tắt khẩn cấp được bật (BR-72), trang đó chỉ hiển thị VND kèm MSG-06 (CB-02) trong thời gian NFR-06 mà khách không phải tải lại trang (BR-75).
   - **INVEST:** I / N / V / E (chưa đạt) / S / T
-    - E: cách vận hành bật tắt, ramp, công tắc tắt khẩn cấp và đổi chế độ thứ bậc hiển thị chờ Q-10; cách đạt NFR-05 cho trang khách đang mở lúc tắt chờ Q-28 (Dev / Tech Lead).
-
-> See RN-13
+    - E: cách vận hành bật tắt, ramp, công tắc tắt khẩn cấp và đổi chế độ thứ bậc hiển thị chờ Q-10; cách đạt NFR-05, NFR-06 cho trang khách đang mở chờ Q-28 (Dev / Tech Lead).
 
 - **US-22 - Cấu hình tỷ giá trên công cụ**
   - **Là** nhân viên vận hành tỷ giá,
@@ -1072,11 +1046,6 @@ stop
 ---
 
 ### 3.4 Use Case Specifications
-
-> [!WARNING] REVIEWER'S NOTE (RN-13)
-> **Risk:** Main Flow của UC-04 đặt việc sửa, bật, tắt quy tắc ở bước 5, sau lần cập nhật tỷ giá của bước 4, và không có bước lưu hay cập nhật nào sau đó, nên đường sửa quy tắc không có bước cho US-22-AC4 (kiểm dữ liệu khi lưu bản sửa), US-22-AC16 (ghi lịch sử) và US-22-AC8 (cập nhật ngay sau khi sửa), nhánh BR-53 nằm ở bước 5 trong khi cặp chỉ ra khỏi bảng ở lần cập nhật sau khi tắt, và Postcondition không đạt được trên đường sửa, nên QC dựng test theo use case sẽ bỏ sót việc lưu bản sửa.
-> **Option A:** Trong UC-04, thay toàn bộ Main Flow bằng: `| 1 | Nhân viên vận hành tỷ giá | Mở danh sách quy tắc, lọc theo mã tiền hoặc trạng thái | US-22-AC1, US-22-AC2 |`; `| 2 | Nhân viên vận hành tỷ giá | Bấm thêm cấu hình tỷ giá và nhập quy tắc mới, hoặc mở một quy tắc đang có để sửa, bật hoặc tắt, trên SCR-17 | US-22-AC3, US-22-AC7, US-22-AC11, US-22-AC12 |`; `| 3 | Nhân viên vận hành tỷ giá | Lưu quy tắc | Quy tắc mới xuất hiện trên SCR-16 (US-22-AC3) hoặc các trường đã sửa được lưu (US-22-AC19); ghi lịch sử (US-22-AC16) |`; `| 4 | Hệ thống | Cập nhật tỷ giá ngay sau khi lưu | US-22-AC8 (BR-48); các nhánh theo UC-03 |`. Thay toàn bộ Branches bằng: `| 3 | Dữ liệu nhập không đúng | US-22-AC4 | BR-58 |`; `| 3 | Cặp tiền đã có quy tắc | US-22-AC5, US-22-AC6 | BR-59 |`; `| 2, 3 | Tắt quy tắc của tiền tệ chính của một ngôn ngữ đang bật | US-22-AC20 | BR-85 |`; `| 4 | Quy tắc vừa lưu ở trạng thái tắt | US-22-AC14 | BR-53 |`; `| 4 | Quy tắc đang tắt vừa được bật lại | US-22-AC15 | BR-23, BR-53 |`; `| 1 đến 4 | Người thực hiện không có quyền | US-22-AC17 | BR-78 |`. Ở Traceability Matrix, dòng BR-23 đổi cột UC từ “—” thành “UC-04”.
-> **Option B:** Trong UC-04, đổi cột Result của bước 5 thành “Trường không sửa được ở dạng chỉ đọc (US-22-AC7)”, và thêm vào cuối Main Flow `| 6 | Nhân viên vận hành tỷ giá | Lưu thay đổi | Các trường đã sửa được lưu (US-22-AC19); ghi lịch sử (US-22-AC16) |` và `| 7 | Hệ thống | Cập nhật tỷ giá ngay sau khi lưu | US-22-AC8 (BR-48); các nhánh theo UC-03 |`. Trong Branches, thêm `| 6 | Dữ liệu sửa không đúng | US-22-AC4 | BR-58 |`; thay dòng `| 5 | Tắt quy tắc của một cặp khác | US-22-AC14 | BR-53 |` bằng `| 7 | Quy tắc vừa lưu ở trạng thái tắt | US-22-AC14 | BR-53 |`; đổi “1 đến 5” thành “1 đến 7” ở dòng người thực hiện không có quyền. Traceability Matrix giữ nguyên.
 
 **UC-01 - Khách mở Vexere và xem giá bằng tiền tệ của mình** (covers US-03, US-05, US-06, US-08, US-10)
 
@@ -1194,11 +1163,10 @@ stop
 
 | Step | Actor | Action | Result (cites AC / BR / MSG) |
 |------|-------|--------|------------------------------|
-| 1 | Nhân viên vận hành tỷ giá | Mở danh sách quy tắc, lọc theo mã tiền | US-22-AC1, US-22-AC2 |
-| 2 | Nhân viên vận hành tỷ giá | Bấm thêm cấu hình tỷ giá và nhập quy tắc trên SCR-17 | US-22-AC3, US-22-AC11, US-22-AC12 |
-| 3 | Nhân viên vận hành tỷ giá | Lưu quy tắc | Quy tắc xuất hiện trên SCR-16 (US-22-AC3); ghi lịch sử (US-22-AC16) |
+| 1 | Nhân viên vận hành tỷ giá | Mở danh sách quy tắc, lọc theo mã tiền hoặc trạng thái | US-22-AC1, US-22-AC2 |
+| 2 | Nhân viên vận hành tỷ giá | Bấm thêm cấu hình tỷ giá và nhập quy tắc mới, hoặc mở một quy tắc đang có để sửa, bật hoặc tắt, trên SCR-17 | US-22-AC3, US-22-AC7, US-22-AC11, US-22-AC12 |
+| 3 | Nhân viên vận hành tỷ giá | Lưu quy tắc | Quy tắc mới xuất hiện trên SCR-16 (US-22-AC3) hoặc các trường đã sửa được lưu (US-22-AC19); ghi lịch sử (US-22-AC16) |
 | 4 | Hệ thống | Cập nhật tỷ giá ngay sau khi lưu | US-22-AC8 (BR-48); các nhánh theo UC-03 |
-| 5 | Nhân viên vận hành tỷ giá | Mở quy tắc để sửa, bật hoặc tắt | Trường không sửa được ở dạng chỉ đọc (US-22-AC7); lưu được các trường còn lại (US-22-AC19) |
 
 **Branches:**
 
@@ -1206,9 +1174,10 @@ stop
 |------|------------------------------|----------------------|------|
 | 3 | Dữ liệu nhập không đúng | US-22-AC4 | BR-58 |
 | 3 | Cặp tiền đã có quy tắc | US-22-AC5, US-22-AC6 | BR-59 |
-| 5 | Tắt quy tắc của tiền tệ chính của một ngôn ngữ đang bật | US-22-AC20 | BR-85 |
-| 5 | Tắt quy tắc của một cặp khác | US-22-AC14 | BR-53 |
-| 1 đến 5 | Người thực hiện không có quyền | US-22-AC17 | BR-78 |
+| 2, 3 | Tắt quy tắc của tiền tệ chính của một ngôn ngữ đang bật | US-22-AC20 | BR-85 |
+| 4 | Quy tắc vừa lưu ở trạng thái tắt | US-22-AC14 | BR-53 |
+| 4 | Quy tắc đang tắt vừa được bật lại | US-22-AC15 | BR-23, BR-53 |
+| 1 đến 4 | Người thực hiện không có quyền | US-22-AC17 | BR-78 |
 
 ---
 
@@ -1240,7 +1209,7 @@ stop
 | BR-20 | US-10-AC4 | — | — |
 | BR-21 | US-12-AC3, US-12-AC4, US-12-AC5, US-12-AC6, US-12-AC7, via BR-07 | — | — |
 | BR-22 | US-03-AC5, US-05-AC1, US-05-AC7, US-08-AC4, US-09-AC8, US-20-AC3, US-20-AC4, via BR-23, via BR-25, via BR-26, via BR-29, via BR-35, via BR-36, via BR-49, via BR-64, via BR-76, via BR-82, via BR-85 | UC-01 | — |
-| BR-23 | US-06-AC2, US-06-AC7, US-19-AC17, US-20-AC6, US-20-AC7, US-22-AC14, US-22-AC15, CB-04, via BR-08, via BR-24, via BR-25, via BR-26, via BR-27, via BR-33, via BR-34, via BR-49, via BR-76, via BR-85 | — | MSG-04 |
+| BR-23 | US-06-AC2, US-06-AC7, US-19-AC17, US-20-AC6, US-20-AC7, US-22-AC14, US-22-AC15, CB-04, via BR-08, via BR-24, via BR-25, via BR-26, via BR-27, via BR-33, via BR-34, via BR-49, via BR-76, via BR-85 | UC-04 | MSG-04 |
 | BR-24 | US-05-AC5 | — | — |
 | BR-25 | US-06-AC1, US-08-AC2, CB-02, via BR-26, via BR-29, via BR-30, via BR-53, via BR-80 | — | MSG-22 |
 | BR-26 | US-05-AC2, US-06-AC1, US-06-AC10, US-07-AC1, US-07-AC7, US-07-AC8, US-08-AC6, US-08-AC12, US-09-AC1, US-09-AC2, US-09-AC3, US-09-AC4, US-09-AC5, US-09-AC7, US-09-AC10, via BR-24, via BR-28, via BR-31, via BR-33, via BR-34, via BR-64, via BR-80 | UC-01 | — |
@@ -1283,16 +1252,16 @@ stop
 | BR-63 | US-21-AC7, via BR-81 | UC-02 | — |
 | BR-64 | US-05-AC7, US-06-AC10, US-07-AC6, via BR-53 | — | — |
 | BR-65 | US-10-AC12, US-13-AC10, US-14-AC13, US-15-AC4, US-15-AC12, US-17-AC7, CB-05, via BR-43 | UC-02 | MSG-19 |
-| BR-66 | US-14-AC1, via BR-13, via BR-39, via BR-42, via BR-48, via BR-63, via BR-74 | UC-02 | — |
+| BR-66 | US-14-AC1, via BR-13, via BR-39, via BR-42, via BR-48, via BR-63, via BR-74, via BR-75 | UC-02 | — |
 | BR-67 | US-14-AC2, US-14-AC4, US-14-AC5, US-14-AC6, US-14-AC7, US-14-AC8, US-14-AC13, via BR-48, via BR-83 | UC-02 | MSG-12 |
 | BR-68 | US-14-AC6, US-14-AC8, US-14-AC9, US-14-AC12, via BR-48, via BR-75 | UC-02 | — |
 | BR-69 | US-14-AC10, US-14-AC11 | UC-02 | MSG-13 |
 | BR-70 | US-14-AC7, US-14-AC13, US-15-AC1, US-15-AC4, US-17-AC1, US-17-AC2, US-17-AC3, US-17-AC4, US-17-AC7, US-18-AC5 | UC-02 | — |
 | BR-71 | US-19-AC9, US-19-AC10, CB-02, via BR-56, via BR-68 | UC-03 | — |
 | BR-72 | US-21-AC8, US-21-AC17, US-21-AC18, CB-02, via BR-73, via BR-77 | UC-03 | — |
-| BR-73 | US-14-AC14, US-19-AC11, US-21-AC14, US-21-AC17, via BR-75, via BR-83 | UC-03 | — |
+| BR-73 | US-14-AC14, US-19-AC11, US-19-AC18, US-21-AC14, US-21-AC17, via BR-75, via BR-83 | UC-03 | — |
 | BR-74 | US-14-AC10, via BR-69 | UC-02 | MSG-13 |
-| BR-75 | US-21-AC18, CB-02, via BR-43, via BR-44, via BR-45, via BR-71, via BR-72, via BR-83 | UC-01, UC-02, UC-03 | MSG-06 |
+| BR-75 | US-19-AC18, US-21-AC9, US-21-AC18, CB-02, via BR-43, via BR-44, via BR-45, via BR-71, via BR-72, via BR-83 | UC-01, UC-02, UC-03 | MSG-06 |
 | BR-76 | US-20-AC11, via BR-22, via BR-35, via BR-82 | — | — |
 | BR-77 | US-21-AC8, US-21-AC10, via BR-60, via BR-72, via BR-84 | — | — |
 | BR-78 | US-22-AC17, via BR-14, via BR-52, via BR-55, via BR-56 | UC-04 | — |
@@ -1300,18 +1269,13 @@ stop
 | BR-80 | US-08-AC9, US-08-AC12, via BR-29 | — | — |
 | BR-81 | US-21-AC11, US-21-AC15, US-21-AC16, CB-03 | UC-01, UC-02 | — |
 | BR-82 | US-08-AC11, via BR-29, via BR-30 | — | — |
-| BR-83 | US-14-AC1, US-14-AC4, US-14-AC5, US-14-AC6, US-14-AC7, US-14-AC12, US-14-AC13, US-14-AC14, via BR-48 | UC-02 | MSG-12 |
+| BR-83 | US-14-AC1, US-14-AC4, US-14-AC5, US-14-AC6, US-14-AC7, US-14-AC12, US-14-AC13, US-14-AC14, via BR-48, via BR-75 | UC-02 | MSG-12 |
 | BR-84 | US-21-AC9, via BR-75 | — | — |
 | BR-85 | US-20-AC12, US-22-AC20, via BR-53 | UC-04 | MSG-23 |
 | BR-86 | US-19-AC16, US-19-AC17, via BR-48 | UC-03 | MSG-06 |
 | — | US-23-AC1, US-23-AC2, US-23-AC3 | UC-02 | — |
 
 #### Non-Functional Requirements
-
-> [!WARNING] REVIEWER'S NOTE (RN-12)
-> **Risk:** NFR-06 viết lại BR-75 thành “mọi bề mặt có giá, kể cả trang khách đang mở, chỉ hiển thị VND” mà bỏ vế số tham khảo đã lưu trên đơn vẫn hiển thị (BR-44, BR-45, A-36), và target “như NFR-05” kéo theo danh sách trang đang mở của NFR-05 có cả My bookings, nên QC kiểm NFR-06 sẽ đòi My bookings, email xác nhận và số tiền hoàn chỉ còn VND khi bảng tỷ giá Cũ, ngược với BR-44, BR-45 và CB-02.
-> **Option A:** Trong 3.5, đổi cột Expectation của NFR-06 thành “Sau khi bảng tỷ giá hiện hành chuyển sang Cũ (BR-71, BR-72), trang khách đang mở chuyển sang cách hiển thị BR-75 quy định”, cột Target thành “Ngay khi chuyển, không chờ khách tải lại trang (assumed, A-42); nếu không làm được ngay, độ trễ tối đa: TBD (Q-28)”, và cột Why it matters thành “Khi bảng tỷ giá hiện hành Cũ, kể cả khi bật công tắc tắt khẩn cấp (BR-72), trang khách đang xem phải dừng hiển thị số tham khảo tính từ bảng cũ”. Trong INVEST của US-21, đổi “cách đạt NFR-05 cho trang khách đang mở lúc tắt chờ Q-28” thành “cách đạt NFR-05, NFR-06 cho trang khách đang mở chờ Q-28”.
-> **Option B:** Trong 3.5 NFR-06, thay “mọi bề mặt có giá, kể cả trang khách đang mở, chỉ hiển thị VND (BR-75)” bằng “giá đang xem, kể cả trên trang khách đang mở, chỉ hiển thị VND (BR-75); số tham khảo đã lưu trên đơn vẫn hiển thị theo BR-44, BR-45”, và đổi cột Target thành “Ngay khi chuyển, kể cả trang khách đang mở lúc chuyển (kết quả tìm kiếm, chi tiết chuyến, checkout, bước nhập thông tin hành khách, màn thanh toán) (assumed, A-42)”. Thêm vào US-21: “AC19 (Alternative) Done when: Nếu khách đang mở My bookings khi công tắc tắt khẩn cấp được bật (BR-72), đơn đã lưu số tham khảo vẫn hiển thị số tham khảo lúc đặt (BR-44, BR-75).” (Rules applied của US-21 đã có BR-44, BR-72, BR-75.) Trong INVEST của US-21, đổi “cách đạt NFR-05 cho trang khách đang mở lúc tắt chờ Q-28” thành “cách đạt NFR-05, NFR-06 cho trang khách đang mở chờ Q-28”. Ở Traceability Matrix, thêm US-21-AC19 vào các dòng BR-44, BR-72, BR-75.
 
 | ID | Expectation | Target | Why it matters |
 |----|-------------|--------|----------------|
@@ -1320,7 +1284,7 @@ stop
 | NFR-03 | Cùng một giá (cùng một dòng breakdown, total hoặc số hoàn của cùng một báo giá hoặc cùng một đơn) hiển thị cùng một số tham khảo ở mọi nơi hiển thị: web, app, email, back office | 0 lệch | Số tham khảo khác nhau giữa các nơi tạo khiếu nại "giá khác số bị trừ" (SM-04) |
 | NFR-04 | Nền tảng hỗ trợ | Web desktop, mobile web, app | Khách quốc tế đặt vé trên cả ba platform |
 | NFR-05 | Sau khi tắt Currency Switch cho một vertical × platform (BR-61), mọi bề mặt của vertical × platform đó chỉ hiển thị VND | Ngay khi tắt, kể cả trang khách đang mở lúc tắt (checkout, bước nhập thông tin hành khách, màn thanh toán, My bookings) (gốc US-21; assumed, A-12) | Dừng hiển thị số tham khảo kịp thời khi có sự cố |
-| NFR-06 | Sau khi bảng tỷ giá hiện hành chuyển sang Cũ (BR-71, BR-72), mọi bề mặt có giá, kể cả trang khách đang mở, chỉ hiển thị VND (BR-75) | Ngay khi chuyển, như NFR-05 (assumed, A-42) | Công tắc tắt khẩn cấp chỉ dừng được rủi ro khi trang khách đang xem cũng dừng hiển thị số tham khảo |
+| NFR-06 | Sau khi bảng tỷ giá hiện hành chuyển sang Cũ (BR-71, BR-72), trang khách đang mở chuyển sang cách hiển thị BR-75 quy định | Ngay khi chuyển, không chờ khách tải lại trang (assumed, A-42); nếu không làm được ngay, độ trễ tối đa: TBD (Q-28) | Khi bảng tỷ giá hiện hành Cũ, kể cả khi bật công tắc tắt khẩn cấp (BR-72), trang khách đang xem phải dừng hiển thị số tham khảo tính từ bảng cũ |
 
 ---
 
@@ -1431,10 +1395,6 @@ Placeholder số tiền chỉ chứa số đã định dạng theo BR-09, BR-10,
 
 ## 4. Assumptions & Open Questions
 
-> See RN-11
-
-> See RN-14
-
 **Assumptions**
 
 | ID | Assumption | Affects | Source / Confidence |
@@ -1451,7 +1411,7 @@ Placeholder số tiền chỉ chứa số đã định dạng theo BR-09, BR-10,
 | A-10 | Lúc ra mắt, chế độ thứ bậc hiển thị là VND làm số chính trên mọi bề mặt; chế độ theo nhóm Browse/Pay bật được bằng cấu hình sau này. | BR-06, BR-05, BR-20 | Brief (Assumptions), quyết định 5 / Cao |
 | A-11 | "Đơn vị làm tròn" của quy tắc tỷ giá làm tròn tỷ giá theo quy tắc (VND cho 1 đơn vị ngoại tệ). Ví dụ THB của PRD gốc ghi 787,88, khác kết quả làm tròn half-up 787.89; Pack dùng 787.89. | BR-52 | Brief (Assumptions) / Trung bình |
 | A-12 | Cách xử lý dữ liệu cũ lúc ra mắt, checkout đang dở lúc ra mắt, khi tắt tính năng (gồm picker và thông báo trong lúc tắt), khi ramp theo tỷ lệ traffic, khi tắt một ngôn ngữ hoặc tiền tệ, khi lấy tỷ giá mới không thành công trong checkout, khi có bảng tỷ giá hợp lệ mới trong lúc công tắc tắt khẩn cấp đang bật, khi tắt công tắc tắt khẩn cấp, và việc đơn chỉ lưu số tham khảo khi màn thanh toán đã hiển thị nó, do pipeline đề xuất theo yêu cầu của user ("tự đề xuất"); cần PO duyệt. | BR-43, BR-61, BR-62, BR-63, BR-64, BR-68, BR-73, BR-81, BR-83, BR-84, CB-03, NFR-05, US-21 | Brief (Assumptions, đề xuất), quyết định 7, 9 / Thấp, chờ duyệt |
-| A-13 | Các bề mặt CMS, coupon/campaign, landing page, trip card, payment promotion nằm ngoài phạm vi đợt này vì chưa có estimate; user chưa chắc chắn. | BR-05, BR-17, BR-20, US-10, SCR-01 đến SCR-11, SCR-20 | Brief (Assumptions), quyết định 4 / Trung bình |
+| A-13 | Các bề mặt CMS, coupon/campaign, landing page do CMS tạo, trip card và bề mặt giới thiệu payment promotion nằm ngoài phạm vi đợt này vì chưa có estimate; Trang SEO landing (SCR-11), các dòng giảm giá trên breakdown của đơn (BR-17, BR-20) và mục tỷ giá tham khảo của Điều khoản (SCR-20) vẫn trong phạm vi; user chưa chắc chắn. | BR-05, BR-17, BR-20, US-10, SCR-01 đến SCR-11, SCR-20 | Brief (Assumptions), quyết định 4 / Trung bình |
 | A-14 | Copy toast làm mới tỷ giá giữ nguyên như PRD gốc, kể cả chữ "bank". | MSG-12 | Brief (Assumptions), quyết định 7 / Cao |
 | A-15 | Trong khi Legal chưa kết luận cho màn thanh toán (SCR-07), email xác nhận, My bookings và số tiền hoàn, bốn bề mặt này chỉ hiển thị VND. Trong thời gian này, đơn vẫn lưu số tham khảo nếu checkout của báo giá đã hiển thị số tham khảo (BR-43), để back office có bằng chứng về những gì khách đã thấy (US-17, SM-04) và các bề mặt hiển thị lại số đã lưu khi Legal cho phép; nếu không có ngoại lệ này, mọi đơn thanh toán trong thời gian chờ sẽ vĩnh viễn không có số tham khảo. | BR-43, BR-65, CB-05, DEP-03, SCR-07 đến SCR-10, US-15, US-16, US-17, SM-04 | Pack đề xuất / Thấp, chờ duyệt |
 | A-16 | JTBD-05 (người chia sẻ link) và JTBD-07 (kế toán) được suy ra từ US-09 và US-18; JTBD-08 (PO) và JTBD-09 (nhân viên vận hành tỷ giá) được tách từ một JTBD candidate chung vì tình huống và kết quả mong muốn khác nhau. | JTBD-05, JTBD-07, JTBD-08, JTBD-09 | Pack đề xuất / Trung bình |
@@ -1480,7 +1440,7 @@ Placeholder số tiền chỉ chứa số đã định dạng theo BR-09, BR-10,
 | A-39 | Cảnh báo tỷ giá bị bỏ qua hiển thị trên danh sách quy tắc (SCR-16) cho nhân viên vận hành tỷ giá, không gửi thông báo riêng, vì đây là nơi họ đã theo dõi tỷ giá hiện tại của từng cặp. | BR-54, US-19 | Pack đề xuất theo yêu cầu "tự đề xuất" của user / Trung bình, chờ PO duyệt cùng PRD |
 | A-40 | MSG-13 hiện trong popup vì khách mất chỗ đã chọn và phải chọn lại chuyến; MSG-20 hiện dạng lỗi inline ở trường mã tiền vì đây là lỗi nhập liệu trên form. | MSG-13, MSG-20, US-14, US-22 | Pack đề xuất theo yêu cầu "tự đề xuất" của user / Trung bình, chờ PO duyệt cùng PRD |
 | A-41 | Khi không có ứng viên tiền tệ hợp lệ nào, không có mã tiền tệ để điền vào MSG-06, nên dùng MSG-22 không có mã tiền tệ. | MSG-22, MSG-06, CB-02 | Pack đề xuất theo yêu cầu "tự đề xuất" của user / Trung bình, chờ PO duyệt cùng PRD |
-| A-42 | Khi bảng tỷ giá hiện hành chuyển sang Cũ, trang khách đang mở cũng chuyển ngay sang chỉ hiển thị VND, vì công tắc tắt khẩn cấp dùng để dừng ngay số tham khảo khi có sự cố (JTBD-08). | BR-75, NFR-06, US-21 | Reviewer đề xuất (RN-03), user chọn / Trung bình |
+| A-42 | Khi bảng tỷ giá hiện hành chuyển sang Cũ, trang khách đang mở cũng chuyển ngay sang chỉ hiển thị VND, vì công tắc tắt khẩn cấp dùng để dừng ngay số tham khảo khi có sự cố (JTBD-08). Khi bảng trở lại Bình thường, trang đang mở ngoài checkout chỉ hiện lại số tham khảo khi khách mở hoặc tải lại trang (BR-48), còn checkout đang mở hiện lại ngay theo báo giá (BR-83), để khách đang thanh toán không phải tải lại trang (US-14-AC4). | BR-73, BR-75, BR-84, NFR-06, US-14, US-19, US-21 | Reviewer đề xuất (RN-03), user chọn / Trung bình |
 
 **Open Questions**
 
