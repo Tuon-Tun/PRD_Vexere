@@ -147,8 +147,6 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 
 ### 2.6 Glossary
 
-> See RN-17
-
 | Term | Meaning in this PRD | Not to be confused with |
 |------|---------------------|-------------------------|
 | Khách inbound | Khách quốc tế dùng UI ngoại ngữ của Vexere | Việt kiều dùng UI VI ở nước ngoài (BR-30) |
@@ -207,11 +205,6 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 
 ### 3.1 Business Rules
 
-> [!WARNING] REVIEWER'S NOTE (RN-17)
-> **Risk:** Dòng Glossary mới “Dòng giảm giá” đã xếp khoản giảm theo phương thức thanh toán vào nhóm dòng giảm giá và trích BR-20. Nhưng BR-20 và US-10-AC4 vẫn chỉ nói “voucher và khuyến mãi” lấy VND làm số chính, nên phần BR-20 trong rủi ro của RN-14 vẫn chưa xử lý xong. Khi bật chế độ (2) theo nhóm (BR-06, US-21-AC12), Dev và QC không biết dòng giảm theo phương thức thanh toán trên breakdown lấy VND làm số chính hay theo nhóm Browse/Pay.
-> **Option A:** Trong 3.1 BR-20, đổi cột Rule thành “Voucher, khuyến mãi và mọi dòng giảm giá luôn lấy VND làm số chính, ở cả hai chế độ của BR-06.” Thêm vào cuối cột Example “ Khoản giảm theo phương thức thanh toán −20,000 VND (giá trị mẫu) trên breakdown cũng có số chính là −20,000 VND.” Trong US-10, đổi AC4 thành “AC4 (Alternative) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (2) "theo nhóm" (BR-06), số tiền của voucher, khuyến mãi và mọi dòng giảm giá vẫn lấy VND làm số chính trên mọi bề mặt (BR-20).” (Rules applied của US-10 đã có BR-20; Traceability Matrix giữ nguyên.)
-> **Option B:** Trong 4 Open Questions, thêm `| Q-33 | Ở chế độ (2) theo nhóm (BR-06), khoản giảm theo phương thức thanh toán đã áp vào đơn có lấy VND làm số chính như voucher và khuyến mãi (BR-20) không? | BR-06, BR-20, US-10 | PO: trả lời trước khi bật chế độ (2) (US-21-AC12) |`. Trong 3.1 BR-20, thêm vào cuối cột Rule “ Khoản giảm theo phương thức thanh toán đã áp vào đơn: TBD (Q-33).” Dòng Glossary “Dòng giảm giá” và US-10-AC4 giữ nguyên.
-
 Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn nghìn, dấu chấm thập phân); tỷ giá là số VND cho 1 đơn vị ngoại tệ (A-03). Ngôn ngữ, tiền tệ trong ví dụ là giá trị mẫu; danh sách ngôn ngữ, tiền tệ được bật theo cấu hình của BU (BR-22, A-08). Lúc ra mắt VND là số chính trên mọi bề mặt (BR-06), nên ví dụ hiển thị viết dạng "467,000 VND : ~USD 17.92".
 
 **Formulas, Policies & Limits**
@@ -249,7 +242,7 @@ Quy ước cho cột Example: số viết như trên UI EN (dấu phẩy ngăn n
 | BR-17 | Breakdown luôn cộng khớp total. Đơn có dòng giảm giá: dòng giảm giá gánh phần chênh do làm tròn; giảm giá tham khảo = tổng tham khảo − tổng các dòng dương − tổng các dòng giảm giá khác. Có nhiều dòng giảm giá thì dòng có giá trị tuyệt đối lớn nhất gánh chênh, các dòng giảm giá khác quy đổi độc lập theo BR-15. | 1 KRW = 18.95 VND: vé 467,000 VND → 24,643.80 → 24,644; phí dịch vụ 50,000 VND → 2,638.52 → 2,639; total 470,300 VND → 24,817.94 → 24,818; voucher 10% −46,700 VND → 24,818 − 24,644 − 2,639 = −2,465 (quy đổi độc lập sẽ là −2,464). Kiểm tra: 24,644 + 2,639 − 2,465 = 24,818. | BR-15, BR-16 | Gốc: BR-D06, CR-08 |
 | BR-18 | Đơn không có dòng giảm giá: phần chênh do làm tròn (tổng tham khảo − tổng các dòng dương) cộng vào dòng có giá trị VND lớn nhất. | 1 USD = 26,054 VND: vé chặng 1 467,000 VND → 17.92; phí dịch vụ 50,000 VND → 1.92; vé chặng 2 517,000 VND → 19.84; total 1,034,000 VND → 39.687 → 39.69. Chênh 39.69 − (17.92 + 1.92 + 19.84) = +0.01 cộng vào vé chặng 2 → 19.85. Kiểm tra: 17.92 + 1.92 + 19.85 = 39.69. | BR-15 | Gốc: CR-10 |
 | BR-19 | Đơn nhiều vé: mỗi dòng breakdown là thành tiền của dòng (đơn giá × số lượng) rồi mới quy đổi. Sơ đồ ghế và chi tiết chuyến quy đổi theo đơn giá. | 1 USD = 26,054 VND: breakdown 2 vé × 467,000 VND = 934,000 VND → 35.849 → ~USD 35.85; sơ đồ ghế hiện ~USD 17.92 mỗi ghế (2 × 17.92 = 35.84 khác 35.85 là đúng quy tắc). | BR-15 | Gốc: CR-11, CR-12 |
-| BR-20 | Voucher và khuyến mãi luôn lấy VND làm số chính, ở cả hai chế độ của BR-06. | Chế độ (2): dòng voucher có số chính là −46,700 VND, số phụ là số USD quy đổi. | BR-06 | Gốc: BR-D07 |
+| BR-20 | Voucher, khuyến mãi và mọi dòng giảm giá luôn lấy VND làm số chính, ở cả hai chế độ của BR-06. | Chế độ (2): dòng voucher có số chính là −46,700 VND, số phụ là số USD quy đổi. Khoản giảm theo phương thức thanh toán −20,000 VND (giá trị mẫu) trên breakdown cũng có số chính là −20,000 VND. | BR-06 | Gốc: BR-D07 |
 | BR-21 | Lọc giá theo tiền tệ tham khảo: giá trị biên khách chọn bằng tiền tệ tham khảo được quy ngược về VND và so sánh bằng VND, nới thêm nửa đơn vị nhỏ nhất của tiền tệ tham khảo (theo số lẻ BR-09, ví dụ USD 0.01, KRW 1) ở hai đầu, để chuyến hiển thị đúng bằng giá trị biên vẫn được giữ. Biên trên VND = (biên trên + 0.5 × đơn vị) × tỷ giá. Biên dưới VND = (biên dưới − 0.5 × đơn vị) × tỷ giá. Chuyến được giữ khi biên dưới VND ≤ giá VND < biên trên VND. Khi khách đổi tiền tệ tham khảo trong khi đang lọc theo khoảng giá, biên trên VND và biên dưới VND đã tính được giữ, nên danh sách chuyến không đổi; giá trị biên hiển thị lại bằng tiền tệ mới, quy đổi từ biên VND và làm tròn theo BR-09, BR-10 (assumed, A-34). | 1 USD = 26,054 VND. Lọc ≤ USD 20: biên trên = 20.005 × 26,054 = 521,210.27 VND → giữ chuyến 521,100 VND (~USD 20.00), loại chuyến 521,250 VND (~USD 20.01). Lọc ≥ USD 15: biên dưới = 14.995 × 26,054 = 390,679.73 VND → giữ chuyến 390,700 VND (~USD 15.00). Giá trị mẫu 1 USD = 26,000 VND, lọc ≤ USD 20: biên trên = 20.005 × 26,000 = 520,130 VND → chuyến 520,130 VND (~USD 20.01) bị loại. Đang lọc USD 15 đến USD 20 (biên VND 390,679.73 đến 521,210.27), đổi sang KRW với 1 KRW = 18.95 VND → biên hiển thị ~KRW 20,616 đến ~KRW 27,504; danh sách chuyến không đổi. | BR-09, BR-10, BR-13 | Gốc: BR-D08, CR-32 |
 
 *Ngôn ngữ và tiền tệ*
@@ -721,8 +714,6 @@ stop
 
 **Epic 3: Hiển thị kép** — Serves: JTBD-01, JTBD-02 — Jira: [PM fills]
 
-> See RN-17
-
 - **US-10 - Thấy số tham khảo và số VND ở mọi bước**
   - **Là** khách inbound,
   - **tôi muốn** thấy đồng thời số tham khảo và số VND phải trả ở bất kỳ bước nào có giá,
@@ -736,7 +727,7 @@ stop
     - AC1 (Happy) Done when: Trên mọi bề mặt có giá dành cho khách thuộc phạm vi BR-05, mỗi giá được hiển thị kép, gồm số VND và số tham khảo bằng tiền tệ hiện hành (BR-05, BR-07).
     - AC2 (Happy) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (1) "VND là số chính trên mọi bề mặt" (BR-06), mọi giá có số VND ở vị trí số chính và số tham khảo ở vị trí số phụ.
     - AC3 (Alternative) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (2) "theo nhóm" (BR-06), mỗi bề mặt lấy số chính theo nhóm Browse hoặc Pay mà BR-06 gán cho bề mặt đó.
-    - AC4 (Alternative) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (2) "theo nhóm" (BR-06), số tiền của voucher và khuyến mãi vẫn lấy VND làm số chính trên mọi bề mặt (BR-20).
+    - AC4 (Alternative) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (2) "theo nhóm" (BR-06), số tiền của voucher, khuyến mãi và mọi dòng giảm giá vẫn lấy VND làm số chính trên mọi bề mặt (BR-20).
     - AC5 (Happy) Done when: Số phụ có cỡ chữ nhỏ hơn và màu xám so với số chính (gợi ý cho Design: khoảng 70% cỡ chữ của số chính; DEP-04).
     - AC6 (Alternative) Done when: Ở ô giá nhỏ (ví dụ lịch giá theo ngày, sơ đồ ghế), giá dùng biến thể gọn chỉ giảm cỡ chữ, vẫn hiển thị đủ số VND và số tham khảo (BR-07).
     - AC7 (Happy) Done when: Trên mỗi trang có số tham khảo, MSG-01 hiện đúng một lần, cạnh bảng giá, không lặp ở từng giá; cách thể hiện theo thiết kế của từng UI (DEP-04).
@@ -1018,8 +1009,6 @@ stop
   - **INVEST:** I / N / V / E (chưa đạt) / S / T
     - E: cách vận hành bật tắt, ramp, công tắc tắt khẩn cấp và đổi chế độ thứ bậc hiển thị chờ Q-10; cách đạt NFR-05, NFR-06 cho trang khách đang mở chờ Q-28 (Dev / Tech Lead).
 
-> See RN-16
-
 - **US-22 - Cấu hình tỷ giá trên công cụ**
   - **Là** nhân viên vận hành tỷ giá,
   - **tôi muốn** quản lý quy tắc tỷ giá quy đổi sang VND trên công cụ cấu hình tỷ giá,
@@ -1057,11 +1046,6 @@ stop
 ---
 
 ### 3.4 Use Case Specifications
-
-> [!WARNING] REVIEWER'S NOTE (RN-16)
-> **Risk:** Bước 2 mới của UC-04 chỉ cho sửa, bật, tắt quy tắc trên SCR-17. Trong khi đó, US-22-AC20 (nhánh “2, 3” trích AC này) và MSG-23 cho bật, tắt bằng công tắc trạng thái trên cả SCR-16, còn cột Purpose của SCR-16 không nhắc tới công tắc này. Vì vậy QC dựng test theo UC-04 sẽ bỏ sót việc bật, tắt ngay trên danh sách, và Dev không biết SCR-16 có công tắc trạng thái hay không.
-> **Option A:** Trong UC-04, đổi cột Action của bước 3 thành “Lưu quy tắc trên SCR-17, hoặc bật, tắt một quy tắc bằng công tắc trạng thái ngay trên danh sách SCR-16” (cột Result giữ nguyên). Trong 3.6, thêm vào cuối cột Purpose của SCR-16 “; bật, tắt quy tắc bằng công tắc trạng thái (BR-52)”. Nhánh `| 2, 3 | Tắt quy tắc của tiền tệ chính của một ngôn ngữ đang bật | US-22-AC20 | BR-85 |`, US-22-AC20 và MSG-23 giữ nguyên. Traceability Matrix giữ nguyên.
-> **Option B:** Giữ UC-04 như hiện tại và chỉ cho bật, tắt quy tắc trên form SCR-17: trong US-22, đổi đoạn cuối của AC20 “cạnh công tắc trạng thái, trên SCR-16 hoặc SCR-17 nơi thao tác” thành “cạnh công tắc trạng thái trên SCR-17”. Trong 3.6, đổi cột Channel của MSG-23 từ “Màn hình (SCR-16, SCR-17)” thành “Màn hình (SCR-17)”. Traceability Matrix giữ nguyên.
 
 **UC-01 - Khách mở Vexere và xem giá bằng tiền tệ của mình** (covers US-03, US-05, US-06, US-08, US-10)
 
@@ -1181,7 +1165,7 @@ stop
 |------|-------|--------|------------------------------|
 | 1 | Nhân viên vận hành tỷ giá | Mở danh sách quy tắc, lọc theo mã tiền hoặc trạng thái | US-22-AC1, US-22-AC2 |
 | 2 | Nhân viên vận hành tỷ giá | Bấm thêm cấu hình tỷ giá và nhập quy tắc mới, hoặc mở một quy tắc đang có để sửa, bật hoặc tắt, trên SCR-17 | US-22-AC3, US-22-AC7, US-22-AC11, US-22-AC12 |
-| 3 | Nhân viên vận hành tỷ giá | Lưu quy tắc | Quy tắc mới xuất hiện trên SCR-16 (US-22-AC3) hoặc các trường đã sửa được lưu (US-22-AC19); ghi lịch sử (US-22-AC16) |
+| 3 | Nhân viên vận hành tỷ giá | Lưu quy tắc trên SCR-17, hoặc bật, tắt một quy tắc bằng công tắc trạng thái ngay trên danh sách SCR-16 | Quy tắc mới xuất hiện trên SCR-16 (US-22-AC3) hoặc các trường đã sửa được lưu (US-22-AC19); ghi lịch sử (US-22-AC16) |
 | 4 | Hệ thống | Cập nhật tỷ giá ngay sau khi lưu | US-22-AC8 (BR-48); các nhánh theo UC-03 |
 
 **Branches:**
@@ -1306,8 +1290,6 @@ stop
 
 ### 3.6 UI/UX Specifications
 
-> See RN-16
-
 **Screens**
 
 | ID | Screen | Purpose | Stories | Design |
@@ -1327,7 +1309,7 @@ stop
 | SCR-13 | Picker tiền tệ (web và app) | Chọn tiền tệ tham khảo trong danh sách tiền tệ chọn được của ngôn ngữ (BR-23) | US-06, US-07, US-08, US-09, US-13, US-20, US-22 |  |
 | SCR-14 | Search widget (web desktop, mobile web, app) | Tìm chuyến theo ngôn ngữ UI, địa danh không dấu (BR-37) | US-02, US-03 |  |
 | SCR-15 | Back office đơn hàng (CSKH) | Xem thông tin tiền tệ của từng đơn | US-01, US-17 |  |
-| SCR-16 | Công cụ cấu hình tỷ giá - danh sách quy tắc (Home / Fx Conversion Rule) | Xem, lọc quy tắc tỷ giá; làm mới tỷ giá; mở form thêm quy tắc; đặt ngưỡng bảng cũ cho cả bảng tỷ giá (BR-56) (assumed, A-22) | US-19, US-22 |  |
+| SCR-16 | Công cụ cấu hình tỷ giá - danh sách quy tắc (Home / Fx Conversion Rule) | Xem, lọc quy tắc tỷ giá; làm mới tỷ giá; mở form thêm quy tắc; đặt ngưỡng bảng cũ cho cả bảng tỷ giá (BR-56) (assumed, A-22); bật, tắt quy tắc bằng công tắc trạng thái (BR-52) | US-19, US-22 |  |
 | SCR-17 | Công cụ cấu hình tỷ giá - form tạo, sửa quy tắc | Tạo, sửa quy tắc tỷ giá và nguồn của một cặp tiền | US-20, US-22 |  |
 | SCR-18 | Trang tạo bản dịch cho ngôn ngữ mới (web và app) (proposed) | Tạo bản dịch của ngôn ngữ mới từ bản EN (en-US) | US-20 |  |
 | SCR-19 | Trang xem trước bản dịch (web và app) (proposed) | Xem trước UI với bản dịch mới trước khi bật ngôn ngữ | US-20 |  |

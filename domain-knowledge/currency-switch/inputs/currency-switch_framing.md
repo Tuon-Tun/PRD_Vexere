@@ -1,3 +1,5 @@
+> Superseded by PRDs/currency-switch_PRD.md — do not edit; change the PRD instead.
+
 # Product Framing Pack - Currency Switch
 
 ## 1. Framing Summary
