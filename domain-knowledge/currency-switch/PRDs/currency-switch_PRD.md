@@ -1294,26 +1294,26 @@ stop
 
 | ID | Screen | Purpose | Stories | Design |
 |----|--------|---------|---------|--------|
-| SCR-01 | Trang kết quả tìm kiếm | Xem, lọc và chọn chuyến; gồm lịch giá theo ngày, bộ lọc và thanh trượt giá, nhãn giảm giá; giá hiển thị kép (BR-05) | US-01, US-02, US-03, US-06, US-09, US-10, US-12, US-14 |  |
-| SCR-02 | Trang tìm nhà xe | Tìm nhà xe; giá hiển thị kép (BR-05) | US-01, US-10 |  |
-| SCR-03 | Trang chi tiết chuyến | Xem chi tiết chuyến và điểm đón trả; giá theo đơn giá (BR-19) | US-01, US-02, US-10 |  |
-| SCR-04 | Sơ đồ ghế | Chọn ghế, giường; giá từng ghế, giường theo đơn giá (BR-19) | US-01, US-10 |  |
-| SCR-05 | Checkout | Breakdown phí (phí dịch vụ, phí thanh toán, bảo hiểm, dịch vụ thêm), voucher và khuyến mãi, total; thông báo thanh toán bằng VND | US-01, US-02, US-05, US-06, US-10, US-11, US-13, US-14 |  |
-| SCR-06 | Bước nhập thông tin hành khách | Nhập thông tin hành khách; đổi ngôn ngữ, tiền tệ theo BR-40 | US-05, US-06, US-14, US-23 |  |
-| SCR-07 | Màn thanh toán | Thanh toán bằng VND; Payment Notice rút gọn, nút thanh toán | US-01, US-10, US-11, US-13, US-14 |  |
-| SCR-08 | Email xác nhận và vé điện tử | Xác nhận đơn theo ngôn ngữ đặt vé (BR-46), kèm số tham khảo lúc đặt (BR-44) | US-01, US-02, US-10, US-11, US-15 |  |
-| SCR-09 | My bookings | Xem đơn đã đặt với số tham khảo lúc đặt (BR-44) | US-01, US-02, US-10, US-11, US-14, US-15 |  |
-| SCR-10 | Số tiền hoàn (thông tin hoàn tiền của đơn) | Xem số tiền hoàn bằng VND kèm số tham khảo theo tỷ giá ngày mua (BR-45) | US-01, US-10, US-16 |  |
-| SCR-11 | Trang SEO landing | Trang đích từ công cụ tìm kiếm; giá hiển thị kép (BR-05) | US-01, US-02, US-09, US-10 |  |
-| SCR-12 | Picker ngôn ngữ (web và app) | Chọn ngôn ngữ UI | US-05, US-07, US-08, US-09, US-13, US-20 |  |
-| SCR-13 | Picker tiền tệ (web và app) | Chọn tiền tệ tham khảo trong danh sách tiền tệ chọn được của ngôn ngữ (BR-23) | US-06, US-07, US-08, US-09, US-13, US-20, US-22 |  |
-| SCR-14 | Search widget (web desktop, mobile web, app) | Tìm chuyến theo ngôn ngữ UI, địa danh không dấu (BR-37) | US-02, US-03 |  |
-| SCR-15 | Back office đơn hàng (CSKH) | Xem thông tin tiền tệ của từng đơn | US-01, US-17 |  |
-| SCR-16 | Công cụ cấu hình tỷ giá - danh sách quy tắc (Home / Fx Conversion Rule) | Xem, lọc quy tắc tỷ giá; làm mới tỷ giá; mở form thêm quy tắc; đặt ngưỡng bảng cũ cho cả bảng tỷ giá (BR-56) (assumed, A-22); bật, tắt quy tắc bằng công tắc trạng thái (BR-52) | US-19, US-22 |  |
-| SCR-17 | Công cụ cấu hình tỷ giá - form tạo, sửa quy tắc | Tạo, sửa quy tắc tỷ giá và nguồn của một cặp tiền | US-20, US-22 |  |
-| SCR-18 | Trang tạo bản dịch cho ngôn ngữ mới (web và app) (proposed) | Tạo bản dịch của ngôn ngữ mới từ bản EN (en-US) | US-20 |  |
-| SCR-19 | Trang xem trước bản dịch (web và app) (proposed) | Xem trước UI với bản dịch mới trước khi bật ngôn ngữ | US-20 |  |
-| SCR-20 | Điều khoản (T&C) - mục tỷ giá tham khảo | Công bố thông tin tỷ giá tham khảo (BR-51, MSG-15) | US-10 |  |
+| SCR-01 | Trang kết quả tìm kiếm | Xem, lọc và chọn chuyến; gồm lịch giá theo ngày, bộ lọc và thanh trượt giá, nhãn giảm giá; giá hiển thị kép (BR-05) | US-01, US-02, US-03, US-06, US-09, US-10, US-12, US-14 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=2-2) (wireframe) |
+| SCR-02 | Trang tìm nhà xe | Tìm nhà xe; giá hiển thị kép (BR-05) | US-01, US-10 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-11) (wireframe) |
+| SCR-03 | Trang chi tiết chuyến | Xem chi tiết chuyến và điểm đón trả; giá theo đơn giá (BR-19) | US-01, US-02, US-10 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-47) (wireframe) |
+| SCR-04 | Sơ đồ ghế | Chọn ghế, giường; giá từng ghế, giường theo đơn giá (BR-19) | US-01, US-10 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-84) (wireframe) |
+| SCR-05 | Checkout | Breakdown phí (phí dịch vụ, phí thanh toán, bảo hiểm, dịch vụ thêm), voucher và khuyến mãi, total; thông báo thanh toán bằng VND | US-01, US-02, US-05, US-06, US-10, US-11, US-13, US-14 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-141) (wireframe) |
+| SCR-06 | Bước nhập thông tin hành khách | Nhập thông tin hành khách; đổi ngôn ngữ, tiền tệ theo BR-40 | US-05, US-06, US-14, US-23 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-185) (wireframe) |
+| SCR-07 | Màn thanh toán | Thanh toán bằng VND; Payment Notice rút gọn, nút thanh toán | US-01, US-10, US-11, US-13, US-14 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-226) (wireframe) |
+| SCR-08 | Email xác nhận và vé điện tử | Xác nhận đơn theo ngôn ngữ đặt vé (BR-46), kèm số tham khảo lúc đặt (BR-44) | US-01, US-02, US-10, US-11, US-15 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=5-36) (wireframe) |
+| SCR-09 | My bookings | Xem đơn đã đặt với số tham khảo lúc đặt (BR-44) | US-01, US-02, US-10, US-11, US-14, US-15 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=5-57) (wireframe) |
+| SCR-10 | Số tiền hoàn (thông tin hoàn tiền của đơn) | Xem số tiền hoàn bằng VND kèm số tham khảo theo tỷ giá ngày mua (BR-45) | US-01, US-10, US-16 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=5-84) (wireframe) |
+| SCR-11 | Trang SEO landing | Trang đích từ công cụ tìm kiếm; giá hiển thị kép (BR-05) | US-01, US-02, US-09, US-10 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=5-109) (wireframe) |
+| SCR-12 | Picker ngôn ngữ (web và app) | Chọn ngôn ngữ UI | US-05, US-07, US-08, US-09, US-13, US-20 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=5-139) (wireframe) |
+| SCR-13 | Picker tiền tệ (web và app) | Chọn tiền tệ tham khảo trong danh sách tiền tệ chọn được của ngôn ngữ (BR-23) | US-06, US-07, US-08, US-09, US-13, US-20, US-22 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=5-165) (wireframe) |
+| SCR-14 | Search widget (web desktop, mobile web, app) | Tìm chuyến theo ngôn ngữ UI, địa danh không dấu (BR-37) | US-02, US-03 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=5-207) (wireframe) |
+| SCR-15 | Back office đơn hàng (CSKH) | Xem thông tin tiền tệ của từng đơn | US-01, US-17 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=6-55) (wireframe) |
+| SCR-16 | Công cụ cấu hình tỷ giá - danh sách quy tắc (Home / Fx Conversion Rule) | Xem, lọc quy tắc tỷ giá; làm mới tỷ giá; mở form thêm quy tắc; đặt ngưỡng bảng cũ cho cả bảng tỷ giá (BR-56) (assumed, A-22); bật, tắt quy tắc bằng công tắc trạng thái (BR-52) | US-19, US-22 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=6-129) (wireframe) |
+| SCR-17 | Công cụ cấu hình tỷ giá - form tạo, sửa quy tắc | Tạo, sửa quy tắc tỷ giá và nguồn của một cặp tiền | US-20, US-22 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=6-218) (wireframe) |
+| SCR-18 | Trang tạo bản dịch cho ngôn ngữ mới (web và app) (proposed) | Tạo bản dịch của ngôn ngữ mới từ bản EN (en-US) | US-20 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=6-294) (wireframe) |
+| SCR-19 | Trang xem trước bản dịch (web và app) (proposed) | Xem trước UI với bản dịch mới trước khi bật ngôn ngữ | US-20 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=6-317) (wireframe) |
+| SCR-20 | Điều khoản (T&C) - mục tỷ giá tham khảo | Công bố thông tin tỷ giá tham khảo (BR-51, MSG-15) | US-10 | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=5-247) (wireframe) |
 
 **Messages**
 
