@@ -38,11 +38,11 @@
 | Reader | Start with | Use it to |
 |--------|------------|-----------|
 | PO | 2. Feature Overview, 2.5 Scope | Confirm the value, the goals, and what is in or out |
-| BA | 3.1 Business Rules, 3.3 User Stories, 3.4 Use Cases, 3.5 Traceability Matrix | Check that every rule and flow is complete and consistent |
-| Dev | 3.1 Business Rules, 3.3 Acceptance Criteria and Rules applied, 3.6 Screens and Messages, 3.7 Dependencies | Understand the logic to build, then design the technical solution separately |
-| QC | 3.1 Business Rules, 3.3 Acceptance Criteria and Common Behaviors, 3.5 Traceability Matrix, 3.6 Messages | Derive test cases and trace each one to a criterion or rule ID |
+| BA | 3.1 Shared Business Rules, 3.3 User Stories, 3.4 Use Cases, 3.5 Traceability Matrix | Check that every rule and flow is complete and consistent |
+| Dev | 3.3 Stories with their Story rules and Acceptance Criteria, 3.1 Shared Business Rules, 3.6 Screens and Messages, 3.7 Dependencies | Understand the logic to build, then design the technical solution separately |
+| QC | 3.3 Acceptance Criteria, Story rules and Common Behaviors, 3.1 Shared Business Rules, 3.5 Traceability Matrix, 3.6 Messages | Derive test cases and trace each one to a criterion or rule ID |
 
-Every fact appears once. Other places cite its ID: `JTBD-` job, `US-` story, `US-01-AC2` acceptance criterion, `CB-` common behavior, `BR-` business rule, `MSG-` message, `SCR-` screen, `UC-` use case, `SM-` success metric, `NFR-` quality target, `DEP-` dependency, `A-` assumption, `Q-` open question.
+Every fact appears once. Other places cite its ID: `JTBD-` job, `US-` story, `US-01-AC2` acceptance criterion, `CB-` common behavior, `BR-` business rule, `MSG-` message, `SCR-` screen, `UC-` use case, `SM-` success metric, `NFR-` quality target, `DEP-` dependency, `A-` assumption, `Q-` open question. Read each story from top to bottom: the rules only it uses sit just above its acceptance criteria; rules several stories share are in 3.1.
 
 ---
 
@@ -154,11 +154,12 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 ## 3. Feature Specifications
 
-### 3.1 Business Rules
+### 3.1 Shared Business Rules
 
 <!--
-  The core of the PRD for Dev and QC, and the only place rule values live. One rule per row, each with
-  its own BR ID (unique across all tables in this section), concrete values, and the condition that triggers it.
+  The rules several stories or a common behavior cite, and every status, transition, and permission table.
+  A rule only one story cites lives under that story in 3.3 (Story rules), in the same columns. One rule per
+  row, each with its own BR ID (unique across the PRD), concrete values, and the condition that triggers it.
   A rule answers a question about money, seats or other inventory, a status, a voucher or other
   entitlement, or who may act. What the user sees when it applies lives in the citing acceptance criteria.
   - Example: a concrete case with real numbers, e.g. "Ticket 300,000 VND cancelled 30 hours before
@@ -233,19 +234,20 @@ When [situation], I want to [motivation], so I can [expected outcome].
   - Screens: the SCR IDs from 3.6 the story is built on, or none.
   - Jira: filled by the PM after creating the ticket; never generated. The Jira ticket summary starts
     with the story ID and name (e.g. "US-03 Choose seats"), so the ticket and the PRD always match.
-  - Common behaviors: the CB IDs that apply to the story.
-  - Rules applied: every BR referred to by its acceptance criteria and its common behaviors, then every
-    BR cited in any cell of those rules' rows, followed all the way down (a transition also brings in the
-    "on entering" row of its new status; a cited message brings in its Rules column). Prefixed with the
-    feature name so it still makes sense in a Jira ticket; rules from another PRD go in a second group
-    prefixed with that PRD's name and are not followed further.
+  - Common behaviors: the CB IDs that apply to the story, each with its situation in a few words.
+  - Story rules: the rules only this story cites, in the 3.1 columns, placed just above the acceptance
+    criteria so the reader sees them where they apply. The story carries no list of rule IDs to
+    remember; 3.5 lists each story's rules for Jira.
   - Acceptance criteria, numbered AC1, AC2, ... and labelled (Happy), (Alternative), or (Error): UI/UX
     behavior, how a broken rule or a failure is shown (toast / inline error / popup + MSG ID), and
     side-effects of this story's own action. One outcome per criterion: split it when its outcomes can
     pass or fail separately (a disabled control and the inline message explaining it count as one). When it depends on a situation or state beyond "the user is on this
     screen", open with "If" (something happens) or "While" (a state holds) and cite the rule.
     Side-effects of a status change live in 3.1 (on its transition or "on entering" row); the acceptance
-    criterion only states that the transition happens. Cite rule and message IDs; never copy a rule value or message wording.
+    criterion only states that the transition happens. Each criterion reads on its own: a Story rule is cited
+    by ID (it sits just above); a shared rule's effect is said in a few words, with a sample labelled e.g. when
+    useful, then cited; a message is named by what it says, then cited. Never write only "per BR-.."; never
+    copy a rule's full logic or a message's wording.
 -->
 
 **Common Behaviors**
@@ -254,21 +256,27 @@ When [situation], I want to [motivation], so I can [expected outcome].
 |----|-----------|-----------------------------------|------------------|
 | CB-01 | | | |
 
-**Epic 1: [Epic Name]** — Serves: JTBD-01 — Jira: [PM fills]
+#### Epic 1: [Epic Name] — Serves: JTBD-01 — Jira: [PM fills]
 
-- **US-01 - [Story Name]**
-  - **As a** [user role],
-  - **I want to** [action],
-  - **so that** [benefit].
-  - **Priority:** [Must / Should / Could]
-  - **Screens:** SCR-01
-  - **Jira:** [PM fills]
-  - **Common behaviors:** CB-01
-  - **Rules applied (PRD [Feature Name]):** BR-01, BR-03
-  - **Acceptance Criteria**
-    - AC1 (Happy) Done when: [observable outcome, naming the rule in words] (BR-03)
-    - AC2 (Alternative) Done when: While [state] (BR-03), [what the user can do or sees].
-    - AC3 (Error) Done when: If [business situation] (BR-01), [toast / inline error / popup] shows MSG-01.
+##### US-01 - [Story Name]
+
+**As a** [user role], **I want to** [action], **so that** [benefit].
+
+**Priority:** [Must / Should / Could] · **Screens:** SCR-01 · **Jira:** [PM fills]
+
+**Common behaviors:** CB-01 ([situation in a few words])
+
+**Story rules**
+
+| ID | Rule | Example | Uses | Notes |
+|----|------|---------|------|-------|
+| BR-04 | [rule only this story cites] | [worked example] | | |
+
+**Acceptance Criteria**
+
+- AC1 (Happy) Done when: [situation and outcome in plain words] (BR-04)
+- AC2 (Alternative) Done when: While [state in words] (BR-04), [what the user can do or sees].
+- AC3 (Error) Done when: If [business situation], [the shared rule's effect in a few words, e.g. a sample] (BR-01), and a [toast / inline error / popup] [says what, in a few words] (MSG-01).
 
 ---
 
@@ -281,9 +289,10 @@ When [situation], I want to [motivation], so I can [expected outcome].
   If no flow qualifies, write "No use case needed: every story is single-step; see the acceptance
   criteria in 3.3." This is complete, not TBD.
 
-  Use cases hold only the ORDER of steps, taken from the approved user flow. Every outcome cites where it is defined: the acceptance
-  criterion or common behavior (what the user sees), the rule (BR), the message (MSG). Add a branch
-  row only where the flow really branches; there is no minimum number of rows.
+  Use cases hold only the ORDER of steps, taken from the approved user flow: who acts, what they do, and
+  the acceptance criterion or common behavior where the outcome is defined. Never restate the outcome;
+  the reader finds it in the story. Add a branch row only where the flow really branches; there is no
+  minimum number of rows.
   Precondition and Postcondition name the condition or status and cite its BR ID, without values.
 -->
 
@@ -297,7 +306,7 @@ When [situation], I want to [motivation], so I can [expected outcome].
 
 **Main Flow:**
 
-| Step | Actor | Action | Result (cites AC / BR / MSG) |
+| Step | Actor | Action | Outcome defined in (AC / CB) |
 |------|-------|--------|------------------------------|
 
 **Branches:**
@@ -316,14 +325,23 @@ When [situation], I want to [motivation], so I can [expected outcome].
 <!--
   IDs only, no prose. One row per BR, built from the citations in 3.3 (acceptance criteria and common
   behaviors), 3.4 (use cases), 3.6 (the Rules column of each message), and 3.1 (rules citing other rules).
+  Home: "3.1" for a shared rule, or the story ID for a Story rule.
   Cited by: the AC and CB IDs that cite the rule, plus "via BR-.." for each rule that uses it.
   MSG: the messages whose Rules column lists the rule. A removed rule shows "No longer applies".
   A rule cited from another PRD gets its own row, named with that PRD, so a change there can be traced here.
   Add a row with "—" in the BR column for each story that applies no rule. Use "—" when nothing maps.
 -->
 
-| BR | Cited by (AC / CB) | UC | MSG |
-|----|--------------------|----|-----|
+| BR | Home | Cited by (AC / CB) | UC | MSG |
+|----|------|--------------------|----|-----|
+
+#### Rules by Story
+
+<!-- For Jira, not for reading: each story's own rules plus the shared rules its acceptance criteria and
+     common behaviors cite, prefixed with the feature name. Built from the citations. -->
+
+| Story | Rules (PRD [Feature Name]) |
+|-------|----------------------------|
 
 #### Non-Functional Requirements
 

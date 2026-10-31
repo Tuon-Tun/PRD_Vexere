@@ -39,11 +39,11 @@ Do not draft the full PRD. Do not export files. This skill produces only the Pro
 Every ID must exist before a story cites it. Rules, messages, common behaviors, referenced items, assumptions, and open questions may cite each other in either direction (a transition sends a message, a message names a rule, a rule waits on a question), so number them all before filling their rows. Build the Pack in this order:
 
 1. Jobs To Be Done.
-2. Business Rules: every rule, status transition, and permission, each with its `BR-` ID.
+2. Business Rules: every rule, status transition, and permission, each with its `BR-` ID. Where each rule sits is decided after the stories are written (step 6).
 3. Messages: every message any story or rule shows, each with its `MSG-` ID.
 4. Common Behaviors: situations that behave the same in every story, each with its `CB-` ID.
 5. Referenced Items: every success metric, quality target, dependency, and screen, each with its `SM-`, `NFR-`, `DEP-`, or `SCR-` ID.
-6. Epics & User Stories: each epic names the `JTBD-` it serves, and the acceptance criteria cite the IDs above.
+6. Epics & User Stories: each epic names the `JTBD-` it serves, and the acceptance criteria cite the IDs above. Then place the rules: a formula, policy, or limit that the acceptance criteria of exactly one story cite, and no common behavior cites, moves under that story as a Story rule. Every other rule stays in Shared Business Rules, and so do all status, transition, on-entering, and permission rows. A shared rule or a message may still cite a Story rule by ID.
 7. Assumptions and Open Questions, each with its `A-` or `Q-` ID.
 
 ---
@@ -79,7 +79,7 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
     - **On entering a status:** one row per status whose side-effects are the same however it is reached (notifications by `MSG-` ID, inventory released, partner informed). They are written here once, never on each transition.
     - **Permissions:** one row per action a role may perform, including actions that change a status.
   - **Limits & constraints:** time windows, quantities, input rules, and deadlines promised to the customer.
-- Each row has its own `BR-` ID, unique across all the business rule tables.
+- Each row has its own `BR-` ID, unique across all the business rule tables, Story rules included.
 - Fill **Uses** with the IDs of other rules a formula, policy, or limit depends on (for example a refund rule that uses the cancellation fee rule). In transition, status, and permission rows, the rules cited in the row play the same role.
 - What the user sees when a rule applies or is broken is not part of the rule. It goes into the acceptance criteria that cite the rule.
 - A value set per partner or per campaign is written as the rule's shape, who sets the value, the default if any, and a worked example labelled as sample values.
@@ -117,8 +117,8 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
 - Keep UI and implementation details out of the story statement unless they are truly the user outcome. Never prescribe technical solutions (APIs, data storage, internal components).
 - **Priority:** `Must`, `Should`, or `Could`.
 - **Screens:** the `SCR-` IDs the story is built on, or `none`.
-- **Common behaviors:** the `CB-` IDs that apply to the story, or `none`.
-- **Rules applied:** every `BR-` ID referred to by the story's acceptance criteria and by its listed common behaviors, then every `BR-` ID cited in any cell of those rules' rows, followed all the way down. Following a transition row also follows the "on entering" row of its new status. A message cited by an acceptance criterion, a common behavior, or a followed row counts too: follow its Rules column. Prefix the line with the feature name so it still makes sense in a Jira ticket: `Rules applied (PRD [Feature Name]): BR-01, BR-03`, using the feature name, not the full PRD title. Rules from another PRD go in a second group, `(PRD [Other PRD name]): BR-02`; they are listed but their rows are not followed. Write `none` if there are none.
+- **Common behaviors:** the `CB-` IDs that apply to the story, each followed by its situation in a few words, for example `CB-02 (rates temporarily unavailable)`, or `none`.
+- **Story rules:** the rules only this story cites (see Order of work, step 6), in the same columns as Formulas, Policies & Limits (ID, Rule, Example, Uses, Notes), placed between the story's lines and its acceptance criteria so the reader sees them where they apply. Write `none` when the story has none. The story carries no list of rule IDs to remember; the PRD's Traceability Matrix lists each story's rules for Jira.
 
 ### Acceptance Criteria
 
@@ -131,8 +131,8 @@ Every ID must exist before a story cites it. Rules, messages, common behaviors, 
   - **UI/UX behavior:** what the user sees and can do, loading and empty states, default sort order, what each button does.
   - **Validation and error handling:** when a rule is broken or something fails, how it is shown (toast, inline error, or popup) and which message (`MSG-` ID).
   - **Side-effects of this story's own action:** what the system records and for which metric (`SM-` ID), which notification is sent (`MSG-` ID), what a partner is informed of. Side-effects of a status transition live on the transition row; the acceptance criterion only states that the transition happens, citing its `BR-` ID.
-- Never copy a rule's value, formula, or condition into an acceptance criterion. Name the rule in words and cite its ID: `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01.`
-- Never copy message wording into an acceptance criterion; cite the `MSG-` ID.
+- **Readable on its own.** State the situation and the outcome in plain words, so the criterion reads without opening another section. A Story rule is cited by ID: the reader sees it just above. For a shared rule, say its effect in a few words, add a sample labelled e.g. when that makes the outcome concrete, then cite the ID: `Done when: If the customer has never chosen a currency, prices show their country's currency when the language supports it, otherwise the language's main currency (e.g. EN in the US → USD) (BR-25).` Never write only "per BR-25". Do not copy a rule's full logic, table, formula, or limit value: that stays in the rule row.
+- Never copy message wording into an acceptance criterion: say how the message is shown and what it is about in a few words, then cite its ID, for example `a toast confirming the rate was updated (MSG-12)`.
 - Each story has at least one happy-path acceptance criterion and, where applicable, one negative/error acceptance criterion; a listed common behavior counts as the negative case for its situation. Do not rewrite a situation a listed common behavior already covers.
 - Write negative/error situations as business situations (seat already taken, payment failed, partner did not respond), never as status codes, error codes, or technical causes.
 - For tracking and partners, write WHAT, not HOW: no event names, properties, or data-sync mechanisms.
@@ -165,7 +165,9 @@ Return Markdown only, with these sections:
 
 When [situation], I want to [motivation], so I can [expected outcome].
 
-## 3. Business Rules
+## 3. Shared Business Rules
+
+Rules that several stories or a common behavior cite, and every status, transition, and permission row. A rule only one story cites is under that story in section 7.
 
 **Formulas, Policies & Limits**
 
@@ -240,14 +242,19 @@ so that [value/reason].
 
 **Priority:** [Must / Should / Could]
 **Screens:** SCR-01
-**Common behaviors:** CB-01
-**Rules applied (PRD [Feature Name]):** BR-01, BR-03
+**Common behaviors:** CB-01 ([situation in a few words])
+
+**Story rules**
+
+| ID | Rule | Example | Uses | Notes |
+|----|------|---------|------|-------|
+| BR-04 | [rule only this story cites] | [worked example] | | |
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: [observable outcome, citing rules by ID] (BR-03)
-- AC2 (Alternative) Done when: While [state named in words] (BR-03), [what the user can do or sees].
-- AC3 (Error) Done when: If [business situation named in words] (BR-01), [toast / inline error / popup] shows MSG-01.
+- AC1 (Happy) Done when: [situation and outcome in plain words] (BR-04)
+- AC2 (Alternative) Done when: While [state in words] (BR-04), [what the user can do or sees].
+- AC3 (Error) Done when: If [business situation], [the shared rule's effect in a few words, e.g. a sample] (BR-01), and a [toast / inline error / popup] [says what, in a few words] (MSG-01).
 
 **INVEST Check:** I / N / V / E / S / T
 

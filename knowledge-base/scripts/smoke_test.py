@@ -218,9 +218,19 @@ def check_product_framing_skill():
     content = path.read_text(encoding="utf-8")
     assert_true("Product Framing Pack" in content, "Product framing skill is missing its output contract")
     assert_true("Done when" in content, "Product framing skill is missing acceptance criteria guidance")
-    assert_true("Rules applied" in content, "Product framing skill is missing the Rules applied line")
+    assert_true("**Story rules**" in content, "Product framing skill is missing the Story rules block")
+    # Rules travel with their story: no story carries a list of rule IDs to memorize.
+    for rel in (
+        "knowledge-base/product-framing/SKILL.md",
+        "knowledge-base/prd-template/SKILL.md",
+        "knowledge-base/prd-template/resources/prd-template.md",
+        "knowledge-base/prd-reviewer.md",
+        "knowledge-base/knowledge/user-story-skill/SKILL.md",
+    ):
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        assert_true("Rules applied" not in text, f"{rel} still asks for a Rules applied line")
     # Rules must get their IDs before the stories that cite them are written.
-    rules_at = content.find("## 3. Business Rules")
+    rules_at = content.find("## 3. Shared Business Rules")
     stories_at = content.find("## 7. Epics & User Stories")
     assert_true(
         0 <= rules_at < stories_at,
@@ -244,7 +254,7 @@ def check_prd_sections():
     assert_true("API / Technical Specs" not in template, "PRD template still contains the technical specs section")
     # Rules are defined before the stories that cite them, in the PRD as in the framing pack.
     assert_true(
-        0 <= template.find("### 3.1 Business Rules") < template.find("### 3.3 Feature Epics & User Stories"),
+        0 <= template.find("### 3.1 Shared Business Rules") < template.find("### 3.3 Feature Epics & User Stories"),
         "PRD template must place Business Rules (3.1) before Feature Epics & User Stories (3.3)",
     )
     assert_true(

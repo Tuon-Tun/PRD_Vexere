@@ -53,7 +53,7 @@ so that [Value/Reason].
 ### Standalone story vs. story inside a PRD
 
 - **Standalone** (a story written on its own, with no PRD): write the values directly in the AC, as in the examples.
-- **Inside a PRD** (the PRD pipeline): every fact has one home, as defined in `knowledge-base/product-language/SKILL.md`. Rule values, formulas, conditions, status transitions, and permissions live in the PRD's Business Rules; message wording lives in its Messages table; quality targets live in its NFR table; behavior shared by every story lives in Common Behaviors. The AC names the rule in words and cites its ID — `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01.` — and never copies the value or the wording. Side-effects of a status transition live on its rule row; the AC only states that the transition happens. Number AC within the story (`AC1`, `AC2`) and add the story's `Priority`, `Screens`, `Jira` (left empty for the PM), `Common behaviors`, and `Rules applied` lines.
+- **Inside a PRD** (the PRD pipeline): every fact has one home, as defined in `knowledge-base/product-language/SKILL.md`. A rule only this story cites sits under the story as a Story rule, just above the AC; a rule several stories share sits in the PRD's Shared Business Rules, with the status transitions and permissions. Message wording lives in the Messages table, quality targets in the NFR table, and behavior shared by every story in Common Behaviors. Each AC reads on its own: it cites a Story rule by ID, says a shared rule's effect in a few words (with a sample labelled e.g. when useful) and cites it, and names a message by what it says and its ID — `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline note says online cancellation has closed (MSG-01).` It never copies a rule's full logic or a message's wording, and never says only "per BR-01". Side-effects of a status transition live on its rule row; the AC only states that the transition happens. Number AC within the story (`AC1`, `AC2`) and add the story's `Priority`, `Screens`, `Jira` (left empty for the PM), `Common behaviors` (each with its situation in a few words), and `Story rules` lines.
 
 ### Must cover all of these
 
@@ -108,7 +108,7 @@ Epic → Feature → User Story
 ```
 
 - Stories must connect to a Feature; Features to an Epic
-- Each story's "Why" must be **self-contained** — the "so that" clause makes sense without reading the Epic; devs work from stories, not Epics. Inside a PRD, do not paste the Epic description or rule content into the story: the Jira ticket gets its context from the Epic link and from the rules listed in `Rules applied`
+- Each story's "Why" must be **self-contained** — the "so that" clause makes sense without reading the Epic; devs work from stories, not Epics. Inside a PRD, do not paste the Epic description or rule content into the story: the Jira ticket gets its context from the Epic link, the story's own rules, and its AC
 
 ---
 
@@ -145,7 +145,7 @@ Also define, in business terms: what information is exchanged, when, who owns it
 | Vague NFR ("more than X") | Untestable | Use exact threshold |
 | Developer as actor | No end-user value | Reframe as technical task |
 | Missing "so that" | Team doesn't know the why | Always include value clause |
-| Inside a PRD, AC repeats a rule value ("cancel at least 24h before") or message wording | A policy change must be edited in many places, and the copies drift | Name the rule and cite it: "If the cancellation cutoff has passed (BR-01), ..." |
+| Inside a PRD, AC repeats a rule's full logic ("cancel at least 24h before") or message wording, or says only "per BR-01" | Copies drift when the policy changes; a bare ID forces the reader to look it up | Put the rule under the story (or cite the shared rule), say its effect in a few words, and cite the ID |
 
 ---
 
@@ -163,7 +163,7 @@ so that [Value].
 **Screens:** SCR-01                                    ← inside a PRD
 **Jira:** [PM fills]                                   ← inside a PRD
 **Common behaviors:** CB-01                            ← inside a PRD
-**Rules applied (PRD [Feature Name]):** BR-01, BR-03   ← inside a PRD
+**Story rules:** BR-01 table (rules only this story cites)   ← inside a PRD
 
 ## Acceptance Criteria
 AC1 (Happy) Done when: [positive condition]
@@ -191,7 +191,7 @@ Fix any failure before outputting.
 - [ ] No `and` / `or` / `/` in WHO/DOES/WHAT
 - [ ] Every AC has a clear pass/fail condition
 - [ ] Every AC describes an observable outcome in business language — no status codes, endpoints, or internal components
-- [ ] Inside a PRD: no AC repeats a rule value, formula, condition, or message wording — it cites the ID, and `Rules applied` lists every rule referred to by the AC and the listed common behaviors, plus every rule cited in those rules' rows and in the messages they cite, followed all the way down
+- [ ] Inside a PRD: every AC reads on its own — no AC copies a rule's full logic or a message's wording, and none says only "per BR-.."; rules only this story cites are in its Story rules
 - [ ] Happy path + at least one negative/edge case covered, by its own AC or, inside a PRD, by a listed common behavior
 - [ ] All AC completable within one sprint
 - [ ] All 6 INVEST criteria pass
