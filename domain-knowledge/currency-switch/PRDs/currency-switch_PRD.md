@@ -1192,7 +1192,7 @@ none
 | 2 | Hệ thống | Mở trang theo ngôn ngữ tự nhận diện | US-08-AC3 |
 | 3 | Khách | Tìm chuyến bằng search widget | US-03-AC4 |
 | 4 | Hệ thống | Hiển thị kết quả tìm kiếm | US-10-AC1, US-10-AC2, US-10-AC7 |
-| 5 | Khách | Mở tooltip cạnh MSG-01 | US-10-AC8 |
+| 5 | Khách | Mở tooltip (i) cạnh disclaimer giá tham khảo | US-10-AC8 |
 | 6 | Khách | Đổi tiền tệ trên picker | US-06-AC2, US-06-AC5, NFR-01, US-06-AC6, BR-31 |
 | 7 | Khách | Đổi ngôn ngữ trên picker | US-05-AC3, US-05-AC5 |
 
