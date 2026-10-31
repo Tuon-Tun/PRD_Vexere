@@ -510,13 +510,13 @@ stop
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trên mọi màn hình của story và mọi platform (NFR-04), mỗi số tiền hiển thị kèm mã ISO của tiền tệ, không số tiền nào dùng ký hiệu tiền tệ (BR-11).
-- AC2 (Happy) Done when: Mỗi số VND được viết theo cách viết số của ngôn ngữ UI đang dùng, với mã VND đứng sau số (BR-12).
-- AC3 (Happy) Done when: Mỗi số ngoại tệ hiển thị có mã tiền đứng trước số (BR-12).
-- AC4 (Happy) Done when: Trong cùng một ngôn ngữ UI, cùng một số VND được viết giống hệt nhau trên mọi màn hình của story và mọi platform (BR-12, NFR-04).
-- AC5 (Happy) Done when: Mỗi số tiền hiển thị đúng số lẻ của tiền tệ đó theo bảng số lẻ của Vexere (BR-09).
-- AC6 (Alternative) Done when: Nếu tiền tệ tham khảo không có trong bảng số lẻ của Vexere (BR-09), số tham khảo hiển thị theo số lẻ mà BR-09 quy định cho tiền tệ ngoài bảng.
-- AC7 (Happy) Done when: Nếu kết quả quy đổi chưa làm tròn có nhiều chữ số thập phân hơn số lẻ của tiền tệ (BR-09), số tham khảo hiển thị được làm tròn theo quy tắc làm tròn chung (BR-10).
+- AC1 (Happy) Done when: Trên mọi màn hình của story và mọi platform được hỗ trợ (NFR-04), mỗi số tiền hiển thị kèm mã ISO của tiền tệ, không số tiền nào dùng ký hiệu tiền tệ (VD: USD 19.96, không viết $19.96) (BR-11).
+- AC2 (Happy) Done when: Mỗi số VND được viết theo cách viết số của ngôn ngữ UI đang dùng, với mã VND đứng sau số (VD: trên UI EN là 520,000 VND) (BR-12).
+- AC3 (Happy) Done when: Mỗi số ngoại tệ hiển thị có mã tiền đứng trước số (VD: USD 17.92) (BR-12).
+- AC4 (Happy) Done when: Trong cùng một ngôn ngữ UI, cùng một số VND được viết giống hệt nhau trên mọi màn hình của story và mọi platform được hỗ trợ (BR-12, NFR-04).
+- AC5 (Happy) Done when: Mỗi số tiền hiển thị đúng số lẻ của tiền tệ đó theo bảng số lẻ của Vexere (VD: TWD 570 không có số lẻ, KWD 5.494 có 3 số lẻ) (BR-09).
+- AC6 (Alternative) Done when: Nếu tiền tệ tham khảo không có trong bảng số lẻ của Vexere (BR-09), số tham khảo hiển thị theo số lẻ chuẩn ISO 4217 của tiền tệ đó (VD: AUD có 2 số lẻ).
+- AC7 (Happy) Done when: Nếu kết quả quy đổi chưa làm tròn có nhiều chữ số thập phân hơn số lẻ của tiền tệ (BR-09), số tham khảo hiển thị được làm tròn nửa lên tới số lẻ đó theo quy tắc làm tròn chung (VD: 17.925 → 17.93) (BR-10).
 - AC8 — No longer applies: trùng với US-10-AC11 (NFR-03).
 
 **INVEST:** I / N / V / E / S (chưa đạt) / T
@@ -538,12 +538,12 @@ stop
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ (BR-37), mọi địa danh Bus hiển thị dạng không dấu trên mọi màn hình có địa danh, gồm SCR-01, SCR-03, SCR-05, SCR-09, SCR-11 và SCR-14.
+- AC1 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ (BR-37), mọi địa danh Bus (bến xe, trạm dừng, điểm đón trả) hiển thị dạng không dấu (VD: "Ben xe Mien Dong") trên mọi màn hình có địa danh, gồm trang kết quả tìm kiếm (SCR-01), chi tiết chuyến (SCR-03), checkout (SCR-05), My bookings (SCR-09), trang SEO landing (SCR-11) và search widget (SCR-14).
 - AC2 (Happy) Done when: Nếu email xác nhận và vé điện tử (SCR-08) được gửi bằng một ngoại ngữ (BR-37), mọi địa danh Bus trong đó hiển thị dạng không dấu.
-- AC3 (Happy) Done when: Tên không dấu của mỗi địa danh đúng bằng kết quả chuẩn hoá tên tiếng Việt của địa danh đó theo BR-38.
-- AC4 (Happy) Done when: Cùng một địa danh hiển thị cùng một tên không dấu trên mọi ngôn ngữ ngoại ngữ đang bật và mọi platform (BR-37, NFR-04).
+- AC3 (Happy) Done when: Tên không dấu của mỗi địa danh đúng bằng tên tiếng Việt của địa danh đó sau khi bỏ dấu và chuyển "đ/Đ" thành "d/D" (VD: "Đà Lạt" → "Da Lat") (BR-38).
+- AC4 (Happy) Done when: Cùng một địa danh hiển thị cùng một tên không dấu trên mọi ngôn ngữ ngoại ngữ đang bật và mọi platform được hỗ trợ (VD: UI EN, KO, TH đều hiện "Ben xe Mien Dong") (BR-37, NFR-04).
 - AC5 (Alternative) Done when: Nếu khách dùng một ngôn ngữ ngoại ngữ được bật sau ngày ra mắt (BR-37), địa danh Bus hiển thị cùng tên không dấu như trên các ngôn ngữ ngoại ngữ khác.
-- AC6 (Alternative) Done when: Trong khi khách dùng UI VI (ngoài phạm vi BR-37), địa danh vẫn hiển thị bằng tiếng Việt có dấu như hiện tại.
+- AC6 (Alternative) Done when: Trong khi khách dùng UI VI (địa danh không dấu chỉ áp cho UI ngoại ngữ, BR-37), địa danh vẫn hiển thị bằng tiếng Việt có dấu như hiện tại (VD: "Bến xe Miền Đông").
 
 **INVEST:** I / N / V / E / S / T
 
@@ -561,12 +561,12 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trên mọi platform (NFR-04), nhãn, chữ gợi ý trong ô nhập và thông báo lỗi của search widget (SCR-14) hiển thị bằng ngôn ngữ UI khách đang dùng.
-- AC2 (Happy) Done when: Khi khách gõ tên một địa danh Bus bằng chữ Latin không dấu, danh sách gợi ý hiện địa danh đó ở dạng không dấu (BR-37).
+- AC1 (Happy) Done when: Trên mọi platform được hỗ trợ (NFR-04), nhãn, chữ gợi ý trong ô nhập và thông báo lỗi của search widget (SCR-14) hiển thị bằng ngôn ngữ UI khách đang dùng.
+- AC2 (Happy) Done when: Khi khách gõ tên một địa danh Bus bằng chữ Latin không dấu, danh sách gợi ý hiện địa danh đó ở dạng không dấu (VD: "Ben xe Mien Dong", không phải "Bến xe Miền Đông") (BR-37).
 - AC3 (Happy) Done when: Sau khi khách chọn một gợi ý, ô điểm đi hoặc điểm đến hiển thị tên không dấu của địa danh đã chọn (BR-37).
-- AC4 (Happy) Done when: Khi khách bấm tìm, trang kết quả tìm kiếm (SCR-01) mở bằng đúng ngôn ngữ UI khách đang dùng (trên web, theo ngôn ngữ trong đường dẫn, BR-28).
-- AC5 (Alternative) Done when: Nếu một ngôn ngữ ngoại ngữ được bật sau ngày ra mắt (BR-22), nhãn, chữ gợi ý trong ô nhập và thông báo lỗi của search widget hiển thị bằng ngôn ngữ đó sau khi ngôn ngữ được bật, mà không cần phát hành bản mới.
-- AC6 (Error) Done when: Nếu không có địa danh nào khớp với nội dung khách gõ, danh sách gợi ý hiện MSG-18 bằng ngôn ngữ UI.
+- AC4 (Happy) Done when: Khi khách bấm tìm, trang kết quả tìm kiếm (SCR-01) mở bằng đúng ngôn ngữ UI khách đang dùng (trên web, ngôn ngữ của trang theo ngôn ngữ trong đường dẫn, VD: /en-US/ → EN) (BR-28).
+- AC5 (Alternative) Done when: Nếu BU bật thêm một ngôn ngữ ngoại ngữ trong cấu hình sau ngày ra mắt (BR-22), nhãn, chữ gợi ý trong ô nhập và thông báo lỗi của search widget hiển thị bằng ngôn ngữ đó sau khi ngôn ngữ được bật, mà không cần phát hành bản mới.
+- AC6 (Error) Done when: Nếu không có địa danh nào khớp với nội dung khách gõ, danh sách gợi ý hiện thông báo không tìm thấy địa danh phù hợp (MSG-18) bằng ngôn ngữ UI.
 
 **INVEST:** I (chưa đạt) / N / V / E / S / T
 - I: gợi ý và tên điểm đã chọn dùng địa danh không dấu của US-02 (BR-37); nên làm cùng hoặc sau US-02.
@@ -587,9 +587,9 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, mỗi ô tên hành khách ở bước nhập thông tin hành khách (SCR-06) luôn hiện MSG-16 bằng ngôn ngữ UI, có sẵn trước khi khách bắt đầu nhập.
-- AC2 (Error) Done when: Nếu tên hành khách có ký tự không hợp lệ theo quy tắc ký tự hiện có của hệ thống (DEP-10), lỗi inline dưới ô tên hiện MSG-17 bằng ngôn ngữ UI.
-- AC3 (Alternative) Done when: Trong khi khách dùng UI VI, ô tên hành khách không hiện MSG-16 và hoạt động như hiện tại.
+- AC1 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, mỗi ô tên hành khách ở bước nhập thông tin hành khách (SCR-06) luôn hiện, bằng ngôn ngữ UI, dòng gợi ý nhập tên bằng chữ Latin (MSG-16), có sẵn trước khi khách bắt đầu nhập.
+- AC2 (Error) Done when: Nếu tên hành khách có ký tự không hợp lệ theo quy tắc ký tự hiện có của hệ thống (DEP-10), lỗi inline dưới ô tên báo tên có ký tự không hợp lệ (MSG-17) bằng ngôn ngữ UI.
+- AC3 (Alternative) Done when: Trong khi khách dùng UI VI, ô tên hành khách không hiện dòng gợi ý nhập tên bằng chữ Latin (MSG-16) và hoạt động như hiện tại.
 
 **INVEST:** I / N / V / E / S / T
 
@@ -611,14 +611,14 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trên mọi platform (NFR-04), picker ngôn ngữ chỉ liệt kê các ngôn ngữ đang bật (BR-22).
-- AC2 (Happy) Done when: Picker ngôn ngữ hiển thị ngôn ngữ hiện hành, xác định theo thứ tự ưu tiên (BR-26), là ngôn ngữ đang được chọn.
+- AC1 (Happy) Done when: Trên mọi platform được hỗ trợ (NFR-04), picker ngôn ngữ chỉ liệt kê các ngôn ngữ BU đang bật (VD: đang bật VI, EN, ZH, KO, TH → picker có đúng năm ngôn ngữ này) (BR-22).
+- AC2 (Happy) Done when: Picker ngôn ngữ hiển thị ngôn ngữ hiện hành là ngôn ngữ đang được chọn. Ngôn ngữ hiện hành lấy theo thứ tự ưu tiên: thao tác của khách trong phiên > tham số trên link > lựa chọn chủ động gần nhất > giá trị tự nhận diện lần đầu > ngôn ngữ dự phòng (VD: khách đã lưu chủ động EN mở link chỉ định KO → picker hiện KO đang được chọn) (BR-26).
 - AC3 (Happy) Done when: Sau khi khách chọn một ngôn ngữ khác trên picker, giao diện Vexere hiển thị bằng ngôn ngữ vừa chọn.
-- AC4 (Happy) Done when: Trên web, sau khi khách chọn một ngôn ngữ khác, trang chuyển tới đường dẫn của ngôn ngữ vừa chọn (BR-28).
+- AC4 (Happy) Done when: Trên web, sau khi khách chọn một ngôn ngữ khác, trang chuyển tới đường dẫn của ngôn ngữ vừa chọn (VD: đang ở /en-US/…, chọn KO → chuyển tới /ko-KR/…) (BR-28).
 - AC5 (Happy) Done when: Sau khi khách đổi ngôn ngữ, số tham khảo hiển thị bằng tiền tệ được xác định lại cho ngôn ngữ mới (BR-24).
-- AC6 (Alternative) Done when: Nếu khách đổi ngôn ngữ ở checkout hoặc bước nhập thông tin hành khách (BR-40), số VND của báo giá không đổi (BR-39).
-- AC7 (Error) Done when: Nếu ngôn ngữ đã lưu của khách đang bị tắt (BR-64), Vexere hiển thị bằng ngôn ngữ dự phòng (BR-22).
-- AC8 (Happy) Done when: Hệ thống ghi nhận ngôn ngữ UI của từng phiên để đo SM-01, SM-02 và SM-03.
+- AC6 (Alternative) Done when: Nếu khách đổi ngôn ngữ ở checkout hoặc bước nhập thông tin hành khách, nơi vẫn đổi được ngôn ngữ, tiền tệ (màn thanh toán thì không) (BR-40), số VND của báo giá giữ nguyên (VD: báo giá 470,300 VND vẫn là 470,300 VND) (BR-39).
+- AC7 (Error) Done when: Nếu ngôn ngữ đã lưu của khách đang bị BU tắt (BR-64), Vexere hiển thị bằng ngôn ngữ dự phòng (VD: đã lưu TH, TH bị tắt → EN) (BR-22).
+- AC8 (Happy) Done when: Hệ thống ghi nhận ngôn ngữ UI của từng phiên để đo tỷ lệ hoàn thành đơn trên UI ngoại ngữ (SM-01), tỷ lệ chuyển giữa các bước trên UI ngoại ngữ (SM-02) và tỷ lệ hoàn thành đơn trên UI VI (SM-03).
 
 **INVEST:** I / N / V / E / S / T
 
@@ -638,18 +638,18 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Nếu khách chưa có tiền tệ hợp lệ nào ở các bước đứng trước bước mặc định của thứ tự ưu tiên (BR-26), số tham khảo hiển thị bằng tiền tệ mặc định theo ngôn ngữ hiện hành (BR-25).
-- AC2 (Happy) Done when: Trên mọi platform (NFR-04), picker tiền tệ chỉ liệt kê danh sách tiền tệ chọn được của ngôn ngữ hiện hành (BR-23).
-- AC3 (Happy) Done when: Ở mọi ngôn ngữ UI có picker tiền tệ, picker hiển thị MSG-04.
-- AC4 (Happy) Done when: Trong khi ngôn ngữ hiện hành thuộc diện có nhóm tiền tệ gợi ý (BR-27), picker tiền tệ hiện nhóm tiền tệ gợi ý trước nhóm tất cả tiền tệ, theo thành phần và thứ tự của BR-27.
+- AC1 (Happy) Done when: Nếu khách chưa có tiền tệ hợp lệ nào từ thao tác trong phiên, link, lựa chọn đã lưu hay tự nhận diện (BR-26), số tham khảo hiển thị bằng tiền tệ mặc định của ngôn ngữ hiện hành: tiền tệ của quốc gia khách nếu ngôn ngữ có tiền tệ đó, không thì tiền tệ chính của ngôn ngữ (BR-25). VD: EN ở Mỹ → USD; KO ở Việt Nam → KRW.
+- AC2 (Happy) Done when: Trên mọi platform được hỗ trợ (NFR-04), picker tiền tệ chỉ liệt kê danh sách tiền tệ chọn được của ngôn ngữ hiện hành: các tiền tệ của ngôn ngữ đó đang bật và có trong bảng tỷ giá hiện hành, luôn kèm VND (VD: ZH → CNY, TWD, VND) (BR-23).
+- AC3 (Happy) Done when: Ở mọi ngôn ngữ UI có picker tiền tệ, picker hiển thị dòng ghi chú cho biết đây là tiền hiển thị, không phải tiền thanh toán (MSG-04).
+- AC4 (Happy) Done when: Trong khi ngôn ngữ hiện hành là ngôn ngữ có nhóm tiền tệ gợi ý, tức EN (BR-27), picker tiền tệ hiện nhóm tiền tệ gợi ý trước nhóm tất cả tiền tệ, với đúng các tiền tệ và thứ tự của BR-27 (VD: khách EN ở Hàn Quốc, trước đây chọn EUR → Gợi ý: KRW, EUR, USD).
 - AC5 (Happy) Done when: Sau khi khách chọn một tiền tệ khác trên picker, mọi giá trên trang hiển thị số tham khảo bằng tiền tệ vừa chọn.
-- AC6 (Happy) Done when: Ở trang kết quả tìm kiếm, sau khi khách đổi tiền tệ, toàn bộ giá trên trang cập nhật theo tiền tệ mới trong thời gian của NFR-01.
-- AC7 (Alternative) Done when: Nếu ngôn ngữ hiện hành là ngôn ngữ khác VI và chỉ khai báo một tiền tệ (BR-23), picker tiền tệ cho chọn tiền tệ đó hoặc VND.
-- AC8 (Alternative) Done when: Nếu khách đổi tiền tệ ở checkout hoặc bước nhập thông tin hành khách (BR-40), số VND của báo giá không đổi (BR-39).
-- AC9 (Alternative) Done when: Nếu khách đổi tiền tệ ở checkout hoặc bước nhập thông tin hành khách (BR-40), số tham khảo theo tiền tệ mới được quy đổi bằng bảng tỷ giá của báo giá (BR-39).
-- AC10 (Error) Done when: Nếu tiền tệ đã lưu của khách đang bị tắt (BR-64), số tham khảo hiển thị bằng tiền tệ của ứng viên kế tiếp theo thứ tự ưu tiên (BR-26, BR-64).
+- AC6 (Happy) Done when: Ở trang kết quả tìm kiếm, sau khi khách đổi tiền tệ, toàn bộ giá trên trang cập nhật theo tiền tệ mới, đủ nhanh để khách không phải chờ (NFR-01).
+- AC7 (Alternative) Done when: Nếu ngôn ngữ hiện hành là ngôn ngữ khác VI và chỉ khai báo một tiền tệ, picker tiền tệ cho chọn tiền tệ đó hoặc VND, vì VND luôn có trong danh sách tiền tệ chọn được (BR-23).
+- AC8 (Alternative) Done when: Nếu khách đổi tiền tệ ở checkout hoặc bước nhập thông tin hành khách, nơi vẫn đổi được ngôn ngữ, tiền tệ (màn thanh toán thì không) (BR-40), số VND của báo giá giữ nguyên (VD: đổi USD → KRW, báo giá vẫn là 470,300 VND) (BR-39).
+- AC9 (Alternative) Done when: Nếu khách đổi tiền tệ ở checkout hoặc bước nhập thông tin hành khách, nơi vẫn đổi được ngôn ngữ, tiền tệ (màn thanh toán thì không) (BR-40), số tham khảo theo tiền tệ mới được quy đổi bằng chính bảng tỷ giá mà báo giá đang giữ (VD: 470,300 VND : ~USD 18.05 thành 470,300 VND : ~KRW 24,818) (BR-39).
+- AC10 (Error) Done when: Nếu tiền tệ đã lưu của khách đang bị BU tắt (BR-64), Vexere bỏ qua tiền tệ đó và dùng tiền tệ hợp lệ kế tiếp trong thứ tự ưu tiên (BR-26). VD: khách EN ở Mỹ đã chọn EUR, EUR bị tắt → USD.
 - AC11 (Happy) Done when: Ở trang kết quả tìm kiếm, sau khi khách đổi tiền tệ, kết quả tìm kiếm vẫn hiển thị mà khách không phải tìm lại chuyến.
-- AC12 (Happy) Done when: Trong khi picker tiền tệ hiện nhóm tiền tệ gợi ý và nhóm tất cả tiền tệ (BR-27), tên hai nhóm là MSG-05.
+- AC12 (Happy) Done when: Trong khi picker tiền tệ hiện nhóm tiền tệ gợi ý và nhóm tất cả tiền tệ (BR-27), mỗi nhóm có tiêu đề cho biết đó là nhóm gợi ý hay nhóm tất cả tiền tệ (MSG-05).
 
 **INVEST:** I / N / V / E / S (chưa đạt) / T
 - S: picker tiền tệ trên ba platform cùng nhóm tiền tệ gợi ý (BR-27) và NFR-01 có thể vượt một sprint; nếu vậy, tách nhóm tiền tệ gợi ý thành story riêng.
@@ -671,14 +671,14 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Sau khi guest đổi ngôn ngữ hoặc tiền tệ trên picker, lần sau mở Vexere trên cùng thiết bị (trên web: mở một đường dẫn không có ngôn ngữ, BR-28), Vexere dùng đúng giá trị vừa chọn (BR-26, BR-31).
-- AC2 (Happy) Done when: Sau khi khách đã đăng nhập đổi ngôn ngữ hoặc tiền tệ trên picker, khi đăng nhập trên một thiết bị khác, khách thấy đúng giá trị vừa chọn (BR-31, BR-32), trừ trường hợp trên web của AC7.
-- AC3 (Alternative) Done when: Nếu ngôn ngữ hoặc tiền tệ trên thiết bị khác với trên hồ sơ lúc khách đăng nhập, Vexere dùng giá trị thắng theo BR-32, trừ trường hợp trên web của AC7.
-- AC4 (Alternative) Done when: Nếu lựa chọn trên thiết bị thắng khi khách đăng nhập (BR-32), lần sau khách đăng nhập trên thiết bị khác cũng thấy lựa chọn đó, trừ trường hợp trên web của AC7.
+- AC1 (Happy) Done when: Sau khi guest đổi ngôn ngữ hoặc tiền tệ trên picker, lần sau mở Vexere trên cùng thiết bị (trên web: đường dẫn không có phần ngôn ngữ như /en-US/, BR-28), Vexere dùng đúng giá trị vừa chọn, vì lựa chọn chủ động được lưu trên thiết bị (BR-31) và đứng trên giá trị tự nhận diện (BR-26). VD: tự nhận diện EN + USD, đổi sang EUR → hôm sau mở lại là EN + EUR.
+- AC2 (Happy) Done when: Sau khi khách đã đăng nhập đổi ngôn ngữ hoặc tiền tệ trên picker, khi đăng nhập trên thiết bị khác khách thấy đúng giá trị vừa chọn, vì lựa chọn được lưu cả trên hồ sơ (BR-31) và là lựa chọn chủ động mới nhất nên thắng giá trị trên thiết bị kia (BR-32). Ngoại lệ trên web: xem AC7.
+- AC3 (Alternative) Done when: Nếu ngôn ngữ hoặc tiền tệ trên thiết bị khác với trên hồ sơ lúc khách đăng nhập, Vexere dùng giá trị thắng, trong đó lựa chọn chủ động luôn thắng giá trị tự nhận diện (BR-32). VD: thiết bị KRW tự nhận diện, hồ sơ USD chủ động → USD. Ngoại lệ trên web: xem AC7.
+- AC4 (Alternative) Done when: Nếu lựa chọn trên thiết bị thắng khi khách đăng nhập (BR-32), lựa chọn đó được cập nhật lên hồ sơ, nên lần sau đăng nhập trên thiết bị khác khách cũng thấy nó. VD: thiết bị USD chủ động hôm nay, hồ sơ EUR chủ động hôm qua → USD trên mọi thiết bị. Ngoại lệ trên web: xem AC7.
 - AC5 (Alternative) Done when: Nếu khách chuyển sang ngôn ngữ có phạm vi tiền tệ không chứa tiền tệ đã lưu rồi quay lại ngôn ngữ có phạm vi chứa nó (BR-33), số tham khảo hiển thị lại bằng tiền tệ đã lưu.
-- AC6 (Error) Done when: Nếu ngôn ngữ hoặc tiền tệ đã lưu đang bị tắt (BR-64), lựa chọn đó không bị mất: khi được bật lại, Vexere dùng lại đúng lựa chọn đã lưu.
-- AC7 (Alternative) Done when: Nếu khách đăng nhập trên web khi trang đang ở đường dẫn của một ngôn ngữ khác ngôn ngữ thắng theo BR-32 (BR-26, BR-28), trang vẫn hiển thị bằng ngôn ngữ của đường dẫn.
-- AC8 (Alternative) Done when: Nếu khách đã đăng nhập trên web và trang hiển thị bằng ngôn ngữ của đường dẫn thay cho ngôn ngữ thắng theo BR-32 (AC7), ở phiên kế tiếp, khi khách mở một đường dẫn không có ngôn ngữ, Vexere dùng ngôn ngữ và tiền tệ thắng theo BR-32 (BR-26, BR-28).
+- AC6 (Error) Done when: Nếu ngôn ngữ hoặc tiền tệ đã lưu đang bị BU tắt (BR-64), lựa chọn đó không bị mất: khi được bật lại, Vexere dùng lại đúng lựa chọn đã lưu (VD: đã lưu TH + THB, TH bị tắt rồi bật lại → TH + THB).
+- AC7 (Alternative) Done when: Nếu khách đăng nhập trên web khi trang đang ở đường dẫn của một ngôn ngữ khác với ngôn ngữ thắng giữa thiết bị và hồ sơ (BR-32), trang vẫn hiển thị bằng ngôn ngữ của đường dẫn, vì trên web ngôn ngữ trong đường dẫn được xếp cùng bậc với tham số trên link, trên mọi lựa chọn đã lưu (VD: trang đang ở /ko-KR/…, hồ sơ là EN chủ động → trang vẫn KO) (BR-26, BR-28).
+- AC8 (Alternative) Done when: Nếu khách đã đăng nhập trên web và trang đang theo ngôn ngữ của đường dẫn thay cho lựa chọn thắng giữa thiết bị và hồ sơ (BR-32), như ở AC7, thì ở phiên kế tiếp mở đường dẫn không có phần ngôn ngữ, Vexere dùng ngôn ngữ và tiền tệ thắng đó, vì ngôn ngữ trong đường dẫn không được lưu (BR-26, BR-28). VD: phiên trước ở /ko-KR/…, hồ sơ EN + USD chủ động → phiên sau EN + USD.
 
 **INVEST:** I (chưa đạt) / N / V / E / S / T
 - I: cần picker của US-05 và US-06 để khách có lựa chọn chủ động; làm sau hai story đó.
@@ -702,18 +702,18 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Nếu khách mới (BR-29) mở Vexere lần đầu, giao diện hiển thị bằng ngôn ngữ tự nhận diện theo BR-29, khớp bảng quyết định cho khách mới (BR-30).
-- AC2 (Happy) Done when: Nếu khách mới (BR-29) mở Vexere lần đầu, số tham khảo hiển thị bằng tiền tệ tự nhận diện theo BR-25, khớp bảng quyết định cho khách mới (BR-30).
-- AC3 (Happy) Done when: Nếu khách mới mở trên web một đường dẫn không có ngôn ngữ (BR-28), trang chuyển tới đường dẫn của ngôn ngữ tự nhận diện (BR-29).
-- AC4 (Alternative) Done when: Nếu ngôn ngữ của trình duyệt hoặc thiết bị không khớp ngôn ngữ nào đang bật (BR-29), giao diện hiển thị bằng ngôn ngữ dự phòng (BR-22).
-- AC5 (Error) Done when: Nếu không xác định được cả ngôn ngữ lẫn quốc gia của khách mới (BR-29), Vexere mở bằng ngôn ngữ và tiền tệ mà BR-29 quy định cho trường hợp này.
-- AC6 (Happy) Done when: Nếu khách đã được tự nhận diện quay lại Vexere (trên web: mở một đường dẫn không có ngôn ngữ, BR-28) mà chưa chủ động chọn ngôn ngữ, tiền tệ nào (BR-26), kể cả khi truy cập từ quốc gia khác, Vexere dùng lại ngôn ngữ và tiền tệ đã tự nhận diện lần đầu (BR-31).
-- AC7 (Alternative) Done when: Nếu trang được mở bởi bot của công cụ tìm kiếm (BR-29), trang hiển thị theo ngôn ngữ của đường dẫn, không bị tự nhận diện (BR-28).
+- AC1 (Happy) Done when: Nếu khách mới (chưa có ngôn ngữ, tiền tệ đã lưu và chưa có hồ sơ, BR-29) mở Vexere lần đầu, giao diện hiển thị bằng ngôn ngữ Vexere tự nhận diện cho khách (BR-29), khớp bảng quyết định cho khách mới (VD: ở Hàn Quốc, trình duyệt tiếng Hàn → KO) (BR-30).
+- AC2 (Happy) Done when: Nếu khách mới (chưa có lựa chọn đã lưu và chưa có hồ sơ, BR-29) mở Vexere lần đầu, số tham khảo hiển thị bằng tiền tệ mặc định của ngôn ngữ tự nhận diện (BR-25), khớp bảng quyết định cho khách mới (BR-30). VD: EN ở Mỹ → USD; KO ở Việt Nam → KRW.
+- AC3 (Happy) Done when: Nếu khách mới mở trên web một đường dẫn không có ngôn ngữ, tức không có phần như /en-US/ (BR-28), trang chuyển tới đường dẫn của ngôn ngữ Vexere tự nhận diện cho khách (VD: khách mới ở Hàn Quốc, trình duyệt ưu tiên tiếng Hàn → /ko-KR/) (BR-29).
+- AC4 (Alternative) Done when: Nếu ngôn ngữ của trình duyệt hoặc thiết bị không khớp ngôn ngữ nào đang bật (BR-29), giao diện hiển thị bằng ngôn ngữ dự phòng (VD: trình duyệt ưu tiên tiếng Nhật, JA chưa bật → EN) (BR-22).
+- AC5 (Error) Done when: Nếu không xác định được cả ngôn ngữ lẫn quốc gia của khách mới, Vexere mở bằng cặp ngôn ngữ, tiền tệ dự phòng dành cho trường hợp này (VD: EN + USD) (BR-29).
+- AC6 (Happy) Done when: Nếu khách đã được tự nhận diện quay lại (trên web: đường dẫn không có phần ngôn ngữ như /en-US/, BR-28) mà chưa chủ động chọn gì, Vexere dùng lại ngôn ngữ và tiền tệ tự nhận diện lần đầu, không nhận diện lại, kể cả khi truy cập từ quốc gia khác (BR-26, BR-31). VD: lần đầu ở Mỹ được EN + USD, lần sau mở từ Việt Nam vẫn EN + USD.
+- AC7 (Alternative) Done when: Nếu trang được mở bởi bot của công cụ tìm kiếm (BR-29), trang hiển thị theo ngôn ngữ của đường dẫn, không bị tự nhận diện (VD: bot mở /en-US/ → trang EN) (BR-28).
 - AC8 (Alternative) Done when: Nếu trang được mở bởi bot của công cụ tìm kiếm (BR-28), giá chỉ hiển thị VND.
-- AC9 (Alternative) Done when: Nếu khách đã có hồ sơ hoặc đã dùng app từ trước khi ra mắt nhưng chưa có ngôn ngữ, tiền tệ đã lưu (BR-80), lần đầu mở Vexere sau ra mắt, Vexere mở bằng cặp ngôn ngữ và tiền tệ tự nhận diện theo BR-29.
-- AC10 (Alternative) Done when: Nếu bot của công cụ tìm kiếm mở một đường dẫn không có ngôn ngữ (BR-28), trang được dẫn tới đường dẫn của ngôn ngữ mà BR-28 quy định cho bot, không bị tự nhận diện.
+- AC9 (Alternative) Done when: Nếu khách đã có hồ sơ hoặc đã dùng app từ trước khi ra mắt nhưng chưa có ngôn ngữ, tiền tệ đã lưu (BR-80), lần đầu mở Vexere sau ra mắt, Vexere tự nhận diện cho khách như với khách mới và mở bằng cặp ngôn ngữ, tiền tệ tự nhận diện đó (VD: thiết bị dùng tiếng Việt, ở Việt Nam → VI + VND) (BR-29).
+- AC10 (Alternative) Done when: Nếu bot của công cụ tìm kiếm mở một đường dẫn không có ngôn ngữ, trang được dẫn tới đường dẫn VI tương ứng, không bị tự nhận diện (BR-28).
 - AC11 (Alternative) Done when: Nếu ngôn ngữ trình duyệt hoặc thiết bị của khách mới là một biến thể theo vùng mà một ngôn ngữ đang bật đã khai báo (BR-82), giao diện hiển thị bằng ngôn ngữ đó.
-- AC12 (Alternative) Done when: Nếu khách đã chọn ngôn ngữ và Vexere đã lưu ngôn ngữ đó trên app trước ngày ra mắt (BR-80), lần đầu mở app sau ra mắt, giao diện hiển thị bằng ngôn ngữ đã lưu đó, không theo ngôn ngữ thiết bị (BR-26, BR-31).
+- AC12 (Alternative) Done when: Nếu khách đã chọn ngôn ngữ trên app trước ngày ra mắt (BR-80), lần đầu mở app sau ra mắt, giao diện hiển thị bằng ngôn ngữ đó chứ không theo ngôn ngữ thiết bị, vì nó được coi là lựa chọn chủ động (BR-31), đứng trên giá trị tự nhận diện (BR-26). VD: đã chọn EN trước ra mắt, thiết bị tiếng Việt → EN.
 
 **INVEST:** I / N / V / E / S / T
 
@@ -733,16 +733,16 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Nếu người nhận mở link web có chỉ định ngôn ngữ và tiền tệ (BR-26), trang mở bằng đúng ngôn ngữ và tiền tệ đó.
-- AC2 (Happy) Done when: Nếu người nhận mở deep link app có chỉ định ngôn ngữ và tiền tệ (BR-26), app mở bằng đúng ngôn ngữ và tiền tệ đó.
-- AC3 (Alternative) Done when: Nếu người nhận là khách quay lại đã lưu lựa chọn chủ động khác với link (BR-26), phiên mở từ link vẫn dùng ngôn ngữ và tiền tệ của link.
-- AC4 (Alternative) Done when: Nếu người nhận đổi ngôn ngữ hoặc tiền tệ trên picker trong phiên mở từ link (BR-26), Vexere dùng giá trị vừa đổi thay cho giá trị của link.
-- AC5 (Alternative) Done when: Nếu người nhận đã có ngôn ngữ, tiền tệ đã lưu, phiên kế tiếp không mở từ link (trên web: mở một đường dẫn không có ngôn ngữ, BR-28) quay về các giá trị đã lưu đó (BR-26, BR-31); nếu người nhận là khách mới mở Vexere lần đầu từ link, ngôn ngữ đã lưu là ngôn ngữ của link (BR-31).
+- AC1 (Happy) Done when: Nếu người nhận mở link web có chỉ định ngôn ngữ và tiền tệ, trang mở bằng đúng ngôn ngữ và tiền tệ đó, vì tham số trên link chỉ đứng sau thao tác của khách trong phiên (VD: link chỉ định KO + KRW → trang mở bằng KO + KRW) (BR-26).
+- AC2 (Happy) Done when: Nếu người nhận mở deep link app có chỉ định ngôn ngữ và tiền tệ, app mở bằng đúng ngôn ngữ và tiền tệ đó, vì tham số trên link chỉ đứng sau thao tác của khách trong phiên (BR-26).
+- AC3 (Alternative) Done when: Nếu người nhận là khách quay lại đã lưu lựa chọn chủ động khác với link, phiên mở từ link vẫn dùng ngôn ngữ và tiền tệ của link, vì tham số trên link được ưu tiên hơn lựa chọn chủ động đã lưu (VD: đã lưu chủ động EN + USD, mở link chỉ định KO + KRW → phiên đó là KO + KRW) (BR-26).
+- AC4 (Alternative) Done when: Nếu người nhận đổi ngôn ngữ hoặc tiền tệ trên picker trong phiên mở từ link, Vexere dùng giá trị vừa đổi thay cho giá trị của link, vì thao tác của khách trong phiên được ưu tiên cao nhất (BR-26).
+- AC5 (Alternative) Done when: Nếu người nhận đã có ngôn ngữ, tiền tệ đã lưu, phiên kế tiếp không mở từ link (trên web: đường dẫn không có phần ngôn ngữ như /en-US/, BR-28) quay về các giá trị đã lưu, vì tham số trên link chỉ dùng cho phiên đó và không được lưu (BR-26, BR-31). VD: đã lưu EN + USD, mở link KO + KRW → phiên sau lại EN + USD. Nếu người nhận là khách mới mở Vexere lần đầu từ link, ngôn ngữ của link được lưu làm giá trị tự nhận diện (BR-31).
 - AC6 (Alternative) Done when: Nếu người nhận đã đăng nhập, ngôn ngữ và tiền tệ trên hồ sơ không đổi theo giá trị của link (BR-31).
-- AC7 (Error) Done when: Nếu tiền tệ chỉ định trên link bị bỏ qua theo BR-34, số tham khảo hiển thị bằng tiền tệ của ứng viên kế tiếp theo thứ tự ưu tiên (BR-26).
-- AC8 (Error) Done when: Nếu ngôn ngữ chỉ định trên link chưa được bật (BR-22), trang mở bằng ngôn ngữ dự phòng (BR-22).
-- AC9 (Alternative) Done when: Nếu ngôn ngữ chỉ định trên link web khác ngôn ngữ trong đường dẫn của link (BR-28), trang mở bằng ngôn ngữ chỉ định trên link, ở đường dẫn của ngôn ngữ đó.
-- AC10 (Alternative) Done when: Nếu khách quay lại đã lưu lựa chọn chủ động khác mở trên web một link có ngôn ngữ trong đường dẫn nhưng không có tham số ngôn ngữ (BR-26, BR-28), trang mở bằng ngôn ngữ của đường dẫn.
+- AC7 (Error) Done when: Nếu tiền tệ trên link bị bỏ qua vì không phải VND và không thuộc phạm vi tiền tệ của ngôn ngữ hiện hành (BR-34), số tham khảo hiển thị bằng tiền tệ hợp lệ kế tiếp trong thứ tự ưu tiên (BR-26). VD: link chỉ định KO + JPY → KO + KRW.
+- AC8 (Error) Done when: Nếu ngôn ngữ chỉ định trên link chưa được BU bật (BR-22), trang mở bằng ngôn ngữ dự phòng (VD: link chỉ định JA, JA chưa bật → EN) (BR-22).
+- AC9 (Alternative) Done when: Nếu ngôn ngữ chỉ định trên link web khác ngôn ngữ trong đường dẫn của link (BR-28), trang mở bằng ngôn ngữ chỉ định trên link, ở đường dẫn của ngôn ngữ đó (VD: link /en-US/… chỉ định KO → trang KO ở /ko-KR/…).
+- AC10 (Alternative) Done when: Nếu khách quay lại đã lưu lựa chọn chủ động khác mở trên web một link có ngôn ngữ trong đường dẫn nhưng không có tham số ngôn ngữ, trang mở bằng ngôn ngữ của đường dẫn, vì trên web ngôn ngữ trong đường dẫn đứng cùng bậc với tham số trên link, trên lựa chọn đã lưu (BR-26, BR-28). VD: đã lưu chủ động EN, mở link /ko-KR/… → trang KO.
 
 **INVEST:** I / N / V / E / S / T
 
@@ -765,17 +765,17 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trên mọi bề mặt có giá dành cho khách thuộc phạm vi BR-05, mỗi giá được hiển thị kép, gồm số VND và số tham khảo bằng tiền tệ hiện hành (BR-05, BR-07).
-- AC2 (Happy) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (1) "VND là số chính trên mọi bề mặt" (BR-06), mọi giá có số VND ở vị trí số chính và số tham khảo ở vị trí số phụ.
-- AC3 (Alternative) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (2) "theo nhóm" (BR-06), mỗi bề mặt lấy số chính theo nhóm Browse hoặc Pay mà BR-06 gán cho bề mặt đó.
-- AC4 (Alternative) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (2) "theo nhóm" (BR-06), số tiền của voucher, khuyến mãi và mọi dòng giảm giá vẫn lấy VND làm số chính trên mọi bề mặt (BR-20).
+- AC1 (Happy) Done when: Trên mọi bề mặt có giá dành cho khách trong phạm vi đợt này, mỗi giá được hiển thị kép trên cùng một dòng, luôn gồm số VND và số tham khảo bằng tiền tệ hiện hành, không bao giờ chỉ có ngoại tệ (VD: 467,000 VND : ~USD 17.92) (BR-05, BR-07).
+- AC2 (Happy) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (1) "VND là số chính trên mọi bề mặt" (BR-06), mọi giá có số VND ở vị trí số chính và số tham khảo ở vị trí số phụ (VD: 467,000 VND : ~USD 17.92).
+- AC3 (Alternative) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (2) "theo nhóm" (BR-06), bề mặt nhóm Browse (xem và chọn chuyến) lấy số tham khảo làm số chính, bề mặt nhóm Pay (checkout, thanh toán, sau khi đặt) lấy VND làm số chính. VD: kết quả tìm kiếm USD 17.92 : 467,000 VND; checkout 470,300 VND : ~USD 18.05.
+- AC4 (Alternative) Done when: Trong khi chế độ thứ bậc hiển thị là chế độ (2) "theo nhóm" (BR-06), số tiền của voucher, khuyến mãi và mọi dòng giảm giá vẫn lấy VND làm số chính trên mọi bề mặt, kể cả các bề mặt xem và chọn chuyến, nơi các giá khác lấy số tham khảo làm số chính (BR-20).
 - AC5 (Happy) Done when: Số phụ có cỡ chữ nhỏ hơn và màu xám so với số chính (gợi ý cho Design: khoảng 70% cỡ chữ của số chính; DEP-04).
 - AC6 (Alternative) Done when: Ở ô giá nhỏ (ví dụ lịch giá theo ngày, sơ đồ ghế), giá dùng biến thể gọn chỉ giảm cỡ chữ, vẫn hiển thị đủ số VND và số tham khảo (BR-07).
-- AC7 (Happy) Done when: Trên mỗi trang có số tham khảo, MSG-01 hiện đúng một lần, cạnh bảng giá, không lặp ở từng giá; cách thể hiện theo thiết kế của từng UI (DEP-04).
-- AC8 (Happy) Done when: Trên mọi trang có số tham khảo, khách mở được tooltip (i) cạnh MSG-01 và thấy MSG-02 với thông tin của bảng tỷ giá đang dùng cho các giá trên trang (BR-13, BR-51).
-- AC9 (Happy) Done when: Từ tooltip MSG-02, khách mở được mục tỷ giá tham khảo của Điều khoản (SCR-20), nơi hiển thị MSG-15.
+- AC7 (Happy) Done when: Trên mỗi trang có số tham khảo, disclaimer nhắc giá ngoại tệ chỉ để tham khảo, khách trả bằng VND (MSG-01) hiện đúng một lần, cạnh bảng giá, không lặp ở từng giá; cách thể hiện theo thiết kế của Design cho từng UI (DEP-04).
+- AC8 (Happy) Done when: Trên mọi trang có số tham khảo, khách mở được tooltip (i) cạnh disclaimer giá tham khảo (MSG-01) và thấy nguồn, loại tỷ giá và thời điểm cập nhật (MSG-02) của bảng tỷ giá đang dùng cho giá trên trang: bảng hiện hành, bảng của báo giá ở checkout, hoặc bảng lưu trên đơn sau khi đặt (BR-13, BR-51).
+- AC9 (Happy) Done when: Từ tooltip thông tin tỷ giá tham khảo (MSG-02), khách mở được mục tỷ giá tham khảo của Điều khoản (SCR-20), nơi hiển thị phần công bố về nguồn, cách cập nhật và cách làm tròn tỷ giá tham khảo (MSG-15).
 - AC10 — No longer applies: chuyển sang US-06-AC6 và US-06-AC11.
-- AC11 (Happy) Done when: Cùng một giá (ví dụ cùng một dòng breakdown của cùng một đơn) hiển thị cùng một số tham khảo trên mọi platform và mọi nơi hiển thị (NFR-03, NFR-04).
+- AC11 (Happy) Done when: Cùng một giá (ví dụ cùng một dòng breakdown của cùng một đơn) hiển thị cùng một số tham khảo ở mọi nơi hiển thị, kể cả email và back office (yêu cầu số tham khảo nhất quán giữa các nơi, NFR-03), và trên mọi platform được hỗ trợ (NFR-04).
 - AC12 (Alternative) Done when: Trong khi màn thanh toán còn chờ kết luận của Legal (BR-65), màn thanh toán (SCR-07) chỉ hiển thị VND, không có số tham khảo.
 
 **INVEST:** I (chưa đạt) / N / V / E / S (chưa đạt) / T
@@ -802,12 +802,12 @@ none
 **Acceptance Criteria**
 
 - AC1 (Happy) Done when: Trên mọi bề mặt hiển thị breakdown (SCR-05, SCR-07, SCR-08, SCR-09), số tham khảo của các dòng breakdown cộng khớp số tham khảo của total (BR-17, BR-18).
-- AC2 (Happy) Done when: Số tham khảo của total hiển thị đúng kết quả quy đổi theo BR-15.
+- AC2 (Happy) Done when: Số tham khảo của total là số VND của total quy đổi theo tỷ giá rồi làm tròn tới số lẻ của tiền tệ tham khảo (VD: 1 USD = 26,054 VND, total 470,300 VND → 18.051 → ~USD 18.05) (BR-15).
 - AC3 (Happy) Done when: Số tham khảo của dòng voucher theo %, dòng có mức trần và dòng phí được quy đổi từ số VND đã tính của chính dòng đó (BR-16), trừ dòng gánh phần chênh do làm tròn (BR-17, BR-18).
-- AC4 (Alternative) Done when: Nếu đơn có dòng giảm giá, số tham khảo của từng dòng breakdown hiển thị đúng như tính theo BR-17, kể cả khi đơn có nhiều dòng giảm giá.
-- AC5 (Alternative) Done when: Nếu đơn không có dòng giảm giá, số tham khảo của từng dòng breakdown hiển thị đúng như tính theo BR-18.
-- AC6 (Alternative) Done when: Nếu đơn có nhiều vé, dòng vé trên breakdown hiển thị số tham khảo tính theo quy tắc đơn nhiều vé (BR-19), có thể khác tổng các số tham khảo theo đơn giá trên sơ đồ ghế.
-- AC7 (Happy) Done when: Email xác nhận (SCR-08) và My bookings (SCR-09) hiển thị breakdown và total với số tham khảo đã lưu trên đơn (BR-42, BR-44).
+- AC4 (Alternative) Done when: Nếu đơn có dòng giảm giá, phần chênh do làm tròn được dồn vào dòng giảm giá có giá trị tuyệt đối lớn nhất, các dòng giảm giá khác quy đổi độc lập, và breakdown vẫn cộng khớp total (BR-17). VD: total ~KRW 24,818 = vé 24,644 + phí 2,639 − voucher 2,465.
+- AC5 (Alternative) Done when: Nếu đơn không có dòng giảm giá, phần chênh do làm tròn được cộng vào dòng có giá trị VND lớn nhất, và breakdown vẫn cộng khớp total (BR-18). VD: chênh +0.01 cộng vào vé chặng 2 → 17.92 + 1.92 + 19.85 = ~USD 39.69.
+- AC6 (Alternative) Done when: Nếu đơn có nhiều vé, dòng vé trên breakdown hiển thị số tham khảo quy đổi từ thành tiền VND của cả dòng (BR-19), nên có thể khác tổng các số tham khảo theo đơn giá trên sơ đồ ghế.
+- AC7 (Happy) Done when: Email xác nhận (SCR-08) và My bookings (SCR-09) hiển thị breakdown và total với số tham khảo lúc đặt đã lưu trên đơn (BR-42), không tính lại theo tỷ giá về sau (VD: đơn đặt ở 1 USD = 26,054 VND vẫn hiện 470,300 VND : ~USD 18.05 khi tỷ giá hôm nay là 26,500) (BR-44).
 
 **INVEST:** I (chưa đạt) / N / V / E / S / T
 - I: cần bảng tỷ giá (US-19) và hiển thị kép (US-10) có trước.
@@ -829,8 +829,8 @@ none
 **Acceptance Criteria**
 
 - AC1 (Happy) Done when: Trên trang kết quả tìm kiếm (SCR-01), khách chọn được giá trị biên của khoảng giá trên bộ lọc và thanh trượt giá bằng tiền tệ tham khảo hiện hành.
-- AC2 (Happy) Done when: Giá trị biên trên bộ lọc và thanh trượt giá hiển thị dạng xấp xỉ, có tiền tố "~", với mã tiền tệ và số lẻ theo BR-09, BR-11, BR-12, không kèm số VND (BR-07).
-- AC3 (Happy) Done when: Sau khi khách áp dụng khoảng giá, danh sách chuyến chỉ còn các chuyến được giữ theo quy tắc lọc giá theo tiền tệ tham khảo (BR-21).
+- AC2 (Happy) Done when: Giá trị biên trên bộ lọc và thanh trượt giá hiển thị có tiền tố "~", mã ISO đứng trước số (BR-11, BR-12), đúng số lẻ của tiền tệ (BR-09) và không kèm số VND (BR-07). VD: ~USD 20.00.
+- AC3 (Happy) Done when: Sau khi khách áp dụng khoảng giá, danh sách chuyến chỉ còn các chuyến có giá nằm trong khoảng giá đã chọn, so sánh bằng VND sau khi quy đổi giá trị biên về VND (BR-21).
 - AC4 (Alternative) Done when: Nếu một chuyến có số tham khảo hiển thị đúng bằng giá trị biên khách đã chọn (BR-21), chuyến đó vẫn có trong kết quả lọc.
 - AC5 (Alternative) Done when: Nếu không chuyến nào được giữ theo khoảng giá đã chọn (BR-21), trang kết quả hiển thị trạng thái không có chuyến hiện có của trang kết quả tìm kiếm.
 - AC6 (Alternative) Done when: Nếu khách đổi tiền tệ tham khảo trong khi đang lọc theo khoảng giá (BR-21), bộ lọc giữ khoảng giá đã chọn và hiển thị giá trị biên bằng tiền tệ mới.
@@ -857,17 +857,17 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, ở checkout, dòng MSG-07 hiện ngay dưới tổng tiền.
-- AC2 (Happy) Done when: Ở checkout, hộp Payment Notice bản đầy đủ hiện MSG-08, với số VND của báo giá (BR-39) và số tham khảo giống hệt tổng tham khảo ở dòng total (BR-15, NFR-03).
-- AC3 (Happy) Done when: Ở màn thanh toán, Payment Notice rút gọn hiện MSG-09 thành một dòng ngay trên nút thanh toán, với số VND của báo giá (BR-39).
-- AC4 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, ở màn thanh toán, nhãn nút thanh toán là MSG-10 bằng ngôn ngữ UI, với số VND của báo giá (BR-39) viết theo BR-12.
-- AC5 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, ở màn thanh toán, MSG-11 hiện thành một dòng ngay dưới nút thanh toán.
+- AC1 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, ở checkout, ngay dưới tổng tiền có một dòng báo khách sẽ thanh toán bằng VND (MSG-07).
+- AC2 (Happy) Done when: Ở checkout, hộp Payment Notice bản đầy đủ báo số VND chính xác sẽ bị trừ, số tham khảo chỉ để tham khảo và ngân hàng có thể áp tỷ giá, phí riêng (MSG-08), với số VND của báo giá (BR-39) và số tham khảo giống hệt tổng tham khảo ở dòng total (BR-15, NFR-03). VD: total 470,300 VND : ~USD 18.05 → hộp hiện 470,300 VND và ~USD 18.05.
+- AC3 (Happy) Done when: Ở màn thanh toán, Payment Notice rút gọn hiện thành một dòng ngay trên nút thanh toán, báo số VND chính xác sẽ bị trừ và số tiền bằng tiền tệ tham khảo chỉ để tham khảo (MSG-09), với số VND của báo giá, không đổi dù khách đã đổi ngôn ngữ hay tiền tệ (BR-39).
+- AC4 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, ở màn thanh toán, nút thanh toán có nhãn bằng ngôn ngữ UI kèm số VND sẽ trả (MSG-10); số VND là số của báo giá (BR-39), mã VND đứng sau số (BR-12). VD: "Pay 520,000 VND".
+- AC5 (Happy) Done when: Trong khi khách dùng UI ngoại ngữ, ở màn thanh toán, ngay dưới nút thanh toán có một dòng báo rằng bấm nút là đồng ý giao dịch được xử lý bằng VND (MSG-11).
 - AC6 (Happy) Done when: Ở màn thanh toán, khách bấm nút thanh toán là thanh toán được, không có ô tick đồng ý nào phải chọn trước.
-- AC7 (Alternative) Done when: Ở màn thanh toán, picker ngôn ngữ và picker tiền tệ chỉ đọc: khách thấy ngôn ngữ hiện hành và MSG-03 nhưng không đổi được (BR-40).
-- AC8 (Alternative) Done when: Nếu khách đổi tiền tệ trước màn thanh toán (BR-40), hộp Payment Notice ở checkout hiện số tham khảo bằng tiền tệ mới trong khi số VND giữ nguyên (BR-39).
-- AC9 (Alternative) Done when: Nếu bản dịch Payment Notice của ngôn ngữ UI chưa được duyệt (BR-41), MSG-08 và MSG-09 hiện bằng bản EN.
-- AC10 (Alternative) Done when: Trong khi checkout hoặc màn thanh toán chỉ hiển thị VND (CB-02, CB-04), hoặc màn thanh toán đang chờ kết luận của Legal (BR-65), màn đó không hiện MSG-08 hay MSG-09 (assumed, A-20).
-- AC11 (Alternative) Done when: Trong khi khách dùng UI VI, checkout và màn thanh toán không hiện MSG-07, MSG-11, và nút thanh toán giữ nhãn hiện tại thay vì MSG-10 (assumed, A-35).
+- AC7 (Alternative) Done when: Ở màn thanh toán, picker ngôn ngữ và picker tiền tệ chỉ đọc, vì ngôn ngữ và tiền tệ chỉ đổi được tới bước nhập thông tin hành khách (BR-40): khách thấy ngôn ngữ hiện hành và nhãn cho biết giá đang hiện bằng tiền tệ nào (MSG-03) nhưng không đổi được.
+- AC8 (Alternative) Done when: Nếu khách đổi tiền tệ ở một bước trước màn thanh toán (BR-40), hộp Payment Notice ở checkout hiện số tham khảo bằng tiền tệ mới, còn số VND của báo giá giữ nguyên (BR-39). VD: đổi USD → KRW: ~USD 18.05 thành ~KRW 24,818; số VND vẫn 470,300.
+- AC9 (Alternative) Done when: Nếu bản dịch Payment Notice của ngôn ngữ UI chưa được duyệt (BR-41), hộp Payment Notice bản đầy đủ ở checkout (MSG-08) và dòng Payment Notice rút gọn ở màn thanh toán (MSG-09) hiện bằng bản EN.
+- AC10 (Alternative) Done when: Trong khi checkout hoặc màn thanh toán chỉ hiển thị VND, vì số tham khảo tạm thời không có (CB-02), tiền tệ hiện hành là VND (CB-04) hoặc Legal chưa kết luận cho màn thanh toán (BR-65), màn đó không hiện hộp Payment Notice bản đầy đủ (MSG-08) hay dòng Payment Notice rút gọn (MSG-09) (assumed, A-20).
+- AC11 (Alternative) Done when: Trong khi khách dùng UI VI, checkout và màn thanh toán không hiện dòng báo khách sẽ thanh toán bằng VND (MSG-07) hay dòng báo bấm nút là đồng ý giao dịch xử lý bằng VND (MSG-11), và nút thanh toán giữ nhãn hiện tại thay vì nhãn kèm số VND sẽ trả (MSG-10) (assumed, A-35).
 
 **INVEST:** I / N / V / E / S / T
 
@@ -885,20 +885,20 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trong khi tỷ giá của báo giá còn hiệu lực (BR-66) và báo giá không được tạo trong lúc bảng tỷ giá hiện hành đang Cũ (BR-83), số tham khảo của cùng một tiền tệ ở checkout và màn thanh toán không đổi, kể cả khi đã có bảng tỷ giá hiện hành mới hơn (BR-39, BR-48).
-- AC2 (Happy) Done when: Nếu tới mốc hết hiệu lực tỷ giá của báo giá và báo giá chuyển sang bảng tỷ giá mới (BR-67), số tham khảo ở checkout và màn thanh toán hiển thị theo bảng tỷ giá mới của báo giá.
+- AC1 (Happy) Done when: Trong khi tỷ giá của báo giá còn hiệu lực (BR-66) và báo giá không được tạo lúc bảng tỷ giá hiện hành đang Cũ (BR-83), số tham khảo của cùng một tiền tệ ở checkout và màn thanh toán giữ nguyên theo bảng tỷ giá của báo giá (BR-39), kể cả khi đã có bảng tỷ giá hiện hành mới hơn (BR-48). VD: vào checkout lúc 09:40, quy tắc tỷ giá được sửa lúc 09:50 tạo bảng mới → số tham khảo vẫn giữ tới mốc 10:00.
+- AC2 (Happy) Done when: Nếu tới mốc hết hiệu lực tỷ giá của báo giá và đã có bảng hợp lệ mới hơn, báo giá chuyển sang bảng tỷ giá hiện hành mới nhất (BR-67), và checkout cùng màn thanh toán hiển thị số tham khảo theo bảng đó. VD: vào checkout lúc 09:40 → lúc 10:00 số tham khảo đổi theo bảng mới nhất.
 - AC3 — No longer applies: lặp side-effects của việc báo giá chuyển sang bảng tỷ giá mới; AC2 đã nêu việc chuyển.
-- AC4 (Happy) Done when: Nếu báo giá đã chuyển sang bảng tỷ giá mới (BR-67, BR-83), khách vẫn ở bước đang làm và không phải nhập lại thông tin hành khách đã nhập.
-- AC5 (Happy) Done when: Nếu tổng tham khảo khách đang thấy thay đổi khi báo giá chuyển sang bảng tỷ giá mới (BR-67, BR-83), toast hiện MSG-12.
-- AC6 (Happy) Done when: Nếu báo giá đã chuyển sang bảng tỷ giá mới (BR-67, BR-83) hoặc giữ tỷ giá hiện có (BR-68), khách bấm nút thanh toán là thanh toán được, không có bước xác nhận lại giá.
-- AC7 (Happy) Done when: Nếu khách thanh toán thành công sau khi báo giá đã chuyển sang bảng tỷ giá mới (BR-67, BR-83), My bookings của đơn hiển thị số tham khảo tính từ bảng tỷ giá mới của báo giá (BR-42, BR-70).
-- AC8 (Alternative) Done when: Nếu tổng tham khảo không đổi khi tới mốc hết hiệu lực tỷ giá của báo giá, dù báo giá đã chuyển sang bảng tỷ giá mới (BR-67) hay giữ tỷ giá hiện có (BR-68), không có toast MSG-12.
+- AC4 (Happy) Done when: Nếu báo giá đã chuyển sang bảng tỷ giá mới, khi tới mốc hết hiệu lực tỷ giá hoặc ngay khi có bảng tỷ giá hợp lệ mới mà báo giá đang chờ (BR-67, BR-83), khách vẫn ở bước đang làm và không phải nhập lại thông tin hành khách đã nhập.
+- AC5 (Happy) Done when: Nếu tổng tham khảo khách đang thấy thay đổi khi báo giá chuyển sang bảng tỷ giá mới, lúc tới mốc hết hiệu lực tỷ giá hoặc ngay khi có bảng tỷ giá hợp lệ mới mà báo giá đang chờ (BR-67, BR-83), hiện toast báo tỷ giá tham khảo vừa được cập nhật (MSG-12).
+- AC6 (Happy) Done when: Dù báo giá đã chuyển sang bảng tỷ giá mới (BR-67, BR-83) hay đang giữ tỷ giá hiện có vì chưa có bảng hợp lệ mới (BR-68), khách bấm nút thanh toán là thanh toán được, không có bước xác nhận lại giá.
+- AC7 (Happy) Done when: Nếu khách thanh toán thành công sau khi báo giá đã chuyển sang bảng tỷ giá mới (BR-67, BR-83), My bookings của đơn hiển thị số tham khảo theo bảng mới đó, vì đơn lưu số tham khảo theo bảng tỷ giá của báo giá lúc khách bấm nút thanh toán (BR-42, BR-70).
+- AC8 (Alternative) Done when: Nếu tổng tham khảo không đổi khi tới mốc hết hiệu lực tỷ giá của báo giá, dù báo giá đã chuyển sang bảng tỷ giá mới nhất (BR-67) hay giữ tỷ giá hiện có vì chưa có bảng tỷ giá hợp lệ mới (BR-68), không có toast báo tỷ giá tham khảo vừa được cập nhật (MSG-12).
 - AC9 (Error) Done when: Nếu tới mốc hết hiệu lực tỷ giá của báo giá mà chưa lấy được bảng tỷ giá hợp lệ mới (BR-68), số tham khảo vẫn hiển thị theo tỷ giá hiện có của báo giá.
-- AC10 (Error) Done when: Nếu hết thời gian giữ chỗ (BR-69) khi khách đang ở checkout, bước nhập thông tin hành khách hoặc màn thanh toán, khách được đưa về trang kết quả tìm kiếm (SCR-01) để chọn lại chuyến (BR-74).
-- AC11 (Error) Done when: Nếu khách được đưa về trang kết quả tìm kiếm vì hết thời gian giữ chỗ (BR-69), trang kết quả tìm kiếm hiện MSG-13 trong popup (assumed, A-40).
-- AC12 (Alternative) Done when: Nếu báo giá đang giữ tỷ giá hiện có sau mốc hết hiệu lực (BR-68) và chuyển sang bảng tỷ giá hợp lệ mới (BR-83), số tham khảo ở checkout và màn thanh toán hiển thị theo bảng tỷ giá mới của báo giá.
-- AC13 (Alternative) Done when: Nếu báo giá chuyển sang bảng tỷ giá mới (BR-67, BR-83) trong khi thanh toán của khách đang được xử lý và màn thanh toán đã hiển thị số tham khảo lúc khách bấm nút thanh toán (BR-43, BR-65), My bookings của đơn hiển thị số tham khảo bằng tổng tham khảo hiển thị ở màn thanh toán lúc khách bấm nút thanh toán (BR-42, BR-70).
-- AC14 (Alternative) Done when: Nếu báo giá được tạo trong khi bảng tỷ giá hiện hành đang Cũ và bảng tỷ giá hiện hành trở lại Bình thường khi chỗ vẫn còn được giữ (BR-73, BR-83), số tham khảo ở checkout và màn thanh toán hiển thị theo bảng tỷ giá mới của báo giá.
+- AC10 (Error) Done when: Nếu hết thời gian giữ chỗ khi khách đang ở checkout, bước nhập thông tin hành khách hoặc màn thanh toán, nên báo giá hết hạn (BR-69), khách được đưa về trang kết quả tìm kiếm (SCR-01) để chọn lại chuyến, vì chỗ đã được nhả và báo giá cũ không còn dùng được (BR-74).
+- AC11 (Error) Done when: Nếu khách được đưa về trang kết quả tìm kiếm vì hết thời gian giữ chỗ làm báo giá hết hạn (BR-69), trang kết quả tìm kiếm hiện popup báo thời gian giữ chỗ đã hết và khách cần chọn lại chuyến (MSG-13) (assumed, A-40).
+- AC12 (Alternative) Done when: Nếu báo giá đang giữ tỷ giá hiện có sau mốc hết hiệu lực vì chưa có bảng hợp lệ mới (BR-68), thì ngay khi một bảng hợp lệ mới thành bảng tỷ giá hiện hành, báo giá chuyển sang bảng đó (BR-83) và checkout cùng màn thanh toán hiển thị số tham khảo theo bảng mới.
+- AC13 (Alternative) Done when: Nếu khách bấm nút thanh toán khi màn thanh toán đang hiển thị số tham khảo (BR-43, BR-65), rồi báo giá chuyển sang bảng tỷ giá mới trong lúc thanh toán còn đang xử lý (BR-67, BR-83), My bookings của đơn vẫn hiển thị đúng tổng tham khảo ở màn thanh toán lúc bấm nút, vì đơn giữ số tham khảo của lúc bấm nút (BR-42, BR-70). VD: bấm nút lúc 09:59 thấy ~USD 18.05, thanh toán xong lúc 10:01 sau khi đổi bảng → đơn vẫn ~USD 18.05.
+- AC14 (Alternative) Done when: Nếu báo giá được tạo lúc bảng tỷ giá hiện hành đang Cũ và bảng trở lại Bình thường khi chỗ vẫn còn được giữ (BR-73), báo giá chuyển ngay sang bảng hợp lệ mới, không chờ mốc hết hiệu lực tỷ giá (BR-83), nên checkout và màn thanh toán hiển thị số tham khảo theo bảng mới đó. VD: báo giá tạo lúc 10:30 khi bảng đang Cũ, lúc 11:00 có bảng hợp lệ → số tham khảo theo bảng 11:00 ngay.
 
 **INVEST:** I / N / V / E / S / T
 
@@ -921,17 +921,17 @@ none
 **Acceptance Criteria**
 
 - AC1 (Happy) Done when: Nếu khách thanh toán thành công, báo giá chuyển sang trạng thái Đã thành đơn (BR-70).
-- AC2 (Happy) Done when: My bookings hiển thị đơn với số VND kèm số tham khảo bằng tiền tệ tham khảo lưu trên đơn (BR-44).
-- AC3 (Happy) Done when: Email xác nhận của đơn hiển thị số VND kèm số tham khảo bằng tiền tệ tham khảo lưu trên đơn (BR-44).
-- AC4 (Happy) Done when: Nếu màn thanh toán đã hiển thị số tham khảo lúc khách bấm nút thanh toán (BR-43, BR-65), số tham khảo của đơn trên email xác nhận và trên My bookings đều giống hệt tổng tham khảo hiển thị ở màn thanh toán lúc đó (BR-42, BR-70, NFR-03).
-- AC5 (Alternative) Done when: Nếu bảng tỷ giá hiện hành đã đổi sau khi đặt (BR-48), My bookings vẫn hiển thị số tham khảo lúc đặt của đơn, không tính lại theo bảng mới (BR-44).
+- AC2 (Happy) Done when: My bookings hiển thị đơn với số VND kèm số tham khảo đã lưu lúc đặt, bằng tiền tệ tham khảo lưu trên đơn (VD: 470,300 VND : ~USD 18.05) (BR-44).
+- AC3 (Happy) Done when: Email xác nhận của đơn hiển thị số VND kèm số tham khảo đã lưu lúc đặt, bằng tiền tệ tham khảo lưu trên đơn (VD: 470,300 VND : ~USD 18.05) (BR-44).
+- AC4 (Happy) Done when: Nếu màn thanh toán đang hiển thị số tham khảo lúc khách bấm nút thanh toán (BR-43, BR-65), email xác nhận và My bookings hiển thị số tham khảo giống hệt tổng tham khảo ở màn thanh toán lúc đó, kể cả khi tỷ giá đổi trước khi thanh toán xong (BR-42, BR-70, NFR-03). VD: bấm nút khi màn hiện ~USD 18.05 → email và My bookings đều ~USD 18.05.
+- AC5 (Alternative) Done when: Nếu bảng tỷ giá hiện hành đã đổi sau khi đặt, do tỷ giá đã được cập nhật (BR-48), My bookings vẫn hiển thị số tham khảo lúc đặt của đơn, không tính lại theo bảng mới (VD: đơn đặt ở 1 USD = 26,054 VND vẫn hiện ~USD 18.05 dù tỷ giá hôm nay là 26,500) (BR-44).
 - AC6 (Alternative) Done when: Nếu sau khi đặt khách đổi sang một tiền tệ khác VND, hoặc đổi sang một ngôn ngữ khác VI (BR-44), đơn cũ trên My bookings vẫn hiển thị tiền tệ tham khảo và số tham khảo lúc đặt, kể cả khi khách chọn VND trên UI ngoại ngữ.
 - AC7 (Alternative) Done when: Trong khi khách xem My bookings trên UI VI (BR-44), đơn chỉ hiển thị số VND.
 - AC8 — No longer applies: dựa trên một nguyên nhân kỹ thuật mà QC không tái hiện được bằng cách dùng sản phẩm; số tham khảo của đơn được kiểm tra ở AC4.
-- AC9 (Happy) Done when: Email xác nhận và vé điện tử của đơn được gửi bằng ngôn ngữ đặt vé (BR-46).
+- AC9 (Happy) Done when: Email xác nhận và vé điện tử của đơn được gửi bằng ngôn ngữ đặt vé, tức ngôn ngữ UI lúc khách thanh toán (BR-46).
 - AC10 (Alternative) Done when: Nếu ngôn ngữ đặt vé là VI (BR-46), email xác nhận và vé điện tử chỉ có số VND.
 - AC11 (Alternative) Done when: Nếu khách đổi ngôn ngữ trên app sau khi thanh toán (BR-46), thông báo trên app về đơn dùng ngôn ngữ mới.
-- AC12 (Alternative) Done when: Nếu đơn được thanh toán trong khi màn thanh toán chờ kết luận của Legal và checkout đã hiển thị số tham khảo (BR-43, BR-65), sau khi Legal cho phép My bookings (BR-65), My bookings hiển thị đơn với số tham khảo đã lưu của đơn (BR-44).
+- AC12 (Alternative) Done when: Nếu đơn được thanh toán khi màn thanh toán chỉ hiện VND vì còn chờ Legal, nhưng checkout đã hiện số tham khảo nên đơn vẫn lưu số này (BR-43, BR-65), thì sau khi Legal cho phép My bookings (BR-65), My bookings hiển thị đơn với số tham khảo đã lưu (BR-44). VD: checkout đã hiện 470,300 VND : ~USD 18.05 → My bookings hiện đúng số này.
 
 **INVEST:** I / N / V / E / S / T
 - S: gồm cả ngôn ngữ của email, vé điện tử và thông báo app (BR-46); nếu vượt một sprint, tách AC9 đến AC11 thành story riêng.
@@ -950,11 +950,11 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Thông tin hoàn tiền của đơn hiển thị số hoàn bằng VND làm số chính, kèm số tham khảo bằng tiền tệ tham khảo của đơn (BR-45).
-- AC2 (Happy) Done when: Nếu tỷ giá hiện hành ngày hoàn đã khác tỷ giá lúc mua (BR-48), số tham khảo của số hoàn vẫn được quy đổi theo bảng tỷ giá lưu trên đơn (BR-45).
-- AC3 (Happy) Done when: Trong khi số hoàn hiển thị kèm số tham khảo (BR-45), MSG-14 hiển thị ngay cạnh số hoàn.
+- AC1 (Happy) Done when: Thông tin hoàn tiền của đơn hiển thị số hoàn bằng VND làm số chính, kèm số tham khảo bằng tiền tệ tham khảo của đơn (VD: 423,270 VND : ~USD 16.25) (BR-45).
+- AC2 (Happy) Done when: Nếu tỷ giá hiện hành ngày hoàn đã khác lúc mua (BR-48), số tham khảo của số hoàn vẫn quy đổi theo bảng tỷ giá lưu trên đơn (BR-45). VD: mua ở 1 USD = 26,054 VND, hoàn 423,270 VND → ~USD 16.25, dù tỷ giá ngày hoàn là 26,500.
+- AC3 (Happy) Done when: Trong khi số hoàn hiển thị kèm số tham khảo (BR-45), ngay cạnh số hoàn có ghi chú giải thích số tham khảo tính theo tỷ giá lúc đặt, còn số tiền về thẻ tuỳ tỷ giá của ngân hàng ngày hoàn (MSG-14).
 - AC4 (Happy) Done when: Số hoàn và số tham khảo của số hoàn hiển thị cho khách mà không có bước nào yêu cầu khách đồng ý (BR-45).
-- AC5 (Happy) Done when: Số tham khảo của số hoàn giống hệt nhau mỗi lần khách xem lại và trên mọi platform (BR-45, NFR-03).
+- AC5 (Happy) Done when: Số tham khảo của số hoàn được lưu lại cùng lần hoàn (BR-45) nên giống hệt nhau mỗi lần khách xem lại và trên mọi platform, vì cùng một giá phải có cùng một số tham khảo ở mọi nơi hiển thị (NFR-03).
 - AC6 (Alternative) Done when: Nếu sau khi đặt khách đổi sang một tiền tệ khác VND, hoặc đổi sang một ngôn ngữ khác VI (BR-45), số tham khảo của số hoàn vẫn dùng tiền tệ tham khảo của đơn, kể cả khi khách chọn VND trên UI ngoại ngữ.
 - AC7 (Alternative) Done when: Trong khi khách xem thông tin hoàn tiền trên UI VI (BR-45), số hoàn chỉ hiển thị VND.
 
@@ -975,13 +975,13 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Back office đơn hàng hiển thị tiền tệ tham khảo và số tham khảo của đơn (BR-70).
-- AC2 (Happy) Done when: Back office đơn hàng hiển thị tỷ giá và nguồn tỷ giá đã dùng để tính số tham khảo của đơn (BR-70).
-- AC3 (Happy) Done when: Back office đơn hàng hiển thị nhóm hiển thị Browse/Pay đã áp dụng cho đơn (BR-06, BR-70).
-- AC4 (Happy) Done when: Back office đơn hàng hiển thị phiên bản, ngôn ngữ và thời điểm MSG-01 được hiển thị cho khách (BR-70).
-- AC5 (Happy) Done when: Số tiền của đơn trên back office hiển thị kép (BR-05), số chính theo chế độ thứ bậc hiển thị (BR-06).
-- AC6 (Happy) Done when: Số tham khảo của đơn trên back office giống hệt số trên email xác nhận và My bookings của cùng đơn (NFR-03).
-- AC7 (Alternative) Done when: Nếu đơn được thanh toán trong khi màn thanh toán chờ kết luận của Legal (BR-65) và checkout đã hiển thị số tham khảo (BR-43), back office đơn hàng hiển thị tiền tệ tham khảo và số tham khảo của đơn (BR-70).
+- AC1 (Happy) Done when: Back office đơn hàng hiển thị tiền tệ tham khảo và số tham khảo mà đơn đã lưu lúc khách thanh toán thành công (BR-70).
+- AC2 (Happy) Done when: Back office đơn hàng hiển thị tỷ giá và nguồn tỷ giá đã dùng để tính số tham khảo của đơn, như đơn đã lưu lúc khách thanh toán thành công (BR-70).
+- AC3 (Happy) Done when: Back office đơn hàng hiển thị nhóm hiển thị Browse/Pay đã áp dụng cho đơn, tức VND hay số tham khảo là số chính khi khách đặt (BR-06), như đơn đã lưu lúc khách thanh toán thành công (BR-70).
+- AC4 (Happy) Done when: Back office đơn hàng hiển thị phiên bản, ngôn ngữ và thời điểm khách được hiển thị disclaimer cho biết giá ngoại tệ chỉ để tham khảo (MSG-01), như đơn đã lưu lúc khách thanh toán thành công (BR-70).
+- AC5 (Happy) Done when: Số tiền của đơn trên back office hiển thị kép, số VND và số tham khảo trên cùng một dòng (VD: 470,300 VND : ~USD 18.05) (BR-05), số chính theo chế độ thứ bậc hiển thị, mà ở cả hai chế độ back office đều lấy VND làm số chính (BR-06).
+- AC6 (Happy) Done when: Số tham khảo của đơn trên back office giống hệt số trên email xác nhận và My bookings của cùng đơn, vì cùng một giá phải có cùng một số tham khảo ở mọi nơi hiển thị (NFR-03).
+- AC7 (Alternative) Done when: Nếu đơn được thanh toán khi màn thanh toán chỉ hiện VND vì còn chờ Legal (BR-65), nhưng checkout đã hiện số tham khảo nên đơn vẫn lưu số này (BR-43), back office đơn hàng hiển thị tiền tệ tham khảo và số tham khảo đã lưu của đơn (BR-70).
 
 **INVEST:** I (chưa đạt) / N / V / E / S / T
 - I: cần thông tin tiền tệ lưu trên đơn khi thanh toán (BR-70, US-15-AC1); làm cùng hoặc sau US-15.
@@ -1004,13 +1004,13 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Hoá đơn VAT của một đơn có số tham khảo được xuất bằng VND theo BR-03.
+- AC1 (Happy) Done when: Hoá đơn VAT của một đơn có số tham khảo được xuất bằng VND, không có số ngoại tệ trong chỉ tiêu tính thuế (BR-03).
 - AC2 (Happy) Done when: Hoá đơn VAT của đơn không có dòng phí quy đổi ngoại tệ (BR-02).
-- AC3 (Happy) Done when: Đối soát thanh toán của một đơn có số tham khảo dùng số tiền VND khách đã thanh toán (BR-01).
+- AC3 (Happy) Done when: Đối soát thanh toán của một đơn có số tham khảo dùng số tiền VND khách đã thanh toán, vì khách luôn trả bằng VND còn số tham khảo chỉ để hiển thị (VD: khách thấy 470,300 VND : ~KRW 24,818 và bị trừ đúng 470,300 VND → đối soát dùng 470,300 VND) (BR-01).
 - AC4 (Happy) Done when: Báo cáo doanh thu ghi nhận đơn có số tham khảo bằng số tiền VND của đơn (BR-04).
-- AC5 (Alternative) Done when: Nếu đơn có số tham khảo (BR-70), tiền tệ tham khảo và số tham khảo chỉ đi kèm là thông tin phụ trong số liệu doanh thu, không được cộng vào chỉ tiêu doanh thu nào (BR-04).
-- AC6 (Alternative) Done when: Nếu hai đơn có cùng số tiền VND nhưng khác tiền tệ tham khảo, hoặc một trong hai đơn không có số tham khảo (BR-43), hai đơn có cùng số liệu trên hoá đơn VAT, đối soát và báo cáo doanh thu (BR-01, BR-03, BR-04).
-- AC7 (Alternative) Done when: Nếu đơn được hoàn tiền (BR-45), số hoàn được ghi nhận trong đối soát và báo cáo doanh thu bằng số VND của số hoàn (BR-01, BR-04).
+- AC5 (Alternative) Done when: Nếu đơn đã lưu tiền tệ tham khảo và số tham khảo lúc khách thanh toán thành công (BR-70), hai thông tin này chỉ đi kèm là thông tin phụ trong số liệu doanh thu, không được cộng vào chỉ tiêu doanh thu nào (BR-04).
+- AC6 (Alternative) Done when: Nếu hai đơn cùng số VND nhưng khác tiền tệ tham khảo, hoặc một đơn không có số tham khảo vì lúc thanh toán khách không thấy số này (BR-43), hai đơn có cùng số liệu trên hoá đơn VAT, đối soát và báo cáo doanh thu, vì các số liệu này chỉ dùng VND (BR-01, BR-03, BR-04).
+- AC7 (Alternative) Done when: Nếu đơn được hoàn tiền, với số hoàn bằng VND là số chính, kèm số tham khảo (BR-45), số hoàn được ghi nhận trong đối soát và báo cáo doanh thu bằng số VND của số hoàn, vì số tham khảo chỉ để hiển thị (VD: hoàn 423,270 VND : ~USD 16.25 → ghi nhận 423,270 VND) (BR-01, BR-04).
 
 **INVEST:** I / N / V / E / S / T
 
@@ -1033,24 +1033,24 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Nếu một lần cập nhật định kỳ tạo được bảng tỷ giá hợp lệ (BR-48, BR-49), bảng đó thành bảng tỷ giá hiện hành: trên SCR-16, tỷ giá hiện tại của mọi cặp có quy tắc đang bật đổi sang tỷ giá, nguồn và thời điểm bản tin của bảng mới.
-- AC2 (Happy) Done when: Trên SCR-16, nguồn hiện ở tỷ giá hiện tại của mỗi cặp là nguồn được chọn cho cặp đó theo BR-47.
-- AC3 (Alternative) Done when: Nếu nguồn chính của một cặp lỗi hoặc thiếu cặp đó (BR-47), SCR-16 hiện ở tỷ giá hiện tại của cặp nguồn dự phòng được chọn theo BR-47.
-- AC4 (Happy) Done when: Trên cùng một trang, cùng một số VND hiển thị cùng một số tham khảo ở mọi chỗ có giá (BR-48).
-- AC5 (Alternative) Done when: Nếu tỷ giá mới của một cặp lệch quá biến động tối đa/ngày của quy tắc (BR-54) và cài đặt thử nguồn kế tiếp của cặp là Không (BR-55), bảng mới giữ tỷ giá hiện hành của cặp: SCR-16 vẫn hiện tỷ giá, nguồn và thời điểm bản tin cũ của cặp.
-- AC6 (Alternative) Done when: Nếu tỷ giá mới của một cặp bị bỏ qua theo BR-54 và cài đặt thử nguồn kế tiếp của cặp là Có (BR-55), tỷ giá của cặp trong bảng mới được xác định từ nguồn kế tiếp theo BR-55, và SCR-16 hiện nguồn được dùng.
-- AC7 (Alternative) Done when: Nếu tỷ giá mới của một cặp bị bỏ qua theo BR-54, SCR-16 hiện cảnh báo tỷ giá bị bỏ qua ở dòng của cặp đó, với thông tin BR-54 quy định.
-- AC8 (Error) Done when: Nếu một lần cập nhật không tạo được bảng tỷ giá hợp lệ (BR-49), kể cả khi mọi nguồn đều lỗi, mà số lần cập nhật định kỳ liên tiếp không tạo được bảng tỷ giá hợp lệ chưa đạt ngưỡng bảng cũ (BR-56), số tham khảo khách thấy không đổi.
-- AC9 (Error) Done when: Nếu số lần cập nhật định kỳ liên tiếp không tạo được bảng tỷ giá hợp lệ đạt ngưỡng bảng cũ (BR-56), bảng tỷ giá hiện hành chuyển sang Cũ (BR-71).
-- AC10 (Alternative) Done when: Nếu các lần cập nhật không tạo được bảng tỷ giá hợp lệ rơi vào ngày nguồn không công bố bản tin (BR-56), bảng tỷ giá hiện hành không chuyển sang Cũ (BR-71) vì những lần đó.
-- AC11 (Alternative) Done when: Nếu bảng tỷ giá hiện hành chuyển từ Cũ sang Bình thường (BR-73), trang có giá khách mở hoặc tải lại sau đó hiện lại số tham khảo.
-- AC12 (Happy) Done when: Mỗi lần cập nhật, tỷ giá mới của từng cặp được ghi vào lịch sử thay đổi tỷ giá theo BR-57.
-- AC13 (Error) Done when: Nếu một lần cập nhật không tạo được bảng tỷ giá hợp lệ (BR-49), tỷ giá hiện tại của mọi cặp trên SCR-16 không đổi (BR-56).
+- AC1 (Happy) Done when: Nếu một lần cập nhật định kỳ tạo được bảng tỷ giá hợp lệ, tức có đủ tiền tệ chính của mọi ngôn ngữ đang bật (BR-48, BR-49), bảng đó thành bảng tỷ giá hiện hành, và trên danh sách quy tắc (SCR-16) mọi cặp có quy tắc đang bật hiện tỷ giá, nguồn và thời điểm bản tin của bảng mới.
+- AC2 (Happy) Done when: Trên danh sách quy tắc (SCR-16), nguồn hiện ở tỷ giá hiện tại của mỗi cặp là nguồn đang bật có ưu tiên cao nhất lấy được tỷ giá của cặp đó (VD: USD/VND ưu tiên 1. FXRatesAPI, 2. ExchangeRate-API → hiện FXRatesAPI) (BR-47).
+- AC3 (Alternative) Done when: Nếu nguồn chính của một cặp, tức nguồn đang bật có ưu tiên cao nhất, lỗi hoặc thiếu cặp đó (BR-47), danh sách quy tắc (SCR-16) hiện ở tỷ giá hiện tại của cặp nguồn dự phòng đã cung cấp tỷ giá, là nguồn đang bật kế tiếp theo thứ tự ưu tiên (VD: FXRatesAPI lỗi → USD/VND hiện ExchangeRate-API).
+- AC4 (Happy) Done when: Trên cùng một trang, mọi giá dùng cùng một bảng tỷ giá, nên cùng một số VND hiển thị cùng một số tham khảo ở mọi chỗ có giá (BR-48).
+- AC5 (Alternative) Done when: Nếu tỷ giá mới của một cặp lệch quá biến động tối đa/ngày của quy tắc (BR-54) và cài đặt thử nguồn kế tiếp khi tỷ giá mới bị bỏ qua của cặp là Không (BR-55), bảng mới giữ tỷ giá hiện hành của cặp (VD: biến động tối đa 3%, tỷ giá hiện hành 26,054, nguồn trả 27,000 → giữ 26,054): SCR-16 vẫn hiện tỷ giá, nguồn và thời điểm bản tin cũ của cặp.
+- AC6 (Alternative) Done when: Nếu tỷ giá mới của một cặp bị bỏ qua vì lệch quá biến động tối đa/ngày (BR-54) và cặp đó đặt thử nguồn kế tiếp là Có (BR-55), bảng mới lấy tỷ giá của cặp từ nguồn kế tiếp theo thứ tự ưu tiên, và SCR-16 hiện nguồn được dùng. VD: FXRatesAPI trả 27,000, bị bỏ qua → ExchangeRate-API trả 26,100 → dùng 26,100.
+- AC7 (Alternative) Done when: Nếu tỷ giá mới của một cặp bị bỏ qua vì lệch quá biến động tối đa/ngày (BR-54), SCR-16 hiện cảnh báo tỷ giá bị bỏ qua ở dòng của cặp đó, kèm thời điểm, tỷ giá gốc bị bỏ qua, nguồn và mức lệch.
+- AC8 (Error) Done when: Nếu một lần cập nhật không tạo được bảng tỷ giá hợp lệ, tức bảng thiếu tiền tệ chính của một ngôn ngữ đang bật (BR-49), kể cả khi mọi nguồn đều lỗi, mà số lần cập nhật định kỳ liên tiếp không tạo được bảng tỷ giá hợp lệ chưa đạt ngưỡng bảng cũ (VD: N = 3, mới 2 lần liên tiếp) (BR-56), số tham khảo khách thấy không đổi.
+- AC9 (Error) Done when: Nếu số lần cập nhật định kỳ liên tiếp không tạo được bảng tỷ giá hợp lệ đạt ngưỡng bảng cũ (VD: N = 3 và cập nhật mỗi 2 giờ → khoảng 6 giờ không có bảng mới) (BR-56), bảng tỷ giá hiện hành chuyển sang Cũ (BR-71).
+- AC10 (Alternative) Done when: Nếu các lần cập nhật không tạo được bảng tỷ giá hợp lệ rơi vào ngày nguồn không công bố bản tin, như cuối tuần hay ngày lễ (BR-56), bảng tỷ giá hiện hành không chuyển sang Cũ (BR-71) vì những lần đó, do những ngày này không tính là lần lỗi.
+- AC11 (Alternative) Done when: Nếu bảng tỷ giá hiện hành chuyển từ Cũ sang Bình thường, tức một lần cập nhật tạo được bảng hợp lệ khi công tắc tắt khẩn cấp không bật (BR-73), trang có giá khách mở hoặc tải lại sau đó hiện lại số tham khảo.
+- AC12 (Happy) Done when: Mỗi lần cập nhật, tỷ giá mới của từng cặp được ghi vào lịch sử thay đổi tỷ giá (VD: lần cập nhật 10:00 ghi USD/VND 26,054, nguồn FXRatesAPI, hệ thống thực hiện) (BR-57).
+- AC13 (Error) Done when: Nếu một lần cập nhật không tạo được bảng tỷ giá hợp lệ, tức bảng thiếu tiền tệ chính của một ngôn ngữ đang bật (VD: KO đang bật mà không lấy được KRW/VND từ nguồn nào) (BR-49), bảng tỷ giá hiện hành được giữ nên tỷ giá hiện tại của mọi cặp trên SCR-16 không đổi (BR-56).
 - AC14 (Alternative) Done when: Nếu khách mở hoặc tải lại một trang có giá sau khi có bảng tỷ giá hiện hành mới (BR-48), số tham khảo trên trang đó tính theo bảng mới.
 - AC15 (Alternative) Done when: Trong khi khách đang ở một trang có giá, nếu có bảng tỷ giá hiện hành mới (BR-48), số tham khảo trên trang đó không tự đổi.
 - AC16 (Alternative) Done when: Nếu một lần cập nhật không lấy được tỷ giá của một cặp từ nguồn nào nhưng bảng mới vẫn hợp lệ (BR-86), SCR-16 vẫn hiện tỷ giá, nguồn và thời điểm bản tin cũ của cặp đó.
-- AC17 (Error) Done when: Nếu một cặp không lấy được tỷ giá từ nguồn nào trong số lần cập nhật định kỳ liên tiếp bằng ngưỡng bảng cũ (BR-86), bảng tỷ giá mới không có cặp đó và tiền tệ đó không còn trên picker tiền tệ (BR-23).
-- AC18 (Alternative) Done when: Nếu bảng tỷ giá hiện hành chuyển từ Cũ sang Bình thường (BR-73) khi khách đang mở trang kết quả tìm kiếm, trang đó vẫn chỉ hiển thị VND tới khi khách tải lại (BR-75).
+- AC17 (Error) Done when: Nếu một cặp không lấy được tỷ giá từ nguồn nào trong N lần cập nhật định kỳ liên tiếp, N là ngưỡng bảng cũ (BR-86), bảng tỷ giá mới không có cặp đó và tiền tệ đó biến khỏi picker tiền tệ, vì picker chỉ có tiền tệ trong bảng tỷ giá hiện hành (BR-23). VD: N = 3, lần thứ 3 không lấy được TWD/VND → picker của ZH chỉ còn CNY, VND.
+- AC18 (Alternative) Done when: Nếu bảng tỷ giá hiện hành chuyển từ Cũ sang Bình thường nhờ có lại bảng hợp lệ (BR-73) khi khách đang mở trang kết quả tìm kiếm, trang đó vẫn chỉ hiển thị VND như lúc bảng còn Cũ, tới khi khách tải lại trang (BR-75).
 
 **INVEST:** I (chưa đạt) / N / V / E / S (chưa đạt) / T
 - I: cần quy tắc tỷ giá đang bật và danh sách SCR-16 của US-22 (hoặc quy tắc mẫu) để chạy và kiểm thử.
@@ -1073,17 +1073,17 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Trên SCR-18, bản dịch cho một ngôn ngữ mới được tạo từ bản EN (en-US), cho cả web và app (luồng đề xuất, chờ Q-08).
-- AC2 (Happy) Done when: Trên SCR-19, PO xem trước được UI web và app với bản dịch mới trước khi bật ngôn ngữ đó (luồng đề xuất, chờ Q-08).
-- AC3 (Alternative) Done when: Trong khi bản dịch của ngôn ngữ mới đã được đưa lên hệ thống nhưng ngôn ngữ chưa được bật (BR-22, BR-35), khách không thấy ngôn ngữ đó trên picker ngôn ngữ (SCR-12).
-- AC4 (Happy) Done when: Sau khi một ngôn ngữ đã có bản dịch trên hệ thống được bật (BR-22, BR-35), ngôn ngữ đó xuất hiện trên picker ngôn ngữ (SCR-12) ở mọi platform (NFR-04) mà không cần phát hành bản mới.
+- AC1 (Happy) Done when: Trên trang tạo bản dịch (SCR-18), bản dịch cho một ngôn ngữ mới được tạo từ bản EN (en-US), cho cả web và app (luồng đề xuất, chờ Dev / Tech Lead xác nhận, Q-08).
+- AC2 (Happy) Done when: Trên trang xem trước bản dịch (SCR-19), PO xem trước được UI web và app với bản dịch mới trước khi bật ngôn ngữ đó (luồng đề xuất, chờ Dev / Tech Lead xác nhận, Q-08).
+- AC3 (Alternative) Done when: Trong khi bản dịch của ngôn ngữ mới đã được đưa lên hệ thống nhưng ngôn ngữ đó chưa được bật trong danh sách ngôn ngữ do BU cấu hình (BR-22, BR-35), khách không thấy ngôn ngữ đó trên picker ngôn ngữ (SCR-12).
+- AC4 (Happy) Done when: Sau khi một ngôn ngữ đã có bản dịch trên hệ thống được bật trong danh sách ngôn ngữ do BU cấu hình (BR-22, BR-35), ngôn ngữ đó xuất hiện trên picker ngôn ngữ (SCR-12) ở mọi platform Vexere hỗ trợ (NFR-04) mà không cần phát hành bản mới.
 - AC5 (Error) Done when: Nếu bản dịch của một ngôn ngữ chưa được đưa lên hệ thống (BR-35), ngôn ngữ đó không bật được và vẫn không xuất hiện trên picker ngôn ngữ.
-- AC6 (Happy) Done when: Nếu một tiền tệ mới vào danh sách tiền tệ chọn được của một ngôn ngữ (BR-23), tiền tệ đó xuất hiện trên picker tiền tệ (SCR-13) của ngôn ngữ đó mà không cần phát hành bản mới.
-- AC7 (Error) Done when: Nếu một tiền tệ đã được bật nhưng bảng tỷ giá hiện hành chưa có cặp của nó (BR-23, BR-52), tiền tệ đó chưa xuất hiện trên picker tiền tệ.
-- AC8 (Happy) Done when: Mỗi thay đổi cấu hình ngôn ngữ, tiền tệ, phạm vi tiền tệ của ngôn ngữ và bảng quốc gia → tiền tệ được ghi vào lịch sử thay đổi cấu hình theo BR-36.
+- AC6 (Happy) Done when: Nếu một tiền tệ mới vào danh sách tiền tệ chọn được của một ngôn ngữ, tức tiền tệ đó thuộc phạm vi tiền tệ của ngôn ngữ, đang bật và có trong bảng tỷ giá hiện hành (BR-23), tiền tệ đó xuất hiện trên picker tiền tệ (SCR-13) của ngôn ngữ đó mà không cần phát hành bản mới.
+- AC7 (Error) Done when: Nếu một tiền tệ đã được bật nhưng bảng tỷ giá hiện hành chưa có cặp của nó (VD: cặp đó chưa có quy tắc tỷ giá đang bật) (BR-52), tiền tệ đó chưa xuất hiện trên picker tiền tệ, vì picker chỉ cho chọn tiền tệ có trong bảng tỷ giá hiện hành (BR-23).
+- AC8 (Happy) Done when: Mỗi thay đổi cấu hình ngôn ngữ, tiền tệ, phạm vi tiền tệ của ngôn ngữ và bảng quốc gia → tiền tệ được ghi vào lịch sử thay đổi cấu hình (VD: đổi tiền tệ chính của ZH từ CNY sang TWD → lịch sử ghi người đổi, thời điểm, CNY, TWD) (BR-36).
 - AC9 — No longer applies: trùng với US-05-AC7 và US-06-AC10.
 - AC10 — No longer applies: trùng với US-07-AC6.
-- AC11 (Error) Done when: Nếu người thực hiện không có quyền theo BR-76, việc bật, tắt ngôn ngữ, tiền tệ hoặc sửa phạm vi tiền tệ, bảng quốc gia → tiền tệ không được thực hiện theo phân quyền hiện có (DEP-15), và cấu hình đang có giữ nguyên.
+- AC11 (Error) Done when: Nếu người thực hiện bật, tắt ngôn ngữ, tiền tệ hoặc sửa phạm vi tiền tệ, bảng quốc gia → tiền tệ mà không có quyền làm việc đó (BR-76), thao tác không được thực hiện theo phân quyền hiện có của hệ thống (DEP-15), và cấu hình đang có giữ nguyên.
 - AC12 (Error) Done when: Nếu tiền tệ chính của một ngôn ngữ chưa có quy tắc tỷ giá đang bật (BR-85), ngôn ngữ đó không bật được và vẫn không xuất hiện trên picker ngôn ngữ.
 
 **INVEST:** I (chưa đạt) / N / V / E (chưa đạt) / S (chưa đạt) / T
@@ -1107,24 +1107,24 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Sau khi PO bật Currency Switch cho một vertical × platform (BR-60), khách dùng UI ngoại ngữ với tiền tệ tham khảo khác VND trên vertical × platform đó thấy giá hiển thị kép (BR-05) mà không cần phát hành bản mới.
+- AC1 (Happy) Done when: Sau khi PO bật Currency Switch cho một vertical × platform (VD: Bus × app) (BR-60), khách dùng UI ngoại ngữ với tiền tệ tham khảo khác VND trên vertical × platform đó thấy giá hiển thị kép, số VND và số tham khảo trên cùng một dòng (VD: 467,000 VND : ~USD 17.92) (BR-05), mà không cần phát hành bản mới.
 - AC2 (Happy) Done when: Bật hoặc tắt Currency Switch cho một vertical × platform không làm đổi trạng thái của các vertical × platform khác (BR-60).
-- AC3 (Happy) Done when: Trong khi Currency Switch bật cho một vertical × platform ở một tỷ lệ traffic (BR-60), chỉ phần khách thuộc tỷ lệ đó thấy số tham khảo; khách còn lại thấy như CB-03.
+- AC3 (Happy) Done when: Trong khi Currency Switch bật cho một vertical × platform ở một tỷ lệ traffic (VD: Bus × app ở 10%) (BR-60), chỉ phần khách thuộc tỷ lệ đó thấy số tham khảo; khách còn lại chỉ thấy VND, như khi Currency Switch đang tắt (CB-03).
 - AC4 (Happy) Done when: Sau khi PO đổi tỷ lệ traffic của một vertical × platform (BR-60), tỷ lệ mới có hiệu lực mà không cần phát hành bản mới.
-- AC5 (Happy) Done when: Sau khi PO tắt Currency Switch cho một vertical × platform (BR-61, đề xuất, A-12), mọi bề mặt của vertical × platform đó chuyển sang như CB-03 trong thời gian NFR-05, mà không cần phát hành bản mới.
-- AC6 (Alternative) Done when: Nếu Currency Switch được bật lại cho vertical × platform đó (BR-61), đơn đã lưu số tham khảo trước khi tắt hiện lại số tham khảo lúc đặt trên My bookings (BR-44).
+- AC5 (Happy) Done when: Sau khi PO tắt Currency Switch cho một vertical × platform (BR-61, đề xuất, A-12), mọi bề mặt của vertical × platform đó chuyển sang chỉ hiển thị VND, như khi Currency Switch đang tắt (CB-03), trong thời gian yêu cầu cho việc tắt (NFR-05), mà không cần phát hành bản mới (VD: tắt Bus × app lúc 14:00 → khách đang ở checkout trên app thấy 470,300 VND, không còn ~USD 18.05).
+- AC6 (Alternative) Done when: Nếu Currency Switch được bật lại cho vertical × platform đó (BR-61), đơn đã lưu số tham khảo trước khi tắt hiện lại số tham khảo lúc đặt trên My bookings, đúng số đã lưu trên đơn, không tính lại theo tỷ giá mới (VD: đơn đặt lúc 13:00 với ~USD 18.05 hiện lại ~USD 18.05) (BR-44).
 - AC7 (Alternative) Done when: Nếu khách đã vào checkout trước khi Currency Switch được bật cho vertical × platform đó (BR-63, đề xuất, A-12), checkout đó giữ cách hiển thị như trước khi bật cho tới khi xong đơn.
-- AC8 (Happy) Done when: Sau khi người có quyền theo BR-77 bật công tắc tắt khẩn cấp, bảng tỷ giá hiện hành chuyển sang Cũ (BR-72) mà không cần phát hành bản mới.
-- AC9 (Alternative) Done when: Nếu công tắc tắt khẩn cấp được tắt khi chưa đủ ngưỡng bảng cũ (BR-84), các bề mặt có giá hiện lại số tham khảo theo BR-75 mà không cần phát hành bản mới.
-- AC10 (Error) Done when: Nếu người thực hiện không có quyền theo BR-77, việc bật tắt Currency Switch, đổi tỷ lệ traffic hoặc bật tắt công tắc tắt khẩn cấp không được thực hiện theo phân quyền hiện có (DEP-15), và trạng thái đang có giữ nguyên.
-- AC11 (Happy) Done when: Trong khi Currency Switch bật ở tỷ lệ traffic dưới 100% và tỷ lệ không giảm (BR-81), một guest đã thấy số tham khảo vẫn thấy số tham khảo ở mọi trang và mọi phiên sau đó trên cùng thiết bị.
-- AC12 (Happy) Done when: Sau khi người có quyền theo BR-79 đổi chế độ thứ bậc hiển thị (BR-06), các bề mặt có giá hiển thị số chính theo chế độ mới mà không cần phát hành bản mới.
-- AC13 (Error) Done when: Nếu người thực hiện không có quyền theo BR-79, việc đổi chế độ thứ bậc hiển thị không được thực hiện theo phân quyền hiện có (DEP-15), và chế độ đang có giữ nguyên.
-- AC14 (Alternative) Done when: Nếu công tắc tắt khẩn cấp được tắt khi đã đủ ngưỡng bảng cũ (BR-56), các bề mặt vẫn chỉ hiển thị VND (CB-02) cho tới lần cập nhật đầu tiên sau đó tạo được bảng tỷ giá hợp lệ (BR-73).
-- AC15 (Alternative) Done when: Nếu khách đăng nhập trong khi Currency Switch bật ở tỷ lệ traffic dưới 100% (BR-81), việc khách có thấy số tham khảo hay không theo nhóm của hồ sơ, giống nhau trên mọi thiết bị khách đăng nhập.
-- AC16 (Alternative) Done when: Nếu tỷ lệ traffic giảm và khách rời nhóm bật (BR-81), khách thấy như CB-03.
-- AC17 (Alternative) Done when: Trong khi công tắc tắt khẩn cấp đang bật (BR-72), kể cả khi một lần cập nhật tạo được bảng tỷ giá hợp lệ (BR-73), các bề mặt có giá vẫn chỉ hiển thị VND (CB-02).
-- AC18 (Alternative) Done when: Nếu khách đang mở trang kết quả tìm kiếm hoặc checkout khi công tắc tắt khẩn cấp được bật (BR-72), trang đó chỉ hiển thị VND kèm MSG-06 (CB-02) trong thời gian NFR-06 mà khách không phải tải lại trang (BR-75).
+- AC8 (Happy) Done when: Sau khi một người được cấp quyền bật tắt công tắc tắt khẩn cấp (BR-77) bật công tắc này, bảng tỷ giá hiện hành chuyển sang Cũ (BR-72) mà không cần phát hành bản mới.
+- AC9 (Alternative) Done when: Nếu công tắc tắt khẩn cấp được tắt khi chưa đủ ngưỡng bảng cũ, bảng tỷ giá hiện hành trở lại Bình thường với bảng hợp lệ mới nhất (BR-84) và số tham khảo hiện lại mà không cần phát hành bản mới: ngay trên checkout, bước nhập thông tin hành khách và màn thanh toán đang mở; các trang khác khi khách mở hoặc tải lại (BR-75).
+- AC10 (Error) Done when: Nếu người thực hiện bật tắt Currency Switch, đổi tỷ lệ traffic hoặc bật tắt công tắc tắt khẩn cấp mà không có quyền làm việc đó (BR-77), thao tác không được thực hiện theo phân quyền hiện có của hệ thống (DEP-15), và trạng thái đang có giữ nguyên.
+- AC11 (Happy) Done when: Trong khi Currency Switch bật ở tỷ lệ traffic dưới 100% và tỷ lệ không giảm (BR-81), một guest đã thấy số tham khảo vẫn thấy số tham khảo ở mọi trang và mọi phiên sau đó trên cùng thiết bị (VD: Bus × app ở 10% rồi tăng lên 50% → guest đó vẫn thấy ~USD trên điện thoại của mình).
+- AC12 (Happy) Done when: Sau khi một người được cấp quyền đổi chế độ thứ bậc hiển thị (BR-79) đổi chế độ, tức đổi số nào là số chính trên từng bề mặt (VD: từ VND là số chính trên mọi bề mặt sang theo nhóm → kết quả tìm kiếm hiện USD 17.92 : 467,000 VND) (BR-06), các bề mặt có giá hiển thị số chính theo chế độ mới mà không cần phát hành bản mới.
+- AC13 (Error) Done when: Nếu người thực hiện đổi chế độ thứ bậc hiển thị mà không có quyền làm việc đó (BR-79), việc đổi không được thực hiện theo phân quyền hiện có của hệ thống (DEP-15), và chế độ đang có giữ nguyên.
+- AC14 (Alternative) Done when: Nếu công tắc tắt khẩn cấp được tắt khi đã đủ ngưỡng bảng cũ, tức đã N lần cập nhật định kỳ liên tiếp không có bảng hợp lệ (BR-56), các bề mặt vẫn chỉ hiển thị VND như khi số tham khảo tạm thời không có (CB-02), tới khi một lần cập nhật tạo được bảng hợp lệ và đưa bảng tỷ giá hiện hành về Bình thường (BR-73).
+- AC15 (Alternative) Done when: Nếu khách đăng nhập trong khi Currency Switch bật ở tỷ lệ traffic dưới 100% (BR-81), khách thuộc nhóm bật hoặc nhóm tắt theo hồ sơ của mình, nên việc khách có thấy số tham khảo hay không giống nhau trên mọi thiết bị khách đăng nhập.
+- AC16 (Alternative) Done when: Nếu tỷ lệ traffic giảm và khách rời nhóm bật, tức nhóm thấy số tham khảo (BR-81), khách chỉ thấy VND, như khi Currency Switch đang tắt (CB-03).
+- AC17 (Alternative) Done when: Trong khi công tắc tắt khẩn cấp đang bật và giữ bảng tỷ giá hiện hành ở Cũ (BR-72), kể cả khi một lần cập nhật tạo được bảng tỷ giá hợp lệ (bảng chỉ trở lại Bình thường khi công tắc không bật, BR-73), các bề mặt có giá vẫn chỉ hiển thị VND, như khi số tham khảo tạm thời không có (CB-02).
+- AC18 (Alternative) Done when: Nếu khách đang mở trang kết quả tìm kiếm hoặc checkout khi công tắc tắt khẩn cấp được bật (BR-72), trang đó chuyển sang chỉ hiển thị VND kèm thông báo giá đang hiện bằng VND (MSG-06), như khi số tham khảo tạm thời không có (CB-02), ngay khi bảng thành Cũ mà khách không cần tải lại trang (NFR-06, BR-75).
 
 **INVEST:** I / N / V / E (chưa đạt) / S / T
 - E: cách vận hành bật tắt, ramp, công tắc tắt khẩn cấp và đổi chế độ thứ bậc hiển thị chờ Q-10; cách đạt NFR-05, NFR-06 cho trang khách đang mở chờ Q-28 (Dev / Tech Lead).
@@ -1147,26 +1147,26 @@ none
 
 **Acceptance Criteria**
 
-- AC1 (Happy) Done when: Danh sách quy tắc trên SCR-16 hiện mỗi quy tắc với: ID, cặp tiền, buffer, các nguồn theo thứ tự ưu tiên, tỷ giá hiện tại theo quy tắc kèm tỷ giá gốc, nguồn và thời điểm cập nhật, người và thời điểm sửa gần nhất, trạng thái (BR-48, BR-52).
+- AC1 (Happy) Done when: Danh sách quy tắc trên SCR-16 hiện mỗi quy tắc với: ID, cặp tiền, buffer, các nguồn theo thứ tự ưu tiên, tỷ giá hiện tại theo quy tắc kèm tỷ giá gốc (VD: buffer 2%, tỷ giá gốc 25,899 → tỷ giá theo quy tắc 26,417), nguồn và thời điểm cập nhật, người và thời điểm sửa gần nhất, trạng thái (BR-48, BR-52).
 - AC2 (Happy) Done when: Trên SCR-16, lọc theo mã tiền hoặc theo trạng thái (Tất cả, Đang bật, Đang tắt) chỉ hiện các quy tắc khớp bộ lọc.
-- AC3 (Happy) Done when: Từ nút thêm cấu hình tỷ giá trên SCR-16, nhân viên vận hành tỷ giá nhập quy tắc đúng BR-58 cho một cặp tiền chưa có quy tắc trên SCR-17, và sau khi lưu, quy tắc mới xuất hiện trong danh sách SCR-16 (BR-52).
-- AC4 (Error) Done when: Nếu dữ liệu nhập trên SCR-17 không đúng BR-58, quy tắc không được lưu và lỗi inline dưới từng trường sai hiện MSG-21.
-- AC5 (Error) Done when: Nếu tạo quy tắc cho một cặp tiền đã có quy tắc (BR-59), quy tắc không được tạo và SCR-17 hiện MSG-20 dạng lỗi inline ở trường mã tiền (assumed, A-40).
-- AC6 (Alternative) Done when: Bấm link trong MSG-20 mở quy tắc đang có của cặp đó trên SCR-17.
-- AC7 (Happy) Done when: Trên form sửa quy tắc (SCR-17), các trường mà BR-58 không cho sửa sau khi tạo hiển thị ở dạng chỉ đọc.
-- AC8 (Happy) Done when: Sau khi lưu một quy tắc vừa tạo hoặc vừa sửa, một lần cập nhật tỷ giá được thực hiện theo BR-48; khi lần đó tạo được bảng hợp lệ (BR-49), SCR-16 hiện tỷ giá hiện tại của cặp với thời điểm cập nhật mới.
-- AC9 (Happy) Done when: Bấm làm mới tỷ giá trên SCR-16 thực hiện một lần cập nhật tỷ giá (BR-48); khi lần đó tạo được bảng hợp lệ (BR-49), danh sách hiện tỷ giá hiện tại theo bảng mới.
-- AC10 (Happy) Done when: Sau khi đổi số ưu tiên hoặc bật, tắt một nguồn của một cặp trên SCR-17 (BR-58), SCR-16 hiện cho cặp đó nguồn được chọn theo BR-47 với cấu hình mới.
+- AC3 (Happy) Done when: Từ nút thêm cấu hình tỷ giá trên danh sách quy tắc (SCR-16), nhân viên vận hành tỷ giá nhập trên form quy tắc (SCR-17) một quy tắc có dữ liệu đúng yêu cầu nhập (BR-58) cho một cặp tiền chưa có quy tắc, và sau khi lưu, quy tắc tỷ giá mới của cặp đó xuất hiện trong danh sách SCR-16 (BR-52).
+- AC4 (Error) Done when: Nếu dữ liệu nhập trên form quy tắc (SCR-17) không đúng yêu cầu nhập (VD: mã tiền US chỉ có 2 ký tự) (BR-58), quy tắc không được lưu và dưới từng trường sai hiện lỗi inline nêu trường đó cần nhập theo yêu cầu nào (MSG-21).
+- AC5 (Error) Done when: Nếu tạo quy tắc cho một cặp tiền đã có quy tắc (BR-59), quy tắc không được tạo và form quy tắc (SCR-17) hiện lỗi inline ở trường mã tiền báo cặp tiền đã có quy tắc, kèm link sang quy tắc đó (MSG-20) (assumed, A-40).
+- AC6 (Alternative) Done when: Bấm link trong lỗi báo cặp tiền đã có quy tắc (MSG-20) mở quy tắc đang có của cặp đó trên form quy tắc (SCR-17).
+- AC7 (Happy) Done when: Trên form sửa quy tắc (SCR-17), các trường không sửa được sau khi tạo, gồm mã tiền và tiền quy đổi sang (VND) (BR-58), hiển thị ở dạng chỉ đọc.
+- AC8 (Happy) Done when: Sau khi lưu một quy tắc vừa tạo hoặc vừa sửa, một lần cập nhật tỷ giá chạy ngay, không chờ lịch định kỳ (BR-48); nếu lần đó tạo được bảng hợp lệ (BR-49), danh sách quy tắc (SCR-16) hiện tỷ giá hiện tại của cặp với thời điểm cập nhật mới. VD: sửa quy tắc USD/VND lúc 10:15 → cập nhật lúc 10:15.
+- AC9 (Happy) Done when: Bấm làm mới tỷ giá trên SCR-16 thực hiện ngay một lần cập nhật tỷ giá, không chờ lịch cập nhật định kỳ (BR-48); khi lần đó tạo được bảng hợp lệ, tức có đủ tiền tệ chính của mọi ngôn ngữ đang bật (BR-49), danh sách hiện tỷ giá hiện tại theo bảng mới.
+- AC10 (Happy) Done when: Sau khi đổi số ưu tiên hoặc bật, tắt một nguồn của một cặp trên SCR-17 (BR-58), SCR-16 hiện cho cặp đó nguồn được dùng theo cấu hình mới, tức nguồn đang bật có ưu tiên cao nhất lấy được tỷ giá (VD: tắt FXRatesAPI của USD/VND → hiện ExchangeRate-API) (BR-47).
 - AC11 (Happy) Done when: Trên SCR-17, nhân viên vận hành tỷ giá chọn và lưu được cho một cặp cài đặt buffer có áp vào số tham khảo hay không (BR-14).
-- AC12 (Happy) Done when: Trong khi quy tắc có biến động tối đa/ngày (BR-58), trên SCR-17 nhân viên vận hành tỷ giá chọn và lưu được cho một cặp cài đặt thử nguồn kế tiếp khi tỷ giá mới bị bỏ qua (BR-55).
-- AC13 (Happy) Done when: Trên SCR-16, nhân viên vận hành tỷ giá đặt và lưu được ngưỡng bảng cũ cho cả bảng tỷ giá (BR-56).
-- AC14 (Alternative) Done when: Nếu nhân viên vận hành tỷ giá tắt quy tắc của một cặp (BR-53), tiền tệ đó không còn trên picker tiền tệ (SCR-13) kể từ khi cặp đó ra khỏi bảng tỷ giá hiện hành (BR-23).
-- AC15 (Alternative) Done when: Nếu một quy tắc đang tắt được bật lại, tiền tệ đó xuất hiện lại trên picker tiền tệ khi bảng tỷ giá hiện hành có lại cặp đó (BR-23, BR-48).
-- AC16 (Happy) Done when: Mỗi lần tạo, sửa, bật, tắt một quy tắc hoặc một nguồn được ghi vào lịch sử thay đổi quy tắc tỷ giá theo BR-57.
-- AC17 (Error) Done when: Nếu người thực hiện không có quyền theo BR-78, việc tạo, sửa, bật tắt quy tắc hoặc nguồn, đặt ngưỡng bảng cũ hay làm mới tỷ giá không được thực hiện theo phân quyền hiện có (DEP-15), và cấu hình đang có giữ nguyên.
-- AC18 (Happy) Done when: Sau khi cài đặt buffer của một cặp được đổi (BR-14), số tham khảo của tiền tệ đó quy đổi theo cài đặt mới từ bảng tỷ giá tạo sau đó (BR-13).
-- AC19 (Happy) Done when: Trên form sửa quy tắc (SCR-17), nhân viên vận hành tỷ giá sửa và lưu được các trường mà BR-58 cho sửa sau khi tạo.
-- AC20 (Error) Done when: Nếu nhân viên vận hành tỷ giá tắt quy tắc của tiền tệ chính của một ngôn ngữ đang bật (BR-85), quy tắc vẫn bật và MSG-23 hiện dạng lỗi inline cạnh công tắc trạng thái, trên SCR-16 hoặc SCR-17 nơi thao tác.
+- AC12 (Happy) Done when: Trong khi quy tắc có nhập biến động tối đa/ngày (BR-58), trên SCR-17 nhân viên vận hành tỷ giá chọn và lưu được cho một cặp cài đặt Có/Không cho việc thử nguồn kế tiếp khi tỷ giá mới bị bỏ qua vì lệch quá mức đó (BR-55).
+- AC13 (Happy) Done when: Trên SCR-16, nhân viên vận hành tỷ giá đặt và lưu được ngưỡng bảng cũ cho cả bảng tỷ giá, tức số lần cập nhật định kỳ liên tiếp không tạo được bảng hợp lệ thì bảng tỷ giá hiện hành thành Cũ (VD: N = 3 và cập nhật mỗi 2 giờ → khoảng 6 giờ không có bảng mới thì bảng thành Cũ) (BR-56).
+- AC14 (Alternative) Done when: Nếu nhân viên vận hành tỷ giá tắt quy tắc của một cặp, cặp đó ra khỏi bảng tỷ giá từ lần cập nhật ngay sau (BR-53), và từ lúc đó tiền tệ đó không còn trên picker tiền tệ (SCR-13), vì picker chỉ có tiền tệ trong bảng tỷ giá hiện hành (BR-23). VD: tắt quy tắc TWD/VND → picker của ZH chỉ còn CNY, VND.
+- AC15 (Alternative) Done when: Nếu một quy tắc đang tắt được bật lại, tiền tệ đó xuất hiện lại trên picker tiền tệ khi một lần cập nhật tỷ giá sau đó đưa cặp đó trở lại bảng tỷ giá hiện hành (BR-48), vì picker chỉ cho chọn tiền tệ có trong bảng này (BR-23).
+- AC16 (Happy) Done when: Mỗi lần tạo, sửa, bật, tắt một quy tắc hoặc một nguồn được ghi vào lịch sử thay đổi quy tắc tỷ giá (VD: sửa buffer USD/VND từ 2% sang 1.5% lúc 10:15 → ghi người sửa, 10:15, 2%, 1.5%) (BR-57).
+- AC17 (Error) Done when: Nếu người thực hiện tạo, sửa, bật tắt quy tắc hoặc nguồn, đặt ngưỡng bảng cũ hay làm mới tỷ giá mà không có quyền làm việc đó (BR-78), thao tác không được thực hiện theo phân quyền hiện có của hệ thống (DEP-15), và cấu hình đang có giữ nguyên.
+- AC18 (Happy) Done when: Sau khi cài đặt buffer có áp vào số tham khảo hay không của một cặp được đổi (BR-14), số tham khảo của tiền tệ đó quy đổi theo cài đặt mới, bằng tỷ giá của cặp trong bảng tỷ giá tạo sau đó (VD: 470,300 VND, USD gốc 25,899, buffer 2%: đổi từ Có sang Không → từ ~USD 17.80 thành ~USD 18.16) (BR-13).
+- AC19 (Happy) Done when: Trên form sửa quy tắc (SCR-17), nhân viên vận hành tỷ giá sửa và lưu được các trường sửa được sau khi tạo, tức mọi trường trừ mã tiền và tiền quy đổi sang (BR-58).
+- AC20 (Error) Done when: Nếu nhân viên vận hành tỷ giá tắt quy tắc của tiền tệ chính của một ngôn ngữ đang bật (VD: KO đang bật, tiền tệ chính KRW, tắt quy tắc KRW/VND) (BR-85), quy tắc vẫn bật và một lỗi inline cho biết vì sao không tắt được hiện cạnh công tắc trạng thái, trên SCR-16 hoặc SCR-17 nơi thao tác (MSG-23).
 
 **INVEST:** I / N / V / E (chưa đạt) / S (chưa đạt) / T
 - E: cách làm mới tỷ giá ngay sau khi tạo, sửa chờ Dev / Tech Lead (Q-09).
