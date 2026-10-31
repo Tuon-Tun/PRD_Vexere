@@ -232,16 +232,13 @@ Done when: Only the shopper who placed the order can see its delivery informatio
 
 ---
 
-## Example 9 — Story Inside a PRD (Rules Cited by ID)
+## Example 9 — Story Inside a PRD (Rules Travel With the Story)
 
-Inside a PRD, rule values, message wording, and shared behaviors are written once in their own tables. The story's AC name each rule in words and cite its ID, so a policy change is edited in one row only.
+Inside a PRD, every rule, message, and shared behavior is written once. A rule only this story uses sits right under the story, so the reader sees it next to the AC; rules other stories also need, and the status and permission rows, sit in the PRD's Shared Business Rules. Each AC reads on its own and cites the IDs for detail.
 
-**From the PRD's Business Rules (3.1), Screens and Messages (3.6):**
+**From the PRD's Shared Business Rules (3.1), Screens and Messages (3.6):**
 
 ```text
-BR-01 | A ticket can be cancelled online up to 24 hours before departure.
-BR-02 | Cancellation fee = 10% of the ticket price. Example: ticket 300,000 VND -> fee 30,000 VND.
-BR-03 | Refund = amount paid - cancellation fee (BR-02). Uses: BR-02. Example: paid 300,000 VND -> refund 270,000 VND.
 BR-04 | Permission: cancel a ticket. Passenger: own tickets. Customer service: on the passenger's behalf.
 BR-05 | Transition: Confirmed -> Cancelled. Event: cancellation confirmed by a role allowed by BR-04.
         Condition: within the cancellation cutoff (BR-01). Side-effects of this event: refund per BR-03.
@@ -256,32 +253,39 @@ SCR-01 | My tickets | Design: [Figma frame link, filled by the designer]
 **Story:**
 
 ```text
+US-01 - Cancel a ticket
+
 As a Passenger who changed my travel plans,
 I want to cancel my ticket in the app,
 so that I get my money back without calling the hotline.
 
-Priority: Must
-Screens: SCR-01
-Jira: [PM fills after creating the ticket "US-01 Cancel a ticket"]
-Common behaviors: CB-02
-Rules applied (PRD Ticket Cancellation): BR-01, BR-02, BR-03, BR-04, BR-05, BR-06
+Priority: Must · Screens: SCR-01 · Jira: [PM fills after creating the ticket "US-01 Cancel a ticket"]
+Common behaviors: CB-02 (repeated tap on Confirm)
+
+Story rules
+BR-01 | A ticket can be cancelled online up to 24 hours before departure.
+       Example: departure 20:00 on 12 May -> online cancellation closes at 20:00 on 11 May.
+BR-02 | Cancellation fee = 10% of the ticket price. Example: ticket 300,000 VND -> fee 30,000 VND.
+BR-03 | Refund = amount paid - cancellation fee (BR-02). Uses: BR-02.
+       Example: paid 300,000 VND -> refund 270,000 VND.
 ```
-
-**Why it works:**
-
-- No AC repeats "24 hours", "10%", or any message wording — changing the cutoff to 12 hours edits BR-01 only
-- The email and the seat release are on the "on entering Cancelled" row (BR-06), written once however the ticket gets cancelled
-- `Rules applied` lists BR-01, BR-02, BR-03, and BR-05 because the AC and CB-02 cite them, and BR-04 and BR-06 because the transition BR-05 names its permission and its new status. It stops there: a rule that BR-03 uses would be found in BR-03's Uses column, not added to the line
-- Repeated taps are handled once by CB-02, which the story lists instead of writing its own AC for it
-- MSG-02's Rules column names BR-03, so a change to the refund rule shows which message to re-check
 
 **Acceptance Criteria:**
 
 ```text
-AC1 (Happy) Done when: While a ticket is within the cancellation cutoff (BR-01), "My tickets" shows a "Cancel ticket" button for it.
-AC2 (Error) Done when: If the cancellation cutoff has passed (BR-01), the button is disabled and an inline explanation shows MSG-01.
-AC3 (Happy) Done when: Tapping "Cancel ticket" opens a popup with the fee (BR-02) and the refund amount (BR-03) before the passenger confirms.
-AC4 (Happy) Done when: After the passenger confirms, the ticket moves to Cancelled (BR-05).
-AC5 (Happy) Done when: After the passenger confirms, a toast shows MSG-02.
+AC1 (Happy) Done when: While a ticket is still before its cancellation cutoff (BR-01), "My tickets" shows a "Cancel ticket" button for it.
+AC2 (Error) Done when: If the cancellation cutoff has passed (BR-01), the button is disabled and an inline note says online cancellation has closed for this ticket (MSG-01).
+AC3 (Happy) Done when: Tapping "Cancel ticket" opens a popup showing the cancellation fee (BR-02) and the refund amount (BR-03) before the passenger confirms.
+AC4 (Happy) Done when: After the passenger confirms, the ticket moves to Cancelled and the refund is started (BR-05).
+AC5 (Happy) Done when: After the passenger confirms, a toast confirms the cancellation and shows the refund amount (MSG-02).
 AC6 (Alternative) Done when: If the passenger closes the popup without confirming, they are back on "My tickets" and the ticket still shows as Confirmed.
 ```
+
+**Why it works:**
+
+- The reader sees BR-01 to BR-03 right above the AC that use them; nothing has to be memorized or looked up to understand the story
+- No AC repeats "24 hours", "10%", or any message wording — changing the cutoff to 12 hours edits BR-01 only
+- Each AC still reads on its own: AC2 says the button is disabled and what the note is about, and cites BR-01 and MSG-01 for the exact rule and copy
+- The status change, its permission, and the email live in Shared Business Rules (BR-04 to BR-06), because the customer-service story uses them too; AC4 only states that the transition happens
+- Repeated taps are handled once by CB-02, which the story lists with its situation instead of writing its own AC for it
+- MSG-02's Rules column names BR-03, so a change to the refund rule shows which message to re-check

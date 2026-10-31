@@ -17,7 +17,7 @@ Why: whoever writes the PRD (a person or an AI) rarely has the full technical co
 | Shared glossary of business terms, statuses, and roles | Database tables, fields, and data formats |
 | Business rules with concrete values and worked examples, including how existing records are treated at launch | Configuration keys and how values are configured |
 | Statuses and transitions (with their side-effects), roles and permissions | Infrastructure, caching, queues, scheduled jobs |
-| Epics that name the job (JTBD) they serve; user stories with priority, Screens, Jira, "Common behaviors" and "Rules applied" lines, and labelled `Done when` acceptance criteria | Code or pseudo-code |
+| Epics that name the job (JTBD) they serve; user stories with priority, Screens, Jira, "Common behaviors" lines, the rules only that story uses, and labelled `Done when` acceptance criteria that read on their own | Code or pseudo-code |
 | Common behaviors shared by every story (session expired, connection lost, repeated tap) | Tracking event names and properties (the Data team's tracking plan) |
 | Use cases only for multi-step or branching flows, citing IDs | |
 | An ID-only traceability matrix, business-level quality targets, a screen inventory with Figma links, and the message catalog | Colours, sizes, and assets (the Figma file) |
@@ -28,13 +28,14 @@ Why: whoever writes the PRD (a person or an AI) rarely has the full technical co
 
 | Fact | Its one home | Cited elsewhere as |
 |------|--------------|--------------------|
-| Formulas and policies, statuses and transitions, permissions, limits | 3.1 Business Rules | `BR-01` |
+| Formulas, policies, and limits only one story uses | Story rules, right under that story in 3.3 | `BR-01` |
+| Formulas, policies, and limits several stories share; statuses and transitions; permissions | 3.1 Shared Business Rules | `BR-01` |
 | What the user sees in one story, how errors are shown, side-effects of the story's own action | Acceptance criteria under the story in 3.3 | `US-01-AC2` |
 | Behavior that is the same in every story | Common Behaviors in 3.3 | `CB-01` |
 | Message wording, on any channel | Messages in 3.6 | `MSG-01` |
 | Metric and quality targets | 2.4 and the Non-Functional Requirements table in 3.5 | `SM-01`, `NFR-01` |
 
-Example: `BR-01` says "a ticket can be cancelled online up to 24 hours before departure". The acceptance criterion says "If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01", and MSG-01 says "...up to {cancellation cutoff (BR-01)} before departure". Changing 24 hours to 12 hours edits BR-01 only. Each story's `Rules applied (PRD Ticket Cancellation): BR-01, ...` line tells whoever creates the Jira ticket which rules to attach.
+Example: `BR-01` says "a ticket can be cancelled online up to 24 hours before departure". The acceptance criterion says "If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01", and MSG-01 says "...up to {cancellation cutoff (BR-01)} before departure". Changing 24 hours to 12 hours edits BR-01 only. A rule only one story uses sits right under that story, so the reader sees it next to the acceptance criteria; rules several stories share sit in Shared Business Rules. The Rules by Story table at the end tells whoever creates the Jira ticket which rules to attach.
 
 All wording and placement rules, including a technical-to-product translation table, live in [`knowledge-base/product-language/SKILL.md`](./knowledge-base/product-language/SKILL.md). Every pipeline step applies it.
 
@@ -205,7 +206,7 @@ flowchart TD
 - The system generates the Product Framing Pack with `knowledge-base/product-framing/SKILL.md`, which applies standards from:
   - `knowledge-base/knowledge/jobs-to-be-done/SKILL.md`
   - `knowledge-base/knowledge/user-story-skill/SKILL.md`
-- The output is a Product Framing Pack containing numbered single-sentence JTBD job stories (`When [situation], I want to [motivation], so I can [expected outcome].`), research status, business rules with IDs, the message catalog, common behaviors, every success metric (typed Primary, Secondary, or Guardrail), quality target, dependency, and screen from the brief, Epics that name the JTBD they serve, INVEST-standard User Stories with Priority, Screens, Common behaviors, and Rules applied lines, `Done when` acceptance criteria that cite rules and messages by ID, and assumptions and open questions.
+- The output is a Product Framing Pack containing numbered single-sentence JTBD job stories (`When [situation], I want to [motivation], so I can [expected outcome].`), research status, business rules with IDs, the message catalog, common behaviors, every success metric (typed Primary, Secondary, or Guardrail), quality target, dependency, and screen from the brief, Epics that name the JTBD they serve, INVEST-standard User Stories with Priority, Screens, Common behaviors, and the Story rules only they use, `Done when` acceptance criteria that read on their own and cite rules and messages by ID, and assumptions and open questions.
 - Rules, messages, and common behaviors get their IDs before any story is written, so acceptance criteria can cite them instead of repeating their values. The user approves rules and stories together.
 - In IDE mode, the Product Framing Pack is saved under `domain-knowledge/[Domain_Name]/inputs/[Feature_File_Name]_framing.md`.
 - In text-only mode, the Product Framing Pack is shown in chat but not written to disk.
@@ -226,7 +227,7 @@ flowchart TD
 - The orchestrator inserts each note inline, directly below the affected section, using the `> [!WARNING] REVIEWER'S NOTE` callout format.
 - In IDE mode, notes are inserted into the Markdown file. In text-only mode, notes are inserted into the in-chat draft.
 - Reviewer output is capped at 10 high-risk notes per pass.
-- The reviewer validates business logic, business-level edge cases, scope, JTBD alignment, `Done when` acceptance criteria coverage, and traceability: every cited ID exists, every rule is cited or used by another rule, and each story's `Rules applied` line lists the rules its acceptance criteria and common behaviors cite, plus the permission and "on entering" rows of each transition they cite. Rules that a listed rule uses are found through its Uses column and the Traceability Matrix, so the line stays short enough to read in a Jira ticket.
+- The reviewer validates business logic, business-level edge cases, scope, JTBD alignment, `Done when` acceptance criteria coverage, readability in place (no acceptance criterion that says only "per BR-..", no use case step that restates an outcome), and traceability: every cited ID exists, every rule is cited or used by another rule and sits under its story or in Shared Business Rules as its citations require, and the Rules by Story table matches the citations.
 - The reviewer flags **duplication**: a rule value, message wording, or target written outside its home, and proposes replacing the copy with the ID.
 - The reviewer also flags **technical leakage** (endpoints, status codes, database fields, internal services, code) and wording that PO, BA, Dev, and QC could read differently, and proposes a business-language rewrite.
 
@@ -236,7 +237,7 @@ flowchart TD
 - The user can request edits, add information, or approve the PRD.
 - The process stays in this step until the user explicitly approves the draft.
 - Edits change the draft directly. Substantive edits return to Step 4 for re-review before the draft is shown again. Cosmetic edits may skip re-review.
-- A changed business rule is edited in its own row; the worked examples of rules that use it and any affected Rules applied lines are updated, and everything that cites or uses it is re-reviewed.
+- A changed business rule is edited in its own row; the worked examples of rules that use it are updated, the rule moves between its story and Shared Business Rules if the set of stories citing it changed, and everything that cites or uses it is re-reviewed.
 - After approval, the PRD is the only home of the feature's facts; in IDE mode the framing file is marked as superseded. A later change to an approved PRD is made as an edit of that PRD, keeping every ID.
 - In text-only mode, approval completes the workflow and the final PRD remains in chat.
 

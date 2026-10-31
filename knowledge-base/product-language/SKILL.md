@@ -45,7 +45,8 @@ When the same rule appears in a user story, a business rule, a use case, and a s
 9. **Route technical decisions to questions.** If a requirement depends on a technical decision, write the business need and add an Open Question owned by Dev / Tech Lead. Do not answer it in the PRD.
 10. **Keep user-provided delivery constraints, do not expand them.** If the user explicitly states a constraint on how or when the feature is delivered (for example "must reuse the current payment partner", "launch before Tet"), record it once, as stated, under Known Constraints. A limit on what users or data may do (a count, a time window, an amount) is a business rule, not a constraint.
 11. **Write plainly.** Short sentences, active voice, one idea per sentence. Tables for rules, numbered steps for flows.
-12. **Define once, cite by ID.** Every fact lives in exactly one home (table below). Everywhere else, including other sections, diagrams, and messages, cite its ID and never repeat its value, formula, condition, or copy. IDs are plain text so they survive being copied into Jira. IDs are never renumbered or reused once approved; a removed item keeps its row, marked "No longer applies".
+12. **Define once, cite by ID.** Every rule's logic, every message's wording, and every target lives in exactly one home (table below). Everywhere else cites its ID instead of repeating its full value, formula, condition, table, or copy. IDs are plain text so they survive being copied into Jira. IDs are never renumbered or reused once approved; a removed item keeps its row, marked "No longer applies".
+13. **Readable in place.** A reader understands each story from its own block, without opening another section or memorizing IDs. A rule that only one story cites lives under that story as a Story rule, next to the acceptance criteria that use it; only rules several stories or a common behavior cite, and the status, transition, and permission tables, live in Shared Business Rules. An acceptance criterion states the situation and the outcome in plain words. When the outcome depends on a shared rule, it says the rule's effect in a few words, may add a sample labelled "e.g." (in Vietnamese "VD"), and cites the ID; it never says only "per BR-02". A message is named by what it says and its ID ("a toast confirming the rate was updated (MSG-12)"); a common behavior by its situation and its ID. The full logic, tables, formulas, and limits stay in the rule row.
 
 ## Where each fact lives
 
@@ -55,12 +56,12 @@ Ask what a sentence is about. If it is about **money, seats or other inventory, 
 |------|--------------|----|
 | The jobs users hire the feature for | JTBD (2.3); each epic names the job it serves | `JTBD-01` |
 | Who needs what, and why; priority | User Story (3.3) | `US-01` |
-| Formulas, calculations, rounding, application order, with a worked example | Business Rules (3.1) | `BR-01` |
-| Eligibility and conditional policies, including what happens to money, seats, or status when something fails, and how records that exist before launch and actions in progress at launch are treated | Business Rules (3.1) | `BR-01` |
-| Limits and data constraints (time windows, quantities, input rules), and deadlines promised to the customer | Business Rules (3.1) | `BR-01` |
-| Status transitions and their conditions; side-effects of one event on its transition row, and side-effects shared by every way into a status on its "on entering" row (notifications, inventory released, partner informed) | Business Rules (3.1), Statuses & Transitions and On Entering a Status | `BR-01` |
-| Who may perform which action | Business Rules (3.1), Roles & Permissions | `BR-01` |
-| What the user sees and can do in one story: UI behavior, loading and empty states, default sort order, what each button does, how an error or rule violation is shown (toast, inline error, popup), side-effects of this story's own action | Acceptance Criteria under its story (3.3) | `US-01-AC2` |
+| Formulas, calculations, rounding, application order, with a worked example | Story rules under the one story that cites it (3.3), or Shared Business Rules (3.1) when several stories or a common behavior cite it | `BR-01` |
+| Eligibility and conditional policies, including what happens to money, seats, or status when something fails, and how records that exist before launch and actions in progress at launch are treated | Story rules (3.3) or Shared Business Rules (3.1), as above | `BR-01` |
+| Limits and data constraints (time windows, quantities, input rules), and deadlines promised to the customer | Story rules (3.3) or Shared Business Rules (3.1), as above | `BR-01` |
+| Status transitions and their conditions; side-effects of one event on its transition row, and side-effects shared by every way into a status on its "on entering" row (notifications, inventory released, partner informed) | Shared Business Rules (3.1), Statuses & Transitions and On Entering a Status | `BR-01` |
+| Who may perform which action | Shared Business Rules (3.1), Roles & Permissions | `BR-01` |
+| What the user sees and can do in one story: UI behavior, loading and empty states, default sort order, what each button does, how an error or rule violation is shown (toast, inline error, popup), side-effects of this story's own action | Acceptance Criteria under its story (3.3), readable on their own (Rule 13) | `US-01-AC2` |
 | Behavior that is the same in every story: login session expired, connection lost, repeated tap, system temporarily unavailable | Common Behaviors (3.3) | `CB-01` |
 | The exact wording of every message, on any channel (screen, email, SMS, push) | Messages (3.6) | `MSG-01` |
 | Quality targets: perceived speed, availability, supported platforms, information freshness, expected volume | Non-Functional Requirements (3.5) | `NFR-01` |
@@ -68,10 +69,10 @@ Ask what a sentence is about. If it is about **money, seats or other inventory, 
 | Screens and their design links | Screens (3.6) | `SCR-01` |
 | Partners, teams, other PRDs, and existing features this feature relies on | Dependencies (3.7) | `DEP-01` |
 | A rule defined in another approved PRD | That PRD, listed in Dependencies (3.7) | `[Other PRD name] BR-02` |
-| The order of steps in a multi-step flow | Use Case (3.4), citing AC, CB, BR, and MSG IDs | `UC-01` |
+| The order of steps in a multi-step flow | Use Case (3.4): the actor, the action, and the AC or CB that defines each step's outcome, without restating it | `UC-01` |
 | Unknown or assumed values | The rule's own row says `TBD (Q-03)` or `15 minutes (assumed, A-02)`; the question or assumption cites the rule ID | `Q-01`, `A-01` |
 
-**Messages:** a message that mentions a rule value uses a named placeholder that cites the rule, never the number: "Tickets can be cancelled online up to {cancellation cutoff (BR-01)} before departure." Dynamic data uses a plain placeholder: `{ticket code}`. The message's Rules column lists every rule its wording depends on. Acceptance criteria and common behaviors say how a message is shown (toast, inline error, popup); transitions and use cases cite only its ID.
+**Messages:** a message that mentions a rule value uses a named placeholder that cites the rule, never the number: "Tickets can be cancelled online up to {cancellation cutoff (BR-01)} before departure." Dynamic data uses a plain placeholder: `{ticket code}`. The message's Rules column lists every rule its wording depends on. Acceptance criteria and common behaviors say how a message is shown (toast, inline error, popup) and what it is about in a few words; transitions and use cases cite only its ID.
 
 **Tracking and partners:** say WHAT, not HOW. Write "The system records each completed cancellation to measure SM-02" and "The operator is informed that the ticket is cancelled". Event names and properties belong to the Data team's tracking plan, and how data reaches a partner belongs to the technical design; both are linked in References.
 
@@ -98,7 +99,8 @@ The examples are illustrative. Write in the user's language and use only the rul
 
 - [ ] No forbidden technical detail (Rule 3) appears anywhere, including tables and diagrams.
 - [ ] Every business rule has concrete values (or `TBD (Q-..)`) and a trigger condition, in its own row.
-- [ ] No rule value, formula, condition, or message copy appears outside its home; every other mention cites the ID.
+- [ ] No rule's full logic, table, formula, limit value, or message copy appears outside its home; an acceptance criterion may say a rule's effect in a few words or give a sample labelled e.g., and cites the ID.
+- [ ] Every story can be understood from its own block (statement, Story rules, acceptance criteria) without opening another section or memorizing IDs.
 - [ ] Every acceptance criterion describes something a user or QC can observe.
 - [ ] Every term matches the Glossary, with no synonyms.
 - [ ] Every technical decision appears as an Open Question owned by Dev / Tech Lead, not as an answer.
