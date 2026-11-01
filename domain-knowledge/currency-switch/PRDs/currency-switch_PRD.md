@@ -204,6 +204,41 @@ Quy ước cho cột Ví dụ trong cả PRD: số viết như trên UI EN (dấ
 | Bảng tỷ giá chỉ hợp lệ khi có đủ tiền tệ chính của mọi ngôn ngữ đang bật. | Giá trị mẫu: KO đang bật, tiền tệ chính KRW; lần cập nhật không lấy được KRW/VND từ nguồn nào → bảng đó không hợp lệ, bảng hiện hành giữ nguyên. |
 | Bảng tỷ giá hiện hành bị coi là cũ (stale) khi, kể từ lần gần nhất tạo được bảng hợp lệ, N lần cập nhật định kỳ liên tiếp không tạo được bảng hợp lệ (N là ngưỡng bảng cũ). Lần cập nhật ngay sau khi tạo, sửa quy tắc tỷ giá hoặc khi bấm làm mới không được tính vào N. N áp dụng cho cả bảng tỷ giá (giả định), do nhân viên vận hành tỷ giá đặt trên công cụ cấu hình tỷ giá; không có mặc định; bắt buộc đặt trước ngày ra mắt (giả định). Ngày nguồn không công bố bản tin (cuối tuần, lễ) không tính là lần lỗi. Khi mọi nguồn lỗi, giữ bảng hiện hành cho tới ngưỡng này. | Giá trị mẫu: N = 3, cập nhật mỗi 2 giờ → khoảng 6 giờ không có bảng mới thì bảng hiện hành thành Cũ. |
 
+**Trạng thái của bảng tỷ giá hiện hành**
+
+| Từ | Khi | Điều kiện | Sang | Kèm theo |
+|----|-----|-----------|------|----------|
+| Bình thường | Một lần cập nhật định kỳ không tạo được bảng tỷ giá hợp lệ | Đã đủ ngưỡng bảng cũ: N lần cập nhật định kỳ liên tiếp không tạo được bảng hợp lệ | Cũ | — |
+| Bình thường | Người có quyền (theo phân quyền hiện có của hệ thống) bật công tắc tắt khẩn cấp | — | Cũ | Công tắc tắt khẩn cấp vận hành ở đâu, bằng cách nào: TBD, Dev / Tech Lead ghi trong Technical design. |
+| Cũ | Một lần cập nhật tạo được bảng tỷ giá hợp lệ | Công tắc tắt khẩn cấp không bật (giả định) | Bình thường | Bảng mới thành bảng tỷ giá hiện hành. |
+| Cũ | Người có quyền (theo phân quyền hiện có của hệ thống) tắt công tắc tắt khẩn cấp | Chưa đủ ngưỡng bảng cũ: N lần cập nhật định kỳ liên tiếp không tạo được bảng hợp lệ | Bình thường | Bảng tỷ giá hợp lệ mới nhất tiếp tục là bảng tỷ giá hiện hành (giả định). Công tắc tắt khẩn cấp vận hành ở đâu, bằng cách nào: TBD, Dev / Tech Lead ghi trong Technical design. |
+
+| Trạng thái | Khi vào trạng thái này |
+|------------|------------------------|
+| Cũ | Mọi bề mặt chỉ hiển thị VND, không dùng tỷ giá của bảng cũ, kể cả báo giá đang mở, kèm thông báo giá tham khảo tạm thời không có. Đơn thanh toán thành công trong thời gian này chỉ lưu số tham khảo khi, lúc khách bấm nút thanh toán, màn thanh toán đang hiển thị số tham khảo cho khách, hoặc màn thanh toán chỉ hiển thị VND vì đang chờ kết luận của Legal nhưng checkout của báo giá đã hiển thị số tham khảo. Số tham khảo đã lưu trên đơn vẫn hiển thị trên email xác nhận, My bookings và số tiền hoàn, trừ khi xem trên UI VI (giả định). Trang khách đang mở, gồm cả trang kết quả tìm kiếm và checkout, chuyển sang chỉ hiển thị VND ngay khi bảng thành Cũ, không chờ khách tải lại trang (giả định); nếu không làm được ngay, độ trễ tối đa: TBD, Dev / Tech Lead ghi trong Technical design, PO duyệt. Đây là ngoại lệ của quy tắc trang đang mở không tự đổi số tham khảo khi có bảng mới. Khi bảng trở lại Bình thường, trang khách đang mở hiện lại số tham khảo khi khách mở hoặc tải lại trang, trừ Checkout, Bước nhập thông tin hành khách và Màn thanh toán: các trang này hiện lại số tham khảo ngay, theo bảng tỷ giá của báo giá (giả định). |
+
+**Đổi ngôn ngữ, tiền tệ trong lúc đặt vé**
+
+| Quy tắc | Ví dụ |
+|---------|-------|
+| Số VND giữ cố định trong một báo giá: trước màn thanh toán, đổi ngôn ngữ hoặc tiền tệ chỉ đổi tiền tệ tham khảo; tỷ giá vẫn lấy từ bảng tỷ giá của báo giá; số VND và thời điểm hết giữ chỗ không đổi. | Báo giá 470,300 VND, bảng tỷ giá có 1 USD = 26,054 VND và 1 KRW = 18.95 VND. Đổi USD → KRW: 470,300 VND : ~USD 18.05 thành 470,300 VND : ~KRW 24,818; số VND vẫn 470,300. |
+| Ngôn ngữ và tiền tệ đổi được từ trang kết quả tìm kiếm tới bước nhập thông tin hành khách; ở màn thanh toán thì không đổi được. | Ở bước nhập thông tin: đổi USD → KRW được. Ở màn thanh toán: không đổi được. |
+
+**Vòng đời báo giá**
+
+| Từ | Khi | Điều kiện | Sang | Kèm theo |
+|----|-----|-----------|------|----------|
+| — | Khách vào checkout | — | Đang hiệu lực | Báo giá giữ cố định: số VND; bảng tỷ giá hiện hành mới nhất; mốc hết hiệu lực tỷ giá = lần cập nhật định kỳ kế tiếp; mốc hết giữ chỗ theo thời gian giữ chỗ hiện có. Ví dụ (giá trị mẫu): vào checkout lúc 09:40, lịch cập nhật 08:00, 10:00 → tỷ giá của báo giá hết hiệu lực lúc 10:00. |
+| Đang hiệu lực | Tới mốc hết hiệu lực tỷ giá của báo giá | Chỗ vẫn còn được giữ và đã có bảng tỷ giá hợp lệ (có đủ tiền tệ chính của mọi ngôn ngữ đang bật) mới hơn | Đang hiệu lực | Báo giá chuyển sang bảng tỷ giá hiện hành mới nhất; mốc hết hiệu lực tỷ giá mới = lần cập nhật định kỳ kế tiếp; số VND và mốc hết giữ chỗ không đổi; không chặn thanh toán. |
+| Đang hiệu lực | Tới mốc hết hiệu lực tỷ giá của báo giá | Chỗ vẫn còn được giữ và chưa có bảng tỷ giá hợp lệ mới | Đang hiệu lực | Báo giá giữ tỷ giá hiện có trong khi chưa có bảng tỷ giá hợp lệ mới, tối đa cho tới khi bảng tỷ giá hiện hành thành Cũ; không chặn thanh toán (giả định). |
+| Đang hiệu lực | Một bảng tỷ giá hợp lệ mới thành bảng tỷ giá hiện hành, kể cả lúc bảng đang Cũ trở lại Bình thường nhờ một lần cập nhật tạo được bảng hợp lệ | Chỗ vẫn còn được giữ, và đã qua mốc hết hiệu lực tỷ giá của báo giá hoặc báo giá được tạo trong khi bảng tỷ giá hiện hành đang Cũ | Đang hiệu lực | Như khi tới mốc hết hiệu lực tỷ giá và đã có bảng hợp lệ mới hơn: báo giá chuyển sang bảng tỷ giá hiện hành mới nhất; mốc hết hiệu lực tỷ giá mới = lần cập nhật định kỳ kế tiếp; số VND và mốc hết giữ chỗ không đổi; không chặn thanh toán (giả định). Ví dụ (giá trị mẫu): bảng tỷ giá hiện hành Cũ từ 10:00; báo giá tạo lúc 10:30 (mốc hết hiệu lực tỷ giá 12:00) chỉ hiển thị VND; lúc 11:00 bấm làm mới tạo được bảng hợp lệ → báo giá chuyển sang bảng 11:00 ngay, không giữ bảng cũ tới 12:00. |
+| Đang hiệu lực | Hết thời gian giữ chỗ | — | Hết hạn | — |
+| Đang hiệu lực | Khách thanh toán thành công | — | Đã thành đơn | Đơn lưu số VND của báo giá và ngôn ngữ đặt vé (ngôn ngữ UI lúc thanh toán). Nếu đơn đủ điều kiện lưu số tham khảo (lúc khách bấm nút thanh toán, màn thanh toán đang hiển thị số tham khảo, hoặc chỉ hiển thị VND vì đang chờ Legal nhưng checkout đã hiển thị số tham khảo), đơn lưu thêm: tiền tệ tham khảo, số tham khảo tính theo bảng tỷ giá của báo giá lúc khách bấm nút thanh toán, tỷ giá và nguồn tỷ giá của bảng tỷ giá dùng để tính số tham khảo đó, nhóm hiển thị Browse/Pay theo chế độ thứ bậc hiển thị, phiên bản, ngôn ngữ và thời điểm disclaimer giá tham khảo được hiển thị cho khách. |
+
+| Trạng thái | Khi vào trạng thái này |
+|------------|------------------------|
+| Hết hạn | Chỗ được nhả; báo giá không còn dùng được; khách phải chọn lại chuyến để có báo giá mới. |
+
 **Legal và dữ liệu cũ**
 
 | Quy tắc | Ví dụ |
@@ -217,19 +252,6 @@ Quy ước cho cột Ví dụ trong cả PRD: số viết như trên UI EN (dấ
 |---------|-------|
 | Nội dung thông báo viết bằng tiếng Anh trong PRD này là bản EN và giữ nguyên tiếng Anh. Bản dịch theo từng ngôn ngữ UI do đội dịch thuật cung cấp và Legal duyệt theo quy trình riêng. | — |
 | Chỗ chèn số tiền trong nội dung thông báo chỉ chứa số đã định dạng; mã tiền nằm sẵn trong câu, để không bị lặp mã. | "You will be charged exactly {số tiền VND} VND" hiển thị "… exactly 470,300 VND", không phải "VND VND 470,300". |
-
-**Trạng thái của bảng tỷ giá hiện hành**
-
-| Từ | Khi | Điều kiện | Sang | Kèm theo |
-|----|-----|-----------|------|----------|
-| Bình thường | Một lần cập nhật định kỳ không tạo được bảng tỷ giá hợp lệ | Đã đủ ngưỡng bảng cũ: N lần cập nhật định kỳ liên tiếp không tạo được bảng hợp lệ | Cũ | — |
-| Bình thường | Người có quyền (theo phân quyền hiện có của hệ thống) bật công tắc tắt khẩn cấp | — | Cũ | Công tắc tắt khẩn cấp vận hành ở đâu, bằng cách nào: TBD, Dev / Tech Lead ghi trong Technical design. |
-| Cũ | Một lần cập nhật tạo được bảng tỷ giá hợp lệ | Công tắc tắt khẩn cấp không bật (giả định) | Bình thường | Bảng mới thành bảng tỷ giá hiện hành. |
-| Cũ | Người có quyền (theo phân quyền hiện có của hệ thống) tắt công tắc tắt khẩn cấp | Chưa đủ ngưỡng bảng cũ: N lần cập nhật định kỳ liên tiếp không tạo được bảng hợp lệ | Bình thường | Bảng tỷ giá hợp lệ mới nhất tiếp tục là bảng tỷ giá hiện hành (giả định). Công tắc tắt khẩn cấp vận hành ở đâu, bằng cách nào: TBD, Dev / Tech Lead ghi trong Technical design. |
-
-| Trạng thái | Khi vào trạng thái này |
-|------------|------------------------|
-| Cũ | Mọi bề mặt chỉ hiển thị VND, không dùng tỷ giá của bảng cũ, kể cả báo giá đang mở, kèm thông báo giá tham khảo tạm thời không có. Đơn thanh toán thành công trong thời gian này chỉ lưu số tham khảo khi, lúc khách bấm nút thanh toán, màn thanh toán đang hiển thị số tham khảo cho khách, hoặc màn thanh toán chỉ hiển thị VND vì đang chờ kết luận của Legal nhưng checkout của báo giá đã hiển thị số tham khảo. Số tham khảo đã lưu trên đơn vẫn hiển thị trên email xác nhận, My bookings và số tiền hoàn, trừ khi xem trên UI VI (giả định). Trang khách đang mở, gồm cả trang kết quả tìm kiếm và checkout, chuyển sang chỉ hiển thị VND ngay khi bảng thành Cũ, không chờ khách tải lại trang (giả định); nếu không làm được ngay, độ trễ tối đa: TBD, Dev / Tech Lead ghi trong Technical design, PO duyệt. Đây là ngoại lệ của quy tắc trang đang mở không tự đổi số tham khảo khi có bảng mới. Khi bảng trở lại Bình thường, trang khách đang mở hiện lại số tham khảo khi khách mở hoặc tải lại trang, trừ Checkout, Bước nhập thông tin hành khách và Màn thanh toán: các trang này hiện lại số tham khảo ngay, theo bảng tỷ giá của báo giá (giả định). |
 
 **Khi nào khách chỉ thấy VND**
 
@@ -669,28 +691,6 @@ Là khách inbound, tôi muốn lọc chuyến theo khoảng giá bằng tiền 
 
 Khách biết chính xác số VND sẽ bị trừ, và số tham khảo không đổi bất ngờ trong lúc thanh toán.
 
-**Quy tắc của epic**
-
-| Quy tắc | Ví dụ |
-|---------|-------|
-| Số VND giữ cố định trong một báo giá: trước màn thanh toán, đổi ngôn ngữ hoặc tiền tệ chỉ đổi tiền tệ tham khảo; tỷ giá vẫn lấy từ bảng tỷ giá của báo giá; số VND và thời điểm hết giữ chỗ không đổi. | Báo giá 470,300 VND, bảng tỷ giá có 1 USD = 26,054 VND và 1 KRW = 18.95 VND. Đổi USD → KRW: 470,300 VND : ~USD 18.05 thành 470,300 VND : ~KRW 24,818; số VND vẫn 470,300. |
-| Ngôn ngữ và tiền tệ đổi được từ trang kết quả tìm kiếm tới bước nhập thông tin hành khách; ở màn thanh toán thì không đổi được. | Ở bước nhập thông tin: đổi USD → KRW được. Ở màn thanh toán: không đổi được. |
-
-**Vòng đời báo giá**
-
-| Từ | Khi | Điều kiện | Sang | Kèm theo |
-|----|-----|-----------|------|----------|
-| — | Khách vào checkout | — | Đang hiệu lực | Báo giá giữ cố định: số VND; bảng tỷ giá hiện hành mới nhất; mốc hết hiệu lực tỷ giá = lần cập nhật định kỳ kế tiếp; mốc hết giữ chỗ theo thời gian giữ chỗ hiện có. Ví dụ (giá trị mẫu): vào checkout lúc 09:40, lịch cập nhật 08:00, 10:00 → tỷ giá của báo giá hết hiệu lực lúc 10:00. |
-| Đang hiệu lực | Tới mốc hết hiệu lực tỷ giá của báo giá | Chỗ vẫn còn được giữ và đã có bảng tỷ giá hợp lệ (có đủ tiền tệ chính của mọi ngôn ngữ đang bật) mới hơn | Đang hiệu lực | Báo giá chuyển sang bảng tỷ giá hiện hành mới nhất; mốc hết hiệu lực tỷ giá mới = lần cập nhật định kỳ kế tiếp; số VND và mốc hết giữ chỗ không đổi; không chặn thanh toán. |
-| Đang hiệu lực | Tới mốc hết hiệu lực tỷ giá của báo giá | Chỗ vẫn còn được giữ và chưa có bảng tỷ giá hợp lệ mới | Đang hiệu lực | Báo giá giữ tỷ giá hiện có trong khi chưa có bảng tỷ giá hợp lệ mới, tối đa cho tới khi bảng tỷ giá hiện hành thành Cũ; không chặn thanh toán (giả định). |
-| Đang hiệu lực | Một bảng tỷ giá hợp lệ mới thành bảng tỷ giá hiện hành, kể cả lúc bảng đang Cũ trở lại Bình thường nhờ một lần cập nhật tạo được bảng hợp lệ | Chỗ vẫn còn được giữ, và đã qua mốc hết hiệu lực tỷ giá của báo giá hoặc báo giá được tạo trong khi bảng tỷ giá hiện hành đang Cũ | Đang hiệu lực | Như khi tới mốc hết hiệu lực tỷ giá và đã có bảng hợp lệ mới hơn: báo giá chuyển sang bảng tỷ giá hiện hành mới nhất; mốc hết hiệu lực tỷ giá mới = lần cập nhật định kỳ kế tiếp; số VND và mốc hết giữ chỗ không đổi; không chặn thanh toán (giả định). Ví dụ (giá trị mẫu): bảng tỷ giá hiện hành Cũ từ 10:00; báo giá tạo lúc 10:30 (mốc hết hiệu lực tỷ giá 12:00) chỉ hiển thị VND; lúc 11:00 bấm làm mới tạo được bảng hợp lệ → báo giá chuyển sang bảng 11:00 ngay, không giữ bảng cũ tới 12:00. |
-| Đang hiệu lực | Hết thời gian giữ chỗ | — | Hết hạn | — |
-| Đang hiệu lực | Khách thanh toán thành công | — | Đã thành đơn | Đơn lưu số VND của báo giá và ngôn ngữ đặt vé (ngôn ngữ UI lúc thanh toán). Nếu đơn đủ điều kiện lưu số tham khảo (lúc khách bấm nút thanh toán, màn thanh toán đang hiển thị số tham khảo, hoặc chỉ hiển thị VND vì đang chờ Legal nhưng checkout đã hiển thị số tham khảo), đơn lưu thêm: tiền tệ tham khảo, số tham khảo tính theo bảng tỷ giá của báo giá lúc khách bấm nút thanh toán, tỷ giá và nguồn tỷ giá của bảng tỷ giá dùng để tính số tham khảo đó, nhóm hiển thị Browse/Pay theo chế độ thứ bậc hiển thị, phiên bản, ngôn ngữ và thời điểm disclaimer giá tham khảo được hiển thị cho khách. |
-
-| Trạng thái | Khi vào trạng thái này |
-|------------|------------------------|
-| Hết hạn | Chỗ được nhả; báo giá không còn dùng được; khách phải chọn lại chuyến để có báo giá mới. |
-
 ##### US-13 - Thông báo thanh toán rõ ràng
 
 Là khách inbound ở checkout, tôi muốn thấy rõ số VND chính xác sẽ bị trừ cùng lưu ý về tỷ giá của ngân hàng, để tôi không bất ngờ khi xem sao kê.
@@ -851,7 +851,7 @@ Là nhân viên vận hành tỷ giá, tôi muốn có một bảng tỷ giá th
 |---------|-------|
 | Loại tỷ giá: spot. Nguồn dự phòng phải dùng cùng loại tỷ giá; nếu khác thì ghi rõ khác biệt trong bảng tỷ giá. | USD/VND lấy từ ExchangeRate-API (dự phòng) → bảng tỷ giá ghi nguồn và loại tỷ giá của cặp đó; khác spot thì ghi rõ khác biệt. |
 | Biến động tối đa/ngày: tỷ giá gốc mới của một cặp lệch so với tỷ giá gốc hiện hành của cặp đó quá mức biến động tối đa/ngày của quy tắc thì bị bỏ qua; giữ tỷ giá hiện hành và ghi lại một cảnh báo tỷ giá bị bỏ qua cho cặp đó, gồm thời điểm, tỷ giá gốc bị bỏ qua, nguồn và mức lệch; cảnh báo còn hiệu lực tới lần cập nhật kế tiếp nhận được tỷ giá của cặp, và hiển thị cho nhân viên vận hành tỷ giá trên danh sách quy tắc tỷ giá (giả định). Để trống là không giới hạn. Mức lệch = giá trị tuyệt đối của (tỷ giá gốc mới − tỷ giá gốc hiện hành) / tỷ giá gốc hiện hành; cả hai là tỷ giá gốc, trước buffer và trước làm tròn (giả định). | Giá trị mẫu, biến động tối đa 3%, tỷ giá gốc hiện hành 26,054: tỷ giá gốc mới 27,000 → lệch 3.63% → bỏ qua, giữ 26,054. Mới 26,500 → lệch 1.71% → nhận. |
-| Khi một lần cập nhật không lấy được tỷ giá của một cặp từ nguồn nào nhưng bảng mới vẫn hợp lệ, tức vẫn có đủ tiền tệ chính của mọi ngôn ngữ đang bật, bảng mới giữ tỷ giá hiện hành của cặp đó, kèm nguồn và thời điểm bản tin cũ. Sau N lần cập nhật định kỳ liên tiếp không lấy được tỷ giá của cặp đó (N là ngưỡng bảng cũ), cặp đó không có trong bảng mới; khách đang dùng tiền tệ đó thấy như khi quy tắc tỷ giá của cặp bị tắt, tức chỉ thấy VND kèm thông báo giá tham khảo tạm thời không có (giả định). | Giá trị mẫu, N = 3: lần 10:00 và 12:00 không lấy được TWD/VND → hai bảng mới giữ tỷ giá TWD/VND của bảng 08:00; lần 14:00 vẫn không lấy được (lần thứ 3) → bảng 14:00 không có TWD; khách đang dùng TWD thấy VND kèm thông báo giá tham khảo bằng TWD tạm thời không có. |
+| Khi một lần cập nhật không lấy được tỷ giá của một cặp từ nguồn nào nhưng bảng mới vẫn hợp lệ, tức vẫn có đủ tiền tệ chính của mọi ngôn ngữ đang bật, bảng mới giữ tỷ giá hiện hành của cặp đó, kèm nguồn và thời điểm bản tin cũ. Sau N lần cập nhật định kỳ liên tiếp không lấy được tỷ giá của cặp đó (N là ngưỡng bảng cũ), cặp đó không có trong bảng mới; khách đang dùng tiền tệ đó thấy như khi quy tắc tỷ giá của cặp bị tắt: chỉ thấy VND kèm thông báo giá tham khảo bằng tiền tệ đó tạm thời không có; tiền tệ hiện hành không được xác định lại theo cách chọn tiền tệ mặc định; tiền tệ đã chọn của khách không bị xoá và được dùng lại khi cặp có lại trong bảng tỷ giá (giả định). | Giá trị mẫu, N = 3: lần 10:00 và 12:00 không lấy được TWD/VND → hai bảng mới giữ tỷ giá TWD/VND của bảng 08:00; lần 14:00 vẫn không lấy được (lần thứ 3) → bảng 14:00 không có TWD; khách đang dùng TWD thấy VND kèm thông báo giá tham khảo bằng TWD tạm thời không có. |
 
 **Acceptance Criteria**
 
