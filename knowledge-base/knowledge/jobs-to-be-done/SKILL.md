@@ -31,7 +31,7 @@ JTBD uncovers *why* customers "hire" a product, not what features they want. Sta
 
 **When research exists:** Work from it. Help structure, translate, and sharpen insights into well-formed JTBD statements.
 
-**When no research exists:** Flag it — label all outputs as "hypothesized, needs validation." Still proceed; a hypothesis beats nothing. Recommend methods from `references/research-methods.md`.
+**When no research exists:** Flag it — tell the user the jobs are hypotheses that need validation (inside a PRD, say it once when presenting the jobs; do not print a status on each job). Still proceed; a hypothesis beats nothing. Recommend methods from `references/research-methods.md`.
 
 **Output format:** Always use `template.md` as the structure. For lightweight requests: complete elements 1–4 + Approach A (Pains/Gains). For rigorous requests: also complete Approach B (Desired Outcomes). Always end with Implications.
 

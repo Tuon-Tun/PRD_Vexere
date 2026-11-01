@@ -24,7 +24,7 @@ so that [Value/Reason].
 | **WHO** (Actor) | Specific named persona — never "user", "system", or "developer". Represents how the person works, thinks, feels. One actor per story. |
 | **DOES + WHAT** (Action) | Outcome-focused, implementation-free. No UI elements, no technical prescriptions. Use "I want to [do X]" — avoid "I need a [feature]". |
 | **WHY** (so that) | Genuine user/business value — never a system requirement. Always present. Ask "Why?" 5× to reach true motivation. |
-| **DONE WHEN** (AC) | Testable conditions confirming the story is complete. See Section 3. |
+| **AC** | Testable conditions confirming the story is complete. See Section 3. |
 
 ---
 
@@ -43,35 +43,35 @@ so that [Value/Reason].
 
 ## 3 · ACCEPTANCE CRITERIA (AC)
 
-**Format:** `Done when: [testable condition — pass/fail verifiable]`
-**Prefer** "Done when" over Gherkin (Given/When/Then) — simpler to read and test.
+**Format:** `- AC1 (Happy): [testable condition — pass/fail verifiable]`
+**Prefer** one plain sentence per AC over Gherkin (Given/When/Then) — simpler to read and test.
 
 - **One outcome per AC.** Split an AC when its outcomes can pass or fail separately (for example a status change and the toast that confirms it). A disabled or hidden control and the inline message that explains it count as one outcome.
-- **Name the precondition.** When the AC depends on a situation or a state beyond "the user is on this screen", open with `If` (something happens) or `While` (a state holds): `Done when: While the seat hold is active, the remaining time is visible.`
+- **Name the precondition.** When the AC depends on a situation or a state beyond "the user is on this screen", open with `If` (something happens) or `While` (a state holds): `- AC1 (Happy): While the seat hold is active, the remaining time is visible.`
 - **Label the path.** Tag each AC `(Happy)`, `(Alternative)`, or `(Error)` so QC sees the coverage at a glance.
 
 ### Standalone story vs. story inside a PRD
 
 - **Standalone** (a story written on its own, with no PRD): write the values directly in the AC, as in the examples.
-- **Inside a PRD** (the PRD pipeline): every fact has one home, as defined in `knowledge-base/product-language/SKILL.md`. A rule only this story cites sits under the story as a Story rule, just above the AC; a rule several stories share sits in the PRD's Shared Business Rules, with the status transitions and permissions. Message wording lives in the Messages table, quality targets in the NFR table, and behavior shared by every story in Common Behaviors. Each AC reads on its own: it cites a Story rule by ID, says a shared rule's effect in a few words (with a sample labelled e.g. when useful) and cites it, and names a message by what it says and its ID — `Done when: If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline note says online cancellation has closed (MSG-01).` It never copies a rule's full logic or a message's wording, and never says only "per BR-01". Side-effects of a status transition live on its rule row; the AC only states that the transition happens. Number AC within the story (`AC1`, `AC2`) and add the story's `Priority`, `Screens`, `Jira` (left empty for the PM), `Common behaviors` (each with its situation in a few words), and `Story rules` lines.
+- **Inside a PRD** (the PRD pipeline): the reader reads the PRD top to bottom, so each fact sits where it is needed, as defined in `knowledge-base/product-language/SKILL.md`. A rule only this story uses sits under the story in its Rules block, just above the AC; a rule several stories of the epic use sits at the top of the epic; only the foundation of the whole feature sits in General Rules. There are no codes: rules, messages, screens, and metrics are named in words, and the only identifiers are the story ID in its heading and the AC numbers. Each AC reads on its own: it applies the story's or epic's rules in plain words, states the effect of a rule from elsewhere in a few words (with a sample labelled e.g. when useful), and quotes a message's exact copy where it is shown first — `- AC2 (Error): If the cancellation cutoff has passed, the Cancel button is disabled and an inline note says "Online cancellation closes 24 hours before departure."` It never copies another story's whole rule table. What a status change causes lives in its lifecycle row; the AC only states that the change happens. Number AC within the story (`AC1`, `AC2`). Check INVEST, but do not print the check, a priority, or other metadata lines in the PRD.
 
 ### Must cover all of these
 
 | Type | Rule |
 |------|------|
 | **Happy path** | At least one AC for the main successful flow |
-| **Negative/edge flows** | `Done when: If [X], then [Y]` — at least one error/edge case. Inside a PRD, a listed common behavior counts for its situation |
-| **Role-based** | Separate AC per role if multiple actors — only combine if buildable + testable together. Inside a PRD, who may act is a permission rule; the AC states what an allowed or a refused role sees and cites the rule |
+| **Negative/edge flows** | `- ACn (Error): If [X], then [Y]` — at least one error/edge case. Inside a PRD, a situation in "Same in every story" counts for its situation |
+| **Role-based** | Separate AC per role if multiple actors — only combine if buildable + testable together. Inside a PRD, who may act is a rule under the story where the action is taken; the AC states what an allowed or a refused role sees |
 | **Error display** | For each broken rule or failure the story can hit: how it is shown (toast, inline error, popup) and which message |
 | **Side-effects** | After the story's own action succeeds: what is recorded and for which metric, which notification is sent, what a partner is informed of — WHAT, never event names or how data is synced |
-| **NFRs** | Performance, capacity, security — use exact thresholds, never vague quantifiers, and express them as the user or business experiences them (e.g., "results appear within 3 seconds"), not as infrastructure. Inside a PRD, cite the NFR ID instead of restating the threshold |
+| **NFRs** | Performance, capacity, security — use exact thresholds, never vague quantifiers, and express them as the user or business experiences them (e.g., "results appear within 3 seconds"), not as infrastructure. Inside a PRD, a cross-cutting target lives in Non-Functional Requirements; a target that is this story's outcome is written in its AC |
 | **Observable** | Every AC describes what the user sees or what result the business gets — never status codes, error codes, or internal system behavior |
-| **Design hints** | Framed as preference: `Done when: Report is exportable. (Customer prefers Excel.)` |
+| **Design hints** | Framed as preference: `- AC4 (Happy): Report is exportable. (Customer prefers Excel.)` |
 
 ### NFR placement
 
 1. In the **WHAT** clause (if it defines system behaviour)
-2. In **AC** (preferred — for performance, capacity, security). Inside a PRD, the threshold lives once in the NFR table (or in a rule, for a limit) and the AC cites its ID
+2. In **AC** (preferred — for performance, capacity, security). Inside a PRD, a threshold that applies across the feature lives in Non-Functional Requirements (or in a rule, for a limit); the AC states it when it is the story's own outcome
 3. As its **own story** if effort is sprint-sized
 
 ### MoSCoW for AC priority
@@ -108,7 +108,7 @@ Epic → Feature → User Story
 ```
 
 - Stories must connect to a Feature; Features to an Epic
-- Each story's "Why" must be **self-contained** — the "so that" clause makes sense without reading the Epic; devs work from stories, not Epics. Inside a PRD, do not paste the Epic description or rule content into the story: the Jira ticket gets its context from the Epic link, the story's own rules, and its AC
+- Each story's "Why" must be **self-contained** — the "so that" clause makes sense without reading the Epic; devs work from stories, not Epics. Inside a PRD, do not paste the Epic description or another story's rules into the story: the Jira ticket gets its context from the Epic link, the epic's rules, the story's own rules, and its AC
 
 ---
 
@@ -122,11 +122,11 @@ I want to [see / receive / send] [business information] [from / to] [partner or 
 so that [outcome].
 ```
 
-Also define, in business terms: what information is exchanged, when, who owns it, and what the user sees if the partner is unavailable. Inside a PRD, what we need from the partner and who owns it live in Dependencies (cited by `DEP-` ID), and the outcome when the partner is unavailable lives in a rule; the AC only states what the user sees. Do not define endpoints, payloads, status codes, or data formats — those belong to the Dev team's technical design.
+Also define, in business terms: what information is exchanged, when, who owns it, and what the user sees if the partner is unavailable. Inside a PRD, the outcome when the partner is unavailable lives in a rule under the story; the AC states what the user sees. Do not define endpoints, payloads, status codes, or data formats — those belong to the Dev team's technical design.
 
-**Reporting stories:** WHO = person who uses the report · WHAT = the business information the report shows · AC = what the user sees (default sort, empty state, export result) · WHY = business reason. Inside a PRD, limits and formats are rules cited by ID
+**Reporting stories:** WHO = person who uses the report · WHAT = the business information the report shows · AC = what the user sees (default sort, empty state, export result) · WHY = business reason. Inside a PRD, limits and formats are rules under the story
 
-**Non-collocated teams:** Add more AC detail; supplement with SRD or mockup; link all artifacts explicitly in the story. Inside a PRD, add detail by citing rule, message, and common behavior IDs, not by copying their content into the AC; use cases cite the AC, not the reverse.
+**Non-collocated teams:** Add more AC detail; supplement with SRD or mockup; link all artifacts explicitly in the story. Inside a PRD, add detail in the story's rules and AC, where the reader already is, not in a separate document.
 
 **Mockups:** Each mockup section → one or more stories. Developed collaboratively. Suggestion tool only — not a locked design.
 
@@ -145,37 +145,31 @@ Also define, in business terms: what information is exchanged, when, who owns it
 | Vague NFR ("more than X") | Untestable | Use exact threshold |
 | Developer as actor | No end-user value | Reframe as technical task |
 | Missing "so that" | Team doesn't know the why | Always include value clause |
-| Inside a PRD, AC repeats a rule's full logic ("cancel at least 24h before") or message wording, or says only "per BR-01" | Copies drift when the policy changes; a bare ID forces the reader to look it up | Put the rule under the story (or cite the shared rule), say its effect in a few words, and cite the ID |
+| Inside a PRD, AC says only "per BR-01" or "show MSG-04", or copies another story's whole rule table | A code forces the reader to look it up; a copied table drifts when the policy changes | Put the rule under the story or at the top of its epic, and state a rule from elsewhere by its effect in a few words |
 
 ---
 
 ## 9 · OUTPUT FORMAT
 
 ```text
-## User Story
-**Title:** [Short descriptive title]
+##### US-01 - [Short descriptive title]
 
-As a [Actor],
-I want to [Action + Object],
-so that [Value].
+As a [Actor], I want to [Action + Object], so that [Value].
 
-**Priority:** [Must / Should / Could]                  ← inside a PRD
-**Screens:** SCR-01                                    ← inside a PRD
-**Jira:** [PM fills]                                   ← inside a PRD
-**Common behaviors:** CB-01                            ← inside a PRD
-**Story rules:** BR-01 table (rules only this story cites)   ← inside a PRD
+**Rules**                                   ← inside a PRD, only when the story has its own rules
+| Rule | Example |
 
-## Acceptance Criteria
-AC1 (Happy) Done when: [positive condition]
-AC2 (Alternative) Done when: While [state], [what the user can do or sees]
-AC3 (Error) Done when: If [X], then [Y]  ← negative/edge case
-AC4 (Happy) Done when: [NFR with exact threshold, or its NFR ID inside a PRD]
+**Acceptance Criteria**
+- AC1 (Happy): [positive condition]
+- AC2 (Alternative): While [state], [what the user can do or sees]
+- AC3 (Error): If [X], then [Y], and a [toast / inline error / popup] says "[copy]"
+- AC4 (Happy): [NFR with exact threshold]
 
-## Notes (optional)
+Notes (optional, standalone only)
 [Design suggestion — framed as preference, not requirement]
-[Links: mockup / SRD / related story ID]
+[Links: mockup / SRD / related story]
 
-## INVEST
+INVEST (standalone only; inside a PRD the check is done, not printed)
 [ ] I  [ ] N  [ ] V  [ ] E  [ ] S  [ ] T
 ```
 
@@ -191,8 +185,8 @@ Fix any failure before outputting.
 - [ ] No `and` / `or` / `/` in WHO/DOES/WHAT
 - [ ] Every AC has a clear pass/fail condition
 - [ ] Every AC describes an observable outcome in business language — no status codes, endpoints, or internal components
-- [ ] Inside a PRD: every AC reads on its own — no AC copies a rule's full logic or a message's wording, and none says only "per BR-.."; rules only this story cites are in its Story rules
-- [ ] Happy path + at least one negative/edge case covered, by its own AC or, inside a PRD, by a listed common behavior
+- [ ] Inside a PRD: no codes; every AC reads on its own; rules only this story uses are in its Rules block; message copy is quoted where it is shown first
+- [ ] Happy path + at least one negative/edge case covered, by its own AC or, inside a PRD, by "Same in every story"
 - [ ] All AC completable within one sprint
 - [ ] All 6 INVEST criteria pass
 - [ ] NFRs use exact thresholds — no vague quantifiers

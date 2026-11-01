@@ -9,6 +9,7 @@
     "Delivery_Mode",
     "Output_Artifacts",
     "Active_Sections",
+    "Wireframes_Requested",
     "Clarification_Confirmed",
     "Domain_Name",
     "Feature_Name",
@@ -57,7 +58,7 @@
     },
     "Active_Sections": {
       "type": "array",
-      "description": "PRD sections the user has confirmed they want included. Sections not listed here are skipped during drafting. Document Info and Summary are always included and are not listed.",
+      "description": "PRD sections the user has confirmed they want included. Sections not listed here are left out of the PRD. Document Info is always included and is not listed. Success Metrics, Process Diagrams, Non-Functional Requirements, and Screens are optional and are listed only when the user chose them in Step 0.",
       "minItems": 1,
       "uniqueItems": true,
       "items": {
@@ -65,20 +66,20 @@
         "enum": [
           "Problem Statement",
           "JTBD",
-          "Goals & Success Metrics",
-          "Scope",
+          "Goals",
+          "Success Metrics",
           "Glossary",
-          "Business Rules",
+          "General Rules",
           "Process Diagrams",
           "Feature Epics & User Stories",
-          "Use Case Specifications",
-          "Traceability Matrix",
           "Non-Functional Requirements",
-          "UI/UX Specifications",
-          "Dependencies & Impacted Areas",
-          "Assumptions & Open Questions"
+          "Screens"
         ]
       }
+    },
+    "Wireframes_Requested": {
+      "type": "boolean",
+      "description": "True only when the user asked in Step 0 for wireframes of the Screens section to be drawn in a design tool. False when the user said no, skipped the question, or left out the Screens section."
     },
     "Clarification_Confirmed": {
       "type": "boolean",
@@ -88,7 +89,11 @@
       "type": "string",
       "description": "Lowercase kebab-case domain slug.",
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-      "examples": ["loyalty-wallet", "payment-gateway", "user-profile"]
+      "examples": [
+        "loyalty-wallet",
+        "payment-gateway",
+        "user-profile"
+      ]
     },
     "Feature_Name": {
       "type": "string",
@@ -110,7 +115,10 @@
     "Problem_Statement": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["User_Problem", "Business_Problem"],
+      "required": [
+        "User_Problem",
+        "Business_Problem"
+      ],
       "properties": {
         "User_Problem": {
           "$ref": "#/$defs/non_empty_or_needs_clarification"
@@ -156,7 +164,10 @@
       "type": "object",
       "description": "What the feature covers and what it explicitly does not. Out_Of_Scope holds only items the user stated or confirmed.",
       "additionalProperties": false,
-      "required": ["In_Scope", "Out_Of_Scope"],
+      "required": [
+        "In_Scope",
+        "Out_Of_Scope"
+      ],
       "properties": {
         "In_Scope": {
           "$ref": "#/$defs/string_array"
@@ -172,7 +183,10 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["Term", "Meaning"],
+        "required": [
+          "Term",
+          "Meaning"
+        ],
         "properties": {
           "Term": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
@@ -191,7 +205,13 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["Title", "Actor", "Action", "Value", "AC_Seeds"],
+        "required": [
+          "Title",
+          "Actor",
+          "Action",
+          "Value",
+          "AC_Seeds"
+        ],
         "properties": {
           "Title": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"
@@ -229,12 +249,23 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["Type", "Metric", "How_Measured", "Baseline", "Target", "Owner"],
+        "required": [
+          "Type",
+          "Metric",
+          "How_Measured",
+          "Baseline",
+          "Target",
+          "Owner"
+        ],
         "properties": {
           "Type": {
             "type": "string",
             "description": "Primary: the outcome the feature is for. Secondary: a supporting outcome. Guardrail: what must not get worse while the primary metric improves; its target is a limit.",
-            "enum": ["Primary", "Secondary", "Guardrail"]
+            "enum": [
+              "Primary",
+              "Secondary",
+              "Guardrail"
+            ]
           },
           "Metric": {
             "$ref": "#/$defs/non_empty_or_needs_clarification"

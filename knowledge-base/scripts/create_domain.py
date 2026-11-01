@@ -22,6 +22,24 @@ def normalize_domain_name(raw_name):
     return cleaned
 
 
+# Rules several PRDs of the domain share live here once, in words; each PRD states their effect
+# and names this file. The PRD list lets a reader see the whole domain at a glance.
+DEFAULT_RULES = """# Domain Rules
+
+Rules that several PRDs of this domain share. Each PRD states a rule's effect in words and names this
+file; a rule only one PRD uses stays in that PRD.
+
+## Shared rules
+
+None yet.
+
+## PRDs in this domain
+
+| PRD | Feature |
+|-----|---------|
+"""
+
+
 def create_domain_files(domain_name, initial_content, project_root=None):
     root = Path(project_root).resolve() if project_root else PROJECT_ROOT
     base_dir = root / "domain-knowledge"
@@ -38,7 +56,7 @@ def create_domain_files(domain_name, initial_content, project_root=None):
     rules_created = False
     if not rules_path.exists():
         rules_path.write_text(
-            initial_content.strip() or "# Domain Rules\n",
+            initial_content.strip() or DEFAULT_RULES,
             encoding="utf-8",
         )
         rules_created = True

@@ -2,9 +2,9 @@
 name: product-language-guide
 description: >
   The single source of truth for how every PRD pipeline output is worded and where each fact
-  lives. Product first: describe WHAT the feature does and WHY, in business language that PO, BA,
-  Dev, and QC all read the same way, with every fact defined once and cited by ID everywhere else.
-  Apply it in every step that writes or reviews PRD content.
+  lives. Product first and human first: the PRD describes WHAT the feature does and WHY, in
+  business language PO, BA, Dev, and QC read the same way, and a reader understands it top to
+  bottom without looking anything up. Apply it in every step that writes or reviews PRD content.
 ---
 
 # Product-First Language Guide
@@ -13,24 +13,30 @@ A PRD is a shared language between four readers: **PO, BA, Dev, and QC**. Its jo
 
 The PRD describes **WHAT** the feature does and **WHY**. It does not describe **HOW** it is built.
 
+## Why the PRD reads top to bottom, without codes
+
+People read a PRD like any other document: from the top, one section at a time. A reader cannot hold a register of codes in their head. A sentence such as "per BR-26, show MSG-04 (CB-02)" forces them to open three other sections before they know what it says, and once a domain has several PRDs that cross-reference each other, nobody can follow it at all.
+
+So the PRD is written for a reader who has only the page in front of them:
+
+- **Each fact sits where the reader needs it.** A rule lives under the story that uses it, at the top of its epic when several stories of that epic use it, or in General Rules only when it is the foundation of the whole feature.
+- **No codes in the text.** Rules, messages, screens, metrics, and quality targets are named in words, never by an ID. The only identifiers are the story ID in each story heading (`US-01`, used to name the Jira ticket) and the numbers of a story's acceptance criteria (`AC1`, `AC2`, used by QC for test cases).
+- **The overview comes first and is plain.** The Problem Statement, JTBD, and Goals are short prose a new reader understands before meeting any rule.
+
 ## Why the PRD stays non-technical
 
 Whoever writes the PRD, a person or an AI, usually does not have the full technical context: the company's tech stack, its engineering rules, its internal systems, the SaaS tools and configuration systems already in place. Technical detail written without that context is guesswork. It misleads Dev, it cannot be checked by PO, BA, or QC, and it hides the business rules that actually matter.
 
 The Dev team owns the technical design (architecture, APIs, data model, configuration) in a separate document, linked from the PRD's References section.
 
-## Why every fact is written once
-
-When the same rule appears in a user story, a business rule, a use case, and a screen description, readers have to read it four times and still cannot tell which copy is the real one. When the policy changes, one copy gets updated and the others do not, and Dev and QC end up building and testing different numbers. So every fact has exactly **one home**. Every other place **cites its ID** instead of repeating it.
-
 ## What each reader needs
 
 | Reader | Needs from the PRD |
 |--------|--------------------|
-| PO | The problem, the value, the goals, and what is in or out of scope |
+| PO | The problem, the value, and the goals |
 | BA | Complete, consistent business rules, statuses, and flows |
 | Dev | Unambiguous logic: conditions, limits, calculations, statuses, and what happens when something goes wrong |
-| QC | Observable, testable outcomes with IDs to trace every test case back to a rule or an acceptance criterion |
+| QC | Observable, testable outcomes, numbered within each story so every test case points to one acceptance criterion |
 
 ## Rules
 
@@ -38,43 +44,40 @@ When the same rule appears in a user story, a business rule, a use case, and a s
 2. **Treat the system as one black box.** Call it "the system" or the product name. Do not split it into internal services, modules, or components. External parties (partners, other teams) may be named only when the input names them.
 3. **Do not write technical detail.** No endpoints, HTTP methods or status codes, request or response payloads, JSON, error codes, database tables or fields, caches, queues, scheduled jobs, service or module names, frameworks, programming languages, code or pseudo-code, configuration keys, tracking event names or properties, or infrastructure.
 4. **Translate, never drop.** When the input contains technical wording, keep its business meaning and rewrite it in product language (see the table below). If the meaning is unclear, ask in business terms.
-5. **Be specific.** Non-technical does not mean vague. Every business rule states concrete values (amounts, time windows, counts, limits, roles) and the condition that triggers it, once, in its own row. Words such as "fast", "valid", "appropriate", "optimal", "flexible", or "etc." are allowed only when the PRD defines them.
+5. **Be specific.** Non-technical does not mean vague. Every business rule states concrete values (amounts, time windows, counts, limits, roles) and the condition that triggers it. Words such as "fast", "valid", "appropriate", "optimal", "flexible", or "etc." are allowed only when the PRD defines them.
 6. **Make every outcome testable.** Acceptance criteria state a result QC can check by using the product, without reading code.
 7. **One term per concept.** Use the same word for the same thing in every section. Define business terms, status names, and role names in the Glossary, and never switch to a synonym later.
 8. **Adjustable values: say who, not how.** If the business needs to change a value without a new release (a fee, a limit, a time window), state that it is adjustable and by which role. If the value is set per partner or per campaign, give the rule's shape, who sets the value, the default if any, and a worked example labelled as sample values. Do not describe how it is configured.
-9. **Route technical decisions to questions.** If a requirement depends on a technical decision, write the business need and add an Open Question owned by Dev / Tech Lead. Do not answer it in the PRD.
-10. **Keep user-provided delivery constraints, do not expand them.** If the user explicitly states a constraint on how or when the feature is delivered (for example "must reuse the current payment partner", "launch before Tet"), record it once, as stated, under Known Constraints. A limit on what users or data may do (a count, a time window, an amount) is a business rule, not a constraint.
+9. **Technical decisions are questions, not answers.** If a requirement depends on a technical decision, write the business need, mark the open point `TBD` with who decides in words ("TBD, Dev / Tech Lead decides"), and list it for the user at the approval step. Do not answer it in the PRD.
+10. **Keep user-provided delivery constraints, do not expand them.** If the user explicitly states a constraint on how or when the feature is delivered (for example "must reuse the current payment partner", "launch before Tet"), record it once, as stated, under Known constraints in the Context. A limit on what users or data may do (a count, a time window, an amount) is a business rule, not a constraint.
 11. **Write plainly.** Short sentences, active voice, one idea per sentence. Tables for rules, numbered steps for flows.
-12. **Define once, cite by ID.** Every rule's logic, every message's wording, and every target lives in exactly one home (table below). Everywhere else cites its ID instead of repeating its full value, formula, condition, table, or copy. IDs are plain text so they survive being copied into Jira. IDs are never renumbered or reused once approved; a removed item keeps its row, marked "No longer applies".
-13. **Readable in place.** A reader understands each story from its own block, without opening another section or memorizing IDs. A rule that only one story cites lives under that story as a Story rule, next to the acceptance criteria that use it; only rules several stories or a common behavior cite, and the status, transition, and permission tables, live in Shared Business Rules. An acceptance criterion states the situation and the outcome in plain words. When the outcome depends on a shared rule, it says the rule's effect in a few words, may add a sample labelled "e.g." (in Vietnamese "VD"), and cites the ID; it never says only "per BR-02". A message is named by what it says and its ID ("a toast confirming the rate was updated (MSG-12)"); a common behavior by its situation and its ID. The full logic, tables, formulas, and limits stay in the rule row.
+12. **No codes in the text.** Never write a rule, message, screen, metric, quality target, dependency, assumption, question, or job by an ID (`BR-`, `MSG-`, `SCR-`, `SM-`, `NFR-`, `DEP-`, `A-`, `Q-`, `JTBD-`, `UC-`, `CB-`), and never copy source codes from the input ("CR-08", "Gốc: ..."). Name things in words. The only identifiers are story IDs in story headings and acceptance criterion numbers within a story; an acceptance criterion may point to another of the same story ("as in AC3").
+13. **Readable in place.** A reader understands each story from its epic and its own block, without opening another section. An acceptance criterion states the situation and the outcome in plain words. When the outcome depends on a rule that sits elsewhere (General Rules, or another story), it says that rule's effect in a few words and may add a sample labelled "e.g." (in Vietnamese "VD"). A message is described by what it says, and its exact copy is written in quotes where the message is shown.
+14. **Unknowns stay visible but light.** An assumed value is written in its rule as `[value] (assumed)`, an unknown one as `TBD` with who decides in words. They are listed for the user in the chat at the approval step; the PRD has no assumptions or open-questions register.
 
 ## Where each fact lives
 
-Ask what a sentence is about. If it is about **money, seats or other inventory, a status, a voucher or other entitlement, or who may act**, it is a business rule. If it is about **what the user sees or what this story triggers**, it is an acceptance criterion that cites the rule.
+Ask what a sentence is about. If it is about **money, seats or other inventory, a status, a voucher or other entitlement, or who may act**, it is a business rule. If it is about **what the user sees or what this story triggers**, it is an acceptance criterion.
 
-| Fact | Its one home | ID |
-|------|--------------|----|
-| The jobs users hire the feature for | JTBD (2.3); each epic names the job it serves | `JTBD-01` |
-| Who needs what, and why; priority | User Story (3.3) | `US-01` |
-| Formulas, calculations, rounding, application order, with a worked example | Story rules under the one story that cites it (3.3), or Shared Business Rules (3.1) when several stories or a common behavior cite it | `BR-01` |
-| Eligibility and conditional policies, including what happens to money, seats, or status when something fails, and how records that exist before launch and actions in progress at launch are treated | Story rules (3.3) or Shared Business Rules (3.1), as above | `BR-01` |
-| Limits and data constraints (time windows, quantities, input rules), and deadlines promised to the customer | Story rules (3.3) or Shared Business Rules (3.1), as above | `BR-01` |
-| Status transitions and their conditions; side-effects of one event on its transition row, and side-effects shared by every way into a status on its "on entering" row (notifications, inventory released, partner informed) | Shared Business Rules (3.1), Statuses & Transitions and On Entering a Status | `BR-01` |
-| Who may perform which action | Shared Business Rules (3.1), Roles & Permissions | `BR-01` |
-| What the user sees and can do in one story: UI behavior, loading and empty states, default sort order, what each button does, how an error or rule violation is shown (toast, inline error, popup), side-effects of this story's own action | Acceptance Criteria under its story (3.3), readable on their own (Rule 13) | `US-01-AC2` |
-| Behavior that is the same in every story: login session expired, connection lost, repeated tap, system temporarily unavailable | Common Behaviors (3.3) | `CB-01` |
-| The exact wording of every message, on any channel (screen, email, SMS, push) | Messages (3.6) | `MSG-01` |
-| Quality targets: perceived speed, availability, supported platforms, information freshness, expected volume | Non-Functional Requirements (3.5) | `NFR-01` |
-| Success metrics (primary, secondary, guardrail) with their baselines, targets, and owners | Success Metrics table (2.4) | `SM-01` |
-| Screens and their design links | Screens (3.6) | `SCR-01` |
-| Partners, teams, other PRDs, and existing features this feature relies on | Dependencies (3.7) | `DEP-01` |
-| A rule defined in another approved PRD | That PRD, listed in Dependencies (3.7) | `[Other PRD name] BR-02` |
-| The order of steps in a multi-step flow | Use Case (3.4): the actor, the action, and the AC or CB that defines each step's outcome, without restating it | `UC-01` |
-| Unknown or assumed values | The rule's own row says `TBD (Q-03)` or `15 minutes (assumed, A-02)`; the question or assumption cites the rule ID | `Q-01`, `A-01` |
+| Fact | Where it lives |
+|------|----------------|
+| The jobs users hire the feature for | JTBD (2.2), one job story per actor |
+| Who needs what, and why | The user story statement (3.3) |
+| A rule only one story uses: formula, policy, limit, who may take this story's action | Rules, under that story (3.3) |
+| A rule several stories of the same epic use, including a status lifecycle only that epic uses | Epic rules, at the top of that epic (3.3) |
+| A rule that is the foundation of the whole feature and applies across epics (for example the payment currency, the number format, a status lifecycle several epics depend on), and situations that behave the same in every story (session expired, connection lost, repeated tap, system unavailable) | General Rules (3.1) |
+| A rule several PRDs of the domain share | The domain rules file `domain-knowledge/[Domain_Name]/rules.md`; the PRD says the rule's effect in words and names the file |
+| What the user sees and can do in one story: UI behavior, loading and empty states, default sort order, what each button does, how an error or rule violation is shown (toast, inline error, popup), side-effects of this story's own action | Acceptance Criteria under its story (3.3) |
+| The exact copy of a message, on any channel (screen, email, SMS, push) | In quotes, in the acceptance criterion (or general behavior) where it is shown first; elsewhere it is described in a few words |
+| A quality target that applies across the feature: perceived speed, availability, supported platforms, information freshness, expected volume | Non-Functional Requirements (3.4) |
+| A quality target that is the outcome of one story | That story's acceptance criterion |
+| Success metrics with their baselines, targets, and owners (only when the user asked for them) | Success Metrics (2.4) |
+| Screens and their purpose, with design links (only when the user asked for them) | Screens (3.5) |
+| Unknown or assumed values, technical decisions | In the rule itself: `TBD` with who decides, or `[value] (assumed)`; listed for the user in the chat at approval |
 
-**Messages:** a message that mentions a rule value uses a named placeholder that cites the rule, never the number: "Tickets can be cancelled online up to {cancellation cutoff (BR-01)} before departure." Dynamic data uses a plain placeholder: `{ticket code}`. The message's Rules column lists every rule its wording depends on. Acceptance criteria and common behaviors say how a message is shown (toast, inline error, popup) and what it is about in a few words; transitions and use cases cite only its ID.
+**A value in two places.** Saying a rule's effect in an acceptance criterion repeats a little of it. Keep the rule row as the source: the effect in the criterion stays short, and when a rule changes, every criterion of the same epic that mentions it is updated in the same edit. The reviewer checks that the two still match.
 
-**Tracking and partners:** say WHAT, not HOW. Write "The system records each completed cancellation to measure SM-02" and "The operator is informed that the ticket is cancelled". Event names and properties belong to the Data team's tracking plan, and how data reaches a partner belongs to the technical design; both are linked in References.
+**Tracking and partners:** say WHAT, not HOW. Write "The system records the UI language of each session to measure the booking completion rate" and "The operator is informed that the ticket is cancelled". Event names and properties belong to the Data team's tracking plan, and how data reaches a partner belongs to the technical design; both are linked in References.
 
 ## Translation examples
 
@@ -82,26 +85,26 @@ The examples are illustrative. Write in the user's language and use only the rul
 
 | Technical wording (avoid) | Product wording (use) |
 |---------------------------|-----------------------|
-| `POST /bookings` returns `409 Conflict` | BR: A seat held by one customer cannot be held by another. AC: If the seat was just taken (BR-04), the customer sees MSG-02 and is asked to choose another seat. |
-| Request timeout 30s, retry 3 times | BR: The system waits up to 30 seconds for the operator to confirm and tries again up to 3 times; if there is still no confirmation, no money is taken. AC: If the booking is still unconfirmed after the retries (BR-07), a popup shows MSG-05. |
-| `401 Unauthorized` | CB: If the login session has expired, the user is asked to log in again and returns to the step they were on. |
-| `5xx` / service unavailable | CB: If the system cannot process the request right now, the user sees MSG-09 and can try again; BR: the customer is not charged. |
-| Cron job runs at 00:00 daily | BR: Every day at 00:00, the system automatically [action]. |
+| `POST /bookings` returns `409 Conflict` | Rule: A seat held by one customer cannot be held by another. AC: If the seat was just taken, a popup says "This seat has just been booked. Please choose another seat." and the seat map reloads. |
+| Request timeout 30s, retry 3 times | Rule: The system waits up to 30 seconds for the operator to confirm and tries again up to 3 times; if there is still no confirmation, no money is taken. AC: If the booking is still unconfirmed after the retries, a popup says the booking could not be confirmed and that no money was taken. |
+| `401 Unauthorized` | General rule: If the login session has expired, the user is asked to log in again and returns to the step they were on. |
+| `5xx` / service unavailable | General rule: If the system cannot process the request right now, the user sees "Something went wrong. Please try again." and is not charged. |
+| Cron job runs at 00:00 daily | Rule: Every day at 00:00, the system automatically [action]. |
 | Data cached for 5 minutes | NFR: The displayed [information] may be up to 5 minutes behind the latest update. |
-| `UPDATE bookings SET status = 'CANCELLED'` | BR (transition): Confirmed → Cancelled when [event and condition]. AC: the ticket moves to Cancelled (BR-08). |
-| Config key `max_seats_per_booking = 5` | BR: A customer can book at most 5 seats per booking. The Operations team can change this limit. |
-| Idempotency key on payment request | CB: If the customer taps "Pay" more than once, they are charged only once (BR-11). |
-| Webhook from the payment gateway | BR (transition): When the payment partner reports success, the booking moves from Pending to Confirmed. |
-| Emit an analytics event | AC: The system records each [action] to measure SM-01. |
-| Rate limit 3 requests / 10 min | BR: A customer can request a new OTP at most 3 times within 10 minutes. AC: If the limit is reached (BR-12), the "Resend" button is disabled and MSG-06 is shown. |
+| `UPDATE bookings SET status = 'CANCELLED'` | Rule (lifecycle): Confirmed → Cancelled when [event and condition]. AC: the ticket moves to Cancelled. |
+| Config key `max_seats_per_booking = 5` | Rule: A customer can book at most 5 seats per booking. The Operations team can change this limit. |
+| Idempotency key on payment request | General rule: If the customer taps "Pay" more than once, they are charged only once. |
+| Webhook from the payment gateway | Rule (lifecycle): When the payment partner reports success, the booking moves from Pending to Confirmed. |
+| Emit an analytics event | AC: The system records each [action] to measure [metric name]. |
+| Rate limit 3 requests / 10 min | Rule: A customer can request a new OTP at most 3 times within 10 minutes. AC: If the limit is reached, the "Resend" button is disabled and an inline note says when they can try again. |
 
 ## Self-check before output
 
 - [ ] No forbidden technical detail (Rule 3) appears anywhere, including tables and diagrams.
-- [ ] Every business rule has concrete values (or `TBD (Q-..)`) and a trigger condition, in its own row.
-- [ ] No rule's full logic, table, formula, limit value, or message copy appears outside its home; an acceptance criterion may say a rule's effect in a few words or give a sample labelled e.g., and cites the ID.
-- [ ] Every story can be understood from its own block (statement, Story rules, acceptance criteria) without opening another section or memorizing IDs.
+- [ ] No code other than story IDs in story headings and AC numbers appears anywhere, including tables and diagrams.
+- [ ] Every business rule has concrete values (or `TBD` with who decides) and a trigger condition.
+- [ ] Every rule sits where its readers need it: under its one story, at the top of its epic, or in General Rules only when it applies across epics.
+- [ ] Every story can be understood from its epic and its own block without opening another section.
 - [ ] Every acceptance criterion describes something a user or QC can observe.
 - [ ] Every term matches the Glossary, with no synonyms.
-- [ ] Every technical decision appears as an Open Question owned by Dev / Tech Lead, not as an answer.
 - [ ] A PO, a BA, a Dev, and a QC would each read every sentence the same way.
