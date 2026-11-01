@@ -180,6 +180,15 @@ Quy ước cho cột Ví dụ trong cả PRD: số viết như trên UI EN (dấ
 | Không bề mặt nào hiện ngoại tệ mà thiếu số VND. Ngoại lệ: giá trị biên khách chọn trên bộ lọc và thanh trượt giá là giá trị nhập, không phải giá, nên chỉ hiển thị số tham khảo dạng xấp xỉ "~" (giả định). | Ô giá không bao giờ chỉ có "~USD 17.92"; luôn kèm 467,000 VND. Thanh trượt giá hiển thị biên "~USD 20.00", không kèm VND. |
 | Khi tiền tệ hiện hành là VND (UI VI, hoặc khách chọn VND), chỉ hiển thị VND, không có số tham khảo. Quy tắc này áp cho giá đang xem; số tham khảo đã lưu trên đơn vẫn hiển thị trên email xác nhận, My bookings và số tiền hoàn, trừ khi xem trên UI VI (giả định). | UI EN, khách chọn VND: 467,000 VND, không có ~USD. |
 
+**Định dạng số tiền**
+
+| Quy tắc | Ví dụ |
+|---------|-------|
+| Số lẻ của mỗi tiền tệ theo bảng cố định của Vexere; bảng này thắng số lẻ chuẩn ISO 4217 khi hai bên khác nhau (ISO 4217 cho IDR, TWD 2 số lẻ). 0 số lẻ: VND, JPY, KRW, IDR, TWD. 2 số lẻ: USD, EUR, SGD, THB, CNY. 3 số lẻ: BHD, KWD, OMR. Tiền tệ không có trong bảng dùng số lẻ chuẩn ISO 4217 của tiền tệ đó. | Giá trị mẫu: 467,000 VND với 1 TWD = 820 VND → 569.51 → TWD 570; với 1 KWD = 85,000 VND → 5.4941 → KWD 5.494; AUD không có trong bảng → 2 số lẻ theo ISO 4217. |
+| Làm tròn half-up (nửa lên, xa số 0) tới số lẻ của tiền tệ theo bảng số lẻ của Vexere. Mọi nơi hiển thị dùng cùng một quy tắc làm tròn. | 17.925 → 17.93; 17.924 → 17.92; −2,464.5 → −2,465. |
+| Mọi số tiền luôn kèm mã ISO 4217 3 chữ cái, không dùng ký hiệu tiền tệ, trên mọi ngôn ngữ, để tránh nhầm ¥ giữa JPY và CNY. | USD 19.96, CNY 127.95; không viết $19.96 hay ¥127.95. |
+| Số VND định dạng theo ngôn ngữ UI, mã VND đứng sau số. Mã ngoại tệ đứng trước số. Mỗi ngôn ngữ chỉ có một cách viết số VND trên toàn UI, mọi platform. | EN và VI: 520,000 VND. Ngoại tệ: USD 17.92. Không viết "VND 520,000". |
+
 **Quy đổi**
 
 | Quy tắc | Ví dụ |
@@ -392,25 +401,23 @@ stop
 
 Số tiền, địa danh và ô tìm kiếm đọc được trên mọi ngôn ngữ UI.
 
+**Quy tắc của epic**
+
+| Quy tắc | Ví dụ |
+|---------|-------|
+| Địa danh trên UI ngoại ngữ (Phase 1): mọi địa danh Bus (bến xe, trạm dừng, điểm đón trả) được chuẩn hoá thành không dấu, dùng chung cho mọi ngôn ngữ ngoại ngữ, kể cả ngôn ngữ thêm sau. Tên bản địa theo từng ngôn ngữ cho Top 50 điểm đến nằm ngoài phạm vi đợt này. | UI EN, KO, TH đều hiện "Ben xe Mien Dong". |
+| Cách chuẩn hoá không dấu: bỏ dấu tiếng Việt và chuyển "đ/Đ" thành "d/D". | "Đà Lạt" → "Da Lat"; "Bến xe Miền Đông" → "Ben xe Mien Dong". |
+
 ##### US-01 - Số tiền hiển thị theo một quy ước thống nhất
 
 Là khách đặt vé trên Vexere, tôi muốn mọi số tiền trên mọi trang và mọi platform được viết theo cùng một quy ước của ngôn ngữ tôi đang dùng, để tôi không đọc nhầm giá.
 
-**Quy tắc**
-
-| Quy tắc | Ví dụ |
-|---------|-------|
-| Số lẻ của mỗi tiền tệ theo bảng cố định của Vexere; bảng này thắng số lẻ chuẩn ISO 4217 khi hai bên khác nhau (ISO 4217 cho IDR, TWD 2 số lẻ). 0 số lẻ: VND, JPY, KRW, IDR, TWD. 2 số lẻ: USD, EUR, SGD, THB, CNY. 3 số lẻ: BHD, KWD, OMR. Tiền tệ không có trong bảng dùng số lẻ chuẩn ISO 4217 của tiền tệ đó. | Giá trị mẫu: 467,000 VND với 1 TWD = 820 VND → 569.51 → TWD 570; với 1 KWD = 85,000 VND → 5.4941 → KWD 5.494; AUD không có trong bảng → 2 số lẻ theo ISO 4217. |
-| Làm tròn half-up (nửa lên, xa số 0) tới số lẻ của tiền tệ theo bảng số lẻ của Vexere. Mọi nơi hiển thị dùng cùng một quy tắc làm tròn. | 17.925 → 17.93; 17.924 → 17.92; −2,464.5 → −2,465. |
-| Mọi số tiền luôn kèm mã ISO 4217 3 chữ cái, không dùng ký hiệu tiền tệ, trên mọi ngôn ngữ, để tránh nhầm ¥ giữa JPY và CNY. | USD 19.96, CNY 127.95; không viết $19.96 hay ¥127.95. |
-| Số VND định dạng theo ngôn ngữ UI, mã VND đứng sau số. Mã ngoại tệ đứng trước số. Mỗi ngôn ngữ chỉ có một cách viết số VND trên toàn UI, mọi platform. | EN và VI: 520,000 VND. Ngoại tệ: USD 17.92. Không viết "VND 520,000". |
-
 **Acceptance Criteria**
 
-- AC1 (Happy): Trên mọi màn hình của story và mọi platform được hỗ trợ (web desktop, mobile web, app), mỗi số tiền hiển thị kèm mã ISO của tiền tệ, không số tiền nào dùng ký hiệu tiền tệ (VD: USD 19.96, không viết $19.96).
+- AC1 (Happy): Trên mọi bề mặt có giá trong phạm vi đợt này (trang kết quả tìm kiếm, trang tìm nhà xe, trang chi tiết chuyến, sơ đồ ghế, checkout, màn thanh toán, email xác nhận và vé điện tử, My bookings, thông tin hoàn tiền của đơn, trang SEO landing, back office đơn hàng) và mọi platform được hỗ trợ (web desktop, mobile web, app), mỗi số tiền hiển thị kèm mã ISO của tiền tệ, không số tiền nào dùng ký hiệu tiền tệ (VD: USD 19.96, không viết $19.96).
 - AC2 (Happy): Mỗi số VND được viết theo cách viết số của ngôn ngữ UI đang dùng, với mã VND đứng sau số (VD: trên UI EN là 520,000 VND).
 - AC3 (Happy): Mỗi số ngoại tệ hiển thị có mã tiền đứng trước số (VD: USD 17.92).
-- AC4 (Happy): Trong cùng một ngôn ngữ UI, cùng một số VND được viết giống hệt nhau trên mọi màn hình của story và mọi platform được hỗ trợ (web desktop, mobile web, app).
+- AC4 (Happy): Trong cùng một ngôn ngữ UI, cùng một số VND được viết giống hệt nhau trên mọi bề mặt có giá nêu ở AC1 và mọi platform được hỗ trợ (web desktop, mobile web, app).
 - AC5 (Happy): Mỗi số tiền hiển thị đúng số lẻ của tiền tệ đó theo bảng số lẻ của Vexere (VD: TWD 570 không có số lẻ, KWD 5.494 có 3 số lẻ).
 - AC6 (Alternative): Nếu tiền tệ tham khảo không có trong bảng số lẻ của Vexere, số tham khảo hiển thị theo số lẻ chuẩn ISO 4217 của tiền tệ đó (VD: AUD có 2 số lẻ).
 - AC7 (Happy): Nếu kết quả quy đổi chưa làm tròn có nhiều chữ số thập phân hơn số lẻ của tiền tệ, số tham khảo hiển thị được làm tròn half-up (nửa lên, xa số 0) tới số lẻ đó theo quy tắc làm tròn chung. VD: 17.925 → 17.93; −2,464.5 → −2,465.
@@ -418,13 +425,6 @@ Là khách đặt vé trên Vexere, tôi muốn mọi số tiền trên mọi tr
 ##### US-02 - Địa danh không dấu trên UI ngoại ngữ
 
 Là khách inbound, tôi muốn đọc tên bến xe, trạm dừng, điểm đón trả ở dạng không dấu, để tôi đọc và gõ được tên điểm đón mà không cần bàn phím tiếng Việt.
-
-**Quy tắc**
-
-| Quy tắc | Ví dụ |
-|---------|-------|
-| Địa danh trên UI ngoại ngữ (Phase 1): mọi địa danh Bus (bến xe, trạm dừng, điểm đón trả) được chuẩn hoá thành không dấu, dùng chung cho mọi ngôn ngữ ngoại ngữ, kể cả ngôn ngữ thêm sau. Tên bản địa theo từng ngôn ngữ cho Top 50 điểm đến nằm ngoài phạm vi đợt này. | UI EN, KO, TH đều hiện "Ben xe Mien Dong". |
-| Cách chuẩn hoá không dấu: bỏ dấu tiếng Việt và chuyển "đ/Đ" thành "d/D". | "Đà Lạt" → "Da Lat"; "Bến xe Miền Đông" → "Ben xe Mien Dong". |
 
 **Acceptance Criteria**
 
@@ -469,7 +469,7 @@ Khách thấy ngay ngôn ngữ và tiền tệ phù hợp, và đổi được k
 | Ngôn ngữ và tiền tệ là hai danh sách riêng, kèm bảng quốc gia → tiền tệ. Ngôn ngữ, tiền tệ nào được bật và bảng quốc gia → tiền tệ do BU cấu hình, theo phân quyền hiện có của hệ thống, không cần phát hành bản mới. Ngôn ngữ dự phòng là EN: dùng khi ngôn ngữ cần dùng không có trong danh sách đang bật. | Giá trị mẫu (cấu hình ví dụ của PRD gốc): ngôn ngữ VI, EN, ZH, KO, TH; bảng quốc gia → tiền tệ có VN → VND, US → USD, KR → KRW, TW → TWD. Trình duyệt ưu tiên ja, JA chưa bật → EN. |
 | Phạm vi tiền tệ của ngôn ngữ: mỗi ngôn ngữ khai báo danh sách tiền tệ được dùng và một tiền tệ chính, do BU cấu hình. Danh sách tiền tệ chọn được của ngôn ngữ = tiền tệ của ngôn ngữ ∩ tiền tệ đang bật ∩ tiền tệ có trong bảng tỷ giá hiện hành, luôn có VND, kể cả với ngôn ngữ chỉ khai báo một tiền tệ (giả định). Picker tiền tệ chỉ cho chọn trong danh sách tiền tệ chọn được. Mỗi tiền tệ trong phạm vi tiền tệ của ngôn ngữ cần một quy tắc tỷ giá đang bật. Ngôn ngữ VI chỉ có VND. Muốn xem tiền tệ ngoài phạm vi tiền tệ của ngôn ngữ, khách chuyển sang ngôn ngữ tương ứng hoặc EN. | Giá trị mẫu: ZH: CNY, TWD (chính CNY); KO: KRW, USD (chính KRW); TH: THB, USD (chính THB); EN: mọi tiền tệ đang bật, gồm VND; VI: VND. Danh sách tiền tệ chọn được của ZH: CNY, TWD, VND; quy tắc TWD/VND bị tắt, nên TWD không còn trong bảng tỷ giá từ lần cập nhật ngay sau khi tắt → CNY, VND (TWD không phải tiền tệ chính của ngôn ngữ nào, nên bảng mới vẫn hợp lệ, vì bảng tỷ giá chỉ cần có đủ tiền tệ chính của mọi ngôn ngữ đang bật). |
 | Tiền tệ mặc định, xét theo thứ tự, chỉ nhận ứng viên thuộc phạm vi tiền tệ của ngôn ngữ: (1) tiền tệ của quốc gia nơi khách truy cập theo bảng quốc gia → tiền tệ (web: theo vị trí truy cập; app: theo vùng của thiết bị); (2) tiền tệ chính của ngôn ngữ; (3) với EN: USD. Không ứng viên nào hợp lệ thì chỉ hiển thị VND, như khi số tham khảo tạm thời không có. | EN ở Mỹ → USD; EN ở Việt Nam → VND (đổi được trên picker); EN ở Pháp → EUR nếu đang bật, không thì USD; ZH ở Đài Loan → TWD; ZH ở Việt Nam → CNY; KO ở Mỹ → USD; KO ở Hàn Quốc hoặc Việt Nam → KRW. |
-| Thứ tự ưu tiên xác định ngôn ngữ và tiền tệ (xác định riêng từng giá trị, cùng một thứ tự): (1) thao tác của khách trong phiên; (2) tham số trên link, và trên web là ngôn ngữ trong đường dẫn của trang (giả định), chỉ cho phiên đó, không lưu; (3) lựa chọn chủ động gần nhất giữa hồ sơ và thiết bị; (4) giá trị tự nhận diện lần đầu; (5) mặc định: ngôn ngữ dự phòng EN cho ngôn ngữ, tiền tệ mặc định cho tiền tệ. Ngôn ngữ được xác định trước; ở các bước (1) đến (3), tiền tệ phải thuộc phạm vi tiền tệ của ngôn ngữ hiện hành hoặc là VND; ở bước (4), tiền tệ phải thuộc phạm vi tiền tệ của ngôn ngữ hiện hành; không thì xét ứng viên kế tiếp; ở bước (5), xét các ứng viên theo thứ tự của tiền tệ mặc định. Với ngôn ngữ VI, tiền tệ là VND, vì ngôn ngữ VI chỉ có VND. Giá trị tự nhận diện không phải lựa chọn chủ động. Một phiên kết thúc khi khách không thao tác trong 30 phút, hoặc khi khách đóng trình duyệt hay đóng hẳn app; lần mở hoặc thao tác kế tiếp bắt đầu phiên mới (giả định). | Khách đã lưu chủ động EN + USD, mở link chỉ định KO + KRW → phiên đó là KO + KRW; phiên sau quay lại EN + USD. Khách dùng UI KO chọn VND trên picker → KO + VND (VND luôn chọn được); khách mới dùng KO, truy cập từ Việt Nam → KO + KRW (tiền tệ mặc định: VND không thuộc phạm vi tiền tệ của KO). Khách đã lưu chủ động EN mở trên web link /ko-KR/… không có tham số ngôn ngữ → phiên đó KO (giả định); phiên sau mở đường dẫn không có ngôn ngữ → dẫn tới /en-US/…. Khách được tự nhận diện EN + VND ở Việt Nam (theo bảng quyết định cho khách mới), đổi sang KO → VND tự nhận diện bị bỏ qua → KO + KRW (tiền tệ mặc định), như khách mới dùng KO ở Việt Nam; quay lại EN → EN + VND (tiền tệ đã lưu bị bỏ qua không bị xoá). |
+| Thứ tự ưu tiên xác định ngôn ngữ và tiền tệ (xác định riêng từng giá trị, cùng một thứ tự): (1) thao tác của khách trong phiên; (2) tham số trên link, và trên web là ngôn ngữ trong đường dẫn của trang (giả định), chỉ cho phiên đó, không lưu; (3) lựa chọn chủ động gần nhất giữa hồ sơ và thiết bị; (4) giá trị tự nhận diện lần đầu; (5) mặc định: ngôn ngữ dự phòng EN cho ngôn ngữ, tiền tệ mặc định cho tiền tệ. Ngôn ngữ được xác định trước; ở các bước (1) đến (3), tiền tệ phải thuộc phạm vi tiền tệ của ngôn ngữ hiện hành hoặc là VND; ở bước (4), tiền tệ phải thuộc phạm vi tiền tệ của ngôn ngữ hiện hành; không thì xét ứng viên kế tiếp; ở bước (5), xét các ứng viên theo thứ tự của tiền tệ mặc định. Với ngôn ngữ VI, tiền tệ là VND, vì ngôn ngữ VI chỉ có VND. Giá trị tự nhận diện không phải lựa chọn chủ động. Một phiên kết thúc khi khách không thao tác trong 30 phút, hoặc khi khách đóng trình duyệt hay đóng hẳn app; lần mở hoặc thao tác kế tiếp bắt đầu phiên mới (giả định). | Khách đã lưu chủ động EN + USD, mở link chỉ định KO + KRW → phiên đó là KO + KRW; phiên sau quay lại EN + USD. Khách dùng UI KO chọn VND trên picker → KO + VND (VND luôn chọn được); khách mới dùng KO, truy cập từ Việt Nam → KO + KRW (tiền tệ mặc định: VND không thuộc phạm vi tiền tệ của KO). Khách đã lưu chủ động EN mở trên web link /ko-KR/… không có tham số ngôn ngữ → phiên đó KO (giả định); phiên sau mở đường dẫn không có ngôn ngữ → dẫn tới /en-US/…. Khách mới ở Việt Nam, trình duyệt tiếng Anh, được tự nhận diện EN + VND, đổi sang KO → VND tự nhận diện bị bỏ qua → KO + KRW (tiền tệ mặc định), như khách mới dùng KO ở Việt Nam; quay lại EN → EN + VND (tiền tệ đã lưu bị bỏ qua không bị xoá). |
 | Trên web, ngôn ngữ của trang theo ngôn ngữ trong đường dẫn (ví dụ /en-US/). Đường dẫn không có ngôn ngữ thì tự nhận diện và dẫn tới đường dẫn có ngôn ngữ tương ứng. Khách quay lại (không thuộc diện tự nhận diện) mở đường dẫn không có ngôn ngữ thì được dẫn tới đường dẫn của ngôn ngữ xác định theo thứ tự ưu tiên xác định ngôn ngữ, tiền tệ (giả định). Bot của công cụ tìm kiếm không bị tự nhận diện và luôn nhận giá VND. Bot của công cụ tìm kiếm mở đường dẫn không có ngôn ngữ được dẫn tới đường dẫn VI tương ứng (giả định). Trên web, khi ngôn ngữ chỉ định trên link khác ngôn ngữ trong đường dẫn của link, trang được dẫn tới đường dẫn của ngôn ngữ chỉ định trên link (giả định). | Mở /en-US/ → EN. Khách mới ở Hàn Quốc mở đường dẫn không có ngôn ngữ, trình duyệt ưu tiên ko → dẫn tới /ko-KR/. Bot tìm kiếm mở /en-US/ → trang EN, giá chỉ VND. Bot mở đường dẫn không có ngôn ngữ → đường dẫn VI, giá chỉ VND. Link /en-US/… chỉ định KO → dẫn tới /ko-KR/…. |
 | Lưu lựa chọn: ngôn ngữ và tiền tệ lưu riêng; mỗi giá trị kèm đánh dấu là lựa chọn chủ động hay tự nhận diện và thời điểm chọn. Sau tự nhận diện, cả hai được lưu là giá trị tự nhận diện; phiên sau dùng lại, không tự nhận diện lại. Khách đổi trên picker → lưu là lựa chọn chủ động kèm thời điểm, đồng bộ lên hồ sơ nếu đã đăng nhập. Guest lưu trên thiết bị; khách đã đăng nhập lưu cả trên hồ sơ để giữ qua các thiết bị. Tham số trên link không được lưu vào thiết bị hay hồ sơ. Khách mới mở Vexere lần đầu từ link có chỉ định ngôn ngữ: ngôn ngữ của link được lưu là giá trị tự nhận diện, nên phiên sau mở bằng ngôn ngữ đó cho tới khi khách chủ động chọn ngôn ngữ khác (giả định). | Guest lần đầu được tự nhận diện EN + USD (tự nhận diện); đổi sang EUR lúc 10:00 → EUR chủ động, 10:00; hôm sau mở lại → EN + EUR, không tự nhận diện lại. |
 | Khi một ngôn ngữ hoặc tiền tệ bị tắt: lựa chọn đã lưu không bị xoá, chỉ bị bỏ qua tới khi được bật lại; ngôn ngữ bị tắt thì dùng ngôn ngữ dự phòng EN; tiền tệ bị tắt thì dùng ứng viên kế tiếp theo thứ tự ưu tiên xác định ngôn ngữ, tiền tệ (giả định). | Giá trị mẫu: khách đã lưu TH + THB; TH bị tắt → EN, tiền tệ xác định lại theo thứ tự ưu tiên; TH bật lại → TH + THB. |
