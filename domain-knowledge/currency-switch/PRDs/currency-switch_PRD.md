@@ -30,7 +30,7 @@
 **Context**
 
 - Hiện tại: khách dùng UI ngoại ngữ chỉ thấy giá bằng VND, và địa danh vẫn là tiếng Việt có dấu (suy ra từ mục tiêu của PRD v0.1).
-- Khoảng trống: không có giá tham khảo theo tiền tệ của khách; cách viết số tiền chưa thống nhất giữa các trang và platform; tìm điểm đón trả phải gõ tiếng Việt; khách chưa được báo rõ rằng mình bị trừ bằng VND và ngân hàng có thể áp tỷ giá, phí riêng.
+- Khoảng trống: không có số tham khảo theo tiền tệ của khách; cách viết số tiền chưa thống nhất giữa các trang và platform; tìm điểm đón trả phải gõ tiếng Việt; khách chưa được báo rõ rằng mình bị trừ bằng VND và ngân hàng có thể áp tỷ giá, phí riêng.
 - Động lực kinh doanh: Vexere muốn khách quốc tế hoàn thành đơn nhiều hơn trên UI ngoại ngữ, mà không phát sinh rủi ro pháp lý, tài chính hay khiếu nại mới, và không làm giảm kết quả của UI tiếng Việt.
 
 **Known constraints**
@@ -89,7 +89,7 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 ### 2.3 Goals
 
 1. Khách quốc tế hoàn thành đơn nhiều hơn trên UI ngoại ngữ, với tỷ lệ chuyển tốt hơn ở từng bước, từ kết quả tìm kiếm tới thanh toán.
-2. Khách quốc tế thấy giá tham khảo bằng tiền tệ của mình bên cạnh VND ở mọi bước có giá, nên tự đặt vé được mà không phải tự quy đổi.
+2. Khách quốc tế thấy số tham khảo bằng tiền tệ của mình bên cạnh VND ở các bề mặt có giá của đợt này, trừ các bề mặt còn chờ kết luận của Legal, nên tự đặt vé được mà không phải tự quy đổi.
 3. Không phát sinh rủi ro pháp lý, tài chính hay khiếu nại mới từ việc hiển thị ngôn ngữ và ngoại tệ, và không làm giảm kết quả của UI tiếng Việt.
 
 ---
@@ -130,7 +130,7 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 | Giá trị tự nhận diện | Ngôn ngữ, tiền tệ Vexere tự xác định cho khách mới | Lựa chọn chủ động |
 | Tham số trên link | Ngôn ngữ, tiền tệ chỉ định trong link web hoặc deep link app, chỉ cho phiên đó | Ngôn ngữ trong đường dẫn |
 | Ngôn ngữ trong đường dẫn | Phần ngôn ngữ trong địa chỉ trang web, ví dụ /en-US/ | Tham số trên link |
-| Phiên | Khoảng thời gian khách dùng Vexere liên tục | — |
+| Phiên | Khoảng thời gian khách dùng Vexere liên tục; phiên kết thúc khi khách không thao tác trong 30 phút, hoặc khi khách đóng trình duyệt hay đóng hẳn app, và lần mở hoặc thao tác kế tiếp bắt đầu phiên mới (giả định) | — |
 | Bảng tỷ giá | Tập tỷ giá của mọi cặp tiền tạo ra trong một lần cập nhật | Quy tắc tỷ giá |
 | Bảng tỷ giá hiện hành | Bảng tỷ giá hợp lệ mới nhất; trạng thái Bình thường hoặc Cũ | Bảng tỷ giá của báo giá |
 | Cũ (stale) | Trạng thái của bảng tỷ giá hiện hành khi quá lâu không cập nhật được, hoặc khi bật công tắc tắt khẩn cấp | Bảng tỷ giá không hợp lệ |
@@ -168,6 +168,8 @@ Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn qu�
 
 Chỉ những quy tắc là nền tảng của cả tính năng, áp dụng cho nhiều epic. Quy tắc chỉ một epic hoặc một story dùng nằm ngay tại epic hoặc story đó.
 
+Quy ước cho cột Ví dụ trong cả PRD: số viết như trên UI EN (dấu phẩy ngăn nghìn, dấu chấm thập phân); tỷ giá là số VND cho 1 đơn vị ngoại tệ. Ngôn ngữ, tiền tệ trong ví dụ là giá trị mẫu; ngôn ngữ, tiền tệ nào được bật do BU cấu hình. Lúc ra mắt VND là số chính trên mọi bề mặt, nên ví dụ hiển thị viết dạng "467,000 VND : ~USD 17.92".
+
 **Thanh toán và hiển thị**
 
 | Quy tắc | Ví dụ |
@@ -204,7 +206,7 @@ Chỉ những quy tắc là nền tảng của cả tính năng, áp dụng cho 
 
 | Quy tắc | Ví dụ |
 |---------|-------|
-| Bản EN của mọi thông báo là bản gốc. Bản dịch theo từng ngôn ngữ UI do đội dịch thuật cung cấp và Legal duyệt theo quy trình riêng. | — |
+| Nội dung thông báo viết bằng tiếng Anh trong PRD này là bản EN và giữ nguyên tiếng Anh. Bản dịch theo từng ngôn ngữ UI do đội dịch thuật cung cấp và Legal duyệt theo quy trình riêng. | — |
 | Chỗ chèn số tiền trong nội dung thông báo chỉ chứa số đã định dạng; mã tiền nằm sẵn trong câu, để không bị lặp mã. | "You will be charged exactly {số tiền VND} VND" hiển thị "… exactly 470,300 VND", không phải "VND VND 470,300". |
 
 **Trạng thái của bảng tỷ giá hiện hành**
@@ -218,14 +220,14 @@ Chỉ những quy tắc là nền tảng của cả tính năng, áp dụng cho 
 
 | Trạng thái | Khi vào trạng thái này |
 |------------|------------------------|
-| Cũ | Mọi bề mặt chỉ hiển thị VND, không dùng tỷ giá của bảng cũ, kể cả báo giá đang mở, kèm thông báo giá tham khảo tạm thời không có. Đơn thanh toán thành công trong thời gian này chỉ lưu số tham khảo khi, lúc khách bấm nút thanh toán, màn thanh toán đang hiển thị số tham khảo cho khách, hoặc màn thanh toán chỉ hiển thị VND vì đang chờ kết luận của Legal nhưng checkout của báo giá đã hiển thị số tham khảo. Số tham khảo đã lưu trên đơn vẫn hiển thị trên email xác nhận, My bookings và số tiền hoàn (giả định). Trang khách đang mở, gồm cả trang kết quả tìm kiếm và checkout, chuyển sang chỉ hiển thị VND ngay khi bảng thành Cũ, không chờ khách tải lại trang (nếu không làm được ngay, độ trễ tối đa: TBD, Dev / Tech Lead ghi trong Technical design, PO duyệt); đây là ngoại lệ của quy tắc trang đang mở không tự đổi số tham khảo khi có bảng mới. Khi bảng trở lại Bình thường, trang khách đang mở hiện lại số tham khảo khi khách mở hoặc tải lại trang, trừ Checkout, Bước nhập thông tin hành khách và Màn thanh toán: các trang này hiện lại số tham khảo ngay, theo bảng tỷ giá của báo giá (giả định). |
+| Cũ | Mọi bề mặt chỉ hiển thị VND, không dùng tỷ giá của bảng cũ, kể cả báo giá đang mở, kèm thông báo giá tham khảo tạm thời không có. Đơn thanh toán thành công trong thời gian này chỉ lưu số tham khảo khi, lúc khách bấm nút thanh toán, màn thanh toán đang hiển thị số tham khảo cho khách, hoặc màn thanh toán chỉ hiển thị VND vì đang chờ kết luận của Legal nhưng checkout của báo giá đã hiển thị số tham khảo. Số tham khảo đã lưu trên đơn vẫn hiển thị trên email xác nhận, My bookings và số tiền hoàn, trừ khi xem trên UI VI (giả định). Trang khách đang mở, gồm cả trang kết quả tìm kiếm và checkout, chuyển sang chỉ hiển thị VND ngay khi bảng thành Cũ, không chờ khách tải lại trang (giả định); nếu không làm được ngay, độ trễ tối đa: TBD, Dev / Tech Lead ghi trong Technical design, PO duyệt. Đây là ngoại lệ của quy tắc trang đang mở không tự đổi số tham khảo khi có bảng mới. Khi bảng trở lại Bình thường, trang khách đang mở hiện lại số tham khảo khi khách mở hoặc tải lại trang, trừ Checkout, Bước nhập thông tin hành khách và Màn thanh toán: các trang này hiện lại số tham khảo ngay, theo bảng tỷ giá của báo giá (giả định). |
 
 **Khi nào khách chỉ thấy VND**
 
 | Tình huống | Khách thấy gì, điều gì xảy ra |
 |------------|-------------------------------|
 | Bảng tỷ giá đang tải | Ô giá hiện khung chờ (skeleton) cho tới khi có bảng tỷ giá; không ô nào hiện ngoại tệ mà thiếu VND. |
-| Số tham khảo tạm thời không có: bảng tỷ giá hiện hành đang Cũ, kể cả khi bật công tắc tắt khẩn cấp; tiền tệ của khách không có trong bảng tỷ giá hiện hành; không có ứng viên tiền tệ mặc định nào hợp lệ | Mọi giá chỉ hiển thị VND, không có số tham khảo; thông báo "Reference prices in {mã tiền tệ} are temporarily unavailable. Prices are shown in VND." hiện một lần mỗi trang, cạnh bảng giá; khi không có ứng viên tiền tệ mặc định nào hợp lệ, thông báo "Reference prices are temporarily unavailable. Prices are shown in VND." (nội dung đề xuất) hiện thay cho thông báo trên (giả định). Khách vẫn tìm chuyến, đặt vé và thanh toán bằng VND như bình thường. Số tham khảo đã lưu trên các đơn đã đặt vẫn hiển thị trên email xác nhận và My bookings, theo tỷ giá lúc đặt. |
+| Số tham khảo tạm thời không có: bảng tỷ giá hiện hành đang Cũ, kể cả khi bật công tắc tắt khẩn cấp; tiền tệ của khách không có trong bảng tỷ giá hiện hành; không có ứng viên tiền tệ mặc định nào hợp lệ, tức không ứng viên nào (tiền tệ của quốc gia nơi khách truy cập, tiền tệ chính của ngôn ngữ, với EN là USD) thuộc phạm vi tiền tệ của ngôn ngữ | Mọi giá chỉ hiển thị VND, không có số tham khảo; thông báo "Reference prices in {mã tiền tệ} are temporarily unavailable. Prices are shown in VND." hiện một lần mỗi trang, cạnh bảng giá; khi không có ứng viên tiền tệ mặc định nào hợp lệ, thông báo "Reference prices are temporarily unavailable. Prices are shown in VND." (nội dung đề xuất) hiện thay cho thông báo trên (giả định). Khách vẫn tìm chuyến, đặt vé và thanh toán bằng VND như bình thường. Số tham khảo đã lưu trên các đơn đã đặt vẫn hiển thị trên email xác nhận và My bookings, theo tỷ giá lúc đặt. |
 | Currency Switch đang tắt cho vertical Bus trên platform khách đang dùng, hoặc khách thuộc nhóm tắt trong khi Currency Switch bật ở tỷ lệ traffic dưới 100% | Mọi giá chỉ hiển thị VND, không có số tham khảo. Không có picker tiền tệ; picker ngôn ngữ, UI ngoại ngữ, địa danh không dấu và search widget vẫn như khi bật. Không hiện: disclaimer giá tham khảo chỉ để tham khảo, thông tin nguồn tỷ giá tham khảo, thông báo giá tham khảo tạm thời không có, Payment Notice bản đầy đủ ở checkout và bản rút gọn ở màn thanh toán. Vẫn hiện như khi bật: dòng báo khách sẽ trả bằng VND ở checkout, nút thanh toán ghi số VND và câu khách đồng ý giao dịch được xử lý bằng VND ở màn thanh toán (giả định). Back office đơn hàng vẫn hiển thị thông tin tiền tệ đã lưu của đơn (giả định). |
 | Tiền tệ hiện hành là VND: UI VI, hoặc khách chọn VND | Mọi giá chỉ hiển thị VND, không có số tham khảo; trên UI VI không có picker tiền tệ. Số tham khảo đã lưu trên các đơn đã đặt vẫn hiển thị trên email xác nhận và My bookings khi khách chọn VND trên UI ngoại ngữ; xem trên UI VI thì chỉ hiển thị VND. |
 | Đơn không có số tham khảo: đơn đặt trước khi ra mắt hoặc không đủ điều kiện lưu số tham khảo lúc thanh toán; hoặc email xác nhận, My bookings, số tiền hoàn đang chờ kết luận của Legal | Email xác nhận, My bookings và số tiền hoàn của đơn chỉ hiển thị VND trên mọi UI. Back office đơn hàng hiển thị "không có số tham khảo" ở phần thông tin tiền tệ của đơn khi đơn không có số tham khảo (đơn đặt trước khi ra mắt hoặc không đủ điều kiện lưu số tham khảo). |
@@ -358,7 +360,7 @@ while (Còn cặp có quy tắc đang bật?) is (có)
       :Nhận tỷ giá mới theo quy tắc;
     endif
   else (không)
-    if (Cặp đã đủ ngưỡng của ?) then (có)
+    if (Cặp đã N lần cập nhật định kỳ liên tiếp không lấy được tỷ giá?) then (có)
       :Cặp không có trong bảng mới;
     else (không)
       :Giữ tỷ giá hiện hành của cặp;
@@ -367,7 +369,7 @@ while (Còn cặp có quy tắc đang bật?) is (có)
 endwhile (hết)
 if (Bảng mới hợp lệ?) then (có)
   :Bảng mới thành bảng hiện hành;
-  if (Đủ điều kiện của ?) then (có)
+  if (Bảng hiện hành đang Cũ và công tắc tắt khẩn cấp không bật?) then (có)
     :Bảng hiện hành thành Bình thường;
   endif
 else (không)
@@ -906,7 +908,7 @@ Là PO, tôi muốn bật tắt Currency Switch theo từng vertical × platform
 | Quy tắc | Ví dụ |
 |---------|-------|
 | Currency Switch bật tắt theo từng vertical × platform (web desktop, mobile web, app); tỷ lệ traffic được tăng dần mà không cần phát hành bản mới. PO bật tắt và ramp theo phân quyền hiện có của hệ thống. Lúc ra mắt: chỉ vertical Bus. | Giá trị mẫu: Bus × app: 10% traffic → 50% → 100%; Bus × web desktop: tắt. |
-| Khi tắt Currency Switch cho một vertical × platform: mọi bề mặt của vertical × platform đó chuyển về chỉ hiển thị VND ngay khi tắt, kể cả khi khách đang ở checkout, bước nhập thông tin hành khách hoặc màn thanh toán, và My bookings; số tham khảo đã lưu trên đơn được giữ và hiện lại khi bật lại; email đã gửi không đổi (giả định). Trong lúc tắt, khách thấy như khi Currency Switch đang tắt cho khách: mọi giá chỉ hiển thị VND và không có picker tiền tệ. | Tắt Bus × app lúc 14:00: khách đang ở checkout trên app thấy 470,300 VND, không còn ~USD 18.05. Đơn đặt lúc 13:00 vẫn giữ ~USD 18.05 trên đơn và hiện lại khi bật lại. |
+| Khi tắt Currency Switch cho một vertical × platform: mọi bề mặt của vertical × platform đó chuyển về chỉ hiển thị VND ngay khi tắt (nếu không làm được ngay, độ trễ tối đa: TBD, Dev / Tech Lead ghi trong Technical design, PO duyệt), kể cả khi khách đang ở checkout, bước nhập thông tin hành khách hoặc màn thanh toán, và My bookings; số tham khảo đã lưu trên đơn được giữ và hiện lại khi bật lại; email đã gửi không đổi (giả định). Trong lúc tắt, khách thấy như khi Currency Switch đang tắt cho khách: mọi giá chỉ hiển thị VND và không có picker tiền tệ. | Tắt Bus × app lúc 14:00: khách đang ở checkout trên app thấy 470,300 VND, không còn ~USD 18.05. Đơn đặt lúc 13:00 vẫn giữ ~USD 18.05 trên đơn và hiện lại khi bật lại. |
 | Checkout đang dở lúc ra mắt: báo giá tạo trước khi bật tính năng tiếp tục chỉ hiển thị VND tới khi xong đơn (giả định). | Báo giá tạo lúc 13:58, tính năng bật lúc 14:00 → checkout đó vẫn chỉ VND; đơn không có số tham khảo. |
 | Trong khi Currency Switch bật cho một vertical × platform ở tỷ lệ traffic dưới 100%, mỗi khách thuộc cố định một nhóm, nhóm bật (thấy số tham khảo) hoặc nhóm tắt (như khi tắt Currency Switch), qua mọi trang và mọi phiên trên cùng thiết bị; sau khi đăng nhập, nhóm theo hồ sơ của khách. Khi tỷ lệ tăng, khách đang ở nhóm bật vẫn ở nhóm bật; khách mới vào nhóm bật khi đang có báo giá Đang hiệu lực được xử lý như checkout đang dở lúc ra mắt. Khi tỷ lệ giảm, khách rời nhóm bật được xử lý như khi tắt Currency Switch (giả định). | Giá trị mẫu: Bus × app 10% → khách A thuộc nhóm bật thấy ~USD trên mọi trang và mọi phiên trên điện thoại của mình; tăng lên 50% → A vẫn thấy ~USD; khách B vào nhóm bật khi đang ở checkout → checkout đó vẫn chỉ VND. |
 | Ai được bật tắt và ramp Currency Switch theo vertical × platform; bật, tắt công tắc tắt khẩn cấp: theo phân quyền hiện có của hệ thống; PRD này không định nghĩa lại. | — |
@@ -989,8 +991,8 @@ Chỉ các yêu cầu áp dụng cho cả tính năng. Mục tiêu của riêng 
 |--------|---------|--------|
 | Trang kết quả tìm kiếm | Xem, lọc và chọn chuyến; gồm lịch giá theo ngày, bộ lọc và thanh trượt giá, nhãn giảm giá; giá hiển thị kép | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=2-2) (wireframe) |
 | Trang tìm nhà xe | Tìm nhà xe; giá hiển thị kép | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-11) (wireframe) |
-| Trang chi tiết chuyến | Xem chi tiết chuyến và điểm đón trả; giá theo đơn giá | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-47) (wireframe) |
-| Sơ đồ ghế | Chọn ghế, giường; giá từng ghế, giường theo đơn giá | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-84) (wireframe) |
+| Trang chi tiết chuyến | Xem chi tiết chuyến và điểm đón trả; giá hiển thị kép, số tham khảo quy đổi theo đơn giá | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-47) (wireframe) |
+| Sơ đồ ghế | Chọn ghế, giường; giá từng ghế, giường hiển thị kép, số tham khảo quy đổi theo đơn giá | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-84) (wireframe) |
 | Checkout | Breakdown phí (phí dịch vụ, phí thanh toán, bảo hiểm, dịch vụ thêm), voucher và khuyến mãi, total; thông báo thanh toán bằng VND | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-141) (wireframe) |
 | Bước nhập thông tin hành khách | Nhập thông tin hành khách; còn đổi được ngôn ngữ, tiền tệ (màn thanh toán thì không) | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-185) (wireframe) |
 | Màn thanh toán | Thanh toán bằng VND; Payment Notice rút gọn, nút thanh toán | [Figma](https://www.figma.com/design/1RYUvb5oQmcrqtH8BToFg8?node-id=3-226) (wireframe) |
