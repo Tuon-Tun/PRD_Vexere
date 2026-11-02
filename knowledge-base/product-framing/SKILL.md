@@ -4,7 +4,7 @@ description: >
   Defines the Product Framing Pack after the structured requirement JSON is approved.
   Use this before PRD drafting to turn approved requirements into JTBD statements, general rules,
   and Epics with INVEST-checked User Stories, each story carrying the rules it uses and acceptance
-  criteria that read on their own, with no codes for the reader to look up.
+  criteria that read on their own, with no rule or message codes for the reader to look up.
 ---
 
 # Product Framing Pack Generator
@@ -60,14 +60,14 @@ Do not draft the full PRD. Do not export files. This skill produces only the Pro
 - If a required detail is missing, write `TBD` in the rule with who decides in words. A value taken from the brief's `Assumptions`, or assumed by the Pack, is written `[value] (assumed)`.
 - List every `TBD` and every `(assumed)` value for the user when you present the Pack, so they can answer or confirm them. The Pack and the PRD hold no assumptions or open-questions register.
 - Preserve the user's language.
-- No codes in the text (Rule 12 of the language guide). Name rules, messages, screens, metrics, and jobs in words. The only identifiers are story IDs (`US-01`), kept stable once approved, and AC numbers within a story.
+- Codes only where they help (Rule 12 of the language guide): job IDs (`JTBD-01`), epic numbers, story IDs (`US-01`), and AC numbers within a story, all kept stable once approved. Name rules, messages, screens, and metrics in words.
 
 ### Jobs To Be Done
 
-- JTBD statements must follow the single-sentence job story format: `When [situation], I want to [motivation], so I can [expected outcome].` Write exactly one sentence per JTBD block, under the actor or scenario in bold. Do not add IDs, research status, dimension tables, or bullets.
+- JTBD statements must follow the single-sentence job story format: `When [situation], I want to [motivation], so I can [expected outcome].` Write exactly one sentence per JTBD block, under its ID and the actor or scenario in bold (`**JTBD-01 - [actor]**`). Number the jobs `JTBD-01`, `JTBD-02`, ... and keep the numbers stable once approved. Do not add research status, dimension tables, or bullets.
 - When the input involves multiple distinct actor types or usage contexts, write one JTBD block per actor type. Split when the situation, motivation, or expected outcome differs meaningfully between actors.
 - If no user research supports the jobs, say so once to the user when presenting the Pack (they are hypotheses to validate); do not print a status on each job.
-- Every epic serves at least one job, and every job is served by at least one epic; check this yourself, do not print the mapping.
+- Every epic serves at least one job, and every job is served by at least one epic: each epic names the jobs it serves on its Serves line.
 
 ### Business Rules
 
@@ -149,7 +149,7 @@ Return Markdown only, with these sections, in the user's language (headings belo
 
 ## 2. Jobs To Be Done
 
-**[User type / scenario]**
+**JTBD-01 - [User type / scenario]**
 
 When [situation], I want to [motivation], so I can [expected outcome].
 
@@ -179,6 +179,8 @@ situations that behave the same in every story.
 ## 4. Epics & User Stories
 
 ### Epic 1 - [Epic Name]
+
+**Serves:** JTBD-01
 
 [One sentence: what this epic gives the user.]
 

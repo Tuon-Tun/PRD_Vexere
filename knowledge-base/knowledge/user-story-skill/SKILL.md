@@ -53,7 +53,7 @@ so that [Value/Reason].
 ### Standalone story vs. story inside a PRD
 
 - **Standalone** (a story written on its own, with no PRD): write the values directly in the AC, as in the examples.
-- **Inside a PRD** (the PRD pipeline): the reader reads the PRD top to bottom, so each fact sits where it is needed, as defined in `knowledge-base/product-language/SKILL.md`. A rule only this story uses sits under the story in its Rules block, just above the AC; a rule several stories of the epic use sits at the top of the epic; only the foundation of the whole feature sits in General Rules. There are no codes: rules, messages, screens, and metrics are named in words, and the only identifiers are the story ID in its heading and the AC numbers. Each AC reads on its own: it applies the story's or epic's rules in plain words, states the effect of a rule from elsewhere in a few words (with a sample labelled e.g. when useful), and quotes a message's exact copy where it is shown first — `- AC2 (Error): If the cancellation cutoff has passed, the Cancel button is disabled and an inline note says "Online cancellation closes 24 hours before departure."` It never copies another story's whole rule table. What a status change causes lives in its lifecycle row; the AC only states that the change happens. Number AC within the story (`AC1`, `AC2`). Check INVEST, but do not print the check, a priority, or other metadata lines in the PRD.
+- **Inside a PRD** (the PRD pipeline): the reader reads the PRD top to bottom, so each fact sits where it is needed, as defined in `knowledge-base/product-language/SKILL.md`. A rule only this story uses sits under the story in its Rules block, just above the AC; a rule several stories of the epic use sits at the top of the epic; only the foundation of the whole feature sits in General Rules. Rules, messages, screens, and metrics are named in words; the only codes are the job IDs on the epic's Serves line, the story ID in its heading, and the AC numbers. Each AC reads on its own: it applies the story's or epic's rules in plain words, states the effect of a rule from elsewhere in a few words (with a sample labelled e.g. when useful), and quotes a message's exact copy where it is shown first — `- AC2 (Error): If the cancellation cutoff has passed, the Cancel button is disabled and an inline note says "Online cancellation closes 24 hours before departure."` It never copies another story's whole rule table. What a status change causes lives in its lifecycle row; the AC only states that the change happens. Number AC within the story (`AC1`, `AC2`). Check INVEST, but do not print the check, a priority, or other metadata lines in the PRD.
 
 ### Must cover all of these
 
@@ -185,7 +185,7 @@ Fix any failure before outputting.
 - [ ] No `and` / `or` / `/` in WHO/DOES/WHAT
 - [ ] Every AC has a clear pass/fail condition
 - [ ] Every AC describes an observable outcome in business language — no status codes, endpoints, or internal components
-- [ ] Inside a PRD: no codes; every AC reads on its own; rules only this story uses are in its Rules block; message copy is quoted where it is shown first
+- [ ] Inside a PRD: no rule, message, or screen codes; every AC reads on its own; rules only this story uses are in its Rules block; message copy is quoted where it is shown first
 - [ ] Happy path + at least one negative/edge case covered, by its own AC or, inside a PRD, by "Same in every story"
 - [ ] All AC completable within one sprint
 - [ ] All 6 INVEST criteria pass

@@ -5,8 +5,8 @@
   the core value of the feature in business language that PO, BA, Dev, and QC all read the same way.
   It describes WHAT and WHY, never HOW: architecture, APIs, data model, and configuration belong to
   the Dev team's technical design document, linked in 1.2 References.
-  No codes in the text: rules, messages, screens, and metrics are named in words. The only
-  identifiers are story IDs in story headings and acceptance criterion numbers within a story.
+  Codes only where they help: job IDs (JTBD-01), epic numbers, story IDs, and acceptance criterion
+  numbers within a story. Rules, messages, screens, and metrics are named in words.
   Labels inside the PRD (Rules, Acceptance Criteria, table headers) are written in the PRD's language.
   Optional sections (Success Metrics, Process Diagrams, Non-Functional Requirements, Screens) appear
   only when the user chose them; drop an excluded section and renumber the ones after it.
@@ -40,7 +40,7 @@
 ## 2. Feature Overview
 
 <!-- The first thing a new reader meets. Plain prose a reader understands before any rule:
-     no codes, no rule values, no jargon the Glossary has not defined yet. -->
+     no rule values, no codes other than job IDs, no jargon the Glossary has not defined yet. -->
 
 ### 2.1 Problem Statement / Context
 
@@ -49,13 +49,6 @@
 - Current behavior: [How it works today, from the user's point of view]
 - Existing gap:
 - Business motivation:
-
-<!-- Only constraints on how or when the feature is delivered that the user explicitly stated, as stated.
-     Remove this block when there are none. -->
-
-**Known constraints**
-
--
 
 **Problem Statement**
 
@@ -67,11 +60,12 @@
 ### 2.2 Job to Be Done (JTBD)
 
 <!--
-  One block per distinct actor type, role, or usage context. Each block is the actor in bold and
-  exactly one job story sentence. No IDs, no status, no dimension tables.
+  One block per distinct actor type, role, or usage context, numbered JTBD-01, JTBD-02, ... Each
+  block is the ID and actor in bold and exactly one job story sentence. No status, no dimension tables.
+  Every job is served by at least one epic.
 -->
 
-**[User type / scenario]**
+**JTBD-01 - [User type / scenario]**
 
 When [situation], I want to [motivation], so I can [expected outcome].
 
@@ -173,8 +167,9 @@ When [situation], I want to [motivation], so I can [expected outcome].
 <!--
   Follow the `user-story-skill` rules STRICTLY. Read top to bottom: epic, its rules, then each story.
 
-  Epic: a heading, one plain sentence on what it gives the user, and "Rules for this epic" only when
-  several of its stories use a rule (a status lifecycle only this epic uses sits here too).
+  Epic: a heading, a "Serves" line with the IDs of the jobs it serves, one plain sentence on what it
+  gives the user, and "Rules for this epic" only when several of its stories use a rule (a status
+  lifecycle only this epic uses sits here too).
 
   Story:
   - Heading: "##### US-01 - [Story name]". The Jira ticket summary starts with the same ID and name.
@@ -189,10 +184,13 @@ When [situation], I want to [motivation], so I can [expected outcome].
     or state beyond "the user is on this screen", open with "If" (something happens) or "While" (a state
     holds). It reads on its own: a rule from the story's own block or its epic is applied in plain words;
     a rule from General Rules or another epic is stated by its effect in a few words, with a sample
-    labelled e.g. when useful. No codes; another AC of the same story may be named ("as in AC3").
+    labelled e.g. when useful. No rule, message, or screen codes; another AC of the same story may be
+    named ("as in AC3").
 -->
 
 #### Epic 1: [Epic Name]
+
+**Serves:** JTBD-01
 
 [One sentence: what this epic gives the user.]
 

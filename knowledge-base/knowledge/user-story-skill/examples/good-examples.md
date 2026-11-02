@@ -232,9 +232,9 @@ so that I can plan to be home when the parcel arrives.
 
 ---
 
-## Example 9 — Story Inside a PRD (Read Top to Bottom, No Codes)
+## Example 9 — Story Inside a PRD (Read Top to Bottom, No Rule Codes)
 
-Inside a PRD, the reader reads from the top and never looks anything up. A rule only this story uses sits right under the story; a rule several stories of the epic use sits at the top of the epic; only the foundation of the whole feature sits in General Rules. Nothing is named by a code: the only identifiers are the story ID in its heading and the AC numbers. A message's exact copy is quoted where it is shown.
+Inside a PRD, the reader reads from the top and never looks anything up. A rule only this story uses sits right under the story; a rule several stories of the epic use sits at the top of the epic; only the foundation of the whole feature sits in General Rules. Rules and messages are never named by a code; the only codes are the job IDs the epic serves, the story ID in its heading, and the AC numbers. A message's exact copy is quoted where it is shown.
 
 **From the PRD's General Rules (3.1):**
 
@@ -247,6 +247,8 @@ Repeated tap | Tapping a confirm button more than once performs the action only 
 
 ```text
 #### Epic 2: Manage my tickets
+
+Serves: JTBD-02
 
 Passengers change or cancel their tickets without calling the hotline.
 
@@ -286,4 +288,4 @@ Refund = amount paid - cancellation fee.                       | Paid 300,000 VN
 - The ticket status and who may cancel sit at the top of the epic, because the customer-service story in the same epic uses them too; AC4 only states that the status changes
 - Repeated taps are handled once in General Rules, so the story does not write its own AC for them
 - Each message's exact copy is in the AC where it is shown; there is no message table to cross-check
-- The only identifiers are "US-04" (also the start of the Jira ticket summary) and AC1 to AC6, which QC uses for test cases
+- The only codes are JTBD-02 (the job the epic serves, listed near the top of the PRD), "US-04" (also the start of the Jira ticket summary), and AC1 to AC6, which QC uses for test cases

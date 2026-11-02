@@ -20,7 +20,7 @@ People read a PRD like any other document: from the top, one section at a time. 
 So the PRD is written for a reader who has only the page in front of them:
 
 - **Each fact sits where the reader needs it.** A rule lives under the story that uses it, at the top of its epic when several stories of that epic use it, or in General Rules only when it is the foundation of the whole feature.
-- **No codes in the text.** Rules, messages, screens, metrics, and quality targets are named in words, never by an ID. The only identifiers are the story ID in each story heading (`US-01`, used to name the Jira ticket) and the numbers of a story's acceptance criteria (`AC1`, `AC2`, used by QC for test cases).
+- **Codes only where they help.** A code stays when it labels an item the reader meets in a short list and that other parts point to at a high level, or that people use outside the PRD: jobs (`JTBD-01`, each epic names the jobs it serves), epics (`Epic 1`), stories (`US-01`, also the Jira ticket summary), and the numbers of a story's acceptance criteria (`AC1`, used by QC for test cases). Rules, messages, screens, metrics, and quality targets are named in words, never by an ID.
 - **The overview comes first and is plain.** The Problem Statement, JTBD, and Goals are short prose a new reader understands before meeting any rule.
 
 ## Why the PRD stays non-technical
@@ -49,9 +49,9 @@ The Dev team owns the technical design (architecture, APIs, data model, configur
 7. **One term per concept.** Use the same word for the same thing in every section. Define business terms, status names, and role names in the Glossary, and never switch to a synonym later.
 8. **Adjustable values: say who, not how.** If the business needs to change a value without a new release (a fee, a limit, a time window), state that it is adjustable and by which role. If the value is set per partner or per campaign, give the rule's shape, who sets the value, the default if any, and a worked example labelled as sample values. Do not describe how it is configured.
 9. **Technical decisions are questions, not answers.** If a requirement depends on a technical decision, write the business need, mark the open point `TBD` with who decides in words ("TBD, Dev / Tech Lead decides"), and list it for the user at the approval step. Do not answer it in the PRD.
-10. **Keep user-provided delivery constraints, do not expand them.** If the user explicitly states a constraint on how or when the feature is delivered (for example "must reuse the current payment partner", "launch before Tet"), record it once, as stated, under Known constraints in the Context. A limit on what users or data may do (a count, a time window, an amount) is a business rule, not a constraint.
+10. **Delivery constraints stay out of the PRD.** A constraint the user states on how or when the feature is delivered (for example "must reuse the current payment partner", "launch before Tet", "one shared formatter for every amount") belongs to the delivery plan or the Dev team's technical design, not to the PRD. List it for the user at the approval step so it reaches the Dev team. A limit on what users or data may do (a count, a time window, an amount) is a business rule, not a constraint.
 11. **Write plainly.** Short sentences, active voice, one idea per sentence. Tables for rules, numbered steps for flows.
-12. **No codes in the text.** Never write a rule, message, screen, metric, quality target, dependency, assumption, question, or job by an ID (`BR-`, `MSG-`, `SCR-`, `SM-`, `NFR-`, `DEP-`, `A-`, `Q-`, `JTBD-`, `UC-`, `CB-`), and never copy source codes from the input ("CR-08", "Gốc: ..."). Name things in words. The only identifiers are story IDs in story headings and acceptance criterion numbers within a story; an acceptance criterion may point to another of the same story ("as in AC3").
+12. **Codes only where they help.** The PRD keeps four kinds of code: job IDs (`JTBD-01`) in each job's heading and in the line under each epic that names the jobs it serves; epic numbers (`Epic 1`); story IDs (`US-01`) in story headings; and acceptance criterion numbers within a story (an acceptance criterion may point to another of the same story, "as in AC3"). These label short lists the reader sees, or items Jira and QC use. Never write a rule, message, screen, metric, quality target, dependency, assumption, question, or common behavior by an ID (`BR-`, `MSG-`, `SCR-`, `SM-`, `NFR-`, `DEP-`, `A-`, `Q-`, `UC-`, `CB-`), and never copy source codes from the input ("CR-08", "Gốc: ..."). Name those things in words.
 13. **Readable in place.** A reader understands each story from its epic and its own block, without opening another section. An acceptance criterion states the situation and the outcome in plain words. When the outcome depends on a rule that sits elsewhere (General Rules, or another story), it says that rule's effect in a few words and may add a sample labelled "e.g." (in Vietnamese "VD"). A message is described by what it says, and its exact copy is written in quotes where the message is shown.
 14. **Unknowns stay visible but light.** An assumed value is written in its rule as `[value] (assumed)`, an unknown one as `TBD` with who decides in words. They are listed for the user in the chat at the approval step; the PRD has no assumptions or open-questions register.
 
@@ -61,7 +61,7 @@ Ask what a sentence is about. If it is about **money, seats or other inventory, 
 
 | Fact | Where it lives |
 |------|----------------|
-| The jobs users hire the feature for | JTBD (2.2), one job story per actor |
+| The jobs users hire the feature for | JTBD (2.2), one job story per actor, numbered `JTBD-01`; each epic names the jobs it serves |
 | Who needs what, and why | The user story statement (3.3) |
 | A rule only one story uses: formula, policy, limit, who may take this story's action | Rules, under that story (3.3) |
 | A rule several stories of the same epic use, including a status lifecycle only that epic uses | Epic rules, at the top of that epic (3.3) |
@@ -101,7 +101,7 @@ The examples are illustrative. Write in the user's language and use only the rul
 ## Self-check before output
 
 - [ ] No forbidden technical detail (Rule 3) appears anywhere, including tables and diagrams.
-- [ ] No code other than story IDs in story headings and AC numbers appears anywhere, including tables and diagrams.
+- [ ] No code other than job IDs, epic numbers, story IDs, and AC numbers appears anywhere, including tables and diagrams.
 - [ ] Every business rule has concrete values (or `TBD` with who decides) and a trigger condition.
 - [ ] Every rule sits where its readers need it: under its one story, at the top of its epic, or in General Rules only when it applies across epics.
 - [ ] Every story can be understood from its epic and its own block without opening another section.

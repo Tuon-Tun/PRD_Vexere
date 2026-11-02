@@ -12,7 +12,7 @@ Why: whoever writes the PRD (a person or an AI) rarely has the full technical co
 
 | The PRD contains | The PRD leaves to the Dev team's technical design |
 |------------------|---------------------------------------------------|
-| Problem, context, the jobs users hire the feature for, and goals, in plain prose | Architecture, services, and components |
+| Problem, context, the numbered jobs users hire the feature for, and goals, in plain prose | Architecture, services, and components |
 | Shared glossary of business terms, statuses, and roles | APIs, endpoints, payloads, status and error codes |
 | Business rules with concrete values and worked examples, including how existing records are treated at launch, placed where their readers need them | Database tables, fields, and data formats |
 | Status lifecycles and who may act, next to the stories that use them | Configuration keys and how values are configured |
@@ -20,7 +20,7 @@ Why: whoever writes the PRD (a person or an AI) rarely has the full technical co
 | Situations that behave the same in every story (session expired, connection lost, repeated tap) | Code or pseudo-code; tracking event names and properties (the Data team's tracking plan) |
 | Optional, when the user asks: success metrics, business-level diagrams, cross-cutting quality targets, a screen list with purposes and design links | Colours, sizes, and assets (the design file) |
 
-**Read top to bottom, no codes.** People read a PRD like any other document and cannot hold a register of codes in their head. A sentence such as "per BR-26, show MSG-04 (CB-02)" makes the reader open three sections before they know what it says, and once several PRDs cross-reference each other nobody can follow them. So the PRD names everything in words, and each fact sits where the reader needs it:
+**Read top to bottom, no codes to look up.** People read a PRD like any other document and cannot hold a register of codes in their head. A sentence such as "per BR-26, show MSG-04 (CB-02)" makes the reader open three sections before they know what it says, and once several PRDs cross-reference each other nobody can follow them. So the PRD names rules, messages, screens, and metrics in words, and each fact sits where the reader needs it:
 
 | Fact | Where it lives |
 |------|----------------|
@@ -31,7 +31,7 @@ Why: whoever writes the PRD (a person or an AI) rarely has the full technical co
 | What the user sees in one story, how errors are shown, side-effects of the story's own action | Acceptance criteria under the story |
 | A message's exact copy | In quotes, in the acceptance criterion where it is first shown |
 
-The only identifiers are story IDs in story headings (`US-01`, also the start of the Jira ticket summary) and acceptance criterion numbers within a story (`AC1`, used by QC). When an acceptance criterion depends on a rule that sits elsewhere, it states that rule's effect in a few words, with a sample labelled "e.g." when useful. Unknown or assumed values are written in the rule itself (`TBD` with who decides, `[value] (assumed)`) and listed for the user in the chat at approval; the PRD has no assumptions or open-questions register.
+Codes stay only where they help: job IDs (`JTBD-01`, each epic names the jobs it serves), epic numbers, story IDs in story headings (`US-01`, also the start of the Jira ticket summary), and acceptance criterion numbers within a story (`AC1`, used by QC). When an acceptance criterion depends on a rule that sits elsewhere, it states that rule's effect in a few words, with a sample labelled "e.g." when useful. Unknown or assumed values are written in the rule itself (`TBD` with who decides, `[value] (assumed)`) and listed for the user in the chat at approval; the PRD has no assumptions or open-questions register.
 
 All wording and placement rules, including a technical-to-product translation table, live in [`knowledge-base/product-language/SKILL.md`](./knowledge-base/product-language/SKILL.md). Every pipeline step applies it.
 
@@ -202,7 +202,7 @@ flowchart TD
 - The system generates the Product Framing Pack with `knowledge-base/product-framing/SKILL.md`, which applies standards from:
   - `knowledge-base/knowledge/jobs-to-be-done/SKILL.md`
   - `knowledge-base/knowledge/user-story-skill/SKILL.md`
-- The output is a Product Framing Pack with no codes in its text: one single-sentence job story per user type (`When [situation], I want to [motivation], so I can [expected outcome].`), General Rules (only the foundation of the whole feature, and situations that behave the same in every story), Epics with the rules several of their stories use, INVEST-checked User Stories with their own rules and labelled acceptance criteria that read on their own, and the optional parts the user chose.
+- The output is a Product Framing Pack with no rule or message codes: one numbered, single-sentence job story per user type (`When [situation], I want to [motivation], so I can [expected outcome].`), General Rules (only the foundation of the whole feature, and situations that behave the same in every story), Epics that name the jobs they serve and hold the rules several of their stories use, INVEST-checked User Stories with their own rules and labelled acceptance criteria that read on their own, and the optional parts the user chose.
 - Each rule is placed by asking which stories use it: one story → under it; several stories of one epic → at the top of the epic; the foundation of the whole feature → General Rules. Every `TBD` and assumed value is listed for the user with the Pack.
 - In IDE mode, the Product Framing Pack is saved under `domain-knowledge/[Domain_Name]/inputs/[Feature_File_Name]_framing.md`.
 - In text-only mode, the Product Framing Pack is shown in chat but not written to disk.
@@ -211,7 +211,7 @@ flowchart TD
 ### Step 3: Drafting
 
 - The approved JSON from Step 1 and the approved Product Framing Pack from Step 2 are rendered into a full PRD using the standard PRD template.
-- The Product Framing Pack is the source of truth for the jobs, rules, and user stories in the PRD, with story IDs unchanged. Excluded sections are left out and the rest renumbered.
+- The Product Framing Pack is the source of truth for the jobs, rules, and user stories in the PRD, with job and story IDs unchanged. Excluded sections are left out and the rest renumbered.
 - In IDE mode, the draft is stored under `domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.md`.
 - In text-only mode, the full Markdown PRD draft is returned in chat.
 - Diagrams are generated by `diagram-writer/SKILL.md` only. No other file contains diagram generation rules.
@@ -232,7 +232,7 @@ flowchart TD
 - The user can request edits, add information, or approve the PRD.
 - The process stays in this step until the user explicitly approves the draft.
 - Edits change the draft directly. Substantive edits return to Step 4 for re-review before the draft is shown again. Cosmetic edits may skip re-review.
-- At this step the system lists, in the chat, every `TBD` with who decides, every assumed value, and every technical decision for Dev / Tech Lead.
+- At this step the system lists, in the chat, every `TBD` with who decides, every assumed value, every technical decision for Dev / Tech Lead, and every delivery constraint the user stated.
 - A changed business rule is edited where it sits; every acceptance criterion that states its effect is updated in the same edit, the rule moves if the stories using it changed, and everything touched is re-reviewed.
 - After approval, the PRD is the only home of the feature's facts; in IDE mode the framing file is marked as superseded. A later change to an approved PRD is made as an edit of that PRD, keeping every story ID and AC number. In IDE mode, the PRD's line in the domain `rules.md` is added or refreshed, and a rule another PRD of the domain also needs moves into `rules.md`.
 - In text-only mode, approval completes the workflow and the final PRD remains in chat.
@@ -270,7 +270,7 @@ The quality of the Step 1 input strongly affects the quality of the generated PR
 7. **Basic user flow:** What does the happy path look like from start to finish?
 8. **Business rules and edge cases:** Concrete values (amounts, limits, time windows, who may do what) and what should happen when something goes wrong — seat already taken, payment failed, partner not responding, user leaves mid-way. If the feature changes existing bookings, tickets, or vouchers, say how those created before launch are treated.
 9. **Quality expectations:** How fast it should feel, when it must be available, on which platforms. (Who may see which information is a business rule: put it under item 8.)
-10. **Dependencies and known constraints:** Partners, teams, or existing features involved. If your team already knows a constraint (for example "must reuse the current payment partner"), state it — it is recorded as stated under Known Constraints, not expanded into technical detail.
+10. **Dependencies and known constraints:** Partners, teams, or existing features involved. If your team already knows a delivery constraint (for example "must reuse the current payment partner"), state it — it is not written into the PRD but listed back to you at approval, for the Dev team's technical design.
 11. **Success metrics (optional):** Only if you want a metrics section — how will the team know the feature worked, how is each metric counted, who owns it, and what must not get worse (guardrail)?
 12. **Diagram needs:** State whether you want BPMN, Activity Diagram, Sequence Diagram, or no diagrams. Diagrams stay business-level: actors, the system as one participant, and partners.
 13. **Screens and wireframes (optional):** Say whether you want a screen list (one line of purpose per screen) and, if so, whether wireframes should be drawn in a design tool. If designs already exist, give their links.

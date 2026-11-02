@@ -25,9 +25,9 @@ ACTIVE_SECTIONS = [
     "Screens",
 ]
 
-# Codes a human reader would have to look up. A PRD names these things in words; only story IDs
-# (US-01) and AC numbers within a story remain.
-CODE = re.compile(r"\b(?:BR|MSG|CB|SCR|NFR|DEP|SM|JTBD|UC|RN|A|Q)-\d+\b")
+# Codes a human reader would have to look up. A PRD names these things in words; only job IDs
+# (JTBD-01), epic numbers, story IDs (US-01), and AC numbers within a story remain.
+CODE = re.compile(r"\b(?:BR|MSG|CB|SCR|NFR|DEP|SM|UC|RN|A|Q)-\d+\b")
 
 
 def fail(message):
@@ -255,9 +255,12 @@ def check_prd_sections():
     # Sections readers found useless or impossible to follow are gone.
     for removed in ("How to Read This PRD", "### 2.1 Summary", "Scope", "Use Case", "Traceability", "Rules by Story",
                     "**Messages**", "Dependencies & Impacted Areas", "Assumptions & Open Questions", "INVEST",
-                    "Priority", "Common behaviors", "Why it matters", "API / Technical Specs"):
+                    "Priority", "Common behaviors", "Why it matters", "API / Technical Specs", "Known constraints"):
         assert_true(removed not in template, f"PRD template still contains '{removed}'")
     assert_true(not CODE.search(template), "PRD template still uses codes")
+    # Jobs keep their IDs, and each epic names the jobs it serves.
+    assert_true("**JTBD-01 - " in template and "**Serves:** JTBD-01" in template,
+                "PRD template must number the jobs and give each epic a Serves line")
     assert_true(
         0 <= template.find("### 3.1 General Rules") < template.find("### 3.3 Feature Epics & User Stories"),
         "PRD template must place General Rules (3.1) before Feature Epics & User Stories (3.3)",

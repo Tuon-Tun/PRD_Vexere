@@ -33,12 +33,6 @@
 - Khoảng trống: không có số tham khảo theo tiền tệ của khách; cách viết số tiền chưa thống nhất giữa các trang và platform; tìm điểm đón trả phải gõ tiếng Việt; khách chưa được báo rõ rằng mình bị trừ bằng VND và ngân hàng có thể áp tỷ giá, phí riêng.
 - Động lực kinh doanh: Vexere muốn khách quốc tế hoàn thành đơn nhiều hơn trên UI ngoại ngữ, mà không phát sinh rủi ro pháp lý, tài chính hay khiếu nại mới, và không làm giảm kết quả của UI tiếng Việt.
 
-**Known constraints**
-
-- Đổi currency không tạo server call cho search result.
-- Mọi số tiền đi qua một formatter dùng chung trên web và app; còn UI hoặc component format tiền ngoài formatter dùng chung thì không pass.
-- Component search widget dùng lại được cho các ngôn ngữ thêm sau qua config, không sửa code.
-
 **Problem Statement**
 
 - **User problem:** Khách quốc tế dùng UI ngoại ngữ của Vexere phải tự quy đổi giá VND sang tiền nước mình, gặp địa danh và nội dung tiếng Việt có dấu, nên khó đọc giá, khó tìm điểm đón trả và dễ bất ngờ khi số tiền bị trừ trên sao kê khác với số họ nghĩ.
@@ -48,39 +42,39 @@
 
 ### 2.2 Job to Be Done (JTBD)
 
-**Khách inbound xem giá**
+**JTBD-01 - Khách inbound xem giá**
 
 Khi xem giá chuyến xe tại Việt Nam trên UI ngoại ngữ, tôi muốn thấy giá bằng tiền tệ của mình bên cạnh VND, để tôi có thể ước lượng chi phí mà không phải tự quy đổi.
 
-**Khách inbound sắp thanh toán**
+**JTBD-02 - Khách inbound sắp thanh toán**
 
 Khi sắp thanh toán, tôi muốn biết chính xác số VND sẽ bị trừ và việc ngân hàng có thể áp tỷ giá, phí riêng, để tôi có thể xem sao kê ngân hàng mà không bị bất ngờ.
 
-**Khách inbound không đọc được tiếng Việt**
+**JTBD-03 - Khách inbound không đọc được tiếng Việt**
 
 Khi tìm và đặt vé mà không đọc được tiếng Việt, tôi muốn đọc toàn bộ trang và địa danh bằng ngôn ngữ của mình hoặc chữ Latin không dấu, để tôi có thể tự tìm chuyến và đặt vé mà không cần hỏi ai.
 
-**Khách quay lại hoặc khách mở link chia sẻ**
+**JTBD-04 - Khách quay lại hoặc khách mở link chia sẻ**
 
 Khi quay lại Vexere hoặc mở một link được chia sẻ, tôi muốn thấy ngay ngôn ngữ và tiền tệ phù hợp mà không phải chọn lại, để tôi có thể xem giá ngay.
 
-**Người chia sẻ link Vexere (marketing, affiliate)**
+**JTBD-05 - Người chia sẻ link Vexere (marketing, affiliate)**
 
 Khi chia sẻ link Vexere cho khách của một thị trường, tôi muốn link mở trang bằng ngôn ngữ và tiền tệ tôi chỉ định, để tôi có thể cho người nhận thấy đúng thông tin tôi muốn.
 
-**Nhân viên CSKH**
+**JTBD-06 - Nhân viên CSKH**
 
 Khi khách khiếu nại "giá khác số bị trừ", tôi muốn xem đúng những gì khách đã thấy trên đơn, để tôi có thể xử lý khiếu nại bằng bằng chứng.
 
-**Kế toán và Finance analyst**
+**JTBD-07 - Kế toán và Finance analyst**
 
 Khi xuất hoá đơn và lập báo cáo doanh thu, tôi muốn mọi số liệu được ghi nhận bằng VND, để tôi có thể báo cáo mà không bị lẫn số tham khảo.
 
-**PO**
+**JTBD-08 - PO**
 
 Khi mở thêm thị trường hoặc khi có sự cố, tôi muốn bật ngôn ngữ, tiền tệ và tắt tính năng mà không cần phát hành bản mới, để tôi có thể mở rộng an toàn và dừng ngay khi có rủi ro.
 
-**Nhân viên vận hành tỷ giá**
+**JTBD-09 - Nhân viên vận hành tỷ giá**
 
 Khi thêm cặp tiền hoặc khi có sự cố về tỷ giá, tôi muốn quản lý quy tắc tỷ giá và nguồn tỷ giá mà không cần Dev, để tôi có thể giữ số tham khảo dựa trên tỷ giá đúng và ổn định.
 
@@ -421,6 +415,8 @@ stop
 
 #### Epic 1: Nền tảng
 
+**Phục vụ:** JTBD-01, JTBD-03
+
 Số tiền, địa danh và ô tìm kiếm đọc được trên mọi ngôn ngữ UI.
 
 **Quy tắc của epic**
@@ -481,6 +477,8 @@ Là khách inbound, tôi muốn biết phải nhập tên hành khách bằng ch
 - AC3 (Alternative): Trong khi khách dùng UI VI, ô tên hành khách không hiện dòng gợi ý nhập tên bằng chữ Latin ở AC1 và hoạt động như hiện tại.
 
 #### Epic 2: Chọn ngôn ngữ và tiền tệ
+
+**Phục vụ:** JTBD-01, JTBD-03, JTBD-04, JTBD-05
 
 Khách thấy ngay ngôn ngữ và tiền tệ phù hợp, và đổi được khi muốn.
 
@@ -617,6 +615,8 @@ Là người chia sẻ link Vexere (marketing, affiliate), tôi muốn link củ
 
 #### Epic 3: Hiển thị kép
 
+**Phục vụ:** JTBD-01, JTBD-02
+
 Khách thấy số tham khảo bên cạnh số VND ở mọi bước có giá.
 
 ##### US-10 - Thấy số tham khảo và số VND ở mọi bước
@@ -689,6 +689,8 @@ Là khách inbound, tôi muốn lọc chuyến theo khoảng giá bằng tiền 
 
 #### Epic 4: Checkout
 
+**Phục vụ:** JTBD-02
+
 Khách biết chính xác số VND sẽ bị trừ, và số tham khảo không đổi bất ngờ trong lúc thanh toán.
 
 ##### US-13 - Thông báo thanh toán rõ ràng
@@ -736,6 +738,8 @@ Là khách inbound đang thanh toán, tôi muốn số tham khảo được cậ
 - AC13 (Alternative): Nếu báo giá được tạo lúc bảng tỷ giá hiện hành đang Cũ và bảng trở lại Bình thường khi chỗ vẫn còn được giữ, báo giá chuyển ngay sang bảng hợp lệ mới, không chờ mốc hết hiệu lực tỷ giá, nên checkout và màn thanh toán hiển thị số tham khảo theo bảng mới đó. VD: báo giá tạo lúc 10:30 khi bảng đang Cũ, lúc 11:00 có bảng hợp lệ → số tham khảo theo bảng 11:00 ngay.
 
 #### Epic 5: Sau khi đặt
+
+**Phục vụ:** JTBD-02, JTBD-06, JTBD-07
 
 Đơn đã đặt giữ đúng số tham khảo khách đã thấy; hoá đơn, đối soát và doanh thu chỉ dùng VND.
 
@@ -828,6 +832,8 @@ Là kế toán của Vexere, tôi muốn hoá đơn VAT và mọi số liệu do
 - AC7 (Alternative): Nếu đơn được hoàn tiền, với số hoàn bằng VND là số chính, kèm số tham khảo, số hoàn được ghi nhận trong đối soát và báo cáo doanh thu bằng số VND của số hoàn, vì số tham khảo chỉ để hiển thị (VD: hoàn 423,270 VND : ~USD 16.25 → ghi nhận 423,270 VND).
 
 #### Epic 6: Vận hành
+
+**Phục vụ:** JTBD-08, JTBD-09
 
 PO, BU và nhân viên vận hành tỷ giá bật, tắt và cấu hình tính năng mà không cần phát hành bản mới.
 

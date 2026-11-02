@@ -56,7 +56,7 @@ Load `resources/prd-template.md`. Fill every section listed in `Active_Sections`
 **Where each section comes from:**
 
 - The approved Product Framing Pack is the source of truth for 2.2 JTBD, 3.1 General Rules, 3.3 (epics, epic rules, stories, story rules, acceptance criteria), 2.4 Success Metrics, 3.4 Non-Functional Requirements, and 3.5 Screens. Render them as approved. Do not re-derive them from the JSON, and do not reword them.
-- 2.1 and 2.3 come from the JSON (`Problem_Statement`, `Core_Objective`, `Known_Constraints`), written as plain prose with no codes and no rule values.
+- 2.1 and 2.3 come from the JSON (`Problem_Statement`, `Core_Objective`), written as plain prose with no codes and no rule values. `Known_Constraints` is not rendered: the orchestrator lists it for the user at Step 5.
 - 2.5 Glossary comes from the JSON `Glossary` plus every status and role named in the approved rules, using the names the rules use.
 - 3.2 comes from diagram-writer (Phase 3).
 - People fill the links: the 1.2 References rows and the Design column of 3.5 Screens (unless the input gave a link or Step 5.5 created the frame). Leave them empty; never generate a link or a ticket key.
@@ -66,13 +66,13 @@ Load `resources/prd-template.md`. Fill every section listed in `Active_Sections`
 
 - Write for four readers: PO, BA, Dev, and QC. Every sentence must be understandable without technical background.
 - Never write technical detail: endpoints, HTTP methods or status codes, payloads, JSON, error codes, database tables or fields, internal services or modules, frameworks, code, configuration keys, tracking event names, or infrastructure. The system is one black box.
-- Translate technical wording from the brief into business meaning instead of copying it. User-stated delivery constraints go once, as stated, under Known constraints in 2.1.
+- Translate technical wording from the brief into business meaning instead of copying it. User-stated delivery constraints are not written into the PRD.
 - Where a requirement needs a technical decision, state the business need and mark the open point `TBD, Dev / Tech Lead decides`. Do not answer it.
 - Use the terms defined in 2.5 Glossary consistently.
 
 **Human-first rules:**
 
-- No codes anywhere in the text, tables, or diagrams: no rule, message, screen, metric, quality target, dependency, assumption, question, job, or common-behavior IDs, and no source codes copied from the input. The only identifiers are story IDs in story headings and AC numbers within a story.
+- Codes only where they help: job IDs (`JTBD-01`) in job headings and in each epic's Serves line, epic numbers, story IDs in story headings, and AC numbers within a story. No rule, message, screen, metric, quality target, dependency, assumption, question, or common-behavior IDs anywhere, and no source codes copied from the input.
 - 2.1, 2.2, and 2.3 are short plain prose a new reader understands before meeting any rule.
 - A rule sits under the one story that uses it, at the top of its epic when several stories of that epic use it, or in 3.1 only when it applies across epics. A status lifecycle sits with the epic that uses it, or in 3.1 when several epics depend on it. Who may take an action sits with the story where the action is taken.
 - An acceptance criterion reads on its own. It applies a rule of its story or epic in plain words; it states the effect of a rule from 3.1 or another epic in a few words, with a sample labelled e.g. when useful. It shows a message by describing it and, where the message is shown first, quoting its exact copy.
@@ -110,7 +110,8 @@ Do not pre-fill Version History by default; the PM owns it. Keep the table forma
 ## Quality Checklist
 
 - Every section in `Active_Sections` is present and filled; every other section is dropped and the rest renumbered.
-- No codes appear anywhere except story IDs in story headings and AC numbers within a story.
+- No codes appear anywhere except job IDs, epic numbers, story IDs, and AC numbers.
+- Every epic has a Serves line naming the jobs it serves, and every job is served by at least one epic.
 - No technical detail appears anywhere (run the self-check in `knowledge-base/product-language/SKILL.md`).
 - 2.1 to 2.3 read as plain prose with no rule values.
 - Every rule sits where its readers need it: under its one story, at the top of its epic, or in 3.1 only when it applies across epics.

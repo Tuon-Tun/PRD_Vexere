@@ -13,7 +13,7 @@ The PRD hands over the rules, the logic, and the core value of a feature so that
 
 The writer of a PRD rarely has the full technical context — the company's tech stack, engineering rules, internal systems, SaaS tools, and existing configuration. Technical detail written without that context is guesswork that misleads Dev and cannot be checked by anyone else. The Dev team owns the technical design in a separate document, linked from the PRD's References.
 
-People read a PRD top to bottom, like any document, and cannot hold a register of codes in their head. So the PRD has no codes in its text: each rule sits where its readers need it (under the story that uses it, at the top of its epic when several of its stories use it, or in General Rules only when it is the foundation of the whole feature), and each acceptance criterion reads on its own. The only identifiers are story IDs in story headings and acceptance criterion numbers within a story. Rules several PRDs of a domain share live once in the domain rules file, so a set of PRDs stays readable as a system.
+People read a PRD top to bottom, like any document, and cannot hold a register of codes in their head. So the PRD keeps only the codes that help (job IDs, epic numbers, story IDs, and AC numbers), and names everything else in words: each rule sits where its readers need it (under the story that uses it, at the top of its epic when several of its stories use it, or in General Rules only when it is the foundation of the whole feature), and each acceptance criterion reads on its own. Rules several PRDs of a domain share live once in the domain rules file, so a set of PRDs stays readable as a system.
 
 Every step of this pipeline follows `knowledge-base/product-language/SKILL.md`, the single source of truth for PRD wording and for where each fact lives.
 
@@ -42,8 +42,8 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 * **Scope agenda confirmation:** After those questions, present the list of PRD sections and ask the user to confirm which ones apply, briefly explaining each. Document Info is always included. The sections not marked optional are included by default; each optional one is marked as chosen or not, from the answers above.
 
   Present the agenda as a numbered checklist:
-  1. Problem Statement — context, current gap, business motivation, and any delivery constraint the user stated
-  2. JTBD — one job story per user type or scenario
+  1. Problem Statement — context, current gap, business motivation
+  2. JTBD — one job story per user type or scenario, numbered JTBD-01, ...
   3. Goals — the outcomes the feature is for, in plain words
   4. Success Metrics — optional, as answered above
   5. Glossary — shared business terms, status names, and role names
@@ -98,10 +98,10 @@ When a user provides a raw idea or note, you MUST execute the following steps in
   * In `CHAT_TEXT_ONLY`, use only the approved JSON, the raw user input, and any context the user has pasted into chat. Do not read or write files.
 * **Conflict check:** If domain context contradicts the approved JSON (different terminology, conflicting rules, deprecated flows), pause and ask the user how to reconcile before drafting.
 * **Required skill:** Produce the framing output with `knowledge-base/product-framing/SKILL.md`, which applies `knowledge-base/product-language/SKILL.md`, `knowledge-base/knowledge/jobs-to-be-done/SKILL.md`, and `knowledge-base/knowledge/user-story-skill/SKILL.md`.
-* **Action:** Produce a **Product Framing Pack** before PRD drafting. It has no codes in its text. It must include:
-  * JTBD statements, one per user type or scenario, each written as exactly one job story sentence under the actor in bold: `When [situation], I want to [motivation], so I can [expected outcome].` No IDs, no status, no dimension breakdowns.
+* **Action:** Produce a **Product Framing Pack** before PRD drafting. Its only codes are job IDs, epic numbers, story IDs, and AC numbers. It must include:
+  * JTBD statements, one per user type or scenario, each numbered (`JTBD-01`, ...) and written as exactly one job story sentence under its ID and the actor in bold: `When [situation], I want to [motivation], so I can [expected outcome].` No status, no dimension breakdowns.
   * General Rules: only the rules that are the foundation of the whole feature and apply across epics, plus situations that behave the same in every story.
-  * Epics, each with one sentence on what it gives the user and, when several of its stories use a rule, its epic rules (including a status lifecycle only that epic uses).
+  * Epics, each with a Serves line naming the jobs it serves by ID, one sentence on what it gives the user and, when several of its stories use a rule, its epic rules (including a status lifecycle only that epic uses).
   * INVEST-checked User Stories (the check is done, not printed), each with its ID (`US-01`), its statement, the rules only it uses (including who may take its action), and its acceptance criteria.
   * Acceptance criteria numbered and labelled (Happy / Alternative / Error) per story, one outcome each, opening with If or While when they depend on a situation or state, including happy path and negative/error conditions, each describing an observable outcome in business language that reads on its own, with the exact copy of a message in quotes where it is shown first.
   * The optional parts the user chose: Success Metrics, Non-Functional Requirements, Screens.
@@ -115,11 +115,11 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 ### Step 3: Drafting
 
 * Pass the approved JSON from Step 1 and the approved Product Framing Pack from Step 2 into `knowledge-base/prd-template/SKILL.md`.
-* The Product Framing Pack is the source of truth for the JTBD, General Rules, Epics & User Stories with their rules and acceptance criteria, and the optional parts, with story IDs unchanged. The raw `Epic_Candidates`, `User_Story_Candidates`, and `Business_Logic_and_Rules` from Step 1 are seeds only.
-* **No codes:** The draft names rules, messages, screens, and metrics in words. The only identifiers are story IDs in story headings and acceptance criterion numbers within a story.
+* The Product Framing Pack is the source of truth for the JTBD, General Rules, Epics & User Stories with their rules and acceptance criteria, and the optional parts, with job and story IDs unchanged. The raw `Epic_Candidates`, `User_Story_Candidates`, and `Business_Logic_and_Rules` from Step 1 are seeds only.
+* **Codes only where they help:** The draft keeps job IDs, epic numbers, story IDs, and AC numbers, and names rules, messages, screens, and metrics in words.
 * The drafting skill **MUST** use `knowledge-base/prd-template/resources/prd-template.md`.
 * For the `Version History` and `References` sections, keep the table format but do not invent content.
-* **Product-first drafting:** The draft contains no technical detail (endpoints, status codes, payloads, database fields, internal services, code, configuration keys). Technical wording from the input is translated into business meaning; user-stated constraints go once, as stated, under Known constraints in the Context; a technical decision is written `TBD, Dev / Tech Lead decides` and listed for the user at Step 5.
+* **Product-first drafting:** The draft contains no technical detail (endpoints, status codes, payloads, database fields, internal services, code, configuration keys). Technical wording from the input is translated into business meaning; a delivery constraint the user stated is not written into the PRD but listed for the user at Step 5; a technical decision is written `TBD, Dev / Tech Lead decides` and listed for the user at Step 5.
 * **Diagram generation:** When Section 3.2 requires diagrams, the drafting skill delegates to `knowledge-base/prd-template/diagram-writer/SKILL.md`. All diagram rules live there. Do not generate diagram code from any other source.
 * **No diagram case:** If `Diagram_Requirements` is `["None"]`, leave out the Process Diagrams section and renumber the sections after it.
 * **IDE output:** In `IDE_FULL_PIPELINE`, save the Markdown draft to `domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.md`. Do not save drafts in the repository root.
@@ -148,7 +148,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 ### Step 5: User Approval (CRITICAL PAUSE)
 
 * **Action:** Present the complete PRD draft (with reviewer notes inline) to the user.
-* **Open points:** In the chat, below the draft, list every `TBD` in the PRD with who decides, every `(assumed)` value, and every technical decision for Dev / Tech Lead, so the user can answer or confirm them. These lists live in the chat, not in the PRD.
+* **Open points:** In the chat, below the draft, list every `TBD` in the PRD with who decides, every `(assumed)` value, every technical decision for Dev / Tech Lead, and every delivery constraint the user stated (for the Dev team's technical design), so the user can answer or confirm them. These lists live in the chat, not in the PRD.
 * **Mandate:** YOU MUST STOP HERE. Ask the user: *"Here is the reviewed PRD draft. Would you like to adjust anything, add information, or approve this version?"*
 * **Wait:** DO NOT proceed to export or finalization until the user explicitly approves.
 * **Edit loop:** If the user requests substantive edits (new stories, new flows, changed business rules, changed acceptance criteria, scope changes, dependency changes, or diagram changes), update the draft, re-run Step 4 on the affected sections, then return to Step 5.
@@ -183,7 +183,7 @@ When a user provides a raw idea or note, you MUST execute the following steps in
 ## Best Practices & Rules
 
 * **Product first:** Every artifact describes WHAT and WHY in business language that PO, BA, Dev, and QC read the same way. Never invent technical detail; a technical decision is written `TBD, Dev / Tech Lead decides` and listed for the user. Wording rules live only in `knowledge-base/product-language/SKILL.md`.
-* **Readable in place, no codes:** Each fact sits where its readers need it, as defined in `knowledge-base/product-language/SKILL.md`. Nothing is named by a code except stories (`US-01`) and their acceptance criteria (`AC1`); those are plain text, never renumbered or reused.
+* **Readable in place, no codes:** Each fact sits where its readers need it, as defined in `knowledge-base/product-language/SKILL.md`. Nothing is named by a code except jobs (`JTBD-01`), epics, stories (`US-01`), and their acceptance criteria (`AC1`); those are plain text, never renumbered or reused.
 * **Mode discipline:** Never write files, create folders, call DOCX export, or call IDE-only integrations in `CHAT_TEXT_ONLY`.
 * **Silent operation:** The pipeline may run silently only after the Step 2 Product Framing Pack has been reviewed and approved. Steps 3 through 4 can run without piecemeal updates. Reappear at Step 5 with the complete reviewed draft.
 * **Zero hallucination:** Do not invent business rules, scope boundaries, or technical details. If the Input Router outputs `[NEEDS_CLARIFICATION]`, surface that gap to the user at the earliest approval checkpoint and keep unknown values as `TBD` rather than fabricating details.
