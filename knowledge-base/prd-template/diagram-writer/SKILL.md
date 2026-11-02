@@ -12,8 +12,9 @@ Draw business-level diagram code based on user selection. Diagrams show who does
 what happens next, in language PO, BA, Dev, and QC all read the same way. They never show how
 the system is built: the system is one participant, with no internal services, APIs, or data
 stores. Labels follow `knowledge-base/product-language/SKILL.md`: when called from the PRD
-pipeline, a label names a rule or outcome in words and cites its ID (for example "Paid within hold
-time? (BR-03)"), never the rule's value or the message wording, which live only in the PRD's tables.
+pipeline, a label names a rule or outcome in a few plain words (for example "Paid within hold
+time?"), with no codes, and never the rule's full value or the message wording, which live in the
+PRD's rules and acceptance criteria.
 
 If the feature context is already known (for example from a PRD session), skip context
 questions and go straight to drawing.
@@ -32,15 +33,15 @@ When called by the PRD pipeline, the caller provides:
 | `feature_name` | string | Feature or process name. |
 | `actors` | string[] | People or roles involved. |
 | `parties` | string[] | Partners, other teams, or existing features named in the input (business-level). Never internal technical components. |
-| `happy_path` | string[] | Ordered successful-flow steps, each with the AC or BR ID it comes from when called from the PRD pipeline. |
-| `edge_cases` | string[] | Alternative, failure, timeout, validation, or permission scenarios, each with the AC, CB, or BR ID that defines it when called from the PRD pipeline. |
+| `happy_path` | string[] | Ordered successful-flow steps, each named in words. |
+| `edge_cases` | string[] | Alternative, failure, timeout, validation, or permission scenarios, each named in words, that the PRD's rules or acceptance criteria define. |
 
 If `diagram_type` is provided by the caller, do not ask the user to choose again.
 
 **Branches in a PRD pipeline call (all diagram types):** draw only the alternative and failure branches
-that the given AC, CB, and BR define, labelled with their IDs. Never add a branch to fill a skeleton.
-If an outcome the flow needs is not defined, leave the branch out; the drafting step raises it as an
-Open Question.
+that the PRD's rules and acceptance criteria define, labelled in words. Never add a branch to fill a
+skeleton. If an outcome the flow needs is not defined, leave the branch out; the drafting step raises
+it with the user.
 
 ---
 
@@ -88,7 +89,7 @@ into frontend, backend, or internal services.
 
 **Labels:** task names are business actions in the user's language (for example "Choose seats",
 "Confirm payment", "Notify operator"), never API calls or technical operations. Gateways name the
-rule and cite its ID (for example "Within hold time? (BR-03)").
+rule as a short business question (for example "Within hold time?").
 
 **Standard sizes:**
 
@@ -159,7 +160,7 @@ Output a ` ```plantuml ` fenced block.
 - Standalone request: include the happy path, at least 1 alternative branch, and at least 1 error or
   exception branch.
 - Step labels must stay under 8 words, written as business actions or outcomes. No swimlanes.
-- Conditions are business questions (for example "Seat still available? (BR-04)", "Paid within hold time? (BR-03)"), never technical checks. In a PRD pipeline call, cite the rule ID instead of its value.
+- Conditions are business questions (for example "Seat still available?", "Paid within hold time?"), never technical checks and never codes.
 - Use `if / then / else / endif`. Nested conditions are allowed.
 
 **Skeleton:**
@@ -197,8 +198,8 @@ Output a ` ```plantuml ` fenced block.
 
 - Participants: the actors, the system as one participant (named after the product), and only the partners or teams named in the input. Never internal services, databases, or technical components.
 - `->` for an action or request (solid), `-->` for the result (dashed).
-- Label every arrow with a business action or outcome in plain words (for example "Request seat hold", "Seats held (BR-03)"). Never HTTP methods, endpoints, status codes, or payloads.
-- Wrap success versus failure paths in `alt / else / end`. Label what the user sees in each with a short outcome name and its AC or MSG ID (for example "Booking failed (MSG-05)"), never the message wording.
+- Label every arrow with a business action or outcome in plain words (for example "Request seat hold", "Seats held"). Never HTTP methods, endpoints, status codes, or payloads.
+- Wrap success versus failure paths in `alt / else / end`. Label what the user sees in each with a short outcome name (for example "Booking failed"), never the full message wording or a code.
 
 **Skeleton:**
 
@@ -219,11 +220,11 @@ System -> Partner: [What the system asks the partner to do]
 
 alt Success
   Partner --> System: [Partner confirms]
-  System --> User: [Outcome the user sees (AC / MSG ID)]
-' Optional: keep this branch only if a BR or AC defines the outcome
+  System --> User: [Outcome the user sees]
+' Optional: keep this branch only if a rule or acceptance criterion defines the outcome
 else Partner rejects or does not respond
-  Partner --> System: [Rejection / no answer in time (BR ID)]
-  System --> User: [Outcome the user sees and next step (AC / MSG ID)]
+  Partner --> System: [Rejection / no answer in time]
+  System --> User: [Outcome the user sees and next step]
 end
 @enduml
 ```

@@ -15,19 +15,19 @@ ROOT = Path(__file__).resolve().parents[2]
 ACTIVE_SECTIONS = [
     "Problem Statement",
     "JTBD",
-    "Goals & Success Metrics",
-    "Scope",
+    "Goals",
+    "Success Metrics",
     "Glossary",
-    "Business Rules",
+    "General Rules",
     "Process Diagrams",
     "Feature Epics & User Stories",
-    "Use Case Specifications",
-    "Traceability Matrix",
     "Non-Functional Requirements",
-    "UI/UX Specifications",
-    "Dependencies & Impacted Areas",
-    "Assumptions & Open Questions",
+    "Screens",
 ]
+
+# Codes a human reader would have to look up. A PRD names these things in words; only job IDs
+# (JTBD-01), epic numbers, story IDs (US-01), and AC numbers within a story remain.
+CODE = re.compile(r"\b(?:BR|MSG|CB|SCR|NFR|DEP|SM|UC|RN|A|Q)-\d+\b")
 
 
 def fail(message):
@@ -69,6 +69,7 @@ def check_input_schema():
         "Delivery_Mode",
         "Output_Artifacts",
         "Active_Sections",
+        "Wireframes_Requested",
         "Clarification_Confirmed",
         "Domain_Name",
         "Feature_Name",
@@ -217,14 +218,24 @@ def check_product_framing_skill():
 
     content = path.read_text(encoding="utf-8")
     assert_true("Product Framing Pack" in content, "Product framing skill is missing its output contract")
-    assert_true("Done when" in content, "Product framing skill is missing acceptance criteria guidance")
-    assert_true("Rules applied" in content, "Product framing skill is missing the Rules applied line")
-    # Rules must get their IDs before the stories that cite them are written.
-    rules_at = content.find("## 3. Business Rules")
-    stories_at = content.find("## 7. Epics & User Stories")
+    assert_true("**Rules for this epic**" in content, "Product framing skill is missing the epic rules block")
+    # Readers never memorize codes: no skill asks for rule lists, "Done when", or cross-reference tables.
+    for rel in (
+        "knowledge-base/product-framing/SKILL.md",
+        "knowledge-base/prd-template/SKILL.md",
+        "knowledge-base/prd-template/resources/prd-template.md",
+        "knowledge-base/prd-reviewer.md",
+        "knowledge-base/knowledge/user-story-skill/SKILL.md",
+    ):
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        for phrase in ("Rules applied", "Done when", "Traceability Matrix", "Rules by Story", "Story rules"):
+            assert_true(phrase not in text, f"{rel} still mentions '{phrase}'")
+    # General rules come before the stories that apply them.
+    rules_at = content.find("## 3. General Rules")
+    stories_at = content.find("## 4. Epics & User Stories")
     assert_true(
         0 <= rules_at < stories_at,
-        "Product framing output must define Business Rules before Epics & User Stories",
+        "Product framing output must put General Rules before Epics & User Stories",
     )
 
 
@@ -237,25 +248,28 @@ def check_prd_sections():
     assert_true(mapped == ACTIVE_SECTIONS, "prd-template/SKILL.md section mapping drifted from Active_Sections")
 
     template = (ROOT / "knowledge-base/prd-template/resources/prd-template.md").read_text(encoding="utf-8")
-    for heading in ("### 1.3 How to Read This PRD", "### 2.1 Summary", "### 2.5 Scope", "### 2.6 Glossary",
-                    "#### Traceability Matrix", "### 3.7 Dependencies & Impacted Areas",
-                    "## 4. Assumptions & Open Questions"):
+    for heading in ("### 1.2 References", "### 2.1 Problem Statement / Context", "### 2.2 Job to Be Done (JTBD)",
+                    "### 2.3 Goals", "### 2.4 Success Metrics", "### 2.5 Glossary", "### 3.1 General Rules",
+                    "### 3.3 Feature Epics & User Stories", "### 3.4 Non-Functional Requirements", "### 3.5 Screens"):
         assert_true(heading in template, f"PRD template is missing heading: {heading}")
-    assert_true("API / Technical Specs" not in template, "PRD template still contains the technical specs section")
-    # Rules are defined before the stories that cite them, in the PRD as in the framing pack.
+    # Sections readers found useless or impossible to follow are gone.
+    for removed in ("How to Read This PRD", "### 2.1 Summary", "Scope", "Use Case", "Traceability", "Rules by Story",
+                    "**Messages**", "Dependencies & Impacted Areas", "Assumptions & Open Questions", "INVEST",
+                    "Priority", "Common behaviors", "Why it matters", "API / Technical Specs", "Known constraints"):
+        assert_true(removed not in template, f"PRD template still contains '{removed}'")
+    assert_true(not CODE.search(template), "PRD template still uses codes")
+    # Jobs keep their IDs, and each epic names the jobs it serves.
+    assert_true("**JTBD-01 - " in template and "**Serves:** JTBD-01" in template,
+                "PRD template must number the jobs and give each epic a Serves line")
     assert_true(
-        0 <= template.find("### 3.1 Business Rules") < template.find("### 3.3 Feature Epics & User Stories"),
-        "PRD template must place Business Rules (3.1) before Feature Epics & User Stories (3.3)",
-    )
-    assert_true(
-        "#### Functional Requirements" not in template,
-        "PRD template still contains the Functional Requirements table",
+        0 <= template.find("### 3.1 General Rules") < template.find("### 3.3 Feature Epics & User Stories"),
+        "PRD template must place General Rules (3.1) before Feature Epics & User Stories (3.3)",
     )
 
     framing = (ROOT / "knowledge-base/product-framing/SKILL.md").read_text(encoding="utf-8")
     for name, text in (("PRD template", template), ("Product framing skill", framing)):
-        # Shared side-effects of a status live once, on its "on entering" row.
-        assert_true("**On Entering a Status**" in text, f"{name} is missing the On Entering a Status table")
+        # What happens however a status is reached is written once, on its "when it enters" row.
+        assert_true("When it enters" in text, f"{name} is missing the 'When it enters' table")
     for path in sorted((ROOT / "knowledge-base").rglob("*.md")):
         assert_true(
             "Also cites" not in path.read_text(encoding="utf-8"),
@@ -267,6 +281,15 @@ def check_prd_sections():
     assert_true(agenda == ACTIVE_SECTIONS, "prd-writer.md Step 0 agenda drifted from Active_Sections")
 
 
+def check_domain_prds():
+    # Every approved PRD in the repository reads without codes.
+    for path in sorted((ROOT / "domain-knowledge").glob("*/PRDs/*_PRD.md")):
+        text = path.read_text(encoding="utf-8")
+        found = sorted(set(CODE.findall(text)))
+        assert_true(not found, f"{path.relative_to(ROOT)} still uses codes: {', '.join(found[:10])}")
+        assert_true("Done when" not in text, f"{path.relative_to(ROOT)} still uses 'Done when'")
+
+
 def main():
     check_input_schema()
     check_export_schema()
@@ -274,7 +297,8 @@ def main():
     check_export_helper()
     check_product_framing_skill()
     check_prd_sections()
-    print(json.dumps({"status": "success", "checks": 6}))
+    check_domain_prds()
+    print(json.dumps({"status": "success", "checks": 7}))
 
 
 if __name__ == "__main__":

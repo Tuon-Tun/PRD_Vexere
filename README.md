@@ -12,29 +12,26 @@ Why: whoever writes the PRD (a person or an AI) rarely has the full technical co
 
 | The PRD contains | The PRD leaves to the Dev team's technical design |
 |------------------|---------------------------------------------------|
-| Problem, value, goals, and primary and guardrail metrics with owners | Architecture, services, and components |
-| Scope: what is in and what is explicitly out | APIs, endpoints, payloads, status and error codes |
-| Shared glossary of business terms, statuses, and roles | Database tables, fields, and data formats |
-| Business rules with concrete values and worked examples, including how existing records are treated at launch | Configuration keys and how values are configured |
-| Statuses and transitions (with their side-effects), roles and permissions | Infrastructure, caching, queues, scheduled jobs |
-| Epics that name the job (JTBD) they serve; user stories with priority, Screens, Jira, "Common behaviors" and "Rules applied" lines, and labelled `Done when` acceptance criteria | Code or pseudo-code |
-| Common behaviors shared by every story (session expired, connection lost, repeated tap) | Tracking event names and properties (the Data team's tracking plan) |
-| Use cases only for multi-step or branching flows, citing IDs | |
-| An ID-only traceability matrix, business-level quality targets, a screen inventory with Figma links, and the message catalog | Colours, sizes, and assets (the Figma file) |
-| Dependencies on partners, teams, and existing features; impacted areas | |
-| Technical decisions as **Open Questions** owned by Dev / Tech Lead | |
+| Problem, context, the numbered jobs users hire the feature for, and goals, in plain prose | Architecture, services, and components |
+| Shared glossary of business terms, statuses, and roles | APIs, endpoints, payloads, status and error codes |
+| Business rules with concrete values and worked examples, including how existing records are treated at launch, placed where their readers need them | Database tables, fields, and data formats |
+| Status lifecycles and who may act, next to the stories that use them | Configuration keys and how values are configured |
+| Epics with the rules several of their stories use; user stories with their own rules and labelled acceptance criteria that read on their own, with message copy where it is shown | Infrastructure, caching, queues, scheduled jobs |
+| Situations that behave the same in every story (session expired, connection lost, repeated tap) | Code or pseudo-code; tracking event names and properties (the Data team's tracking plan) |
+| Optional, when the user asks: success metrics, business-level diagrams, cross-cutting quality targets, a screen list with purposes and design links | Colours, sizes, and assets (the design file) |
 
-**Define once, cite by ID.** Every fact has exactly one home, and every other place cites its ID instead of repeating it. Repeating a rule in a story, a use case, and a screen description overloads readers and lets copies drift apart when the policy changes.
+**Read top to bottom, no codes to look up.** People read a PRD like any other document and cannot hold a register of codes in their head. A sentence such as "per BR-26, show MSG-04 (CB-02)" makes the reader open three sections before they know what it says, and once several PRDs cross-reference each other nobody can follow them. So the PRD names rules, messages, screens, and metrics in words, and each fact sits where the reader needs it:
 
-| Fact | Its one home | Cited elsewhere as |
-|------|--------------|--------------------|
-| Formulas and policies, statuses and transitions, permissions, limits | 3.1 Business Rules | `BR-01` |
-| What the user sees in one story, how errors are shown, side-effects of the story's own action | Acceptance criteria under the story in 3.3 | `US-01-AC2` |
-| Behavior that is the same in every story | Common Behaviors in 3.3 | `CB-01` |
-| Message wording, on any channel | Messages in 3.6 | `MSG-01` |
-| Metric and quality targets | 2.4 and the Non-Functional Requirements table in 3.5 | `SM-01`, `NFR-01` |
+| Fact | Where it lives |
+|------|----------------|
+| A rule only one story uses, including who may take its action | Under that story (Rules) |
+| A rule several stories of one epic use, including a lifecycle only that epic uses | At the top of that epic (Rules for this epic) |
+| The foundation of the whole feature, used across epics, and situations that behave the same in every story | 3.1 General Rules |
+| A rule several PRDs of the domain share | `domain-knowledge/[domain]/rules.md`, named by the PRDs that rely on it |
+| What the user sees in one story, how errors are shown, side-effects of the story's own action | Acceptance criteria under the story |
+| A message's exact copy | In quotes, in the acceptance criterion where it is first shown |
 
-Example: `BR-01` says "a ticket can be cancelled online up to 24 hours before departure". The acceptance criterion says "If the cancellation cutoff has passed (BR-01), the Cancel button is disabled and an inline explanation shows MSG-01", and MSG-01 says "...up to {cancellation cutoff (BR-01)} before departure". Changing 24 hours to 12 hours edits BR-01 only. Each story's `Rules applied (PRD Ticket Cancellation): BR-01, ...` line tells whoever creates the Jira ticket which rules to attach.
+Codes stay only where they help: job IDs (`JTBD-01`, each epic names the jobs it serves), epic numbers, story IDs in story headings (`US-01`, also the start of the Jira ticket summary), and acceptance criterion numbers within a story (`AC1`, used by QC). When an acceptance criterion depends on a rule that sits elsewhere, it states that rule's effect in a few words, with a sample labelled "e.g." when useful. Unknown or assumed values are written in the rule itself (`TBD` with who decides, `[value] (assumed)`) and listed for the user in the chat at approval; the PRD has no assumptions or open-questions register.
 
 All wording and placement rules, including a technical-to-product translation table, live in [`knowledge-base/product-language/SKILL.md`](./knowledge-base/product-language/SKILL.md). Every pipeline step applies it.
 
@@ -42,18 +39,17 @@ All wording and placement rules, including a technical-to-product translation ta
 
 | # | Section | Main reader |
 |---|---------|-------------|
-| 1 | Document Info — version history, references, how to read this PRD *(always included)* | All |
-| 2.1 | Summary — the feature at a glance *(always included)* | All |
-| 2.2–2.4 | Problem Statement, JTBD, Goals & Success Metrics | PO |
-| 2.5–2.6 | Scope, Glossary | All |
-| 3.1 | Business Rules — rules, statuses & transitions, roles & permissions | BA, Dev, QC |
-| 3.2 | Process Diagrams — business-level only | BA, Dev |
-| 3.3 | Common Behaviors, Feature Epics & User Stories with acceptance criteria | BA, Dev, QC |
-| 3.4 | Use Case Specifications — multi-step or branching flows only | BA, Dev, QC |
-| 3.5 | Traceability Matrix (IDs only) and Non-Functional Requirements | BA, Dev, QC |
-| 3.6 | UI/UX Specifications — screen inventory and message catalog | Dev, QC |
-| 3.7 | Dependencies & Impacted Areas | PO, Dev, QC |
-| 4 | Assumptions & Open Questions | All |
+| 1 | Document Info — version history, references *(always included)* | All |
+| 2.1–2.3 | Problem Statement / Context, JTBD, Goals | All |
+| 2.4 | Success Metrics *(optional, asked in Step 0)* | PO |
+| 2.5 | Glossary | All |
+| 3.1 | General Rules — only the foundation of the whole feature, and situations that behave the same everywhere | BA, Dev, QC |
+| 3.2 | Process Diagrams — business-level only *(optional, asked in Step 0)* | BA, Dev |
+| 3.3 | Feature Epics & User Stories — epic rules, story rules, acceptance criteria | BA, Dev, QC |
+| 3.4 | Non-Functional Requirements — cross-cutting only *(optional)* | Dev, QC |
+| 3.5 | Screens — one line of purpose per screen, design links *(optional, asked in Step 0)* | Dev, QC, Designer |
+
+An excluded section is left out and the sections after it are renumbered.
 
 ---
 
@@ -137,7 +133,7 @@ flowchart TD
     S15 --> H15{{"HITL - approve clarified brief"}}
     H15 --> S2
 
-    S2["Step 2 - Product Framing\nJTBD + Business Rules + Messages + User Stories + AC"]
+    S2["Step 2 - Product Framing\nJTBD + Rules + User Stories + AC"]
     S2 --> H2{{"HITL - approve JTBD + rules + User Stories"}}
     H2 -->|"request edits"| S2
     H2 -->|"approved"| S3
@@ -177,7 +173,8 @@ flowchart TD
 - The system first determines whether the user wants `IDE_FULL_PIPELINE` or `CHAT_TEXT_ONLY`.
 - In IDE mode, the system confirms whether final artifacts should include Markdown only or Markdown plus DOCX.
 - The system checks whether the feature needs any diagrams: BPMN, Activity Diagram, or Sequence Diagram.
-- The system presents the fourteen optional PRD sections as a numbered agenda and asks the user to confirm which apply. Document Info and the Summary are always included. Excluded sections are skipped during drafting; the default is all sections active.
+- The system asks whether the user needs a Success Metrics section, and asks carefully, in two parts, whether they need a screen list and whether wireframes should be drawn in a design tool. Skipping or saying no leaves them out.
+- The system presents the ten PRD sections as a numbered agenda and asks the user to confirm which apply. Document Info is always included; the six core sections are on by default and the optional ones follow the answers above. Excluded sections are left out of the PRD.
 - If the user has not specified mode, diagram needs, or the section agenda, the system must pause and ask before planning the rest of the workflow.
 
 ### Step 1: Data Pre-processing (Input Router)
@@ -193,20 +190,20 @@ flowchart TD
 
 ### Step 1.5: Clarification Gate (Critical Pause)
 
-- The system reviews the approved JSON and asks one consolidated batch of business questions for every `[NEEDS_CLARIFICATION]` field. It does not ask technical implementation questions; those become Open Questions for Dev / Tech Lead in the PRD.
+- The system reviews the approved JSON and asks one consolidated batch of business questions for every `[NEEDS_CLARIFICATION]` field. It does not ask technical implementation questions; those are marked `TBD, Dev / Tech Lead decides` and listed for the user at approval.
 - Fields the user cannot answer stay as `[NEEDS_CLARIFICATION]` and surface as `TBD` in the PRD — the system never invents missing details.
 - If the JSON has no gaps, the system asks for a single confirmation and moves on.
 - `Clarification_Confirmed` is set to `true` only after the user explicitly approves the clarified brief. Framing cannot start before that.
 
-### Step 2: Product Framing Approval (JTBD + Business Rules + User Stories)
+### Step 2: Product Framing Approval (JTBD + Rules + User Stories)
 
-- In IDE mode, the system reads `domain-knowledge/[Domain_Name]/rules.md` and any approved PRDs in the same domain. Approved PRDs win over older inputs and framing files.
+- In IDE mode, the system reads `domain-knowledge/[Domain_Name]/rules.md` (the rules several PRDs of the domain share, and the list of approved PRDs) and any approved PRDs in the same domain. Approved PRDs win over older inputs and framing files. A rule that already lives there is not copied; the stories state its effect and name the file.
 - In text-only mode, the system uses only the approved JSON and context pasted into chat.
 - The system generates the Product Framing Pack with `knowledge-base/product-framing/SKILL.md`, which applies standards from:
   - `knowledge-base/knowledge/jobs-to-be-done/SKILL.md`
   - `knowledge-base/knowledge/user-story-skill/SKILL.md`
-- The output is a Product Framing Pack containing numbered single-sentence JTBD job stories (`When [situation], I want to [motivation], so I can [expected outcome].`), research status, business rules with IDs, the message catalog, common behaviors, every success metric (typed Primary, Secondary, or Guardrail), quality target, dependency, and screen from the brief, Epics that name the JTBD they serve, INVEST-standard User Stories with Priority, Screens, Common behaviors, and Rules applied lines, `Done when` acceptance criteria that cite rules and messages by ID, and assumptions and open questions.
-- Rules, messages, and common behaviors get their IDs before any story is written, so acceptance criteria can cite them instead of repeating their values. The user approves rules and stories together.
+- The output is a Product Framing Pack with no rule or message codes: one numbered, single-sentence job story per user type (`When [situation], I want to [motivation], so I can [expected outcome].`), General Rules (only the foundation of the whole feature, and situations that behave the same in every story), Epics that name the jobs they serve and hold the rules several of their stories use, INVEST-checked User Stories with their own rules and labelled acceptance criteria that read on their own, and the optional parts the user chose.
+- Each rule is placed by asking which stories use it: one story → under it; several stories of one epic → at the top of the epic; the foundation of the whole feature → General Rules. Every `TBD` and assumed value is listed for the user with the Pack.
 - In IDE mode, the Product Framing Pack is saved under `domain-knowledge/[Domain_Name]/inputs/[Feature_File_Name]_framing.md`.
 - In text-only mode, the Product Framing Pack is shown in chat but not written to disk.
 - The user must review and approve this Product Framing Pack before drafting begins.
@@ -214,7 +211,7 @@ flowchart TD
 ### Step 3: Drafting
 
 - The approved JSON from Step 1 and the approved Product Framing Pack from Step 2 are rendered into a full PRD using the standard PRD template.
-- The Product Framing Pack is the source of truth for JTBD, user stories, business rules, messages, and open questions in the PRD, with IDs unchanged. The Traceability Matrix is built from the citations in the stories, the use cases, the messages' Rules column, and the rules that cite other rules.
+- The Product Framing Pack is the source of truth for the jobs, rules, and user stories in the PRD, with job and story IDs unchanged. Excluded sections are left out and the rest renumbered.
 - In IDE mode, the draft is stored under `domain-knowledge/[Domain_Name]/PRDs/[Feature_File_Name]_PRD.md`.
 - In text-only mode, the full Markdown PRD draft is returned in chat.
 - Diagrams are generated by `diagram-writer/SKILL.md` only. No other file contains diagram generation rules.
@@ -226,8 +223,7 @@ flowchart TD
 - The orchestrator inserts each note inline, directly below the affected section, using the `> [!WARNING] REVIEWER'S NOTE` callout format.
 - In IDE mode, notes are inserted into the Markdown file. In text-only mode, notes are inserted into the in-chat draft.
 - Reviewer output is capped at 10 high-risk notes per pass.
-- The reviewer validates business logic, business-level edge cases, scope, JTBD alignment, `Done when` acceptance criteria coverage, and traceability: every cited ID exists, every rule is cited or used by another rule, and each story's `Rules applied` line lists the rules its acceptance criteria, messages, and common behaviors refer to, plus the rules those rules use, followed all the way down.
-- The reviewer flags **duplication**: a rule value, message wording, or target written outside its home, and proposes replacing the copy with the ID.
+- The reviewer reads the draft as a newcomer would, top to bottom, and flags any code in the text, any sentence that needs another section to make sense, any rule placed away from the stories that use it, and any value that differs between a rule and an acceptance criterion's summary of it. It also validates business logic, business-level edge cases, JTBD alignment, and acceptance criteria coverage.
 - The reviewer also flags **technical leakage** (endpoints, status codes, database fields, internal services, code) and wording that PO, BA, Dev, and QC could read differently, and proposes a business-language rewrite.
 
 ### Step 5: User Approval (Critical Pause)
@@ -236,14 +232,15 @@ flowchart TD
 - The user can request edits, add information, or approve the PRD.
 - The process stays in this step until the user explicitly approves the draft.
 - Edits change the draft directly. Substantive edits return to Step 4 for re-review before the draft is shown again. Cosmetic edits may skip re-review.
-- A changed business rule is edited in its own row; the worked examples of rules that use it and any affected Rules applied lines are updated, and everything that cites or uses it is re-reviewed.
-- After approval, the PRD is the only home of the feature's facts; in IDE mode the framing file is marked as superseded. A later change to an approved PRD is made as an edit of that PRD, keeping every ID.
+- At this step the system lists, in the chat, every `TBD` with who decides, every assumed value, every technical decision for Dev / Tech Lead, and every delivery constraint the user stated.
+- A changed business rule is edited where it sits; every acceptance criterion that states its effect is updated in the same edit, the rule moves if the stories using it changed, and everything touched is re-reviewed.
+- After approval, the PRD is the only home of the feature's facts; in IDE mode the framing file is marked as superseded. A later change to an approved PRD is made as an edit of that PRD, keeping every story ID and AC number. In IDE mode, the PRD's line in the domain `rules.md` is added or refreshed, and a rule another PRD of the domain also needs moves into `rules.md`.
 - In text-only mode, approval completes the workflow and the final PRD remains in chat.
 
 ### Step 5.5: Optional Wireframe/UI Creation (Design MCP Tool)
 
 - This step runs only in IDE full pipeline mode.
-- After the PRD is approved, the system may generate wireframes from the 3.6 screen inventory, the acceptance criteria of the stories each screen lists, and the messages they cite. It writes each new frame's link into the screen's Design column and never overwrites a link that is already there.
+- It runs only when the user asked for wireframes in Step 0 and the PRD has the Screens section. After the PRD is approved, the system generates wireframes from each screen's purpose and the acceptance criteria that mention it, including their message copy. It writes each new frame's link into the screen's Design column and never overwrites a link that is already there.
 - This step should run only if a wireframe-capable design MCP tool (for example Stitch or Figma) is available in the environment.
 - If no design tool is available, the workflow should continue to export without blocking.
 
@@ -273,9 +270,10 @@ The quality of the Step 1 input strongly affects the quality of the generated PR
 7. **Basic user flow:** What does the happy path look like from start to finish?
 8. **Business rules and edge cases:** Concrete values (amounts, limits, time windows, who may do what) and what should happen when something goes wrong — seat already taken, payment failed, partner not responding, user leaves mid-way. If the feature changes existing bookings, tickets, or vouchers, say how those created before launch are treated.
 9. **Quality expectations:** How fast it should feel, when it must be available, on which platforms. (Who may see which information is a business rule: put it under item 8.)
-10. **Dependencies and known constraints:** Partners, teams, or existing features involved. If your team already knows a constraint (for example "must reuse the current payment partner"), state it — it is recorded as stated under Known Constraints, not expanded into technical detail.
-11. **Success metrics:** How will the team know the feature worked, how is each metric counted, who owns it, and what must not get worse (guardrail)?
+10. **Dependencies and known constraints:** Partners, teams, or existing features involved. If your team already knows a delivery constraint (for example "must reuse the current payment partner"), state it — it is not written into the PRD but listed back to you at approval, for the Dev team's technical design.
+11. **Success metrics (optional):** Only if you want a metrics section — how will the team know the feature worked, how is each metric counted, who owns it, and what must not get worse (guardrail)?
 12. **Diagram needs:** State whether you want BPMN, Activity Diagram, Sequence Diagram, or no diagrams. Diagrams stay business-level: actors, the system as one participant, and partners.
+13. **Screens and wireframes (optional):** Say whether you want a screen list (one line of purpose per screen) and, if so, whether wireframes should be drawn in a design tool. If designs already exist, give their links.
 
 There is no need to describe APIs, databases, or architecture: the PRD does not carry them. If you do mention technical details, the pipeline translates them into business meaning.
 
@@ -320,7 +318,7 @@ This keeps the workflow lean and uses effort only where it adds real value.
 └── knowledge-base/
     ├── product-language/              ← product-first wording rules applied by every step
     ├── input-router/                  ← Step 1: raw notes → structured JSON brief (+ schema)
-    ├── product-framing/               ← Step 2: JTBD + rule register + messages + INVEST user stories + AC
+    ├── product-framing/               ← Step 2: JTBD + rules placed by story + user stories + AC
     ├── prd-template/                  ← Step 3: PRD template renderer
     │   ├── resources/prd-template.md  ← the standard PRD template
     │   └── diagram-writer/            ← the only source of diagram-generation rules

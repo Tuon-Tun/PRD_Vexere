@@ -28,10 +28,10 @@ so that I can quickly find items available in my size without browsing irrelevan
 **Fixed AC:**
 
 ```text
-Done when: The shopper can select one or more shoe sizes from a filter panel on the product listing page.
-Done when: The product list updates to show only items available in the selected size(s).
-Done when: If no products match the selected size filter, the page displays "No results found for this size."
-Done when: The shopper can clear all size filters to return to the full product listing.
+- The shopper can select one or more shoe sizes from a filter panel on the product listing page.
+- The product list updates to show only items available in the selected size(s).
+- If no products match the selected size filter, the page displays "No results found for this size."
+- The shopper can clear all size filters to return to the full product listing.
 ```
 
 ---
@@ -63,10 +63,10 @@ so that I can build my order efficiently without searching through irrelevant it
 **Fixed AC:**
 
 ```text
-Done when: The customer can locate any food item type within 3 interactions from the order screen.
-Done when: The ordering interface provides a way to browse or filter food items by category.
-Done when: The customer can search for a food item by name and see matching results within 1 second.
-Done when: If a food item type has no available items, it is either hidden or labelled as "Unavailable."
+- The customer can locate any food item type within 3 interactions from the order screen.
+- The ordering interface provides a way to browse or filter food items by category.
+- The customer can search for a food item by name and see matching results within 1 second.
+- If a food item type has no available items, it is either hidden or labelled as "Unavailable."
 ```
 
 ---
@@ -105,9 +105,9 @@ so that [the business or user value].
 **Fixed AC (for the user-facing story):**
 
 ```text
-Done when: [User-facing feature enabled by the refactor works as expected]
-Done when: [Performance or reliability improvement is measurable and verified]
-Done when: [Regression — existing functionality is not broken by the refactor]
+- [User-facing feature enabled by the refactor works as expected]
+- [Performance or reliability improvement is measurable and verified]
+- [Regression — existing functionality is not broken by the refactor]
 ```
 
 ---
@@ -139,11 +139,11 @@ so that I can save time and complete my shopping without frustration.
 **Fixed AC:**
 
 ```text
-Done when: The shopper can search for a product by name and see relevant results within 1 second.
-Done when: Search results update as the shopper types (minimum 3 characters entered).
-Done when: If the search returns no results, a message displays: "No products found. Try a different search term."
-Done when: The search is accessible from the navigation bar on all pages of the site.
-Done when: Search works correctly on mobile devices with touch input.
+- The shopper can search for a product by name and see relevant results within 1 second.
+- Search results update as the shopper types (minimum 3 characters entered).
+- If the search returns no results, a message displays: "No products found. Try a different search term."
+- The search is accessible from the navigation bar on all pages of the site.
+- Search works correctly on mobile devices with touch input.
 ```
 
 ---
@@ -153,7 +153,7 @@ Done when: Search works correctly on mobile devices with touch input.
 **Bad AC:**
 
 ```text
-Done when: The website accepts more than 3,000 users to connect simultaneously.
+- The website accepts more than 3,000 users to connect simultaneously.
 ```
 
 **What's wrong:**
@@ -165,8 +165,8 @@ Done when: The website accepts more than 3,000 users to connect simultaneously.
 **Fixed AC:**
 
 ```text
-Done when: The website supports up to 5,000 concurrent user connections without response times exceeding 3 seconds.
-Done when: When more than 5,000 people use the site at the same time, new visitors see "High traffic — please wait" instead of an error.
+- The website supports up to 5,000 concurrent user connections without response times exceeding 3 seconds.
+- When more than 5,000 people use the site at the same time, new visitors see "High traffic — please wait" instead of an error.
 ```
 
 ---
@@ -197,11 +197,11 @@ so that I can finalise my purchase and receive confirmation that my order has be
 **Fixed AC:**
 
 ```text
-Done when: The customer can enter payment details (card number, expiry, CVV) on the checkout screen.
-Done when: The customer can submit their payment and receive an on-screen confirmation within 5 seconds.
-Done when: The customer receives a confirmation email within 2 minutes of successful payment.
-Done when: If payment is declined, the customer sees a clear error message and can retry or use a different payment method.
-Done when: After payment, the customer only ever sees the last 4 digits of their card. (How card data is protected is an Open Question for Dev / Tech Lead.)
+- The customer can enter payment details (card number, expiry, CVV) on the checkout screen.
+- The customer can submit their payment and receive an on-screen confirmation within 5 seconds.
+- The customer receives a confirmation email within 2 minutes of successful payment.
+- If payment is declined, the customer sees a clear error message and can retry or use a different payment method.
+- After payment, the customer only ever sees the last 4 digits of their card. (How card data is protected: TBD, Dev / Tech Lead decides.)
 ```
 
 ---
@@ -230,10 +230,10 @@ so that customer records remain accurate.
 ```
 
 ```text
-Done when: A Customer Service Rep can update demographic data.
-Done when: An Admin can update demographic data.
-Done when: A Supervisor can update demographic data.
-Done when: Each update is logged with the user's role and timestamp.
+- A Customer Service Rep can update demographic data.
+- An Admin can update demographic data.
+- A Supervisor can update demographic data.
+- Each update is logged with the user's role and timestamp.
 ```
 
 **Or — split into separate stories (if roles require different build or test paths):**
